@@ -75,6 +75,23 @@
             }
         }
     },
+    "ArkRedDotInHall": {
+        "desc": "大厅的方舟红点",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    956,
+                    448,
+                    28,
+                    25
+                ],
+                "template": [
+                    "RedDot.png"
+                ]
+            }
+        }
+    },
     "Confirm": {
         "desc": "确认",
         "recognition": {

@@ -1,0 +1,103 @@
+{
+    "RankingRewards": {
+        "desc": "排名奖励入口",
+        "next": [
+            "[JumpBack]EnterHall",
+            "RankingRewardsStart",
+            "EndTask"
+        ]
+    },
+    "RankingRewardsStart": {
+        "desc": "排名奖励",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "ArkFlagInHall",
+                    "ArkRedDotInHall"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -30,
+                    30,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "RankingRewardFlagInArk",
+            "RankingRewardsStart"
+        ]
+    },
+    "RankingRewardFlagInArk": {
+        "desc": "处于方舟内部",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    17,
+                    16,
+                    50,
+                    20
+                ],
+                "expected": [
+                    "方舟"
+                ]
+            }
+        }
+    },
+    "RankingRewardReddotInArk": {
+        "desc": "方舟内部排名奖励的红点",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1244,
+                    90,
+                    34,
+                    33
+                ],
+                "template": [
+                    "RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "post_wait_freezes": 500,
+        "next": [
+            "RankingRewardClaim"
+        ]
+    },
+    "RankingRewardClaim": {
+        "desc": "排名奖励领取",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1201,
+                    670,
+                    52,
+                    19
+                ],
+                "expected": [
+                    "全部领取"
+                ]
+            }
+        }
+    }
+}
