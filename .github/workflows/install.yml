@@ -16,6 +16,7 @@ on:
     paths:
       - ".github/workflows/install.yml"
       - "assets/**"
+      - "agent/**"
       - "**.py"
   pull_request:
     branches:
@@ -23,6 +24,7 @@ on:
     paths:
       - ".github/workflows/install.yml"
       - "assets/**"
+      - "agent/**"
       - "**.py"
   workflow_dispatch:
 
@@ -81,6 +83,14 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: "agent/go-service/go.mod"
+          cache-dependency-path: |
+            agent/go-service/go.mod
+            agent/go-service/go.sum
+
       - name: Download MaaFramework
         uses: robinraju/release-downloader@v1
         with:
@@ -116,6 +126,14 @@ jobs:
         run: |
           rm -rf install/
           echo "Install directory cleaned."
+
+      - name: Build Go Agent
+        shell: bash
+        run: |
+          cd tools/
+          python -m pip install -r ./requirements.txt
+          python ./install.py --build-go-only ${{ needs.meta.outputs.tag }} ${{ matrix.os }} ${{ matrix.arch }}
+          cd ..
 
       - name: Install
         shell: bash
