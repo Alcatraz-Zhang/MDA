@@ -182,7 +182,7 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: MDA-${{ matrix.os }}-${{ matrix.arch }}
           path: "install"
@@ -219,7 +219,7 @@ jobs:
     needs: [meta, install, changelog]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v7
         with:
           path: assets
 
