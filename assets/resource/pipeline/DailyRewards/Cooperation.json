@@ -4,11 +4,19 @@
         "max_hit": 1,
         "next": [
             "CooperationStart",
-            "EndTask"
+            "[JumpBack]EnterHall"
         ]
     },
     "CooperationStart": {
         "desc": "协同作战",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "ArkFlagInHall"
+                ]
+            }
+        },
         "next": [
             "CooperationSearch",
             "[JumpBack]SlideBanner",
