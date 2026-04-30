@@ -21,7 +21,7 @@
         "TribeTowerEnterCommonTower": {
             "type": "switch",
             "label": "$option.TribeTowerEnterCommonTower.label",
-            "description": "$task.TribeTowerEnterCommonTower.Description",
+            "description": "$task.TribeTowerEnterCommonTower.description",
             "cases": [
                 {
                     "name": "No",

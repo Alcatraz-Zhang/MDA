@@ -65,7 +65,7 @@
         "AutoBIOSSetting": {
             "type": "switch",
             "label": "$option.AutoBIOSSetting.label",
-            "description": "$task.AutoBIOSSetting.Description",
+            "description": "$task.AutoBIOSSetting.description",
             "cases": [
                 {
                     "name": "Yes",
