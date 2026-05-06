@@ -20,7 +20,7 @@
             "type": "Win32",
             "win32": {
                 "class_regex": "UnityWndClass",
-                "window_regex": "NIKKE|勝利女神：妮姬",
+                "window_regex": "(NIKKE|勝利女神：妮姬)",
                 "screencap": "Background",
                 "mouse": "SendMessageWithCursorPos",
                 "keyboard": "PostMessage"
@@ -34,7 +34,7 @@
             "type": "Win32",
             "win32": {
                 "class_regex": "UnityWndClass",
-                "window_regex": "NIKKE|勝利女神：妮姬",
+                "window_regex": "(NIKKE|勝利女神：妮姬)",
                 "screencap": "PrintWindow",
                 "mouse": "SendMessageWithWindowPos",
                 "keyboard": "PostMessage"
@@ -48,7 +48,7 @@
             "type": "Win32",
             "win32": {
                 "class_regex": "UnityWndClass",
-                "window_regex": "NIKKE|勝利女神：妮姬",
+                "window_regex": "(NIKKE|勝利女神：妮姬)",
                 "screencap": "ScreenDC",
                 "mouse": "Seize",
                 "keyboard": "Seize"
