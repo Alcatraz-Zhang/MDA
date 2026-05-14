@@ -11,6 +11,7 @@
             "[JumpBack]NavigationClickHomeButton",
             "[JumpBack]NavigationSkipPlot",
             "[JumpBack]CommonCloseSale",
+            "[JumpBack]LoginRewardClaim",
             "[JumpBack]CommonConfirmReward",
             "NavigationClickFreeState",
             "[JumpBack]NavigationClickHall"

@@ -66,5 +66,25 @@
                 ]
             }
         }
+    },
+    "LoginRewardClaim": {
+        "desc": "领取登录奖励",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    686,
+                    657,
+                    139,
+                    35
+                ],
+                "expected": [
+                    ".*领取.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
     }
 }
