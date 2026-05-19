@@ -1,0 +1,570 @@
+{
+  "D:\\NIKKE\\MDA\\agent\\main.py": {
+    "mtime": 1779017157.0499253,
+    "hash": "a4615f66e4ea4771019c3810f38a774e"
+  },
+  "D:\\NIKKE\\MDA\\agent\\my_action.py": {
+    "mtime": 1779017157.0509253,
+    "hash": "03b28548a8ba910c3bfc18ef960d3f5a"
+  },
+  "D:\\NIKKE\\MDA\\agent\\my_reco.py": {
+    "mtime": 1779017157.0509253,
+    "hash": "7ea1650a1de76e06ecae48f160dfb3ae"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\logger.go": {
+    "mtime": 1779017157.0409243,
+    "hash": "679211ccce081067157efedfb1bd8004"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\main.go": {
+    "mtime": 1779017157.041924,
+    "hash": "2bed658b362061917ec639189cfa6fea"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\register.go": {
+    "mtime": 1779017157.043923,
+    "hash": "6f2e868dfea56a4058a6f784f754cf97"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\version.go": {
+    "mtime": 1779017157.0499253,
+    "hash": "1ce0d8c4a4b77c14a0ff3ec7e4260c13"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myaction\\action.go": {
+    "mtime": 1779017157.0389242,
+    "hash": "4dd8e7a5876994285e422050187d81e1"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myaction\\register.go": {
+    "mtime": 1779017157.0399237,
+    "hash": "7eef4860a4af34ffe067be02b2e7b160"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myreco\\reco.go": {
+    "mtime": 1779017157.0399237,
+    "hash": "eab030267c53836f555eaa0300701a90"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myreco\\register.go": {
+    "mtime": 1779017157.0399237,
+    "hash": "ea4bef7c49cacaf87a5426f7c7599344"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\i18n\\i18n.go": {
+    "mtime": 1779017157.0422647,
+    "hash": "888af92deee6a0f8bc0299142ec9b13e"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\maafocus\\maafocus.go": {
+    "mtime": 1779017157.0429227,
+    "hash": "b2a69773683c1848d500eedb587bec41"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\pienv\\pienv.go": {
+    "mtime": 1779017157.0429227,
+    "hash": "d087921e7ab94e0794bcb16514e8caaf"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\resource\\resource_reader.go": {
+    "mtime": 1779017157.043923,
+    "hash": "7ebaaad4e78298d4e0aeea8428d305c5"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\resource\\resource_sink.go": {
+    "mtime": 1779017157.043923,
+    "hash": "54c96b329e233cc63fc0c12d2ef45a53"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\aspectratio\\checker.go": {
+    "mtime": 1779017157.0449257,
+    "hash": "531083149016ac2198f401d73a1202c9"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\aspectratio\\register.go": {
+    "mtime": 1779017157.0449257,
+    "hash": "6404f2d01051b6ae14bed0ac9e2997de"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\checker.go": {
+    "mtime": 1779017157.0459232,
+    "hash": "65e24858feb197c80d920fdd1df6ee5b"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\hdr_other.go": {
+    "mtime": 1779017157.0459232,
+    "hash": "c90d8dd2cc8119b7e984feb0cc1b15d7"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\hdr_windows.go": {
+    "mtime": 1779017157.0459232,
+    "hash": "24f337debea509210ceda40590a88d64"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\register.go": {
+    "mtime": 1779017157.0469234,
+    "hash": "8e9e193890c6020fcca9483dcc742dce"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\action.go": {
+    "mtime": 1779017157.0469234,
+    "hash": "0611e2572cc14eda076d9cdada98eae6"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\config.go": {
+    "mtime": 1779017157.0469234,
+    "hash": "1ad16f39f8a58932ab0f8cf66ff8e7b7"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\devicecode.go": {
+    "mtime": 1779017157.0479233,
+    "hash": "52625545b46c81da4f81fa4524aafc14"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\devicecode_test.go": {
+    "mtime": 1779017157.0479233,
+    "hash": "57e489487e55b59e764beec6689a3f02"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\memberdata.go": {
+    "mtime": 1779017157.0479233,
+    "hash": "04c9dbba7573c46a6146ede490deb8f0"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\register.go": {
+    "mtime": 1779017157.0489247,
+    "hash": "11bb14c8d633d390ea8c4c0d50992536"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\checker.go": {
+    "mtime": 1779017157.0489247,
+    "hash": "8fb8246bab8d10fea3bfdf06b5764f4e"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\process_other.go": {
+    "mtime": 1779017157.0489247,
+    "hash": "dcd40a0a39d6763eb1a0e2893e47a0ce"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\process_windows.go": {
+    "mtime": 1779017157.0499253,
+    "hash": "f887062000d4cf321cd43ceb609ae0f7"
+  },
+  "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\register.go": {
+    "mtime": 1779017157.0499253,
+    "hash": "17477e1c7dce0b8888d77abe7155da43"
+  },
+  "D:\\NIKKE\\MDA\\scripts\\clean-empty-pipeline-fields.mjs": {
+    "mtime": 1779017157.1455407,
+    "hash": "46cb21581cd956690588a8e1da20e159"
+  },
+  "D:\\NIKKE\\MDA\\tools\\build_and_install.py": {
+    "mtime": 1779017157.146541,
+    "hash": "aa3648cbe98ab0d3a96e1203771c9bdd"
+  },
+  "D:\\NIKKE\\MDA\\tools\\cli_support.py": {
+    "mtime": 1779017157.146541,
+    "hash": "40f0144dd39ad81e9cbb832a84789ee1"
+  },
+  "D:\\NIKKE\\MDA\\tools\\configure.py": {
+    "mtime": 1779017157.146541,
+    "hash": "e9145f31fba4892d8bfa55528b312070"
+  },
+  "D:\\NIKKE\\MDA\\tools\\install.py": {
+    "mtime": 1779017157.146541,
+    "hash": "7ea565351178dd5a517b4d7862743ec3"
+  },
+  "D:\\NIKKE\\MDA\\tools\\setup_workspace.py": {
+    "mtime": 1779017157.1525414,
+    "hash": "a476acec57029a85bdebe9ab61b62143"
+  },
+  "D:\\NIKKE\\MDA\\tools\\validate_schema.py": {
+    "mtime": 1779017157.1525414,
+    "hash": "f89dd79a6d0dd56e83af8d60057678c1"
+  },
+  "D:\\NIKKE\\MDA\\tools\\optimize_templates\\optimize_templates.py": {
+    "mtime": 1779017157.1485405,
+    "hash": "edd56fb97d182ce109af45b0b6f1e12e"
+  },
+  "D:\\NIKKE\\MDA\\AGENTS.md": {
+    "mtime": 1779017667.3032508,
+    "hash": "652636e2175988839c18b1b20f5d25da"
+  },
+  "D:\\NIKKE\\MDA\\README.md": {
+    "mtime": 1779017157.0379248,
+    "hash": "ad3764919993e3f86e0966de9db79020"
+  },
+  "D:\\NIKKE\\MDA\\README_en.md": {
+    "mtime": 1779017157.0379248,
+    "hash": "33840d007c00b37db3ebb0e7ddd0ebab"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\CONTACT.en_us.md": {
+    "mtime": 1779017157.0524292,
+    "hash": "acb60005743f273ee94cc171f8e37e9b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\CONTACT.zh_cn.md": {
+    "mtime": 1779017157.0524292,
+    "hash": "3d60b2d0e30732ea10451f970eeb3ef3"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\LICENSE_SHORT.md": {
+    "mtime": 1779017157.0524292,
+    "hash": "63c4426734700afb8380f88594acf49b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\aspect-ratio-warning.html": {
+    "mtime": 1779017157.053433,
+    "hash": "bad6016a649d3a97af925786e3269a85"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\hdr-warning.html": {
+    "mtime": 1779017157.0544374,
+    "hash": "3fadd41388d735709565681953424701"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\membership-warning.html": {
+    "mtime": 1779017157.0544374,
+    "hash": "0d3d9b9f37e84915817a29a0bd1e8237"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\process-warning.html": {
+    "mtime": 1779017157.0544374,
+    "hash": "b5265cd7ea0b24a69b346674ebdfaeaa"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\interface\\DESCRIPTION\\DESCRIPTION.en_us.md": {
+    "mtime": 1779017157.0564342,
+    "hash": "18aa3b63e81f7eb1b3684b3c670f8fff"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\interface\\DESCRIPTION\\DESCRIPTION.zh_cn.md": {
+    "mtime": 1779017157.0564342,
+    "hash": "a72053088801838dbe293f59dc38e8e9"
+  },
+  "D:\\NIKKE\\MDA\\docs\\pipeline-node-naming.md": {
+    "mtime": 1779017157.143538,
+    "hash": "3fed47c8894061870df5bab127411268"
+  },
+  "D:\\NIKKE\\MDA\\docs\\zh_cn\\\u4e2a\u6027\u5316\u914d\u7f6e.md": {
+    "mtime": 1779017157.143538,
+    "hash": "05d7be013a25769b5086254f6d2c816e"
+  },
+  "D:\\NIKKE\\MDA\\tools\\requirements.txt": {
+    "mtime": 1779017157.1495404,
+    "hash": "24eb098c9cfdfc618038e9eddfa54ab4"
+  },
+  "D:\\NIKKE\\MDA\\tools\\optimize_templates\\requirements.txt": {
+    "mtime": 1779017157.1485405,
+    "hash": "7c1f7ac49c6a0435da5a989cd14812d0"
+  },
+  "D:\\NIKKE\\MDA\\assets\\logo.png": {
+    "mtime": 1779017157.0574338,
+    "hash": "d1b827a6aadb83e3b20dc91faf400ce8"
+  },
+  "D:\\NIKKE\\MDA\\assets\\locales\\MDA-Tiny.png": {
+    "mtime": 1779017157.053433,
+    "hash": "d1b827a6aadb83e3b20dc91faf400ce8"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Advise\\20.png": {
+    "mtime": 1779017157.0584323,
+    "hash": "e5662ed66bfa41c2f3cb5d854e523581"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Advise\\NextAdvise.png": {
+    "mtime": 1779017157.0584323,
+    "hash": "303d0af219f45e4802b8a284164508ac"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Battle\\AutoBurst.png": {
+    "mtime": 1779017157.0594318,
+    "hash": "57961ee7afbb5136812467882e4c3b7c"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Battle\\AutoShoot.png": {
+    "mtime": 1779017157.0594318,
+    "hash": "5fe0587d9d74ae3bf91f30b9f2ff1db4"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Battle\\BattleCloseButton.png": {
+    "mtime": 1779017157.0594318,
+    "hash": "de909a342306fd3b7b71292274e7b7bc"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\CashShop\\OrdinaryPackage.png": {
+    "mtime": 1779017157.0604317,
+    "hash": "15f26a7fa96db517ded0d3459bc15f63"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\Bell.png": {
+    "mtime": 1779017157.0604317,
+    "hash": "3ced2667a14722fe320914a319b9b22e"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton1.png": {
+    "mtime": 1779017157.0604317,
+    "hash": "d6dd3060195d35ca1754285d3ba1035b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton2.png": {
+    "mtime": 1779017157.0614314,
+    "hash": "c74220afac4cd0dad90e0b1bcb9faed5"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton3.png": {
+    "mtime": 1779017157.0614314,
+    "hash": "53f194bb6f7b86a3a4263ffaeeef497f"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton4.png": {
+    "mtime": 1779017157.0614314,
+    "hash": "cbbdaa2607ca007a81c60ab233884306"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\Confirm.png": {
+    "mtime": 1779017157.0614314,
+    "hash": "b699ebc4f7b44f22ea0e04870e17e982"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\ConfirmWithCircle.png": {
+    "mtime": 1779017157.0614314,
+    "hash": "52a0933916af981f757a6d82f22ba0d5"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\GoBack.png": {
+    "mtime": 1779017157.062933,
+    "hash": "b2f0325d312847911c9d91ce80f0d1f1"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\GoBack1.png": {
+    "mtime": 1779017157.062933,
+    "hash": "b2f0325d312847911c9d91ce80f0d1f1"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\GoBack2.png": {
+    "mtime": 1779017157.062933,
+    "hash": "1a08ea3adafb5704c97fdc6489743140"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\HomeButton.png": {
+    "mtime": 1779017157.062933,
+    "hash": "d2a2dc7d2846c4ae23b681c3bf0a5328"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\MAX.png": {
+    "mtime": 1779017157.063936,
+    "hash": "163431b57e26a605cf6428c66e063097"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\New.png": {
+    "mtime": 1779017157.063936,
+    "hash": "145b8c68d9df0d1c835ed8d80eb87e5c"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\PassRedDot.png": {
+    "mtime": 1779017157.063936,
+    "hash": "317f729a5d55b91f0acb0984ec01809c"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\RedDot.png": {
+    "mtime": 1779017157.063936,
+    "hash": "d00a3a08b896f339b6668dbb0c809a69"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\ServerChoose.png": {
+    "mtime": 1779017157.064937,
+    "hash": "125b49c8b073aae37c3641fb6a8484d3"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\CoordinatedOperations\\CoordinatedOperations.png": {
+    "mtime": 1779017157.064937,
+    "hash": "3f8d0865f2e5553a9c6e9ec33558bdf8"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\DailyRewards\\FreeRecruit\\FreeRecruit.png": {
+    "mtime": 1779017157.0659368,
+    "hash": "75b2fab0623b83a2439d5d88d81a3337"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\DailyRewards\\FreeRecruit\\NextRecruit.png": {
+    "mtime": 1779017157.0659368,
+    "hash": "157552c1bc56446238387cb81cd13a67"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\DailyRewards\\Pass\\PassChange.png": {
+    "mtime": 1779017157.0659368,
+    "hash": "c41451a6437328bd6b95c7a184c39a4e"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Dialogues\\Continue.png": {
+    "mtime": 1779017157.0669355,
+    "hash": "b696f4d5e67ca0e57fd2c22018ce01e2"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly1.png": {
+    "mtime": 1779017157.0669355,
+    "hash": "c60897261a70acd73eabcf59949cbc9f"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly2.png": {
+    "mtime": 1779017157.0669355,
+    "hash": "3bc70dd61a850691fa6237bea40b4c42"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly3.png": {
+    "mtime": 1779017157.0679355,
+    "hash": "91bf5157690cd1c0a79bc2506ce4d586"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly4.png": {
+    "mtime": 1779017157.0679355,
+    "hash": "7fcef6a92cfa7e272d7d5d99b6bd60f5"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly5.png": {
+    "mtime": 1779017157.0679355,
+    "hash": "08d1c2ad398cd870c1723d3af21e924d"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisLogo.png": {
+    "mtime": 1779017157.0689356,
+    "hash": "f100d3ae27c90929f64b1c1f9c6a5848"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory1Stage.png": {
+    "mtime": 1779017157.0689356,
+    "hash": "f99da662f19571316e7813cdc41f69fb"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory1StageRepeatable.png": {
+    "mtime": 1779017157.0689356,
+    "hash": "dc6be461bd581c7c0080cd843172a76a"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageHard.png": {
+    "mtime": 1779017157.0689356,
+    "hash": "f2831da82aa94c0d2ad6b0b7e5058442"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageHardRepeatable.png": {
+    "mtime": 1779017157.0699353,
+    "hash": "a10ce5543384cd71e1f8f958bcb29f35"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageHardSP.png": {
+    "mtime": 1779017157.0699353,
+    "hash": "5029acbbf1c44152d920d3a46333ca63"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageNormal.png": {
+    "mtime": 1779017157.0699353,
+    "hash": "b3121ee0683382414004ee53be4116d7"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageNormalRepeatable.png": {
+    "mtime": 1779017157.0699353,
+    "hash": "c227848d8fe4906e037ba6f0650f59b3"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\BriefEncounter.png": {
+    "mtime": 1779017157.0709355,
+    "hash": "0fd31417c8935eeacaa7765862a59f3b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\CommandCenter.png": {
+    "mtime": 1779017157.0709355,
+    "hash": "8bafa5f159283404309f1321cf4414fd"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\DailyLives.png": {
+    "mtime": 1779017157.0719373,
+    "hash": "1e3e813bd0bfad8cb6ea2f88b51462bd"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\Event.png": {
+    "mtime": 1779017157.0719373,
+    "hash": "5d78bcdb53ab107c04c6c3f2e4f38431"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\ArenaShop.png": {
+    "mtime": 1779017157.0719373,
+    "hash": "0d72216f76d70773cd683e10135d2102"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\CodeManualSelectionBox.png": {
+    "mtime": 1779017157.0719373,
+    "hash": "41a89c0020afa64d3980c15e877a3ad5"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\ElectricCodeManual.png": {
+    "mtime": 1779017157.0719373,
+    "hash": "cd3ea39c16d800593f82338102dd591e"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\FireCodeManual.png": {
+    "mtime": 1779017157.0734413,
+    "hash": "8b784d945ef9aa94d44beadb963d376b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\IronCodeManual.png": {
+    "mtime": 1779017157.0734413,
+    "hash": "a696fbac96e2ead1e2b9e73c210c98ff"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\WaterCodeManual.png": {
+    "mtime": 1779017157.0734413,
+    "hash": "73ba991aaf2a2d277df8d0bbfdbcec50"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\WindCodeManual.png": {
+    "mtime": 1779017157.0734413,
+    "hash": "4975bc85dc67c1ee1f42d46de5c86a30"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\CommonShopNotSelected.png": {
+    "mtime": 1779017157.0744462,
+    "hash": "80ee3c1e15b594beac9cf9ebb6a2acc6"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\CommonShopSelected.png": {
+    "mtime": 1779017157.0744462,
+    "hash": "f8426e7c86aff86172e21b53e414d3fa"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\CoreDustCase.png": {
+    "mtime": 1779017157.0744462,
+    "hash": "6c0f34abb289b146bdbc0fcef34f7ba2"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\FreeReset.png": {
+    "mtime": 1779017157.075446,
+    "hash": "fa3ba1e92ce07694b27ba2f040669f83"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\GemCheck.png": {
+    "mtime": 1779017157.075446,
+    "hash": "77fddefa333d5ab8933ea1c25394f1e1"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\BattleDataSetCase.png": {
+    "mtime": 1779017157.075446,
+    "hash": "39d90ff78ab8eaf41cc89676f9485921"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\Credit.png": {
+    "mtime": 1779017157.075446,
+    "hash": "4c42334dbee0c4594094d1627777447b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\CreditCase.png": {
+    "mtime": 1779017157.0764449,
+    "hash": "a71da925e6e68c6ed7977ad4d9c96877"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\CuratedManufacturerArms.png": {
+    "mtime": 1779017157.0764449,
+    "hash": "77ed49191448d438be75ee09aa2de11e"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\Gem.png": {
+    "mtime": 1779017157.0764449,
+    "hash": "8839a49558333885c768834487cb5728"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\GoodTeamworkBox.png": {
+    "mtime": 1779017157.0774448,
+    "hash": "c1c67f73a27a3cd99dda6e42fa29fcd8"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\MaintenanceKitBox.png": {
+    "mtime": 1779017157.0774448,
+    "hash": "f488a921713996206fa41ef4eadd6f5f"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\RecyclingShop.png": {
+    "mtime": 1779017157.0774448,
+    "hash": "dffc9d557adceb7cbbb2541c40c05823"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\TimeFlag.png": {
+    "mtime": 1779017157.0774448,
+    "hash": "9a913e672b417957e05bf8f6b8bcb443"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\AbnormalAnnualTicket.png": {
+    "mtime": 1779017157.0784461,
+    "hash": "5bd1521a8744abbe90b1f9f450fcf470"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\Darlingforaday.png": {
+    "mtime": 1779017157.0784461,
+    "hash": "1dfced584a4afca631b073de00494617"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\ElysionVIPBuffetVoucher.png": {
+    "mtime": 1779017157.0784461,
+    "hash": "0dd05ee2c6970c4b6b499e1320c8053b"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\MissilisVIPCard.png": {
+    "mtime": 1779017157.0784461,
+    "hash": "d4acb0717bc0d377ca36ed0407723000"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\PilgrimSupplySetVoucher.png": {
+    "mtime": 1779017157.079445,
+    "hash": "c0ef0524479644f134c025f74706fc8e"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\TetraVIPSpaVoucher.png": {
+    "mtime": 1779017157.079445,
+    "hash": "c671348dd5ffcb1380202d6fb95576a8"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\AggressiveTactics.png": {
+    "mtime": 1779017157.079445,
+    "hash": "a324cea9977b845bda5494bb0e444e0f"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\BattleFlag.png": {
+    "mtime": 1779017157.0804448,
+    "hash": "247d77db8770d2374c4d97409cb4d22c"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\ClaimImmediately.png": {
+    "mtime": 1779017157.0804448,
+    "hash": "89085dccdffd6f324013ac809c026030"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\EnemyArmorUp\u2162.png": {
+    "mtime": 1779017157.0804448,
+    "hash": "66922aa28dfcbb3f860645da55c97168"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\EnemyVitalsUp\u2162.png": {
+    "mtime": 1779017157.0804448,
+    "hash": "bd40427d52040741d1f9b758738b9591"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\EnemyWeaponUp\u2162.png": {
+    "mtime": 1779017157.081445,
+    "hash": "97481b81118ef5cf91361a7644785321"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\NoRecycling.png": {
+    "mtime": 1779017157.081445,
+    "hash": "eee3d0ef7219a0efc32458939d41d248"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\RelevantPersonnelOnly.png": {
+    "mtime": 1779017157.081445,
+    "hash": "8c1d328308de3a6909c06a8696dc0a8f"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\Rewards0.png": {
+    "mtime": 1779017157.081445,
+    "hash": "b8f0dec0da8b0d5fb2016b08d2e8b2e2"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\RushHour\u2162.png": {
+    "mtime": 1779017157.0824451,
+    "hash": "b44cab884d5c588c0e0dec80e4d11ad7"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SmallEvent\\B-SideIdol\\B-SideIdolLogo.png": {
+    "mtime": 1779017157.0824451,
+    "hash": "96559ce392c208b95210d3b583951921"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SmallEvent\\B-SideIdol\\B-SideIdolStageNormal.png": {
+    "mtime": 1779017157.0824451,
+    "hash": "c0a98c208158dc760bc6f1dbf56dc545"
+  },
+  "D:\\NIKKE\\MDA\\assets\\resource\\image\\SmallEvent\\B-SideIdol\\B-SideIdolStageNormalRepeatable.png": {
+    "mtime": 1779017157.0824451,
+    "hash": "8ceb976e56401312044f20608242eaec"
+  }
+}

@@ -1,0 +1,254 @@
+[
+  {
+    "label": "code",
+    "files": [
+      "D:\\NIKKE\\MDA\\agent\\main.py",
+      "D:\\NIKKE\\MDA\\agent\\my_action.py",
+      "D:\\NIKKE\\MDA\\agent\\my_reco.py",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\logger.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\main.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\register.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\version.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myaction\\action.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myaction\\register.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myreco\\reco.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\common\\myreco\\register.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\i18n\\i18n.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\maafocus\\maafocus.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\pienv\\pienv.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\resource\\resource_reader.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\pkg\\resource\\resource_sink.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\aspectratio\\checker.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\aspectratio\\register.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\checker.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\hdr_other.go"
+    ]
+  },
+  {
+    "label": "code",
+    "files": [
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\hdr_windows.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\hdrcheck\\register.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\action.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\config.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\devicecode.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\devicecode_test.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\memberdata.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\membership\\register.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\checker.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\process_other.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\process_windows.go",
+      "D:\\NIKKE\\MDA\\agent\\go-service\\taskersink\\processcheck\\register.go",
+      "D:\\NIKKE\\MDA\\scripts\\clean-empty-pipeline-fields.mjs",
+      "D:\\NIKKE\\MDA\\tools\\build_and_install.py",
+      "D:\\NIKKE\\MDA\\tools\\cli_support.py",
+      "D:\\NIKKE\\MDA\\tools\\configure.py",
+      "D:\\NIKKE\\MDA\\tools\\install.py",
+      "D:\\NIKKE\\MDA\\tools\\setup_workspace.py",
+      "D:\\NIKKE\\MDA\\tools\\validate_schema.py",
+      "D:\\NIKKE\\MDA\\tools\\optimize_templates\\optimize_templates.py"
+    ]
+  },
+  {
+    "label": "docs",
+    "files": [
+      "D:\\NIKKE\\MDA\\AGENTS.md",
+      "D:\\NIKKE\\MDA\\README.md",
+      "D:\\NIKKE\\MDA\\README_en.md",
+      "D:\\NIKKE\\MDA\\assets\\locales\\CONTACT.en_us.md",
+      "D:\\NIKKE\\MDA\\assets\\locales\\CONTACT.zh_cn.md",
+      "D:\\NIKKE\\MDA\\assets\\locales\\LICENSE_SHORT.md",
+      "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\aspect-ratio-warning.html",
+      "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\hdr-warning.html",
+      "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\membership-warning.html",
+      "D:\\NIKKE\\MDA\\assets\\locales\\go-service\\HTML\\process-warning.html",
+      "D:\\NIKKE\\MDA\\assets\\locales\\interface\\DESCRIPTION\\DESCRIPTION.en_us.md",
+      "D:\\NIKKE\\MDA\\assets\\locales\\interface\\DESCRIPTION\\DESCRIPTION.zh_cn.md",
+      "D:\\NIKKE\\MDA\\docs\\pipeline-node-naming.md",
+      "D:\\NIKKE\\MDA\\docs\\zh_cn\\\u4e2a\u6027\u5316\u914d\u7f6e.md",
+      "D:\\NIKKE\\MDA\\tools\\requirements.txt",
+      "D:\\NIKKE\\MDA\\tools\\optimize_templates\\requirements.txt"
+    ]
+  },
+  {
+    "label": "images_assets",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\logo.png"
+    ]
+  },
+  {
+    "label": "images_locales",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\locales\\MDA-Tiny.png"
+    ]
+  },
+  {
+    "label": "images_Advise",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Advise\\20.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Advise\\NextAdvise.png"
+    ]
+  },
+  {
+    "label": "images_Battle",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Battle\\AutoBurst.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Battle\\AutoShoot.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Battle\\BattleCloseButton.png"
+    ]
+  },
+  {
+    "label": "images_CashShop",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\CashShop\\OrdinaryPackage.png"
+    ]
+  },
+  {
+    "label": "images_Common",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\Bell.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton1.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton2.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton3.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\CloseButton4.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\Confirm.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\ConfirmWithCircle.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\GoBack.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\GoBack1.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\GoBack2.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\HomeButton.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\MAX.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\New.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\PassRedDot.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\RedDot.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Common\\ServerChoose.png"
+    ]
+  },
+  {
+    "label": "images_CoordinatedOperations",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\CoordinatedOperations\\CoordinatedOperations.png"
+    ]
+  },
+  {
+    "label": "images_FreeRecruit",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\DailyRewards\\FreeRecruit\\FreeRecruit.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\DailyRewards\\FreeRecruit\\NextRecruit.png"
+    ]
+  },
+  {
+    "label": "images_Pass",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\DailyRewards\\Pass\\PassChange.png"
+    ]
+  },
+  {
+    "label": "images_Dialogues",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Dialogues\\Continue.png"
+    ]
+  },
+  {
+    "label": "images_Interception",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly1.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly2.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly3.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly4.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Interception\\NextAnomaly5.png"
+    ]
+  },
+  {
+    "label": "images_StarAnis",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisLogo.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory1Stage.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory1StageRepeatable.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageHard.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageHardRepeatable.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageHardSP.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageNormal.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\LargeEvent\\StarAnis\\StarAnisStory2StageNormalRepeatable.png"
+    ]
+  },
+  {
+    "label": "images_Outpost",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\BriefEncounter.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\CommandCenter.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\DailyLives.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Outpost\\Event.png"
+    ]
+  },
+  {
+    "label": "images_ArenaShop",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\ArenaShop.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\CodeManualSelectionBox.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\ElectricCodeManual.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\FireCodeManual.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\IronCodeManual.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\WaterCodeManual.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\ArenaShop\\WindCodeManual.png"
+    ]
+  },
+  {
+    "label": "images_CommonShop",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\CommonShopNotSelected.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\CommonShopSelected.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\CoreDustCase.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\FreeReset.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\CommonShop\\GemCheck.png"
+    ]
+  },
+  {
+    "label": "images_RecyclingShop",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\BattleDataSetCase.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\Credit.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\CreditCase.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\CuratedManufacturerArms.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\Gem.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\GoodTeamworkBox.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\MaintenanceKitBox.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\RecyclingShop.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\RecyclingShop\\TimeFlag.png"
+    ]
+  },
+  {
+    "label": "images_Voucher",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\AbnormalAnnualTicket.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\Darlingforaday.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\ElysionVIPBuffetVoucher.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\MissilisVIPCard.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\PilgrimSupplySetVoucher.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\Shop\\Voucher\\TetraVIPSpaVoucher.png"
+    ]
+  },
+  {
+    "label": "images_SimulationRoom",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\AggressiveTactics.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\BattleFlag.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\ClaimImmediately.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\EnemyArmorUp\u2162.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\EnemyVitalsUp\u2162.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\EnemyWeaponUp\u2162.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\NoRecycling.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\RelevantPersonnelOnly.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\Rewards0.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SimulationRoom\\RushHour\u2162.png"
+    ]
+  },
+  {
+    "label": "images_B-SideIdol",
+    "files": [
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SmallEvent\\B-SideIdol\\B-SideIdolLogo.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SmallEvent\\B-SideIdol\\B-SideIdolStageNormal.png",
+      "D:\\NIKKE\\MDA\\assets\\resource\\image\\SmallEvent\\B-SideIdol\\B-SideIdolStageNormalRepeatable.png"
+    ]
+  }
+]
