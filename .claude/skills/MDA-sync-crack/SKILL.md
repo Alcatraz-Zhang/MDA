@@ -1,5 +1,5 @@
 ---
-name: sync-upstream-crack
+name: MDA-sync-crack
 description: 同步 MDA 上游更新到本地 main 分支，合并到 crack 工作分支，处理冲突，重新构建会员绕过版本的 Go agent，并推送两个分支到 fork（origin = Alcatraz-Zhang/MDA）。用于日常拉取 1204244136/MDA 的新 commit，保持破解版与上游同步。触发词："同步上游"、"拉取 upstream"、"更新 crack"、"sync upstream"、"merge upstream to crack"、"更新 MDA"、"重新构建破解版"、"upgrade cracked MDA"。
 license: MIT
 compatibility: Designed for Claude Code / OpenCode on Windows + PowerShell 7
