@@ -484,6 +484,7 @@ tests/maatools
 
 # oh-my-opencode
 .sisyphus/
+.omo/
 
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
