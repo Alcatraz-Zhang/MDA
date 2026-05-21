@@ -486,6 +486,10 @@ tests/maatools
 .sisyphus/
 .omo/
 
+# Local AI/code intelligence preferences
+.codegraph/
+.cursor/
+
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
 !tools/build-cracked.ps1

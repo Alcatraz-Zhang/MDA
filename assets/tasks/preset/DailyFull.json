@@ -89,7 +89,11 @@
                     "name": "SmallEvent",
                     "option": {
                         "SmallEventTheme": "BSideIdol",
-                        "SmallEventContent": ["SmallEventChallenge", "SmallEventStory", "SmallEventMission"]
+                        "SmallEventContent": [
+                            "SmallEventChallenge",
+                            "SmallEventStory",
+                            "SmallEventMission"
+                        ]
                     }
                 },
                 {
@@ -97,7 +101,12 @@
                     "option": {
                         "LargeEventTheme": "StarAnis",
                         "LargeEventStoryPriority": "Story2First",
-                        "LargeEventContent": ["LargeEventLoginStamp", "LargeEventChallenge", "LargeEventStory", "LargeEventMission"]
+                        "LargeEventContent": [
+                            "LargeEventLoginStamp",
+                            "LargeEventChallenge",
+                            "LargeEventStory",
+                            "LargeEventMission"
+                        ]
                     }
                 }
             ]

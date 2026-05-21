@@ -134,9 +134,30 @@
             "[JumpBack]CommonConfirmAction",
             "[JumpBack]DialoguesSkipStory",
             "[JumpBack]CommonConfirmReward",
+            "[JumpBack]OutpostDailyEventPageClose",
             "BriefEncounterRepeat",
             "OutpostDailyEventFlow"
         ]
+    },
+    "OutpostDailyEventPageClose": {
+        "desc": "关闭已完成的活动页面",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    631,
+                    667,
+                    60,
+                    32
+                ],
+                "expected": [
+                    "关闭"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
     },
     "BriefEncounterRepeat": {
         "desc": "再次执行突发活动",

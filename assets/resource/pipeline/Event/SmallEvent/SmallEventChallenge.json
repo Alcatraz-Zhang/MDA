@@ -2,7 +2,7 @@
     "SmallEventChallenge": {
         "max_hit": 1,
         "timeout": 60000,
-        "desc": "大活动挑战",
+        "desc": "小活动挑战",
         "enabled": false,
         "recognition": {
             "type": "OCR",
@@ -29,8 +29,14 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "[JumpBack]EventChallenge",
+            "[JumpBack]SmallEventChallengeStart",
             "SmallEventGoBack"
+        ]
+    },
+    "SmallEventChallengeStart": {
+        "max_hit": 1,
+        "next": [
+            "EventChallenge"
         ]
     }
 }

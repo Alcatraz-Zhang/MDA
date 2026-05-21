@@ -27,9 +27,16 @@
         "action": {
             "type": "Click"
         },
+        "post_wait_freezes": 500,
         "next": [
-            "[JumpBack]EventChallenge",
+            "[JumpBack]LargeEventChallengeStart",
             "LargeEventGoBack"
+        ]
+    },
+    "LargeEventChallengeStart": {
+        "max_hit": 1,
+        "next": [
+            "EventChallenge"
         ]
     }
 }

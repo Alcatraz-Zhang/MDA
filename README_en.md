@@ -76,11 +76,11 @@ Recommended approach:
 2. In the `debug` folder that opens, find the generated archive and **extract it**
 3. Drag the **`vision` folder** from the same directory into the extracted folder
 4. Verify the folder contains the following:
-   - `vision` folder
-   - `config` folder
-   - `XXXX-XX-XX-X.log`
-   - `go-service.log`
-   - `maafw.log`
+    - `vision` folder
+    - `config` folder
+    - `XXXX-XX-XX-X.log`
+    - `go-service.log`
+    - `maafw.log`
 5. **Re-compress** the entire folder as a ZIP file and send it to the developer
 
 > 💡 After submitting feedback, it's recommended to **delete the old `vision` folder** and restart the program. This keeps debug images from different issues separate and makes troubleshooting easier.

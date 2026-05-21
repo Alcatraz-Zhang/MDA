@@ -1,23 +1,6 @@
 {
     "EventChallenge": {
         "desc": "活动挑战",
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    442,
-                    536,
-                    393,
-                    79
-                ],
-                "expected": [
-                    ".*挑战.*"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
         "next": [
             "EventChallengeStagePage"
         ]
@@ -50,13 +33,16 @@
                     424
                 ],
                 "expected": [
-                    ".*CHALLENGE.*"
-                ]
+                    "(?i).*CHALLENGE.*"
+                ],
+                "order_by": "Vertical",
+                "index": -1
             }
         },
         "action": {
             "type": "Click"
         },
+        "post_wait_freezes": 500,
         "next": [
             "BattleStart",
             "EventChallengeStage"
@@ -83,6 +69,7 @@
         "action": {
             "type": "Click"
         },
+        "post_wait_freezes": 500,
         "next": [
             "BattleStart",
             "EventClearStage"

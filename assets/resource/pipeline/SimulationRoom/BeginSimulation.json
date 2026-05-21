@@ -68,7 +68,8 @@
             "type": "Click"
         },
         "next": [
-            "SimulationRoomEndSimulation"
+            "SimulationRoomEndSimulation",
+            "SimulationRoomSkipBuff"
         ]
     },
     "SimulationRoomEndSimulation": {
@@ -78,9 +79,9 @@
             "param": {
                 "roi": [
                     561,
-                    499,
+                    410,
                     158,
-                    82
+                    171
                 ],
                 "expected": [
                     "模拟结束"
@@ -91,7 +92,32 @@
             "type": "Click"
         },
         "next": [
-            "SimulationRoomCornerFlow"
+            "SimulationRoomCornerFlow",
+            "[JumpBack]CommonConfirmAction"
+        ]
+    },
+    "SimulationRoomSkipBuff": {
+        "desc": "跳过增益效果选择",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    554,
+                    649,
+                    172,
+                    37
+                ],
+                "expected": [
+                    ".*跳过.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "[JumpBack]BattleStart",
+            "SimulationRoomEndSimulation"
         ]
     },
     "SimulationRoomBeginRedDotVisible": {
