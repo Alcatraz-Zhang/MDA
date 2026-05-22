@@ -163,6 +163,8 @@
         },
         "next": [
             "[JumpBack]BattleStart",
+            "LargeEventEventStagePageFlow",
+            "[JumpBack]DialoguesSkipStory",
             "LargeEventGoBack"
         ]
     },

@@ -79,9 +79,8 @@
         "desc": "小活动活动关卡页面战斗流程",
         "next": [
             "SmallEventEventStageBattlePage",
-            "[JumpBack]SmallEventStory1StageClick",
-            "[JumpBack]SmallEventStory2StageNormalClick",
-            "[JumpBack]SmallEventStory2StageHardClick",
+            "[JumpBack]SmallEventStageNormalClick",
+            "[JumpBack]SmallEventStageHardClick",
             "SmallEventEventStageQuickBattleFlow"
         ]
     },
@@ -89,9 +88,8 @@
         "desc": "小活动活动关卡页面快速战斗流程",
         "next": [
             "SmallEventEventStageBattlePage",
-            "[JumpBack]SmallEventStory1StageRepeatableClick",
-            "[JumpBack]SmallEventStory2StageNormalRepeatableClick",
-            "[JumpBack]SmallEventStory2StageHardRepeatableClick",
+            "[JumpBack]SmallEventStageNormalRepeatableClick",
+            "[JumpBack]SmallEventStageHardRepeatableClick",
             "SmallEventGoBack"
         ]
     },
@@ -108,6 +106,7 @@
         "next": [
             "[JumpBack]BattleStart",
             "SmallEventEventStagePageFlow",
+            "[JumpBack]DialoguesSkipStory",
             "SmallEventGoBack"
         ]
     },
@@ -128,8 +127,8 @@
             }
         }
     },
-    "SmallEventStory1StageClick": {
-        "desc": "小活动故事1关卡点击",
+    "SmallEventStageNormalClick": {
+        "desc": "小活动普通关卡点击",
         "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
@@ -152,8 +151,8 @@
         },
         "post_wait_freezes": 500
     },
-    "SmallEventStory2StageNormalClick": {
-        "desc": "小活动故事2普通关卡点击",
+    "SmallEventStageHardClick": {
+        "desc": "小活动困难关卡点击",
         "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
@@ -176,9 +175,8 @@
         },
         "post_wait_freezes": 500
     },
-    "SmallEventStory2StageHardClick": {
-        "desc": "小活动故事2困难关卡点击",
-        "max_hit": 1,
+    "SmallEventStageNormalRepeatableClick": {
+        "desc": "小活动普通关卡可扫荡点击",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -200,54 +198,8 @@
         },
         "post_wait_freezes": 500
     },
-    "SmallEventStory1StageRepeatableClick": {
-        "desc": "小活动故事1关卡可扫荡点击",
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
-                "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
-                ],
-                "order_by": "Vertical",
-                "index": -1
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_wait_freezes": 500
-    },
-    "SmallEventStory2StageNormalRepeatableClick": {
-        "desc": "小活动故事2普通关卡可扫荡点击",
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
-                "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
-                ],
-                "order_by": "Vertical",
-                "index": -1
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_wait_freezes": 500
-    },
-    "SmallEventStory2StageHardRepeatableClick": {
-        "desc": "小活动故事2困难关卡可扫荡点击",
+    "SmallEventStageHardRepeatableClick": {
+        "desc": "小活动困难关卡可扫荡点击",
         "recognition": {
             "type": "TemplateMatch",
             "param": {

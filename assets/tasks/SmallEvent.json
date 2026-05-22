@@ -33,7 +33,7 @@
                                 }
                             }
                         },
-                        "SmallEventStory1StageClick": {
+                        "SmallEventStageNormalClick": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -42,16 +42,16 @@
                                 }
                             }
                         },
-                        "SmallEventStory2StageNormalClick": {
+                        "SmallEventStageHardClick": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormal.png"
+                                        "SmallEvent/B-SideIdol/B-SideIdolStageHard.png"
                                     ]
                                 }
                             }
                         },
-                        "SmallEventStory1StageRepeatableClick": {
+                        "SmallEventStageNormalRepeatableClick": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -60,11 +60,11 @@
                                 }
                             }
                         },
-                        "SmallEventStory2StageNormalRepeatableClick": {
+                        "SmallEventStageHardRepeatableClick": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormalRepeatable.png"
+                                        "SmallEvent/B-SideIdol/B-SideIdolStageHardRepeatable.png"
                                     ]
                                 }
                             }

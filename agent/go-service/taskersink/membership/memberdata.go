@@ -6,6 +6,8 @@ import (
 	"io"
 	"math"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -40,43 +42,44 @@ func isDebugVersion() bool {
 
 // MemberRecord represents a single member entry from the V6 JSON data.
 type MemberRecord struct {
-	UserID          string `json:"user_id"`
-	CPUHash         string `json:"cpu_hash"`
-	UUIDHash        string `json:"uuid_hash"`
-	BIOSHash        string `json:"bios_hash"`
-	BoardHash       string `json:"board_hash"`
-	DiskHash        string `json:"disk_hash"`
-	GUIDHash        string `json:"guid_hash"`
-	Tier            string `json:"tier"`
-	AccountValue    json.Number `json:"account_value"`
-	RegistrationDate string `json:"registration_date"`
+	UserID           string      `json:"user_id"`
+	CPUHash          string      `json:"cpu_hash"`
+	UUIDHash         string      `json:"uuid_hash"`
+	BIOSHash         string      `json:"bios_hash"`
+	BoardHash        string      `json:"board_hash"`
+	DiskHash         string      `json:"disk_hash"`
+	GUIDHash         string      `json:"guid_hash"`
+	Tier             string      `json:"tier"`
+	AccountValue     json.Number `json:"account_value"`
+	RegistrationDate string      `json:"registration_date"`
 }
 
 // MembershipStatus represents the calculated current membership state.
 type MembershipStatus struct {
-	MembershipType string
-	UserLevel      int
-	RemainingValue float64
-	VirtualExpiry  string
-	IsMember       bool
-	UserID         string
+	MembershipType  string
+	UserLevel       int
+	RemainingValue  float64
+	VirtualExpiry   string
+	IsMember        bool
+	UserID          string
 	UnsupportedTier bool
-	DeviceCode     DeviceCodeV6
+	DeviceCode      DeviceCodeV6
 }
 
 var (
-	cachedData      []MemberRecord
-	cachedDataMu    sync.RWMutex
-	cachedDataTime  time.Time
-	cachedStatus    *MembershipStatus
-	cachedStatusMu  sync.RWMutex
+	cachedData       []MemberRecord
+	cachedDataMu     sync.RWMutex
+	cachedDataTime   time.Time
+	cachedStatus     *MembershipStatus
+	cachedStatusMu   sync.RWMutex
 	cachedDeviceCode DeviceCodeV6
 )
 
 const (
-	cacheExpiry    = 1 * time.Hour
-	matchThreshold = 80
-	httpTimeout    = 15 * time.Second
+	cacheExpiry         = 1 * time.Hour
+	matchThreshold      = 80
+	httpTimeout         = 15 * time.Second
+	memberDataCachePath = "config/memberdata-v6-cache.json"
 )
 
 // GetMembershipStatus returns the current membership status, using cache if available.
@@ -177,16 +180,59 @@ func fetchMemberData() ([]MemberRecord, error) {
 	client := &http.Client{Timeout: httpTimeout}
 	records, err := fetchFromSource(client, MemberDataURL)
 	if err != nil {
+		cachedRecords, cacheErr := loadCachedMemberData()
+		if cacheErr == nil {
+			cacheData(cachedRecords)
+			log.Warn().
+				Err(err).
+				Int("count", len(cachedRecords)).
+				Msg("Failed to fetch member data, using cached V6 member data")
+			return cachedRecords, nil
+		}
 		return nil, fmt.Errorf("failed to fetch member data from %s: %w", MemberDataURL, err)
 	}
 
+	cacheData(records)
+	if err := saveCachedMemberData(records); err != nil {
+		log.Warn().Err(err).Msg("Failed to save V6 member data cache")
+	}
+
+	log.Info().Str("url", MemberDataURL).Int("count", len(records)).Msg("Fetched V6 member data")
+	return records, nil
+}
+
+func cacheData(records []MemberRecord) {
 	cachedDataMu.Lock()
 	cachedData = records
 	cachedDataTime = time.Now()
 	cachedDataMu.Unlock()
+}
 
-	log.Info().Str("url", MemberDataURL).Int("count", len(records)).Msg("Fetched V6 member data")
+func loadCachedMemberData() ([]MemberRecord, error) {
+	body, err := os.ReadFile(memberDataCachePath)
+	if err != nil {
+		return nil, err
+	}
+
+	var records []MemberRecord
+	if err := json.Unmarshal(body, &records); err != nil {
+		return nil, err
+	}
+	if len(records) == 0 {
+		return nil, fmt.Errorf("cached member data is empty")
+	}
 	return records, nil
+}
+
+func saveCachedMemberData(records []MemberRecord) error {
+	body, err := json.Marshal(records)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Dir(memberDataCachePath), 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(memberDataCachePath, body, 0o644)
 }
 
 // fetchFromSource fetches and parses member data from a single URL.
