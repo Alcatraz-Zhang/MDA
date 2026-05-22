@@ -91,14 +91,28 @@ Write-Host ""
 # === Pre-flight: required toolchain ===
 Write-Step "Pre-flight checks"
 $missing = @()
-foreach ($t in 'python', 'go') {
-    $c = Get-Command $t -ErrorAction SilentlyContinue
-    if (-not $c) {
-        $missing += $t
-        Write-Err2 "$t not on PATH"
+$venvPython = Join-Path $RepoRoot '.venv\Scripts\python.exe'
+if (Test-Path $venvPython) {
+    $pythonCmd = $venvPython
+    Write-Ok "python : $pythonCmd"
+} else {
+    $python = Get-Command 'python' -ErrorAction SilentlyContinue
+    if (-not $python) {
+        $missing += 'python'
+        Write-Err2 "python not on PATH, and .venv\Scripts\python.exe not found"
     } else {
-        Write-Ok "$t : $($c.Source)"
+        $pythonCmd = $python.Source
+        Write-Ok "python : $pythonCmd"
+        Write-Warn2 "Using PATH python; create .venv and install requirements.txt for reproducible builds."
     }
+}
+
+$go = Get-Command 'go' -ErrorAction SilentlyContinue
+if (-not $go) {
+    $missing += 'go'
+    Write-Err2 "go not on PATH"
+} else {
+    Write-Ok "go : $($go.Source)"
 }
 if ($missing.Count -gt 0) {
     Write-Err2 "Install missing tools and retry."
@@ -162,7 +176,7 @@ Write-Host ""
 if ($Full) {
     $depsBin = Join-Path $RepoRoot 'deps\bin'
     if (-not (Test-Path $depsBin)) {
-        Write-Err2 "deps\bin missing. Run first: python tools\setup_workspace.py"
+        Write-Err2 "deps\bin missing. Run first: $pythonCmd tools\setup_workspace.py"
         exit 1
     }
     Write-Ok "deps\bin present"
@@ -206,11 +220,11 @@ Write-Step "Invoking tools\install.py"
 $pyArgs = @()
 if (-not $Full) { $pyArgs += '--build-go-only' }
 $pyArgs += $Version, $OS, $Arch
-Write-Host "    cmd: python tools\install.py $($pyArgs -join ' ')" -ForegroundColor DarkGray
+Write-Host "    cmd: $pythonCmd tools\install.py $($pyArgs -join ' ')" -ForegroundColor DarkGray
 
 Push-Location $RepoRoot
 try {
-    & python tools\install.py @pyArgs
+    & $pythonCmd tools\install.py @pyArgs
     if ($LASTEXITCODE -ne 0) { throw "install.py failed (exit $LASTEXITCODE)" }
 } finally {
     Pop-Location
