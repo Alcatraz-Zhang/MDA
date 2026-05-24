@@ -95,8 +95,10 @@
         "action": {
             "type": "Click"
         },
+        "post_wait_freezes": 200,
         "next": [
-            "CoordinatedOperationsDifficultySelect"
+            "CoordinatedOperationsDifficultySelect",
+            "CommonEndTask"
         ]
     },
     "CoordinatedOperationsDifficultySelect": {
