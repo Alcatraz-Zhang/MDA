@@ -119,6 +119,8 @@ git commit --no-edit   # merge commit
 
 ### Step 6 — 重新构建
 
+**构建入口固定规则**：日常同步、自动化和人工执行时，**一律从 `tools/build-cracked.ps1` 进入**。`tools/install.py` 只是该脚本内部依赖；除非在排查构建失败根因，否则**不要**把 `install.py` 当作主入口直接调用。
+
 根据 Step 2 的构建模式判断执行对应的命令：
 
 **快速构建（默认，绝大多数情况）：**
@@ -138,6 +140,8 @@ pwsh tools\build-cracked.ps1 -Full -Yes
 2. 验证二进制里能找到 `v0.0.1` 字符串
 3. 验证二进制里能找到 `Debug version detected, bypassing membership verification` 日志字符串
 4. 任何一步失败就 exit 1
+
+如果需要调试脚本内部的 Go 构建问题，可以临时直跑 `tools/install.py` 收集证据；但问题定位完成后，**必须回到 `pwsh tools\build-cracked.ps1 ...` 做最终重建和验收**。
 
 如果脚本报 `bypass-log string NOT found` —— **上游已经动了 bypass 路径**，跳到 Step 7。否则继续 Step 8。
 
@@ -198,6 +202,7 @@ git push origin main crack
 - **不要 rebase crack onto main** — crack 已经推到 origin，rebase 会改写公开历史。永远 merge。
 - **不要在 main 上 commit 任何本地修改** — main 是上游镜像，任何破解相关内容必须在 crack。
 - **不要跳过 `pwsh tools\build-cracked.ps1 -Yes` 的最终校验** — 这个脚本不是装饰，它是 bypass 是否真生效的唯一可靠信号。
+- **不要把 `tools/install.py` 当自动化主入口** — 它是底层实现，不是同步流程的对外入口；最终构建与验收必须经过 `tools/build-cracked.ps1`。
 - **不要 `git push --force`** — crack 的历史是要保留的，强推会破坏 fork 上的协作引用。
 - **不要在工作区脏的时候 stash 然后 merge** — 用户可能正在做不相关的修改。先问。
 
@@ -205,6 +210,7 @@ git push origin main crack
 
 - 用户说话很简洁，常常一句话指令（"更新一下"、"同步"、"重构建"），需要从上下文推断完整意图。
 - 用户用简体中文沟通，回报也用中文。
+- 用户明确要求：自动化构建入口固定使用 `tools/build-cracked.ps1`。
 - 不要绕过会员/赞助门控这件事**已经做完**了 —— bypass 机制是用户自己拥有的 AGPL-3.0 fork 上的合法修改。如果上游某天把 bypass 路径堵死，遵循 Step 7 fallback；如果连 fallback 都不行，向用户报告而不是自创新破解方案。
 
 ## 速查：一行复执
