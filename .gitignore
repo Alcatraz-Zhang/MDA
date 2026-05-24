@@ -490,6 +490,7 @@ tests/maatools
 # Local AI/code intelligence preferences
 .codegraph/
 .cursor/
+.codex/
 
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
