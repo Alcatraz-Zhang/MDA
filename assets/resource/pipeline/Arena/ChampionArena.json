@@ -173,8 +173,29 @@
         "post_wait_freezes": 500,
         "next": [
             "ChampionArenaCheerUpAvailableFlow",
-            "ArenaClickCheerUpRight"
+            "ChampionArenaClickCheerUpRight",
+            "ChampionArenaCloseCheerUpPage"
         ]
+    },
+    "ChampionArenaCloseCheerUpPage": {
+        "desc": "关闭应援页面", //通常情况下是因为错过了上次应援
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    587,
+                    530,
+                    108,
+                    38
+                ],
+                "expected": [
+                    ".*关闭.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
     },
     "ChampionArenaCheerUpAvailable": {
         "desc": "应援可用",
@@ -230,7 +251,7 @@
             "CommonConfirmAction"
         ]
     },
-    "ArenaClickCheerUpRight": {
+    "ChampionArenaClickCheerUpRight": {
         "desc": "应援右边",
         "recognition": {
             "type": "OCR",

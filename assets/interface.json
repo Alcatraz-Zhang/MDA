@@ -106,6 +106,7 @@
         "tasks/CoordinatedOperations.json",
         "tasks/DailyRewards.json",
         "tasks/MapPushing.json",
+        "tasks/RedDotClear.json",
         "tasks/LargeEvent.json",
         "tasks/SmallEvent.json",
         "tasks/preset/DailyFull.json",

@@ -1,0 +1,63 @@
+{
+    "task": [
+        {
+            "name": "RedDotClear",
+            "label": "$task.RedDotClear.label",
+            "entry": "RedDotClearMain",
+            "description": "$task.RedDotClear.description",
+            "option": [
+                "RedDotClearCashShop",
+                "RedDotClearNotice"
+            ],
+            "group": [
+                "utility"
+            ]
+        }
+    ],
+    "option": {
+        "RedDotClearCashShop": {
+            "type": "switch",
+            "label": "$option.RedDotClearCashShop.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearCashShop": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearCashShop": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearNotice": {
+            "type": "switch",
+            "label": "$option.RedDotClearNotice.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearNotice": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearNotice": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

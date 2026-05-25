@@ -36,7 +36,7 @@
             "[JumpBack]LevelDChoose",
             "[JumpBack]LevelSChoose",
             "[JumpBack]InterceptionEXChoose",
-            "BattleStart"
+            "InterceptionBattle"
         ]
     },
     "LevelDChoose": {
@@ -101,5 +101,26 @@
         "action": {
             "type": "Click"
         }
+    },
+    "InterceptionBattle": {
+        "desc": "拦截战战斗",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    487,
+                    464,
+                    117,
+                    26
+                ],
+                "expected": [
+                    ".*拦截战.*"
+                ]
+            }
+        },
+        "next": [
+            "BattleCannotBattle",
+            "[JumpBack]BattleStart"
+        ]
     }
 }

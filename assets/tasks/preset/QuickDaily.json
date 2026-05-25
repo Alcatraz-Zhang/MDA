@@ -54,6 +54,7 @@
                         "DailyRewardsRankingRewards": "Yes",
                         "DailyRewardsMission": "Yes",
                         "DailyRewardsPassMain": "Yes",
+                        "DailyRewardsDailyLogin": "Yes",
                         "DailyRewardsFreeRecruit": "Yes"
                     }
                 }

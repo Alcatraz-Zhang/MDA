@@ -1,13 +1,13 @@
 package membership
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
-	"math"
+	"net"
 	"net/http"
-	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -40,52 +40,45 @@ func isDebugVersion() bool {
 	return major < 1
 }
 
-// MemberRecord represents a single member entry from the V6 JSON data.
-type MemberRecord struct {
-	UserID           string      `json:"user_id"`
-	CPUHash          string      `json:"cpu_hash"`
-	UUIDHash         string      `json:"uuid_hash"`
-	BIOSHash         string      `json:"bios_hash"`
-	BoardHash        string      `json:"board_hash"`
-	DiskHash         string      `json:"disk_hash"`
-	GUIDHash         string      `json:"guid_hash"`
-	Tier             string      `json:"tier"`
-	AccountValue     json.Number `json:"account_value"`
-	RegistrationDate string      `json:"registration_date"`
+type MemberStatusResponse struct {
+	Matched       bool   `json:"matched"`
+	Score         int    `json:"score"`
+	IsMember      bool   `json:"is_member"`
+	UserID        string `json:"user_id"`
+	Tier          string `json:"tier"`
+	PlanCode      string `json:"plan_code"`
+	StartsOn      string `json:"starts_on"`
+	ExpiresOn     string `json:"expires_on"`
+	RemainingDays int    `json:"remaining_days"`
 }
 
-// MembershipStatus represents the calculated current membership state.
+// MembershipStatus represents the current membership state.
 type MembershipStatus struct {
-	MembershipType  string
-	UserLevel       int
-	RemainingValue  float64
-	VirtualExpiry   string
-	IsMember        bool
-	UserID          string
-	UnsupportedTier bool
-	DeviceCode      DeviceCodeV6
+	MembershipType string
+	UserLevel      int
+	VirtualExpiry  string
+	IsMember       bool
+	UserID         string
+	DeviceCode     DeviceCodeV6
 }
 
 var (
-	cachedData       []MemberRecord
-	cachedDataMu     sync.RWMutex
-	cachedDataTime   time.Time
 	cachedStatus     *MembershipStatus
 	cachedStatusMu   sync.RWMutex
+	cachedStatusTime time.Time
 	cachedDeviceCode DeviceCodeV6
 )
 
 const (
-	cacheExpiry         = 1 * time.Hour
-	matchThreshold      = 80
-	httpTimeout         = 15 * time.Second
-	memberDataCachePath = "config/memberdata-v6-cache.json"
+	cacheExpiry      = 1 * time.Hour
+	httpTimeout      = 15 * time.Second
+	maxFetchAttempts = 3
 )
 
 // GetMembershipStatus returns the current membership status, using cache if available.
 func GetMembershipStatus() *MembershipStatus {
 	cachedStatusMu.RLock()
-	if cachedStatus != nil && time.Since(cachedDataTime) < cacheExpiry {
+	if cachedStatus != nil && time.Since(cachedStatusTime) < cacheExpiry {
 		status := cachedStatus
 		cachedStatusMu.RUnlock()
 		return status
@@ -114,7 +107,6 @@ func checkMembership() *MembershipStatus {
 		}
 	}
 
-	// Generate device code
 	deviceCode := GenerateDeviceCodeV6()
 	cachedDeviceCode = deviceCode
 	defaultStatus.DeviceCode = deviceCode
@@ -124,251 +116,150 @@ func checkMembership() *MembershipStatus {
 		Str("uuid_hash", shortHash(deviceCode.UUIDHash)).
 		Msg("Generated V6 device code")
 
-	// Fetch member data
-	records, err := fetchMemberData()
+	response, err := fetchMemberStatus(deviceCode)
 	if err != nil {
-		log.Warn().Err(err).Msg("Failed to fetch member data, treating as non-member")
+		log.Warn().Err(err).Msg("Membership verification unavailable, treating as non-member for this check")
 		return defaultStatus
 	}
 
-	// Match device code
-	record, score := matchDeviceCode(deviceCode, records)
-	if record == nil {
-		log.Info().Msg("No matching member record found")
+	if !response.Matched {
+		log.Info().Int("score", response.Score).Msg("No matching member device found")
 		return defaultStatus
 	}
 
+	if !response.IsMember {
+		log.Info().Str("user_id", response.UserID).Int("score", response.Score).Msg("Member device matched but no active subscription")
+		defaultStatus.UserID = response.UserID
+		return defaultStatus
+	}
+
+	status := statusFromResponse(response, deviceCode)
 	log.Info().
-		Str("user_id", record.UserID).
-		Int("score", score).
-		Str("tier", record.Tier).
-		Msg("Matched member record")
+		Str("user_id", status.UserID).
+		Int("score", response.Score).
+		Str("tier", status.MembershipType).
+		Str("expiry", status.VirtualExpiry).
+		Msg("Matched active member subscription")
 
-	// Check for unsupported tiers
-	unsupported := false
-	if unsupportedTiers[record.Tier] {
-		log.Warn().
-			Str("tier", record.Tier).
-			Msg("检测到不再支持的会员等级，该等级在 MDA 中不享受会员功能。请升级至金Doro会员或以上。")
-		unsupported = true
-	}
-
-	// Calculate current membership status
-	status := calculateStatus(record)
-	status.UnsupportedTier = unsupported
-	status.DeviceCode = deviceCode
-
-	// Cache the result
-	cachedStatusMu.Lock()
-	cachedStatus = status
-	cachedDataTime = time.Now()
-	cachedStatusMu.Unlock()
-
+	cacheStatus(status)
 	return status
 }
 
-// fetchMemberData fetches V6 member data from the API.
-func fetchMemberData() ([]MemberRecord, error) {
-	cachedDataMu.RLock()
-	if cachedData != nil && time.Since(cachedDataTime) < cacheExpiry {
-		data := cachedData
-		cachedDataMu.RUnlock()
-		return data, nil
-	}
-	cachedDataMu.RUnlock()
+func cacheStatus(status *MembershipStatus) {
+	cachedStatusMu.Lock()
+	cachedStatus = status
+	cachedStatusTime = time.Now()
+	cachedStatusMu.Unlock()
+}
 
-	client := &http.Client{Timeout: httpTimeout}
-	records, err := fetchFromSource(client, MemberDataURL)
-	if err != nil {
-		cachedRecords, cacheErr := loadCachedMemberData()
-		if cacheErr == nil {
-			cacheData(cachedRecords)
-			log.Warn().
-				Err(err).
-				Int("count", len(cachedRecords)).
-				Msg("Failed to fetch member data, using cached V6 member data")
-			return cachedRecords, nil
+func statusFromResponse(response *MemberStatusResponse, deviceCode DeviceCodeV6) *MembershipStatus {
+	tier := response.Tier
+	if tier == "" {
+		tier = "普通用户"
+	}
+	level, ok := membershipLevels[tier]
+	if !ok {
+		log.Warn().Str("tier", tier).Msg("Unknown membership tier")
+		return &MembershipStatus{
+			MembershipType: "普通用户",
+			UserLevel:      0,
+			IsMember:       false,
+			UserID:         response.UserID,
+			DeviceCode:     deviceCode,
 		}
-		return nil, fmt.Errorf("failed to fetch member data from %s: %w", MemberDataURL, err)
 	}
 
-	cacheData(records)
-	if err := saveCachedMemberData(records); err != nil {
-		log.Warn().Err(err).Msg("Failed to save V6 member data cache")
+	return &MembershipStatus{
+		MembershipType: tier,
+		UserLevel:      level,
+		VirtualExpiry:  response.ExpiresOn,
+		IsMember:       response.IsMember,
+		UserID:         response.UserID,
+		DeviceCode:     deviceCode,
 	}
-
-	log.Info().Str("url", MemberDataURL).Int("count", len(records)).Msg("Fetched V6 member data")
-	return records, nil
 }
 
-func cacheData(records []MemberRecord) {
-	cachedDataMu.Lock()
-	cachedData = records
-	cachedDataTime = time.Now()
-	cachedDataMu.Unlock()
-}
-
-func loadCachedMemberData() ([]MemberRecord, error) {
-	body, err := os.ReadFile(memberDataCachePath)
+func fetchMemberStatus(deviceCode DeviceCodeV6) (*MemberStatusResponse, error) {
+	client := &http.Client{Timeout: httpTimeout}
+	payload, err := json.Marshal(deviceCode)
 	if err != nil {
 		return nil, err
 	}
 
-	var records []MemberRecord
-	if err := json.Unmarshal(body, &records); err != nil {
-		return nil, err
+	var lastErr error
+	for attempt := 1; attempt <= maxFetchAttempts; attempt++ {
+		startedAt := time.Now()
+		status, statusCode, err := fetchMemberStatusOnce(client, payload)
+		duration := time.Since(startedAt)
+		if err == nil {
+			log.Info().
+				Int("attempt", attempt).
+				Int("status", statusCode).
+				Bool("matched", status.Matched).
+				Bool("is_member", status.IsMember).
+				Dur("duration", duration).
+				Msg("Fetched membership status")
+			return status, nil
+		}
+
+		lastErr = err
+		log.Warn().
+			Int("attempt", attempt).
+			Int("status", statusCode).
+			Dur("duration", duration).
+			Err(err).
+			Msg("Failed to fetch membership status")
+
+		if !shouldRetryFetch(statusCode, err) || attempt == maxFetchAttempts {
+			break
+		}
+		time.Sleep(time.Duration(attempt*300) * time.Millisecond)
 	}
-	if len(records) == 0 {
-		return nil, fmt.Errorf("cached member data is empty")
-	}
-	return records, nil
+
+	return nil, fmt.Errorf("failed to fetch membership status: %w", lastErr)
 }
 
-func saveCachedMemberData(records []MemberRecord) error {
-	body, err := json.Marshal(records)
+func fetchMemberStatusOnce(client *http.Client, payload []byte) (*MemberStatusResponse, int, error) {
+	req, err := http.NewRequest("POST", MemberStatusURL, bytes.NewReader(payload))
 	if err != nil {
-		return err
-	}
-	if err := os.MkdirAll(filepath.Dir(memberDataCachePath), 0o755); err != nil {
-		return err
-	}
-	return os.WriteFile(memberDataCachePath, body, 0o644)
-}
-
-// fetchFromSource fetches and parses member data from a single URL.
-func fetchFromSource(client *http.Client, url string) ([]MemberRecord, error) {
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	req.Header.Set("User-Agent", "MDA/"+appVersion)
+	req.Header.Set("Content-Type", "application/json")
+
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("HTTP %d from %s", resp.StatusCode, url)
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 512))
+		return nil, resp.StatusCode, fmt.Errorf("HTTP %d from membership status source: %s", resp.StatusCode, strings.TrimSpace(string(body)))
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
-	var records []MemberRecord
-	if err := json.Unmarshal(body, &records); err != nil {
-		return nil, fmt.Errorf("failed to parse JSON from %s: %w", url, err)
+	var status MemberStatusResponse
+	if err := json.Unmarshal(body, &status); err != nil {
+		return nil, resp.StatusCode, fmt.Errorf("failed to parse membership status JSON: %w", err)
 	}
 
-	return records, nil
+	return &status, resp.StatusCode, nil
 }
 
-// matchDeviceCode finds the best matching member record using weighted scoring.
-func matchDeviceCode(current DeviceCodeV6, records []MemberRecord) (*MemberRecord, int) {
-	var bestRecord *MemberRecord
-	bestScore := 0
-
-	for i := range records {
-		saved := DeviceCodeV6{
-			CPUHash:   records[i].CPUHash,
-			UUIDHash:  records[i].UUIDHash,
-			BIOSHash:  records[i].BIOSHash,
-			BoardHash: records[i].BoardHash,
-			DiskHash:  records[i].DiskHash,
-			GUIDHash:  records[i].GUIDHash,
-		}
-		score := MatchDeviceCodeV6(current, saved)
-		if score > bestScore {
-			bestScore = score
-			bestRecord = &records[i]
-		}
+func shouldRetryFetch(statusCode int, err error) bool {
+	if statusCode >= http.StatusInternalServerError {
+		return true
 	}
-
-	if bestScore >= matchThreshold {
-		return bestRecord, bestScore
+	var netErr net.Error
+	if errors.As(err, &netErr) && netErr.Timeout() {
+		return true
 	}
-	return nil, bestScore
-}
-
-// calculateStatus computes the current membership status using the prepaid credit burn model.
-func calculateStatus(record *MemberRecord) *MembershipStatus {
-	status := &MembershipStatus{
-		MembershipType: "普通用户",
-		UserLevel:      0,
-		IsMember:       false,
-		UserID:         record.UserID,
-	}
-
-	tier := record.Tier
-	level, ok := membershipLevels[tier]
-	if !ok {
-		log.Warn().Str("tier", tier).Msg("Unknown membership tier")
-		return status
-	}
-
-	accountValue, err := record.AccountValue.Float64()
-	if err != nil {
-		log.Warn().Stringer("value", record.AccountValue).Err(err).Msg("Failed to parse account value")
-		return status
-	}
-
-	cost, ok := monthlyCost[tier]
-	if !ok || cost <= 0 {
-		// Free tier or unknown - if they have value, treat as active
-		if accountValue > 0 {
-			status.MembershipType = tier
-			status.UserLevel = level
-			status.RemainingValue = accountValue
-			status.IsMember = level >= minMemberLevel
-			status.VirtualExpiry = "99991231"
-		}
-		return status
-	}
-
-	dailyCost := cost / 30.0
-
-	// Calculate days passed since registration
-	daysPassed := daysSince(record.RegistrationDate)
-	if daysPassed < 0 {
-		daysPassed = 0
-	}
-
-	consumedValue := float64(daysPassed) * dailyCost
-	remainingValue := accountValue - consumedValue
-
-	if remainingValue < 0.001 {
-		// Membership expired
-		status.RemainingValue = 0
-		return status
-	}
-
-	// Calculate virtual expiry date
-	daysLeft := int(math.Floor(remainingValue / dailyCost))
-	expiry := time.Now().AddDate(0, 0, daysLeft).Format("20060102")
-
-	status.MembershipType = tier
-	status.UserLevel = level
-	status.RemainingValue = remainingValue
-	status.VirtualExpiry = expiry
-	status.IsMember = level >= minMemberLevel
-
-	return status
-}
-
-// daysSince calculates the number of days from the given date string (YYYYMMDD) to now.
-func daysSince(dateStr string) int {
-	dateStr = strings.TrimSpace(dateStr)
-	if len(dateStr) < 8 {
-		return 0
-	}
-	t, err := time.ParseInLocation("20060102", dateStr[:8], time.Local)
-	if err != nil {
-		log.Debug().Str("date", dateStr).Err(err).Msg("Failed to parse date")
-		return 0
-	}
-	return int(time.Since(t).Hours() / 24)
+	return statusCode == 0
 }
 
 func shortHash(s string) string {

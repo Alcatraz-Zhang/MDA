@@ -56,7 +56,8 @@
                     "Common/CloseButton1.png",
                     "Common/CloseButton2.png",
                     "Common/CloseButton3.png",
-                    "Common/CloseButton4.png"
+                    "Common/CloseButton4.png",
+                    "Common/CloseButton5.png"
                 ],
                 "green_mask": true
             }

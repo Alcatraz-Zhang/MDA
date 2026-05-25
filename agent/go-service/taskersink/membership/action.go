@@ -21,12 +21,6 @@ var notifyOnce sync.Once
 func (a *MembershipCheckAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool {
 	status := GetMembershipStatus()
 
-	if status.UnsupportedTier {
-		log.Warn().
-			Str("tier", status.MembershipType).
-			Msg("MembershipCheck: unsupported tier")
-	}
-
 	// 构建赞助链接（无论是否会员都显示）
 	sponsorURL := fmt.Sprintf(
 		"https://doropay.top?cpu=%s&uuid=%s&bios=%s&board=%s&disk=%s&guid=%s",
