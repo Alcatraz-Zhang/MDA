@@ -219,7 +219,8 @@ def install_agent():
 
 if __name__ == "__main__":
     if build_go_only:
-        build_go_agent()
+        if not build_go_agent():
+            sys.exit(1)
     else:
         install_deps()
         install_resource()

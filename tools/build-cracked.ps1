@@ -119,6 +119,13 @@ if ($missing.Count -gt 0) {
     exit 1
 }
 
+# Use a repo-local Go build cache so sandboxed/automation environments do not
+# fail on a protected user-profile cache directory.
+$goCache = Join-Path $RepoRoot '.go-build-cache'
+New-Item -ItemType Directory -Force -Path $goCache | Out-Null
+$env:GOCACHE = $goCache
+Write-Ok "GOCACHE: $env:GOCACHE"
+
 # === Interactive prompts (skipped with -Yes) ===
 if (-not $Yes) {
     if ([string]::IsNullOrWhiteSpace($Version)) {

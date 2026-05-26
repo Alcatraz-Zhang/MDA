@@ -491,6 +491,8 @@ tests/maatools
 .codegraph/
 .cursor/
 .codex/
+.go-build-cache/
+agent/go-service/.codex-go-cache/
 
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
