@@ -83,30 +83,6 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "OutpostEnterDailyEvent"
-        ]
-    },
-    "OutpostEnterDailyEvent": {
-        "desc": "进入活动",
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    756,
-                    566,
-                    41,
-                    38
-                ],
-                "template": [
-                    "Outpost/Event.png"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_wait_freezes": 500,
-        "next": [
             "OutpostDailyEventFlow"
         ]
     },

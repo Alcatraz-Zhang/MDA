@@ -62,6 +62,25 @@
     "MultipleBattleClickMax": {
         "desc": "多次战斗点击max",
         "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "MultipleBattleClickMaxVisible",
+                    "MultipleBattleClickMaxAvailable"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "MultipleBattleClickMax",
+            "MultipleBattleStart"
+        ]
+    },
+    "MultipleBattleClickMaxVisible": {
+        "desc": "多次战斗max可见",
+        "recognition": {
             "type": "TemplateMatch",
             "param": {
                 "roi": [
@@ -72,17 +91,29 @@
                 ],
                 "template": [
                     "Common/MAX.png"
-                ],
-                "threshold": 0.9
+                ]
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "MultipleBattleClickMax",
-            "MultipleBattleStart"
-        ]
+        }
+    },
+    "MultipleBattleClickMaxAvailable": {
+        "desc": "多次战斗max可点击",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "MultipleBattleClickMaxVisible",
+                "lower": [
+                    140,
+                    140,
+                    140
+                ],
+                "upper": [
+                    255,
+                    255,
+                    255
+                ],
+                "count": 50
+            }
+        }
     },
     "MultipleBattleStart": {
         "desc": "多次战斗点击进行战斗",

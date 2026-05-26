@@ -47,6 +47,7 @@ type MemberStatusResponse struct {
 	UserID        string `json:"user_id"`
 	Tier          string `json:"tier"`
 	PlanCode      string `json:"plan_code"`
+	PlanName      string `json:"plan_name"`
 	StartsOn      string `json:"starts_on"`
 	ExpiresOn     string `json:"expires_on"`
 	RemainingDays int    `json:"remaining_days"`
@@ -54,12 +55,15 @@ type MemberStatusResponse struct {
 
 // MembershipStatus represents the current membership state.
 type MembershipStatus struct {
-	MembershipType string
-	UserLevel      int
-	VirtualExpiry  string
-	IsMember       bool
-	UserID         string
-	DeviceCode     DeviceCodeV6
+	Tier          string
+	PlanCode      string
+	PlanName      string
+	StartsOn      string
+	ExpiresOn     string
+	RemainingDays int
+	IsMember      bool
+	UserID        string
+	DeviceCode    DeviceCodeV6
 }
 
 var (
@@ -90,26 +94,29 @@ func GetMembershipStatus() *MembershipStatus {
 
 // checkMembership performs the full membership check flow.
 func checkMembership() *MembershipStatus {
+	deviceCode := GenerateDeviceCodeV6()
+	cachedDeviceCode = deviceCode
+
 	defaultStatus := &MembershipStatus{
-		MembershipType: "普通用户",
-		UserLevel:      0,
-		IsMember:       false,
+		Tier:       "普通用户",
+		IsMember:   false,
+		DeviceCode: deviceCode,
 	}
 
 	// Debug versions (below 1.0.0) bypass membership verification
 	if isDebugVersion() {
 		log.Info().Str("version", appVersion).Msg("Debug version detected, bypassing membership verification")
 		return &MembershipStatus{
-			MembershipType: "金Doro会员",
-			UserLevel:      3,
-			IsMember:       true,
-			VirtualExpiry:  "99991231",
+			Tier:          "金Doro会员",
+			PlanCode:      "debug",
+			PlanName:      "金Doro会员调试订阅",
+			StartsOn:      "00000000",
+			ExpiresOn:     "99991231",
+			RemainingDays: 9999,
+			IsMember:      true,
+			DeviceCode:    deviceCode,
 		}
 	}
-
-	deviceCode := GenerateDeviceCodeV6()
-	cachedDeviceCode = deviceCode
-	defaultStatus.DeviceCode = deviceCode
 
 	log.Info().
 		Str("cpu_hash", shortHash(deviceCode.CPUHash)).
@@ -137,8 +144,11 @@ func checkMembership() *MembershipStatus {
 	log.Info().
 		Str("user_id", status.UserID).
 		Int("score", response.Score).
-		Str("tier", status.MembershipType).
-		Str("expiry", status.VirtualExpiry).
+		Str("tier", status.Tier).
+		Str("plan_code", status.PlanCode).
+		Str("plan_name", status.PlanName).
+		Str("expiry", status.ExpiresOn).
+		Int("remaining_days", status.RemainingDays).
 		Msg("Matched active member subscription")
 
 	cacheStatus(status)
@@ -157,25 +167,17 @@ func statusFromResponse(response *MemberStatusResponse, deviceCode DeviceCodeV6)
 	if tier == "" {
 		tier = "普通用户"
 	}
-	level, ok := membershipLevels[tier]
-	if !ok {
-		log.Warn().Str("tier", tier).Msg("Unknown membership tier")
-		return &MembershipStatus{
-			MembershipType: "普通用户",
-			UserLevel:      0,
-			IsMember:       false,
-			UserID:         response.UserID,
-			DeviceCode:     deviceCode,
-		}
-	}
 
 	return &MembershipStatus{
-		MembershipType: tier,
-		UserLevel:      level,
-		VirtualExpiry:  response.ExpiresOn,
-		IsMember:       response.IsMember,
-		UserID:         response.UserID,
-		DeviceCode:     deviceCode,
+		Tier:          tier,
+		PlanCode:      response.PlanCode,
+		PlanName:      response.PlanName,
+		StartsOn:      response.StartsOn,
+		ExpiresOn:     response.ExpiresOn,
+		RemainingDays: response.RemainingDays,
+		IsMember:      response.IsMember,
+		UserID:        response.UserID,
+		DeviceCode:    deviceCode,
 	}
 }
 
