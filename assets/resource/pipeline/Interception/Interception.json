@@ -1,62 +1,36 @@
 {
     "InterceptionMain": {
-        "next": [
-            "ArkEnterInterception",
-            "[JumpBack]HallEnterArk"
-        ],
         "action": {
             "type": "Custom",
             "param": {
                 "custom_action": "RuntimeQuotaCheck"
             }
-        }
+        },
+        "next": ["ArkEnterInterception", "[JumpBack]HallEnterArk"]
     },
     "ArkEnterInterception": {
         "desc": "进入拦截战",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    512,
-                    585,
-                    85,
-                    23
-                ],
-                "replace": [
-                    [
-                        "载",
-                        "截"
-                    ]
-                ],
-                "expected": [
-                    "拦截战"
-                ]
+                "roi": [512, 585, 85, 23],
+                "expected": ["拦截战"],
+                "replace": [["载", "截"]]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "InterceptionBattleFlow",
-            "ArkEnterInterception",
-            "[JumpBack]CommonClickBlank"
-        ]
+        "next": ["InterceptionBattleFlow", "ArkEnterInterception", "[JumpBack]CommonClickBlank"]
     },
     "InterceptionMainPageEntered": {
         "desc": "已进入拦截战",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    24,
-                    61,
-                    70,
-                    22
-                ],
-                "expected": [
-                    "剩余拦截次数"
-                ]
+                "roi": [24, 61, 70, 22],
+                "expected": ["剩余拦截次数"]
             }
         }
     },
@@ -65,35 +39,22 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "InterceptionMainPageEntered"
-                ]
+                "all_of": ["InterceptionMainPageEntered"]
             }
         },
-        "next": [
-            "NormalInterception",
-            "AnomalyInterception",
-            "CommonEndTask"
-        ]
+        "next": ["NormalInterception", "AnomalyInterception", "CommonEndTask"]
     },
     "ManualInterceptionBattle": {
         "desc": "手动拦截战",
         "enabled": false,
-        "inverse": true,
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    708,
-                    620,
-                    43,
-                    17
-                ],
-                "expected": [
-                    "达成阶段"
-                ]
+                "roi": [708, 620, 43, 17],
+                "expected": ["达成阶段"]
             }
         },
+        "inverse": true,
         "focus": {
             "Node.Recognition.Succeeded": "$focus.ManualInterceptionBattle.Succeeded"
         }

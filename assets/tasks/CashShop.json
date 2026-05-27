@@ -5,13 +5,8 @@
             "label": "$task.CashShop.label",
             "entry": "CashShopMain",
             "description": "$task.CashShop.description",
-            "option": [
-                "CashShopFreePackage",
-                "StepUpPackage"
-            ],
-            "group": [
-                "daily"
-            ]
+            "option": ["CashShopFreePackage", "StepUpPackage"],
+            "group": ["daily"]
         }
     ],
     "option": {

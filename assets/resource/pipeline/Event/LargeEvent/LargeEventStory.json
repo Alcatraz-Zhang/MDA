@@ -1,110 +1,67 @@
 {
     "LargeEventStory": {
-        "timeout": 60000,
-        "max_hit": 1,
         "desc": "大活动剧情",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    485,
-                    536,
-                    308,
-                    79
-                ],
-                "expected": [
-                    ".*STORY.*"
-                ],
+                "roi": [485, 536, 308, 79],
+                "expected": [".*STORY.*"],
                 "order_by": "Vertical"
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "LargeEventStoryEventPage"
-        ]
+        "timeout": 60000,
+        "next": ["LargeEventStoryEventPage"]
     },
     "LargeEventStoryEventPage": {
         "desc": "大活动剧情活动页面",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "LargeEventStoryVisible"
-                ]
+                "all_of": ["LargeEventStoryVisible"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target": [
-                    150,
-                    650
-                ]
+                "target": [150, 650]
             }
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [
-                314,
-                413,
-                661,
-                294
-            ]
+            "target": [314, 413, 661, 294]
         },
-        "next": [
-            "LargeEventClickStoryEventPageRedDot",
-            "[JumpBack]CommonClickBlank"
-        ]
+        "next": ["LargeEventClickStoryEventPageRedDot", "[JumpBack]CommonClickBlank"]
     },
     "LargeEventClickStoryEventPageRedDot": {
         "desc": "大活动剧情活动页面的红点",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    314,
-                    413,
-                    661,
-                    294
-                ],
-                "expected": [
-                    ".*剩余.*"
-                ]
+                "roi": [314, 413, 661, 294],
+                "expected": [".*剩余.*"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    -50,
-                    0,
-                    0
-                ]
+                "target_offset": [0, -50, 0, 0]
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "LargeEventEventStagePageFlow"
-        ]
+        "next": ["LargeEventEventStagePageFlow"]
     },
     "LargeEventEventStagePageEntered": {
         "desc": "已进入大活动活动关卡页面",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    5,
-                    18,
-                    50,
-                    16
-                ],
-                "expected": [
-                    ".*活动关.*"
-                ]
+                "roi": [5, 18, 50, 16],
+                "expected": [".*活动关.*"]
             }
         }
     },
@@ -113,23 +70,14 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "LargeEventEventStagePageEntered"
-                ]
+                "all_of": ["LargeEventEventStagePageEntered"]
             }
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [
-                494,
-                505,
-                294,
-                131
-            ]
+            "target": [494, 505, 294, 131]
         },
-        "next": [
-            "LargeEventEventStageBattleFlow"
-        ]
+        "next": ["LargeEventEventStageBattleFlow"]
     },
     "LargeEventEventStageBattleFlow": {
         "desc": "大活动活动关卡页面战斗流程",
@@ -156,9 +104,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "BattleMainVisible"
-                ]
+                "all_of": ["BattleMainVisible"]
             }
         },
         "next": [
@@ -173,15 +119,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    5,
-                    18,
-                    50,
-                    16
-                ],
-                "expected": [
-                    "剧情活动"
-                ]
+                "roi": [5, 18, 50, 16],
+                "expected": ["剧情活动"]
             }
         }
     },
@@ -191,12 +130,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
+                "roi": [314, 103, 661, 604],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -215,12 +149,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
+                "roi": [314, 103, 661, 604],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -239,12 +168,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
+                "roi": [314, 103, 661, 604],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -262,12 +186,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
+                "roi": [314, 103, 661, 604],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -285,12 +204,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
+                "roi": [314, 103, 661, 604],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -308,12 +222,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
+                "roi": [314, 103, 661, 604],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],

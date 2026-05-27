@@ -17,40 +17,22 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    0,
-                    255,
-                    55,
-                    390
-                ],
-                "template": [
-                    "Shop/CommonShop/CommonShopSelected.png",
-                    "Shop/CommonShop/CommonShopNotSelected.png"
-                ]
+                "roi": [0, 255, 55, 390],
+                "template": ["Shop/CommonShop/CommonShopSelected.png", "Shop/CommonShop/CommonShopNotSelected.png"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "ShopCommonShopEntered",
-            "ShopEnterCommonShop"
-        ]
+        "next": ["ShopCommonShopEntered", "ShopEnterCommonShop"]
     },
     "ShopCommonShopEntered": {
         "desc": "处于普通商店",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    68,
-                    264,
-                    119,
-                    20
-                ],
-                "expected": [
-                    "普通商店"
-                ]
+                "roi": [68, 264, 119, 20],
+                "expected": ["普通商店"]
             }
         }
     },
@@ -59,15 +41,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    159,
-                    351,
-                    26,
-                    26
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [159, 351, 26, 26],
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -80,15 +55,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    182,
-                    352,
-                    109,
-                    164
-                ],
-                "template": [
-                    "Shop/CommonShop/CoreDustCase.png"
-                ],
+                "roi": [182, 352, 109, 164],
+                "template": ["Shop/CommonShop/CoreDustCase.png"],
                 "threshold": 0.9
             }
         },
@@ -101,47 +69,25 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    217,
-                    304,
-                    56,
-                    27
-                ],
-                "template": [
-                    "Shop/CommonShop/FreeReset.png"
-                ]
+                "roi": [217, 304, 56, 27],
+                "template": ["Shop/CommonShop/FreeReset.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -50,
-                    20,
-                    0,
-                    0
-                ]
+                "target_offset": [-50, 20, 0, 0]
             }
         },
-        "next": [
-            "ShopConfirmReset",
-            "ShopFreeReset"
-        ]
+        "next": ["ShopConfirmReset", "ShopFreeReset"]
     },
     "ShopConfirmReset": {
         "desc": "确认刷新",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    594,
-                    429,
-                    220,
-                    250
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [594, 429, 220, 250],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -154,15 +100,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    585,
-                    516,
-                    113,
-                    34
-                ],
-                "template": [
-                    "Shop/CommonShop/GemCheck.png"
-                ]
+                "roi": [585, 516, 113, 34],
+                "template": ["Shop/CommonShop/GemCheck.png"]
             }
         }
     },
@@ -171,12 +110,7 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    610,
-                    166,
-                    60,
-                    30
-                ],
+                "roi": [610, 166, 60, 30],
                 "expected": "芯尘盒"
             }
         }

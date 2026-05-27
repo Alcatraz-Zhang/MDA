@@ -4,15 +4,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    1218,
-                    9,
-                    39,
-                    16
-                ],
-                "expected": [
-                    ".*SKI.*"
-                ]
+                "roi": [1218, 9, 39, 16],
+                "expected": [".*SKI.*"]
             }
         },
         "action": {
@@ -25,15 +18,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    622,
-                    646,
-                    336,
-                    70
-                ],
-                "template": [
-                    "Dialogues/Continue.png"
-                ]
+                "roi": [622, 646, 336, 70],
+                "template": ["Dialogues/Continue.png"]
             }
         },
         "action": {
@@ -47,27 +33,14 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    452,
-                    383,
-                    56,
-                    324
-                ],
-                "expected": [
-                    "[0-9]",
-                    "[①②③④⑤⑥⑦⑧⑨]"
-                ]
+                "roi": [452, 383, 56, 324],
+                "expected": ["[0-9]", "[①②③④⑤⑥⑦⑧⑨]"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    50,
-                    0,
-                    0,
-                    0
-                ]
+                "target_offset": [50, 0, 0, 0]
             }
         }
     },
@@ -76,18 +49,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    953,
-                    0,
-                    327,
-                    75
-                ],
-                "expected": [
-                    ".*HIDE.*",
-                    ".*AUTO.*",
-                    ".*LOG.*",
-                    ".*SKIP.*"
-                ]
+                "roi": [953, 0, 327, 75],
+                "expected": [".*HIDE.*", ".*AUTO.*", ".*LOG.*", ".*SKIP.*"]
             }
         }
     }

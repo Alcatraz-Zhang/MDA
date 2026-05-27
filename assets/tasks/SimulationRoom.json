@@ -5,13 +5,8 @@
             "label": "$task.SimulationRoom.label",
             "entry": "SimulationRoomMain",
             "description": "$task.SimulationRoom.description",
-            "option": [
-                "BeginSimulation",
-                "StartOverclock"
-            ],
-            "group": [
-                "daily"
-            ]
+            "option": ["BeginSimulation", "StartOverclock"],
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -48,9 +43,7 @@
                             "enabled": true
                         }
                     },
-                    "option": [
-                        "AutoBIOSSetting"
-                    ]
+                    "option": ["AutoBIOSSetting"]
                 },
                 {
                     "name": "No",

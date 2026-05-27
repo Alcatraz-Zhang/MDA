@@ -1,40 +1,26 @@
 {
     "EventChallenge": {
         "desc": "活动挑战",
-        "next": [
-            "EventChallengeStagePage"
-        ]
+        "next": ["EventChallengeStagePage"]
     },
     "EventChallengeStagePage": {
         "desc": "活动挑战页面",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "EventChallengeStageVisible"
-                ]
+                "all_of": ["EventChallengeStageVisible"]
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "EventChallengeStage",
-            "EventClearStage"
-        ]
+        "next": ["EventChallengeStage", "EventClearStage"]
     },
     "EventChallengeStage": {
         "desc": "未挑战的关卡",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    452,
-                    253,
-                    379,
-                    424
-                ],
-                "expected": [
-                    "(?i).*CHALLENGE.*"
-                ],
+                "roi": [452, 253, 379, 424],
+                "expected": ["(?i).*CHALLENGE.*"],
                 "order_by": "Vertical",
                 "index": -1
             }
@@ -43,25 +29,15 @@
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "BattleStart",
-            "EventChallengeStage"
-        ]
+        "next": ["BattleStart", "EventChallengeStage"]
     },
     "EventClearStage": {
         "desc": "已挑战的关卡",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    452,
-                    253,
-                    379,
-                    424
-                ],
-                "expected": [
-                    ".*CLEAR.*"
-                ],
+                "roi": [452, 253, 379, 424],
+                "expected": [".*CLEAR.*"],
                 "order_by": "Vertical",
                 "index": -1
             }
@@ -70,25 +46,15 @@
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "BattleStart",
-            "EventClearStage"
-        ]
+        "next": ["BattleStart", "EventClearStage"]
     },
     "EventChallengeStageVisible": {
         "desc": "活动挑战入口的标识",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    5,
-                    18,
-                    50,
-                    16
-                ],
-                "expected": [
-                    "挑战关卡"
-                ]
+                "roi": [5, 18, 50, 16],
+                "expected": ["挑战关卡"]
             }
         }
     }

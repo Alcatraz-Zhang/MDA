@@ -4,26 +4,14 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    572,
-                    523,
-                    116,
-                    115
-                ],
-                "template": [
-                    "SimulationRoom/Rewards0.png"
-                ]
+                "roi": [572, 523, 116, 115],
+                "template": ["SimulationRoom/Rewards0.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    -25,
-                    0,
-                    0
-                ]
+                "target_offset": [0, -25, 0, 0]
             }
         },
         "next": [
@@ -37,24 +25,15 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    597,
-                    422,
-                    105,
-                    32
-                ],
-                "expected": [
-                    "BIOS SETTING"
-                ]
+                "roi": [597, 422, 105, 32],
+                "expected": ["BIOS SETTING"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SimulationRoomBiosSettingFlow"
-        ]
+        "next": ["SimulationRoomBiosSettingFlow"]
     },
     "SimulationRoomBiosSettingFlow": {
         "desc": "BIOS设置",
@@ -69,15 +48,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    496,
-                    191,
-                    33,
-                    19
-                ],
-                "expected": [
-                    "25"
-                ]
+                "roi": [496, 191, 33, 19],
+                "expected": ["25"]
             }
         },
         "action": {
@@ -89,12 +61,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    478,
-                    255,
-                    325,
-                    219
-                ],
+                "roi": [478, 255, 325, 219],
                 "template": [
                     "SimulationRoom/EnemyWeaponUpⅢ.png",
                     "SimulationRoom/EnemyArmorUpⅢ.png",
@@ -118,14 +85,8 @@
         "action": {
             "type": "Swipe",
             "param": {
-                "begin": [
-                    480,
-                    360
-                ],
-                "end": [
-                    480,
-                    260
-                ],
+                "begin": [480, 360],
+                "end": [480, 260],
                 "end_hold": 300
             }
         },
@@ -136,38 +97,22 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    482,
-                    634,
-                    316,
-                    36
-                ],
-                "expected": [
-                    "开始模拟"
-                ]
+                "roi": [482, 634, 316, 36],
+                "expected": ["开始模拟"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SimulationRoomSelectBattle"
-        ]
+        "next": ["SimulationRoomSelectBattle"]
     },
     "SimulationRoomSelectBattle": {
         "desc": "选择战斗",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    474,
-                    406,
-                    333,
-                    158
-                ],
-                "template": [
-                    "SimulationRoom/BattleFlag.png"
-                ]
+                "roi": [474, 406, 333, 158],
+                "template": ["SimulationRoom/BattleFlag.png"]
             }
         },
         "action": {
@@ -187,65 +132,38 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    515,
-                    384,
-                    249,
-                    131
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [515, 384, 249, 131],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SimulationRoomSelectBuff"
-        ]
+        "next": ["SimulationRoomSelectBuff"]
     },
     "SimulationRoomSelectBuff": {
         "desc": "选择增益效果",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    474,
-                    406,
-                    333,
-                    158
-                ],
-                "expected": [
-                    "EPIC",
-                    "SSR",
-                    "SR"
-                ]
+                "roi": [474, 406, 333, 158],
+                "expected": ["EPIC", "SSR", "SR"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SimulationRoomConfirmBuff"
-        ]
+        "next": ["SimulationRoomConfirmBuff"]
     },
     "SimulationRoomConfirmBuff": {
         "desc": "确认增益",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    650,
-                    567,
-                    150,
-                    95
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [650, 567, 150, 95],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {

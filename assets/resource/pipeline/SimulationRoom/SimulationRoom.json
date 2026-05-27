@@ -1,55 +1,34 @@
 {
     "SimulationRoomMain": {
-        "next": [
-            "SimulationRoomEnter",
-            "[JumpBack]HallEnterArk"
-        ],
         "action": {
             "type": "Custom",
             "param": {
                 "custom_action": "RuntimeQuotaCheck"
             }
-        }
+        },
+        "next": ["SimulationRoomEnter", "[JumpBack]HallEnterArk"]
     },
     "SimulationRoomEnter": {
         "desc": "进入模拟室",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    476,
-                    393,
-                    85,
-                    21
-                ],
-                "expected": [
-                    "模拟室"
-                ]
+                "roi": [476, 393, 85, 21],
+                "expected": ["模拟室"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]SimulationRoomConfirmBiosUpdate",
-            "SimulationRoomCornerFlow",
-            "SimulationRoomEnter"
-        ]
+        "next": ["[JumpBack]SimulationRoomConfirmBiosUpdate", "SimulationRoomCornerFlow", "SimulationRoomEnter"]
     },
     "SimulationRoomConfirmBiosUpdate": {
         "desc": "模拟室超频更新",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    532,
-                    334,
-                    227,
-                    149
-                ],
-                "expected": [
-                    "确认"
-                ]
+                "roi": [532, 334, 227, 149],
+                "expected": ["确认"]
             }
         },
         "action": {
@@ -61,15 +40,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "模拟室"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["模拟室"]
             }
         }
     },
@@ -78,24 +50,13 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SimulationRoomMainPageEntered"
-                ]
+                "all_of": ["SimulationRoomMainPageEntered"]
             }
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [
-                580,
-                505,
-                125,
-                90
-            ]
+            "target": [580, 505, 125, 90]
         },
-        "next": [
-            "SimulationRoomBeginSimulation",
-            "SimulationRoomStartOverclock",
-            "CommonEndTask"
-        ]
+        "next": ["SimulationRoomBeginSimulation", "SimulationRoomStartOverclock", "CommonEndTask"]
     }
 }

@@ -4,21 +4,13 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SimulationRoomBeginRedDotVisible",
-                    "SimulationRoomBeginTextVisible"
-                ]
+                "all_of": ["SimulationRoomBeginRedDotVisible", "SimulationRoomBeginTextVisible"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -20,
-                    20,
-                    0,
-                    0
-                ]
+                "target_offset": [-20, 20, 0, 0]
             }
         },
         "next": [
@@ -32,15 +24,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    551,
-                    505,
-                    144,
-                    124
-                ],
-                "template": [
-                    "SimulationRoom/ClaimImmediately.png"
-                ]
+                "roi": [551, 505, 144, 124],
+                "template": ["SimulationRoom/ClaimImmediately.png"]
             }
         },
         "action": {
@@ -52,87 +37,50 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    645,
-                    596,
-                    181,
-                    39
-                ],
-                "expected": [
-                    "快速模拟"
-                ]
+                "roi": [645, 596, 181, 39],
+                "expected": ["快速模拟"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SimulationRoomEndSimulation",
-            "SimulationRoomSkipBuff"
-        ]
+        "next": ["SimulationRoomEndSimulation", "SimulationRoomSkipBuff"]
     },
     "SimulationRoomEndSimulation": {
         "desc": "模拟结束",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    561,
-                    410,
-                    158,
-                    171
-                ],
-                "expected": [
-                    "模拟结束"
-                ]
+                "roi": [561, 410, 158, 171],
+                "expected": ["模拟结束"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SimulationRoomCornerFlow",
-            "[JumpBack]CommonConfirmAction"
-        ]
+        "next": ["SimulationRoomCornerFlow", "[JumpBack]CommonConfirmAction"]
     },
     "SimulationRoomSkipBuff": {
         "desc": "跳过增益效果选择",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    554,
-                    649,
-                    172,
-                    37
-                ],
-                "expected": [
-                    ".*跳过.*"
-                ]
+                "roi": [554, 649, 172, 37],
+                "expected": [".*跳过.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]BattleStart",
-            "SimulationRoomEndSimulation"
-        ]
+        "next": ["[JumpBack]BattleStart", "SimulationRoomEndSimulation"]
     },
     "SimulationRoomBeginRedDotVisible": {
         "desc": "开始模拟的红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    679,
-                    393,
-                    44,
-                    33
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [679, 393, 44, 33],
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -141,15 +89,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    574,
-                    406,
-                    133,
-                    40
-                ],
-                "expected": [
-                    "开始模拟"
-                ]
+                "roi": [574, 406, 133, 40],
+                "expected": ["开始模拟"]
             }
         }
     }

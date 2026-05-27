@@ -5,13 +5,8 @@
             "label": "$task.Advise.label",
             "entry": "AdviseMain",
             "description": "$task.Advise.description",
-            "option": [
-                "NikkeAdvise",
-                "AdviseEpisodeViewingReward"
-            ],
-            "group": [
-                "daily"
-            ]
+            "option": ["NikkeAdvise", "AdviseEpisodeViewingReward"],
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -27,9 +22,7 @@
                             "enabled": true
                         }
                     },
-                    "option": [
-                        "AdviseEpisodeReward"
-                    ]
+                    "option": ["AdviseEpisodeReward"]
                 },
                 {
                     "name": "No",

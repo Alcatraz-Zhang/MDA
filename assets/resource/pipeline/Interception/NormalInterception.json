@@ -4,32 +4,15 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    679,
-                    683,
-                    56,
-                    26
-                ],
-                "replace": [
-                    [
-                        "载",
-                        "截"
-                    ]
-                ],
-                "expected": [
-                    ".*拦截战.*"
-                ]
+                "roi": [679, 683, 56, 26],
+                "expected": [".*拦截战.*"],
+                "replace": [["载", "截"]]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    -50,
-                    0,
-                    0
-                ]
+                "target_offset": [0, -50, 0, 0]
             }
         },
         "next": [
@@ -45,15 +28,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    510,
-                    317,
-                    29,
-                    19
-                ],
-                "expected": [
-                    "LEVEL"
-                ]
+                "roi": [510, 317, 29, 19],
+                "expected": ["LEVEL"]
             }
         },
         "action": {
@@ -66,15 +42,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    770,
-                    370,
-                    30,
-                    20
-                ],
-                "expected": [
-                    "LEVEL"
-                ]
+                "roi": [770, 370, 30, 20],
+                "expected": ["LEVEL"]
             }
         },
         "action": {
@@ -87,15 +56,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    687,
-                    539,
-                    122,
-                    24
-                ],
-                "expected": [
-                    "特殊目标拦截战"
-                ]
+                "roi": [687, 539, 122, 24],
+                "expected": ["特殊目标拦截战"]
             }
         },
         "action": {
@@ -107,20 +69,10 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    487,
-                    464,
-                    117,
-                    26
-                ],
-                "expected": [
-                    ".*拦截战.*"
-                ]
+                "roi": [487, 464, 117, 26],
+                "expected": [".*拦截战.*"]
             }
         },
-        "next": [
-            "BattleCannotBattle",
-            "[JumpBack]BattleStart"
-        ]
+        "next": ["BattleCannotBattle", "[JumpBack]BattleStart"]
     }
 }

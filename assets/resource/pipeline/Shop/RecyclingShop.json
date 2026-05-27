@@ -21,55 +21,33 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    0,
-                    255,
-                    55,
-                    390
-                ],
-                "template": [
-                    "Shop/RecyclingShop/RecyclingShop.png"
-                ]
+                "roi": [0, 255, 55, 390],
+                "template": ["Shop/RecyclingShop/RecyclingShop.png"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "ShopRecyclingShopEntered",
-            "ShopEnterRecyclingShop"
-        ]
+        "next": ["ShopRecyclingShopEntered", "ShopEnterRecyclingShop"]
     },
     "ShopRecyclingShopEntered": {
         "desc": "处于废铁商店",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    68,
-                    264,
-                    119,
-                    20
-                ],
-                "expected": [
-                    "废铁商店"
-                ]
+                "roi": [68, 264, 119, 20],
+                "expected": ["废铁商店"]
             }
         }
     },
     "ShopGoodTeamworkBoxPurchase": {
         "desc": "购买优秀团队合作宝箱",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    58,
-                    338,
-                    1222,
-                    325
-                ],
+                "roi": [58, 338, 1222, 325],
                 "template": "Shop/RecyclingShop/GoodTeamworkBox.png",
                 "threshold": 0.9
             }
@@ -80,17 +58,12 @@
     },
     "ShopMaintenanceKitBoxPurchase": {
         "desc": "购买保养工具箱",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    58,
-                    338,
-                    1222,
-                    325
-                ],
+                "roi": [58, 338, 1222, 325],
                 "template": "Shop/RecyclingShop/MaintenanceKitBox.png",
                 "threshold": 0.9
             }
@@ -101,17 +74,12 @@
     },
     "ShopCuratedManufacturerArmsPurchase": {
         "desc": "购买企业精选武装",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    58,
-                    338,
-                    1222,
-                    325
-                ],
+                "roi": [58, 338, 1222, 325],
                 "template": "Shop/RecyclingShop/CuratedManufacturerArms.png",
                 "threshold": 0.9
             }
@@ -122,17 +90,12 @@
     },
     "ShopGemPurchase": {
         "desc": "购买珠宝",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    58,
-                    338,
-                    1222,
-                    325
-                ],
+                "roi": [58, 338, 1222, 325],
                 "template": "Shop/RecyclingShop/Gem.png",
                 "threshold": 0.9
             }
@@ -143,17 +106,12 @@
     },
     "ShopVoucherPurchase": {
         "desc": "购买所有礼物券",
-        "max_hit": 6,
         "enabled": false,
+        "max_hit": 6,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    58,
-                    338,
-                    1222,
-                    325
-                ],
+                "roi": [58, 338, 1222, 325],
                 "template": [
                     "Shop/Voucher/Darlingforaday.png",
                     "Shop/Voucher/ElysionVIPBuffetVoucher.png",
@@ -171,17 +129,12 @@
     },
     "ShopUpgradeMaterialsPurchase": {
         "desc": "购买所有养成材料",
-        "max_hit": 7,
         "enabled": false,
+        "max_hit": 7,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    58,
-                    338,
-                    1222,
-                    325
-                ],
+                "roi": [58, 338, 1222, 325],
                 "template": [
                     "Shop/RecyclingShop/CreditCase.png",
                     "Shop/RecyclingShop/BattleDataSetCase.png",

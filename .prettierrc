@@ -1,8 +1,5 @@
 {
-    "plugins": [
-        "prettier-plugin-multiline-arrays",
-        "@nekosu/prettier-plugin-maafw-sort"
-    ],
+    "plugins": ["prettier-plugin-multiline-arrays", "@nekosu/prettier-plugin-maafw-sort"],
     "multilineArraysWrapThreshold": 1,
     "tabWidth": 4,
     "printWidth": 120,
@@ -12,19 +9,14 @@
     "endOfLine": "auto",
     "overrides": [
         {
-            "files": [
-                "**/*.yml",
-                "**/*.yaml"
-            ],
+            "files": ["**/*.yml", "**/*.yaml"],
             "options": {
                 "parser": "yaml",
                 "tabWidth": 2
             }
         },
         {
-            "files": [
-                "*.json"
-            ],
+            "files": ["*.json"],
             "options": {
                 "parser": "json",
                 "useTabs": false,

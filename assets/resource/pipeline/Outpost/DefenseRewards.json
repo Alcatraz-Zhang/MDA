@@ -5,38 +5,22 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    1176,
-                    659,
-                    47,
-                    32
-                ],
-                "expected": [
-                    "%$"
-                ]
+                "roi": [1176, 659, 47, 32],
+                "expected": ["%$"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "OutpostDefenseRewardsFlow"
-        ]
+        "next": ["OutpostDefenseRewardsFlow"]
     },
     "OutpostDefenseRewardsVisible": {
         "desc": "防御奖励标志",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    487,
-                    77,
-                    144,
-                    32
-                ],
-                "expected": [
-                    "防御前哨基地"
-                ]
+                "roi": [487, 77, 144, 32],
+                "expected": ["防御前哨基地"]
             }
         }
     },
@@ -45,9 +29,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostDefenseRewardsVisible"
-                ]
+                "all_of": ["OutpostDefenseRewardsVisible"]
             }
         },
         "next": [
@@ -65,15 +47,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    700,
-                    603,
-                    68,
-                    24
-                ],
-                "expected": [
-                    "获得奖励"
-                ]
+                "roi": [700, 603, 68, 24],
+                "expected": ["获得奖励"]
             }
         },
         "action": {
@@ -87,59 +62,36 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostWipeOutVisible",
-                    "OutpostWipeOutRedDotVisible"
-                ]
+                "all_of": ["OutpostWipeOutVisible", "OutpostWipeOutRedDotVisible"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "OutpostConfirmWipeOut"
-        ]
+        "next": ["OutpostConfirmWipeOut"]
     },
     "OutpostConfirmWipeOut": {
         "desc": "确认一举歼灭",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    665,
-                    540,
-                    70,
-                    24
-                ],
-                "expected": [
-                    "进行歼灭"
-                ]
+                "roi": [665, 540, 70, 24],
+                "expected": ["进行歼灭"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "[JumpBack]CommonConfirmReward",
-            "[JumpBack]OutpostCancelWipeOut",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]CommonConfirmReward", "[JumpBack]OutpostCancelWipeOut", "CommonEndTask"]
     },
     "OutpostCancelWipeOut": {
         "desc": "取消一举歼灭",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    477,
-                    532,
-                    109,
-                    39
-                ],
-                "expected": [
-                    "取消"
-                ]
+                "roi": [477, 532, 109, 39],
+                "expected": ["取消"]
             }
         },
         "action": {
@@ -151,15 +103,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    539,
-                    601,
-                    67,
-                    26
-                ],
-                "expected": [
-                    ".*歼灭.*"
-                ]
+                "roi": [539, 601, 67, 26],
+                "expected": [".*歼灭.*"]
             }
         }
     },
@@ -168,15 +113,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    624,
-                    586,
-                    21,
-                    21
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [624, 586, 21, 21],
+                "template": ["Common/RedDot.png"]
             }
         }
     }

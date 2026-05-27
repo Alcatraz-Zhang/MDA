@@ -23,15 +23,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    91,
-                    664,
-                    39,
-                    32
-                ],
-                "template": [
-                    "Common/HomeButton.png"
-                ]
+                "roi": [91, 664, 39, 32],
+                "template": ["Common/HomeButton.png"]
             }
         },
         "action": {
@@ -43,15 +36,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    1218,
-                    9,
-                    50,
-                    16
-                ],
-                "expected": [
-                    "SKIP"
-                ]
+                "roi": [1218, 9, 50, 16],
+                "expected": ["SKIP"]
             }
         },
         "action": {
@@ -63,71 +49,48 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    601,
-                    660,
-                    66,
-                    17
-                ],
-                "expected": [
-                    "点击关闭画面"
-                ]
+                "roi": [601, 660, 66, 17],
+                "expected": ["点击关闭画面"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CommonConfirmAction"
-        ]
+        "next": ["CommonConfirmAction"]
     },
     "NavigationFreeStateVisible": {
         "desc": "自由状态可见",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "CommonBellVisible"
-                ]
+                "all_of": ["CommonBellVisible"]
             }
         }
     },
     "NavigationClickFreeState": {
         "desc": "点击自由状态",
-        "pre_wait_freezes": 500,
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationFreeStateVisible"
-                ]
+                "all_of": ["NavigationFreeStateVisible"]
             }
         },
+        "pre_wait_freezes": 500,
         "action": {
             "type": "Click"
         },
-        "next": [
-            "NavigationNoticeFlow",
-            "[Anchor]NeedCheck"
-        ]
+        "next": ["NavigationNoticeFlow", "[Anchor]NeedCheck"]
     },
     "NavigationOutpostBack": {
         "desc": "前哨基地误触返回",
-        "pre_wait_freezes": 500,
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    633,
-                    668,
-                    60,
-                    33
-                ],
-                "expected": [
-                    "关闭"
-                ]
+                "roi": [633, 668, 60, 33],
+                "expected": ["关闭"]
             }
         },
+        "pre_wait_freezes": 500,
         "action": {
             "type": "Click"
         }
@@ -137,16 +100,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    634,
-                    63,
-                    39,
-                    25
-                ],
-                "expected": [
-                    "公告",
-                    "Notice"
-                ]
+                "roi": [634, 63, 39, 25],
+                "expected": ["公告", "Notice"]
             }
         }
     },
@@ -155,29 +110,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationNoticeVisible"
-                ]
+                "all_of": ["NavigationNoticeVisible"]
             }
         },
-        "next": [
-            "CommonClosePage"
-        ]
+        "next": ["CommonClosePage"]
     },
     "NavigationClickHall": {
         "desc": "点击大厅",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    625,
-                    686,
-                    30,
-                    18
-                ],
-                "expected": [
-                    "大厅"
-                ]
+                "roi": [625, 686, 30, 18],
+                "expected": ["大厅"]
             }
         },
         "action": {
@@ -186,26 +130,15 @@
     },
     "HallEnterArk": {
         "desc": "进入方舟",
-        "next": [
-            "NavigationArkEntered",
-            "NavigationClickArk",
-            "[JumpBack]NavigationEnterHall"
-        ]
+        "next": ["NavigationArkEntered", "NavigationClickArk", "[JumpBack]NavigationEnterHall"]
     },
     "NavigationArkEntered": {
         "desc": "处于方舟内部",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "方舟"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["方舟"]
             }
         }
     },
@@ -214,33 +147,21 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "NavigationArkEntered",
-            "NavigationClickArk"
-        ]
+        "next": ["NavigationArkEntered", "NavigationClickArk"]
     },
     "NavigationArkVisible": {
         "desc": "大厅的方舟标识",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    896,
-                    471,
-                    54,
-                    36
-                ],
-                "expected": [
-                    "方舟"
-                ]
+                "roi": [896, 471, 54, 36],
+                "expected": ["方舟"]
             }
         }
     },
@@ -249,15 +170,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    956,
-                    448,
-                    28,
-                    25
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [956, 448, 28, 25],
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -266,15 +180,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1174,
-                    8,
-                    37,
-                    35
-                ],
-                "template": [
-                    "Common/Bell.png"
-                ]
+                "roi": [1174, 8, 37, 35],
+                "template": ["Common/Bell.png"]
             }
         }
     },
@@ -284,14 +191,8 @@
         "action": {
             "type": "Swipe",
             "param": {
-                "begin": [
-                    627,
-                    528
-                ],
-                "end": [
-                    627,
-                    238
-                ],
+                "begin": [627, 528],
+                "end": [627, 238],
                 "end_hold": 300
             }
         },
@@ -302,16 +203,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    0,
-                    647,
-                    93,
-                    73
-                ],
-                "template": [
-                    "Common/GoBack1.png",
-                    "Common/GoBack2.png"
-                ]
+                "roi": [0, 647, 93, 73],
+                "template": ["Common/GoBack1.png", "Common/GoBack2.png"]
             }
         },
         "action": {

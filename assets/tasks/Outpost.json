@@ -5,14 +5,8 @@
             "label": "$task.Outpost.label",
             "entry": "OutpostMain",
             "description": "$task.Outpost.description",
-            "option": [
-                "DefenseRewards",
-                "BulletinBoard",
-                "BriefEncounter"
-            ],
-            "group": [
-                "daily"
-            ]
+            "option": ["DefenseRewards", "BulletinBoard", "BriefEncounter"],
+            "group": ["daily"]
         }
     ],
     "option": {

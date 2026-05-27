@@ -4,9 +4,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DialoguesMainVisible"
-                ]
+                "all_of": ["DialoguesMainVisible"]
             }
         },
         "next": [

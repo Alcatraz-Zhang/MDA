@@ -5,15 +5,8 @@
             "label": "$task.Shop.label",
             "entry": "ShopMain",
             "description": "$task.Shop.description",
-            "option": [
-                "CommonShopFreeGoods",
-                "CommonShopCoreDustCase",
-                "ArenaShopItemList",
-                "RecyclingShopList"
-            ],
-            "group": [
-                "daily"
-            ]
+            "option": ["CommonShopFreeGoods", "CommonShopCoreDustCase", "ArenaShopItemList", "RecyclingShopList"],
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -130,9 +123,7 @@
         },
         "RecyclingShopList": {
             "type": "checkbox",
-            "default_case": [
-                "Gem"
-            ],
+            "default_case": ["Gem"],
             "label": "$option.RecyclingShopList.label",
             "cases": [
                 {

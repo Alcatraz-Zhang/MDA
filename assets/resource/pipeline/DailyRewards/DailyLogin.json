@@ -2,61 +2,38 @@
     "DailyRewardsDailyLogin": {
         "desc": "每日登录奖励",
         "max_hit": 1,
-        "next": [
-            "DailyRewardsDailyLoginStart",
-            "CommonEndTask"
-        ]
+        "next": ["DailyRewardsDailyLoginStart", "CommonEndTask"]
     },
     "DailyRewardsDailyLoginStart": {
         "desc": "每日登录奖励入口",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
-        "next": [
-            "DailyLoginSearch",
-            "[JumpBack]CoordinatedOperationsSlideBanner",
-            "CommonEndTask"
-        ]
+        "next": ["DailyLoginSearch", "[JumpBack]CoordinatedOperationsSlideBanner", "CommonEndTask"]
     },
     "DailyLoginSearch": {
         "desc": "寻找每日登录奖励图标",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    9,
-                    60,
-                    151,
-                    52
-                ],
-                "template": [
-                    "DailyRewards/DailyLogin/BackStageGift.png"
-                ]
+                "roi": [9, 60, 151, 52],
+                "template": ["DailyRewards/DailyLogin/BackStageGift.png"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]DailyLoginRewardsClaim",
-            "[JumpBack]CommonConfirmReward",
-            "CommonClosePage"
-        ]
+        "next": ["[JumpBack]DailyLoginRewardsClaim", "[JumpBack]CommonConfirmReward", "CommonClosePage"]
     },
     "DailyLoginRewardsClaim": {
         "desc": "领取每日登录奖励",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyLoginRewardsTextVisible",
-                    "DailyLoginRewardsAvailable"
-                ]
+                "all_of": ["DailyLoginRewardsTextVisible", "DailyLoginRewardsAvailable"]
             }
         },
         "action": {
@@ -69,15 +46,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    686,
-                    657,
-                    139,
-                    34
-                ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "roi": [686, 657, 139, 34],
+                "expected": [".*全部.*"]
             }
         },
         "action": {
@@ -91,16 +61,8 @@
             "type": "ColorMatch",
             "param": {
                 "roi": "DailyLoginRewardsTextVisible",
-                "lower": [
-                    200,
-                    200,
-                    200
-                ],
-                "upper": [
-                    255,
-                    255,
-                    255
-                ],
+                "lower": [200, 200, 200],
+                "upper": [255, 255, 255],
                 "count": 100
             }
         }

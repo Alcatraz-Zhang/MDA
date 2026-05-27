@@ -2,53 +2,38 @@
     "DailyRewardsFreeRecruitMain": {
         "desc": "免费招募入口",
         "max_hit": 1,
-        "next": [
-            "DailyRewardsFreeRecruitEntry",
-            "[JumpBack]NavigationEnterHall"
-        ]
+        "next": ["DailyRewardsFreeRecruitEntry", "[JumpBack]NavigationEnterHall"]
     },
     "DailyRewardsFreeRecruitEntry": {
         "desc": "在大厅寻找免费招募入口",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
-        "next": [
-            "DailyRewardsFreeRecruitStart",
-            "CommonEndTask"
-        ]
+        "next": ["DailyRewardsFreeRecruitStart", "CommonEndTask"]
     },
     "DailyRewardsFreeRecruitStart": {
         "desc": "免费招募",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsFreeRecruitVisible"
-                ]
+                "all_of": ["DailyRewardsFreeRecruitVisible"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "[JumpBack]DailyRewardsFreeRecruit",
-            "NavigationEnterHall"
-        ]
+        "next": ["[JumpBack]DailyRewardsFreeRecruit", "NavigationEnterHall"]
     },
     "DailyRewardsFreeRecruitAvailable": {
         "desc": "可以免费招募",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsFreeRecruitVisible"
-                ]
+                "all_of": ["DailyRewardsFreeRecruitVisible"]
             }
         }
     },
@@ -57,55 +42,32 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsFreeRecruitAvailable"
-                ]
+                "all_of": ["DailyRewardsFreeRecruitAvailable"]
             }
         },
-        "next": [
-            "DailyRewardsClickFreeRecruit",
-            "DailyRewardsFreeRecruitNextRecruitClick"
-        ]
+        "next": ["DailyRewardsClickFreeRecruit", "DailyRewardsFreeRecruitNextRecruitClick"]
     },
     "DailyRewardsClickFreeRecruit": {
         "desc": "点击免费招募",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    480,
-                    593,
-                    43,
-                    14
-                ],
-                "expected": [
-                    ".*免费.*"
-                ]
+                "roi": [480, 593, 43, 14],
+                "expected": [".*免费.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]NavigationSkipPlot",
-            "DailyRewardsConfirmRecruit",
-            "[JumpBack]CommonClickBlank"
-        ]
+        "next": ["[JumpBack]NavigationSkipPlot", "DailyRewardsConfirmRecruit", "[JumpBack]CommonClickBlank"]
     },
     "DailyRewardsConfirmRecruit": {
         "desc": "招募确认",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    485,
-                    633,
-                    146,
-                    34
-                ],
-                "expected": [
-                    "确认"
-                ]
+                "roi": [485, 633, 146, 34],
+                "expected": ["确认"]
             }
         },
         "action": {
@@ -118,15 +80,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    750,
-                    665,
-                    64,
-                    22
-                ],
-                "template": [
-                    "DailyRewards/FreeRecruit/FreeRecruit.png"
-                ]
+                "roi": [750, 665, 64, 22],
+                "template": ["DailyRewards/FreeRecruit/FreeRecruit.png"]
             }
         }
     },
@@ -135,15 +90,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1232,
-                    349,
-                    46,
-                    54
-                ],
-                "template": [
-                    "DailyRewards/FreeRecruit/NextRecruit.png"
-                ]
+                "roi": [1232, 349, 46, 54],
+                "template": ["DailyRewards/FreeRecruit/NextRecruit.png"]
             }
         },
         "action": {

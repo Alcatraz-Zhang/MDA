@@ -1,53 +1,34 @@
 {
     "LargeEventLoginStamp": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "大活动签到",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    485,
-                    536,
-                    308,
-                    79
-                ],
-                "expected": [
-                    ".*签到.*"
-                ]
+                "roi": [485, 536, 308, 79],
+                "expected": [".*签到.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "LargeEventLoginStampClaim"
-        ]
+        "timeout": 60000,
+        "next": ["LargeEventLoginStampClaim"]
     },
     "LargeEventLoginStampClaim": {
         "desc": "大活动签到奖励领取",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    651,
-                    649,
-                    162,
-                    37
-                ],
-                "expected": [
-                    "全部领取"
-                ]
+                "roi": [651, 649, 162, 37],
+                "expected": ["全部领取"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "[JumpBack]CommonConfirmReward",
-            "LargeEventGoBack"
-        ]
+        "next": ["[JumpBack]CommonConfirmReward", "LargeEventGoBack"]
     }
 }

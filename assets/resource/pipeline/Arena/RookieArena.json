@@ -1,37 +1,25 @@
 {
     "ArenaEnterRookieArena": {
-        "max_hit": 5,
         "desc": "进入新人竞技场",
+        "max_hit": 5,
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "RookieArena",
-                    "RookieArenaRedDotVisible"
-                ]
+                "all_of": ["RookieArena", "RookieArenaRedDotVisible"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "RookieArenaCornerFlow"
-        ]
+        "next": ["RookieArenaCornerFlow"]
     },
     "RookieArenaMainPageEntered": {
         "desc": "处于新人竞技场",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "新人竞技场"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["新人竞技场"]
             }
         }
     },
@@ -40,31 +28,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "RookieArenaMainPageEntered"
-                ]
+                "all_of": ["RookieArenaMainPageEntered"]
             }
         },
-        "next": [
-            "[JumpBack]ArenaFreeBattle",
-            "ArenaCornerFlow",
-            "[JumpBack]CommonGoBack"
-        ]
+        "next": ["[JumpBack]ArenaFreeBattle", "ArenaCornerFlow", "[JumpBack]CommonGoBack"]
     },
     "RookieArenaClickQuickBattleToggle": {
         "desc": "点击快速战斗开关",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    502,
-                    587,
-                    108,
-                    29
-                ],
-                "expected": [
-                    "OFF"
-                ]
+                "roi": [502, 587, 108, 29],
+                "expected": ["OFF"]
             }
         },
         "action": {
@@ -76,15 +51,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    615,
-                    313,
-                    27,
-                    25
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [615, 313, 27, 25],
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -93,15 +61,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    468,
-                    356,
-                    84,
-                    35
-                ],
-                "expected": [
-                    "ROOKIE"
-                ]
+                "roi": [468, 356, 84, 35],
+                "expected": ["ROOKIE"]
             }
         }
     }

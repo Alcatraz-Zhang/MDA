@@ -5,9 +5,7 @@
             "label": "$task.CoordinatedOperations.label",
             "entry": "CoordinatedOperationsMain",
             "description": "$task.CoordinatedOperations.description",
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {}

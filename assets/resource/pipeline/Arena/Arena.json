@@ -6,11 +6,7 @@
                 "custom_action": "RuntimeQuotaCheck"
             }
         },
-        "next": [
-            "[JumpBack]ArenaSpecialRewardClaim",
-            "ArkEnterArena",
-            "[JumpBack]HallEnterArk"
-        ]
+        "next": ["[JumpBack]ArenaSpecialRewardClaim", "ArkEnterArena", "[JumpBack]HallEnterArk"]
     },
     "ArenaSpecialRewardClaim": {
         "desc": "领取累积奖励",
@@ -18,15 +14,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    785,
-                    318,
-                    26,
-                    25
-                ],
-                "expected": [
-                    "^[0-9]"
-                ]
+                "roi": [785, 318, 26, 25],
+                "expected": ["^[0-9]"]
             }
         },
         "action": {
@@ -45,40 +34,23 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    710,
-                    461,
-                    85,
-                    21
-                ],
-                "expected": [
-                    "竞技场"
-                ]
+                "roi": [710, 461, 85, 21],
+                "expected": ["竞技场"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "ArenaCornerFlow",
-            "ArkEnterArena"
-        ]
+        "next": ["ArenaCornerFlow", "ArkEnterArena"]
     },
     "ArenaMainPageEntered": {
         "desc": "处于竞技场",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "^竞技场$"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["^竞技场$"]
             }
         }
     },
@@ -87,57 +59,33 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ArenaMainPageEntered"
-                ]
+                "all_of": ["ArenaMainPageEntered"]
             }
         },
-        "next": [
-            "ArenaEnterRookieArena",
-            "ArenaEnterSpecialArena",
-            "ArenaEnterChampionArena",
-            "CommonEndTask"
-        ]
+        "next": ["ArenaEnterRookieArena", "ArenaEnterSpecialArena", "ArenaEnterChampionArena", "CommonEndTask"]
     },
     "ArenaFreeBattle": {
         "desc": "免费战斗",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    749,
-                    579,
-                    54,
-                    26
-                ],
-                "expected": [
-                    "免费"
-                ]
+                "roi": [749, 579, 54, 26],
+                "expected": ["免费"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "ArenaFreeBattleFlow",
-            "ArenaFreeBattle"
-        ]
+        "next": ["ArenaFreeBattleFlow", "ArenaFreeBattle"]
     },
     "ArenaFreeBattleVisible": {
         "desc": "免费战斗页面可见",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    526,
-                    566,
-                    59,
-                    22
-                ],
-                "expected": [
-                    "快速战斗"
-                ]
+                "roi": [526, 566, 59, 22],
+                "expected": ["快速战斗"]
             }
         }
     },
@@ -146,14 +94,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ArenaFreeBattleVisible"
-                ]
+                "all_of": ["ArenaFreeBattleVisible"]
             }
         },
-        "next": [
-            "[JumpBack]RookieArenaClickQuickBattleToggle",
-            "BattleStart"
-        ]
+        "next": ["[JumpBack]RookieArenaClickQuickBattleToggle", "BattleStart"]
     }
 }

@@ -6,44 +6,29 @@
                 "custom_action": "RuntimeQuotaCheck"
             }
         },
-        "next": [
-            "ArkEnterTribeTower",
-            "[JumpBack]HallEnterArk"
-        ]
+        "next": ["ArkEnterTribeTower", "[JumpBack]HallEnterArk"]
     },
     "ArkEnterTribeTower": {
         "desc": "进入无限之塔",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    687,
-                    269,
-                    87,
-                    23
-                ],
-                "expected": [
-                    "无限之塔"
-                ]
+                "roi": [687, 269, 87, 23],
+                "expected": ["无限之塔"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "TribeTowerTask",
-            "ArkEnterTribeTower"
-        ]
+        "next": ["TribeTowerTask", "ArkEnterTribeTower"]
     },
     "TribeTowerTask": {
         "desc": "无限之塔的任务",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "TribeTowerMainPageEntered"
-                ]
+                "all_of": ["TribeTowerMainPageEntered"]
             }
         },
         "next": [
@@ -61,66 +46,37 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    710,
-                    293,
-                    51,
-                    21
-                ],
-                "expected": [
-                    "^无限之塔$"
-                ]
+                "roi": [710, 293, 51, 21],
+                "expected": ["^无限之塔$"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "TribeTowerChooseStage"
-        ]
+        "next": ["TribeTowerChooseStage"]
     },
     "TribeTowerChooseStage": {
         "desc": "选择关卡",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    544,
-                    292,
-                    33,
-                    17
-                ],
-                "expected": [
-                    "STAGE"
-                ]
+                "roi": [544, 292, 33, 17],
+                "expected": ["STAGE"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    100,
-                    0,
-                    0,
-                    0
-                ]
+                "target_offset": [100, 0, 0, 0]
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "TribeTowerBattleFlow",
-            "TribeTowerChooseStage"
-        ]
+        "next": ["TribeTowerBattleFlow", "TribeTowerChooseStage"]
     },
     "TribeTowerBattleFlow": {
         "desc": "无限之塔战斗流程",
-        "next": [
-            "[JumpBack]BattleStart",
-            "[JumpBack]CommonCloseSale",
-            "TribeTowerTask",
-            "[JumpBack]CommonGoBack"
-        ]
+        "next": ["[JumpBack]BattleStart", "[JumpBack]CommonCloseSale", "TribeTowerTask", "[JumpBack]CommonGoBack"]
     },
     "TribeTowerEnterElysionTower": {
         "desc": "进入极乐净土之塔",
@@ -128,32 +84,18 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    455,
-                    377,
-                    92,
-                    23
-                ],
-                "expected": [
-                    "OPEN"
-                ]
+                "roi": [455, 377, 92, 23],
+                "expected": ["OPEN"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    50,
-                    0,
-                    0
-                ]
+                "target_offset": [0, 50, 0, 0]
             }
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "TribeTowerChooseStage"
-        ]
+        "next": ["TribeTowerChooseStage"]
     },
     "TribeTowerEnterMissilisTower": {
         "desc": "进入米西利斯之塔",
@@ -161,32 +103,18 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    548,
-                    376,
-                    92,
-                    23
-                ],
-                "expected": [
-                    "OPEN"
-                ]
+                "roi": [548, 376, 92, 23],
+                "expected": ["OPEN"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    50,
-                    0,
-                    0
-                ]
+                "target_offset": [0, 50, 0, 0]
             }
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "TribeTowerChooseStage"
-        ]
+        "next": ["TribeTowerChooseStage"]
     },
     "TribeTowerEnterTetraTower": {
         "desc": "进入泰特拉之塔",
@@ -194,32 +122,18 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    641,
-                    377,
-                    92,
-                    23
-                ],
-                "expected": [
-                    "OPEN"
-                ]
+                "roi": [641, 377, 92, 23],
+                "expected": ["OPEN"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    50,
-                    0,
-                    0
-                ]
+                "target_offset": [0, 50, 0, 0]
             }
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "TribeTowerChooseStage"
-        ]
+        "next": ["TribeTowerChooseStage"]
     },
     "TribeTowerEnterPilgrimTower": {
         "desc": "进入朝圣者之塔",
@@ -227,47 +141,26 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    733,
-                    376,
-                    92,
-                    23
-                ],
-                "expected": [
-                    "OPEN"
-                ]
+                "roi": [733, 376, 92, 23],
+                "expected": ["OPEN"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    0,
-                    50,
-                    0,
-                    0
-                ]
+                "target_offset": [0, 50, 0, 0]
             }
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "TribeTowerChooseStage"
-        ]
+        "next": ["TribeTowerChooseStage"]
     },
     "TribeTowerMainPageEntered": {
         "desc": "处于无限之塔1级页面",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    710,
-                    293,
-                    51,
-                    21
-                ],
-                "expected": [
-                    "^无限之塔$"
-                ]
+                "roi": [710, 293, 51, 21],
+                "expected": ["^无限之塔$"]
             }
         }
     }

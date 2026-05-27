@@ -5,14 +5,8 @@
             "label": "$task.LargeEvent.label",
             "entry": "LargeEventMain",
             "description": "$task.LargeEvent.description",
-            "option": [
-                "LargeEventTheme",
-                "LargeEventStoryPriority",
-                "LargeEventContent"
-            ],
-            "group": [
-                "daily"
-            ]
+            "option": ["LargeEventTheme", "LargeEventStoryPriority", "LargeEventContent"],
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -24,34 +18,26 @@
                 {
                     "name": "StarAnis",
                     "label": "$option.LargeEventTheme.StarAnis",
-                    "option": [
-                        "LargeEventStarAnisMerchBagClick"
-                    ],
+                    "option": ["LargeEventStarAnisMerchBagClick"],
                     "pipeline_override": {
                         "LargeEventEntry": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisLogo.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisLogo.png"]
                                 }
                             }
                         },
                         "LargeEventStory1StageClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory1Stage.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory1Stage.png"]
                                 }
                             }
                         },
                         "LargeEventStory2StageNormalClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory2StageNormal.png"]
                                 }
                             }
                         },
@@ -66,39 +52,28 @@
                             },
                             "action": {
                                 "param": {
-                                    "target_offset": [
-                                        70,
-                                        -70,
-                                        0,
-                                        0
-                                    ]
+                                    "target_offset": [70, -70, 0, 0]
                                 }
                             }
                         },
                         "LargeEventStory1StageRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory1StageRepeatable.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory1StageRepeatable.png"]
                                 }
                             }
                         },
                         "LargeEventStory2StageNormalRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory2StageNormal.png"]
                                 }
                             }
                         },
                         "LargeEventStory2StageHardRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageHardRepeatable.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory2StageHardRepeatable.png"]
                                 }
                             }
                         }
@@ -112,12 +87,7 @@
         },
         "LargeEventContent": {
             "type": "checkbox",
-            "default_case": [
-                "LargeEventLoginStamp",
-                "LargeEventChallenge",
-                "LargeEventStory",
-                "LargeEventMission"
-            ],
+            "default_case": ["LargeEventLoginStamp", "LargeEventChallenge", "LargeEventStory", "LargeEventMission"],
             "label": "$option.LargeEventContent.label",
             "cases": [
                 {

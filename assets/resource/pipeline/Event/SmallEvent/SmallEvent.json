@@ -7,37 +7,24 @@
                 "custom_action": "RuntimeQuotaCheck"
             }
         },
-        "next": [
-            "SmallEventStart",
-            "[JumpBack]NavigationEnterHall"
-        ]
+        "next": ["SmallEventStart", "[JumpBack]NavigationEnterHall"]
     },
     "SmallEventStart": {
         "desc": "小活动开始",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
-        "next": [
-            "SmallEventEntry",
-            "CommonEndTask"
-        ]
+        "next": ["SmallEventEntry", "CommonEndTask"]
     },
     "SmallEventEntry": {
         "desc": "小活动入口",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    824,
-                    571,
-                    145,
-                    68
-                ],
+                "roi": [824, 571, 145, 68],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ]
@@ -46,25 +33,15 @@
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SmallEventMainPageFlow",
-            "SmallEventEntry"
-        ]
+        "next": ["SmallEventMainPageFlow", "SmallEventEntry"]
     },
     "SmallEventMainPageEntered": {
         "desc": "已进入剧情活动",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    2,
-                    11,
-                    82,
-                    30
-                ],
-                "expected": [
-                    ".*剧情.*"
-                ]
+                "roi": [2, 11, 82, 30],
+                "expected": [".*剧情.*"]
             }
         }
     },
@@ -73,28 +50,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SmallEventMainPageEntered"
-                ]
+                "all_of": ["SmallEventMainPageEntered"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target": [
-                    150,
-                    650
-                ]
+                "target": [150, 650]
             }
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [
-                446,
-                539,
-                389,
-                82
-            ]
+            "target": [446, 539, 389, 82]
         },
         "next": [
             "[JumpBack]SmallEventChallenge",
@@ -105,10 +72,6 @@
     },
     "SmallEventGoBack": {
         "desc": "返回剧情活动页面",
-        "next": [
-            "SmallEventMainPageEntered",
-            "[JumpBack]DialoguesSkipStory",
-            "[JumpBack]CommonGoBack"
-        ]
+        "next": ["SmallEventMainPageEntered", "[JumpBack]DialoguesSkipStory", "[JumpBack]CommonGoBack"]
     }
 }

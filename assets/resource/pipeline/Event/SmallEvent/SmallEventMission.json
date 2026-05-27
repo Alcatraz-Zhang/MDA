@@ -1,44 +1,28 @@
 {
     "SmallEventMission": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "小活动任务",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    314,
-                    413,
-                    661,
-                    294
-                ],
-                "expected": [
-                    ".*任务.*"
-                ]
+                "roi": [314, 413, 661, 294],
+                "expected": [".*任务.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SmallEventMissionFlow"
-        ]
+        "timeout": 60000,
+        "next": ["SmallEventMissionFlow"]
     },
     "SmallEventMissionVisible": {
         "desc": "小活动任务内部的标识",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    680,
-                    624,
-                    137,
-                    35
-                ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "roi": [680, 624, 137, 35],
+                "expected": [".*全部.*"]
             }
         }
     },
@@ -47,9 +31,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SmallEventMissionVisible"
-                ]
+                "all_of": ["SmallEventMissionVisible"]
             }
         },
         "next": [
@@ -64,22 +46,9 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    680,
-                    624,
-                    137,
-                    35
-                ],
-                "lower": [
-                    105,
-                    105,
-                    105
-                ],
-                "upper": [
-                    122,
-                    122,
-                    122
-                ],
+                "roi": [680, 624, 137, 35],
+                "lower": [105, 105, 105],
+                "upper": [122, 122, 122],
                 "count": 100
             }
         }
@@ -89,29 +58,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SmallEventMissionClaimed"
-                ]
+                "all_of": ["SmallEventMissionClaimed"]
             }
         },
-        "next": [
-            "CommonGoBack"
-        ]
+        "next": ["CommonGoBack"]
     },
     "SmallEventMissionClaimAll": {
         "desc": "小活动任务奖励领取",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    680,
-                    624,
-                    137,
-                    35
-                ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "roi": [680, 624, 137, 35],
+                "expected": [".*全部.*"]
             }
         },
         "action": {

@@ -1,37 +1,25 @@
 {
     "ArenaEnterChampionArena": {
-        "max_hit": 5,
         "desc": "进入冠军竞技场",
+        "max_hit": 5,
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArena",
-                    "ChampionArenaRedDotVisible"
-                ]
+                "all_of": ["ChampionArena", "ChampionArenaRedDotVisible"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "ChampionArenaCornerFlow"
-        ]
+        "next": ["ChampionArenaCornerFlow"]
     },
     "ChampionArenaMainPageEntered": {
         "desc": "处于冠军竞技场",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "冠军竞技场"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["冠军竞技场"]
             }
         },
         "post_wait_freezes": 500
@@ -41,56 +29,32 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArenaMainPageEntered"
-                ]
+                "all_of": ["ChampionArenaMainPageEntered"]
             }
         },
-        "next": [
-            "ChampionArenaEnterChampionsDuel",
-            "ArenaCornerFlow",
-            "[JumpBack]CommonGoBack"
-        ]
+        "next": ["ChampionArenaEnterChampionsDuel", "ArenaCornerFlow", "[JumpBack]CommonGoBack"]
     },
     "ChampionArenaEnterChampionsDuel": {
         "desc": "进入冠军对决",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    477,
-                    523,
-                    332,
-                    39
-                ],
-                "expected": [
-                    ".*剩余.*",
-                    ".*分钟.*"
-                ]
+                "roi": [477, 523, 332, 39],
+                "expected": [".*剩余.*", ".*分钟.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]ArenaClickCheerReward",
-            "ChampionArenaCompetitionFlow"
-        ]
+        "next": ["[JumpBack]ArenaClickCheerReward", "ChampionArenaCompetitionFlow"]
     },
     "ArenaClickCheerReward": {
         "desc": "应援奖励",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    596,
-                    559,
-                    95,
-                    30
-                ],
-                "expected": [
-                    "点击进行下一步"
-                ]
+                "roi": [596, 559, 95, 30],
+                "expected": ["点击进行下一步"]
             }
         },
         "action": {
@@ -102,17 +66,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "小组循环赛",
-                    "晋级赛",
-                    "冠军争霸赛"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["小组循环赛", "晋级赛", "冠军争霸赛"]
             }
         }
     },
@@ -121,30 +76,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArenaCompetitionEntered"
-                ]
+                "all_of": ["ChampionArenaCompetitionEntered"]
             }
         },
-        "next": [
-            "ArenaClickCheerUp",
-            "[JumpBack]ArenaCheerResult"
-        ]
+        "next": ["ArenaClickCheerUp", "[JumpBack]ArenaCheerResult"]
     },
     "ArenaCheerResult": {
         "desc": "应援结果确认",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    603,
-                    240,
-                    73,
-                    21
-                ],
-                "expected": [
-                    ".*应援.*"
-                ]
+                "roi": [603, 240, 73, 21],
+                "expected": [".*应援.*"]
             }
         },
         "action": {
@@ -156,41 +99,23 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    571,
-                    630,
-                    141,
-                    32
-                ],
-                "expected": [
-                    "应援"
-                ]
+                "roi": [571, 630, 141, 32],
+                "expected": ["应援"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "ChampionArenaCheerUpAvailableFlow",
-            "ChampionArenaClickCheerUpRight",
-            "ChampionArenaCloseCheerUpPage"
-        ]
+        "next": ["ChampionArenaCheerUpAvailableFlow", "ChampionArenaClickCheerUpRight", "ChampionArenaCloseCheerUpPage"]
     },
     "ChampionArenaCloseCheerUpPage": {
         "desc": "关闭应援页面", //通常情况下是因为错过了上次应援
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    587,
-                    530,
-                    108,
-                    38
-                ],
-                "expected": [
-                    ".*关闭.*"
-                ]
+                "roi": [587, 530, 108, 38],
+                "expected": [".*关闭.*"]
             }
         },
         "action": {
@@ -202,15 +127,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    487,
-                    322,
-                    51,
-                    19
-                ],
-                "expected": [
-                    "^[5-9]"
-                ]
+                "roi": [487, 322, 51, 19],
+                "expected": ["^[5-9]"]
             }
         }
     },
@@ -219,75 +137,46 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArenaCheerUpAvailable"
-                ]
+                "all_of": ["ChampionArenaCheerUpAvailable"]
             }
         },
-        "next": [
-            "ArenaClickCheerUpLeft"
-        ]
+        "next": ["ArenaClickCheerUpLeft"]
     },
     "ArenaClickCheerUpLeft": {
         "desc": "应援左边",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    540,
-                    352,
-                    62,
-                    25
-                ],
-                "expected": [
-                    "选择"
-                ]
+                "roi": [540, 352, 62, 25],
+                "expected": ["选择"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CommonConfirmAction"
-        ]
+        "next": ["CommonConfirmAction"]
     },
     "ChampionArenaClickCheerUpRight": {
         "desc": "应援右边",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    708,
-                    351,
-                    63,
-                    26
-                ],
-                "expected": [
-                    "选择"
-                ]
+                "roi": [708, 351, 63, 26],
+                "expected": ["选择"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CommonConfirmAction"
-        ]
+        "next": ["CommonConfirmAction"]
     },
     "ChampionArenaRedDotVisible": {
         "desc": "冠军竞技场的红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    799,
-                    448,
-                    26,
-                    23
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [799, 448, 26, 23],
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -296,15 +185,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    490,
-                    507,
-                    95,
-                    31
-                ],
-                "expected": [
-                    "CHAMPION"
-                ]
+                "roi": [490, 507, 95, 31],
+                "expected": ["CHAMPION"]
             }
         }
     }

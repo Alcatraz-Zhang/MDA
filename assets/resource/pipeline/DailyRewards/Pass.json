@@ -2,11 +2,7 @@
     "DailyRewardsPassMain": {
         "desc": "Pass入口",
         "max_hit": 1,
-        "next": [
-            "[JumpBack]DailyRewardsPassChangeClick",
-            "DailyRewardsPassStart",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]DailyRewardsPassChangeClick", "DailyRewardsPassStart", "CommonEndTask"]
     },
     "DailyRewardsPassChangeClick": {
         "desc": "点击更换pass", //确保其一定时间内不会再次更换，防止出现在更换途中识别导致失败的情况
@@ -14,15 +10,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1116,
-                    91,
-                    163,
-                    66
-                ],
-                "template": [
-                    "DailyRewards/Pass/PassChange.png"
-                ]
+                "roi": [1116, 91, 163, 66],
+                "template": ["DailyRewards/Pass/PassChange.png"]
             }
         },
         "action": {
@@ -35,16 +24,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1116,
-                    91,
-                    163,
-                    66
-                ],
-                "template": [
-                    "Common/RedDot.png",
-                    "Common/PassRedDot.png"
-                ]
+                "roi": [1116, 91, 163, 66],
+                "template": ["Common/RedDot.png", "Common/PassRedDot.png"]
             }
         },
         "next": [
@@ -61,26 +42,14 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1116,
-                    91,
-                    163,
-                    66
-                ],
-                "template": [
-                    "Common/PassRedDot.png"
-                ]
+                "roi": [1116, 91, 163, 66],
+                "template": ["Common/PassRedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -5,
-                    5,
-                    0,
-                    0
-                ]
+                "target_offset": [-5, 5, 0, 0]
             }
         },
         "post_wait_freezes": 500
@@ -90,26 +59,14 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1116,
-                    91,
-                    163,
-                    66
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [1116, 91, 163, 66],
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -5,
-                    5,
-                    0,
-                    0
-                ]
+                "target_offset": [-5, 5, 0, 0]
             }
         },
         "post_wait_freezes": 1500
@@ -119,62 +76,31 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    455,
-                    202,
-                    369,
-                    36
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [455, 202, 369, 36],
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -50,
-                    15,
-                    0,
-                    0
-                ]
+                "target_offset": [-50, 15, 0, 0]
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "DailyRewardsClaimRewardFlow"
-        ]
+        "next": ["DailyRewardsClaimRewardFlow"]
     },
     "DailyRewardsClaimRewardFlow": {
         "desc": "领取Pass奖励流程",
-        "next": [
-            "[JumpBack]DailyRewardsPassClaimAll",
-            "CommonConfirmReward",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]DailyRewardsPassClaimAll", "CommonConfirmReward", "CommonEndTask"]
     },
     "DailyRewardsPassClaimed": {
         "desc": "已领取",
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    553,
-                    655,
-                    175,
-                    30
-                ],
-                "lower": [
-                    100,
-                    100,
-                    100
-                ],
-                "upper": [
-                    180,
-                    180,
-                    180
-                ],
+                "roi": [553, 655, 175, 30],
+                "lower": [100, 100, 100],
+                "upper": [180, 180, 180],
                 "count": 500
             }
         }
@@ -184,10 +110,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsPassTextVisible",
-                    "DailyRewardsPassAvailable"
-                ]
+                "all_of": ["DailyRewardsPassTextVisible", "DailyRewardsPassAvailable"]
             }
         },
         "action": {
@@ -200,15 +123,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    553,
-                    655,
-                    175,
-                    30
-                ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "roi": [553, 655, 175, 30],
+                "expected": [".*全部.*"]
             }
         },
         "action": {
@@ -222,16 +138,8 @@
             "type": "ColorMatch",
             "param": {
                 "roi": "DailyRewardsPassTextVisible",
-                "lower": [
-                    200,
-                    200,
-                    200
-                ],
-                "upper": [
-                    255,
-                    255,
-                    255
-                ],
+                "lower": [200, 200, 200],
+                "upper": [255, 255, 255],
                 "count": 100
             }
         }

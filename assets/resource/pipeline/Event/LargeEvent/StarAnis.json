@@ -4,40 +4,23 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    1208,
-                    130,
-                    63,
-                    21
-                ],
-                "expected": [
-                    "周边包包"
-                ]
+                "roi": [1208, 130, 63, 21],
+                "expected": ["周边包包"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "LargeEventStarAnisMerchLotteryClick",
-            "LargeEventStarAnisMerchGachaClick"
-        ]
+        "next": ["LargeEventStarAnisMerchLotteryClick", "LargeEventStarAnisMerchGachaClick"]
     },
     "LargeEventStarAnisMerchLotteryClick": {
         "desc": "点击抽取刮刮乐周边",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    681,
-                    417,
-                    106,
-                    102
-                ],
-                "expected": [
-                    "抽取刮刮乐周边"
-                ]
+                "roi": [681, 417, 106, 102],
+                "expected": ["抽取刮刮乐周边"]
             }
         },
         "action": {
@@ -54,15 +37,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    1212,
-                    166,
-                    58,
-                    21
-                ],
-                "expected": [
-                    "抽取周边"
-                ]
+                "roi": [1212, 166, 58, 21],
+                "expected": ["抽取周边"]
             }
         },
         "action": {
@@ -80,15 +56,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    589,
-                    515,
-                    101,
-                    29
-                ],
-                "expected": [
-                    ".*抽取.*"
-                ]
+                "roi": [589, 515, 101, 29],
+                "expected": [".*抽取.*"]
             }
         },
         "action": {
@@ -107,61 +76,33 @@
         "recognition": {
             "type": "Or",
             "param": {
-                "any_of": [
-                    "LargeEventStarAnisLotteryGrayButtonVisible",
-                    "LargeEventStarAnisLotteryRunOut"
-                ]
+                "any_of": ["LargeEventStarAnisLotteryGrayButtonVisible", "LargeEventStarAnisLotteryRunOut"]
             }
         },
-        "next": [
-            "LargeEventStarAnisLotteryConfirmClick",
-            "LargeEventGoBack"
-        ]
+        "next": ["LargeEventStarAnisLotteryConfirmClick", "LargeEventGoBack"]
     },
     "LargeEventStarAnisLotteryConfirmClick": {
         "desc": "确认抽取结果",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    489,
-                    490,
-                    36,
-                    33
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [489, 490, 36, 33],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "LargeEventGoBack"
-        ]
+        "next": ["LargeEventGoBack"]
     },
     "LargeEventStarAnisLotteryGrayButtonVisible": {
         "desc": "抽取按钮变灰",
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    646,
-                    488,
-                    149,
-                    37
-                ],
-                "lower": [
-                    100,
-                    100,
-                    100
-                ],
-                "upper": [
-                    180,
-                    180,
-                    180
-                ],
+                "roi": [646, 488, 149, 37],
+                "lower": [100, 100, 100],
+                "upper": [180, 180, 180],
                 "count": 4000
             }
         }
@@ -171,15 +112,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    542,
-                    343,
-                    188,
-                    33
-                ],
-                "expected": [
-                    ".*不足.*"
-                ]
+                "roi": [542, 343, 188, 33],
+                "expected": [".*不足.*"]
             }
         }
     }

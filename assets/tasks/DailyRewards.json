@@ -14,9 +14,7 @@
                 "DailyRewardsDailyLogin",
                 "DailyRewardsFreeRecruit"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {

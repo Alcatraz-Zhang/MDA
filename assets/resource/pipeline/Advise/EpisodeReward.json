@@ -4,27 +4,15 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    818,
-                    344,
-                    25,
-                    23
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [818, 344, 25, 23],
+                "template": ["Common/RedDot.png"]
             }
         },
         "pre_wait_freezes": 500,
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -30,
-                    30,
-                    0,
-                    0
-                ]
+                "target_offset": [-30, 30, 0, 0]
             }
         },
         "post_wait_freezes": 500,
@@ -41,102 +29,56 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    793,
-                    285,
-                    28,
-                    365
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ],
+                "roi": [793, 285, 28, 365],
+                "template": ["Common/RedDot.png"],
                 "threshold": 0.8
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -30,
-                    30,
-                    0,
-                    0
-                ]
+                "target_offset": [-30, 30, 0, 0]
             }
         },
         "post_wait_freezes": 2500,
-        "next": [
-            "[JumpBack]AdviseStory",
-            "[JumpBack]CommonConfirmReward",
-            "CommonClosePage"
-        ]
+        "next": ["[JumpBack]AdviseStory", "[JumpBack]CommonConfirmReward", "CommonClosePage"]
     },
     "AdviseClickAdviceCollection": {
         "desc": "点击咨询图鉴",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    778,
-                    86,
-                    34,
-                    34
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ],
+                "roi": [778, 86, 34, 34],
+                "template": ["Common/RedDot.png"],
                 "threshold": 0.8
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -30,
-                    30,
-                    0,
-                    0
-                ]
+                "target_offset": [-30, 30, 0, 0]
             }
         },
-        "next": [
-            "AdviseClickBadgeStickerReward",
-            "AdviseClickAdviceCollection"
-        ]
+        "next": ["AdviseClickBadgeStickerReward", "AdviseClickAdviceCollection"]
     },
     "AdviseClickBadgeStickerReward": {
         "desc": "点击徽章贴纸奖励",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    791,
-                    594,
-                    28,
-                    25
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ],
+                "roi": [791, 594, 28, 25],
+                "template": ["Common/RedDot.png"],
                 "threshold": 0.8
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -30,
-                    30,
-                    0,
-                    0
-                ]
+                "target_offset": [-30, 30, 0, 0]
             }
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "[JumpBack]CommonConfirmReward",
-            "CommonClosePage"
-        ]
+        "next": ["[JumpBack]CommonConfirmReward", "CommonClosePage"]
     },
     "AdviseEpisodeRewardScrollDown": {
         "desc": "花絮奖励向下滑动",
@@ -144,14 +86,8 @@
         "action": {
             "type": "Swipe",
             "param": {
-                "begin": [
-                    627,
-                    600
-                ],
-                "end": [
-                    627,
-                    400
-                ],
+                "begin": [627, 600],
+                "end": [627, 400],
                 "end_hold": 300
             }
         },
@@ -162,15 +98,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    614,
-                    89,
-                    35,
-                    28
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [614, 89, 35, 28],
+                "template": ["Common/RedDot.png"]
             }
         }
     }

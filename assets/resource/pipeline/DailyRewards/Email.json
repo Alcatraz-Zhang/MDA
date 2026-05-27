@@ -2,58 +2,33 @@
     "DailyRewardsEmail": {
         "desc": "邮箱入口",
         "max_hit": 1,
-        "next": [
-            "DailyRewardsEmailStart",
-            "CommonEndTask"
-        ]
+        "next": ["DailyRewardsEmailStart", "CommonEndTask"]
     },
     "DailyRewardsEmailStart": {
         "desc": "邮箱入口",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1226,
-                    9,
-                    20,
-                    19
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [1226, 9, 20, 19],
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -10,
-                    10,
-                    0,
-                    0
-                ]
+                "target_offset": [-10, 10, 0, 0]
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "DailyRewardsEmailFlow",
-            "DailyRewardsEmailStart"
-        ]
+        "next": ["DailyRewardsEmailFlow", "DailyRewardsEmailStart"]
     },
     "DailyRewardsEmailVisible": {
         "desc": "邮箱的标志",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    637,
-                    87,
-                    44,
-                    24
-                ],
-                "expected": [
-                    "邮箱"
-                ]
+                "roi": [637, 87, 44, 24],
+                "expected": ["邮箱"]
             }
         }
     },
@@ -62,31 +37,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsEmailVisible"
-                ]
+                "all_of": ["DailyRewardsEmailVisible"]
             }
         },
-        "next": [
-            "[JumpBack]DailyRewardsHandleEmailRedDot",
-            "[JumpBack]CommonConfirmReward",
-            "CommonClosePage"
-        ]
+        "next": ["[JumpBack]DailyRewardsHandleEmailRedDot", "[JumpBack]CommonConfirmReward", "CommonClosePage"]
     },
     "DailyRewardsEmailRedDotVisible": {
         "desc": "邮箱内部的的红点，代表有未领取的奖励",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    778,
-                    231,
-                    24,
-                    20
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [778, 231, 24, 20],
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -95,30 +57,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsEmailRedDotVisible"
-                ]
+                "all_of": ["DailyRewardsEmailRedDotVisible"]
             }
         },
-        "next": [
-            "DailyRewardsEmailClaimUnable",
-            "DailyRewardsEmailClaim"
-        ]
+        "next": ["DailyRewardsEmailClaimUnable", "DailyRewardsEmailClaim"]
     },
     "DailyRewardsEmailClaim": {
         "desc": "邮箱收取",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    706,
-                    596,
-                    77,
-                    28
-                ],
-                "expected": [
-                    "全部领取"
-                ]
+                "roi": [706, 596, 77, 28],
+                "expected": ["全部领取"]
             }
         },
         "action": {
@@ -131,22 +81,9 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    667,
-                    592,
-                    136,
-                    37
-                ],
-                "lower": [
-                    150,
-                    150,
-                    150
-                ],
-                "upper": [
-                    170,
-                    170,
-                    170
-                ],
+                "roi": [667, 592, 136, 37],
+                "lower": [150, 150, 150],
+                "upper": [170, 170, 170],
                 "count": 3000
             }
         }

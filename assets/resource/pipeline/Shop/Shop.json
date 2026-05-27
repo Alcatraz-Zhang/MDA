@@ -1,54 +1,34 @@
 {
     "ShopMain": {
-        "next": [
-            "HallEnterShop",
-            "[JumpBack]NavigationEnterHall"
-        ],
         "action": {
             "type": "Custom",
             "param": {
                 "custom_action": "RuntimeQuotaCheck"
             }
-        }
+        },
+        "next": ["HallEnterShop", "[JumpBack]NavigationEnterHall"]
     },
     "HallEnterShop": {
         "desc": "进入商店",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    367,
-                    474,
-                    58,
-                    43
-                ],
-                "expected": [
-                    "商店"
-                ]
+                "roi": [367, 474, 58, 43],
+                "expected": ["商店"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "ShopCornerFlow",
-            "HallEnterShop"
-        ]
+        "next": ["ShopCornerFlow", "HallEnterShop"]
     },
     "ShopMainPageEntered": {
         "desc": "处于百货商店",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "百货商店"
-                ]
+                "roi": [0, 15, 70, 25],
+                "expected": ["百货商店"]
             }
         }
     },
@@ -57,32 +37,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ShopMainPageEntered"
-                ]
+                "all_of": ["ShopMainPageEntered"]
             }
         },
-        "next": [
-            "[JumpBack]CommonShop",
-            "[JumpBack]ArenaShop",
-            "[JumpBack]RecyclingShop",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]CommonShop", "[JumpBack]ArenaShop", "[JumpBack]RecyclingShop", "CommonEndTask"]
     },
     "ShopConfirmPurchase": {
         "desc": "购买商品",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    594,
-                    429,
-                    220,
-                    250
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [594, 429, 220, 250],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "next": [
@@ -98,44 +64,22 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ShopGemVisible",
-                    "ShopGoodsVisible"
-                ]
+                "all_of": ["ShopGemVisible", "ShopGoodsVisible"]
             }
         },
-        "next": [
-            "[JumpBack]CommonClosePage",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]CommonClosePage", "CommonEndTask"]
     },
     "ShopPurchasePriceBlocked": {
         "desc": "价格购买阻断",
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    667,
-                    486,
-                    58,
-                    49
-                ],
-                "lower": [
-                    150,
-                    0,
-                    0
-                ],
-                "upper": [
-                    255,
-                    100,
-                    100
-                ],
+                "roi": [667, 486, 58, 49],
+                "lower": [150, 0, 0],
+                "upper": [255, 100, 100],
                 "count": 100
             }
         },
-        "next": [
-            "[JumpBack]CommonClosePage",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]CommonClosePage", "CommonEndTask"]
     }
 }

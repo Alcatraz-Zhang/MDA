@@ -90,11 +90,7 @@
                     "name": "SmallEvent",
                     "option": {
                         "SmallEventTheme": "BSideIdol",
-                        "SmallEventContent": [
-                            "SmallEventChallenge",
-                            "SmallEventStory",
-                            "SmallEventMission"
-                        ]
+                        "SmallEventContent": ["SmallEventChallenge", "SmallEventStory", "SmallEventMission"]
                     }
                 },
                 {

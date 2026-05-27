@@ -1,21 +1,14 @@
 {
     "AdviseFlow": {
         "desc": "开始咨询流程",
-        "next": [
-            "AdviseAttemptsExhausted",
-            "AdviseCollectionCompletedFlow",
-            "AdviseCollectionNotCompletedFlow"
-        ]
+        "next": ["AdviseAttemptsExhausted", "AdviseCollectionCompletedFlow", "AdviseCollectionNotCompletedFlow"]
     },
     "AdviseAttemptsExhausted": {
         "desc": "次数耗尽",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "AdviseGrayButtonVisible",
-                    "Advise0AttemptsVisible"
-                ]
+                "all_of": ["AdviseGrayButtonVisible", "Advise0AttemptsVisible"]
             }
         }
     },
@@ -24,22 +17,9 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    647,
-                    567,
-                    155,
-                    53
-                ],
-                "lower": [
-                    100,
-                    100,
-                    100
-                ],
-                "upper": [
-                    180,
-                    180,
-                    180
-                ],
+                "roi": [647, 567, 155, 53],
+                "lower": [100, 100, 100],
+                "upper": [180, 180, 180],
                 "count": 500
             }
         }
@@ -49,17 +29,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    730,
-                    599,
-                    13,
-                    14
-                ],
-                "expected": [
-                    "0",
-                    "O",
-                    "o"
-                ],
+                "roi": [730, 599, 13, 14],
+                "expected": ["0", "O", "o"],
                 "threshold": 0.2
             }
         }
@@ -69,15 +40,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    790,
-                    469,
-                    19,
-                    20
-                ],
-                "expected": [
-                    ".*20.*"
-                ]
+                "roi": [790, 469, 19, 20],
+                "expected": [".*20.*"]
             }
         }
     },
@@ -86,74 +50,44 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "AdviseCollectionCompletedVisible"
-                ]
+                "all_of": ["AdviseCollectionCompletedVisible"]
             }
         },
-        "next": [
-            "AdviseQuickAdvise"
-        ]
+        "next": ["AdviseQuickAdvise"]
     },
     "AdviseNormalAdvise": {
         "desc": "普通咨询",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    697,
-                    573,
-                    52,
-                    24
-                ],
-                "expected": [
-                    "咨询"
-                ]
+                "roi": [697, 573, 52, 24],
+                "expected": ["咨询"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]AdviseConfirmAction",
-            "[JumpBack]AdviseStory",
-            "AdviseSettlement"
-        ]
+        "next": ["[JumpBack]AdviseConfirmAction", "[JumpBack]AdviseStory", "AdviseSettlement"]
     },
     "AdviseQuickAdvise": {
         "desc": "快速咨询",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    702,
-                    533,
-                    66,
-                    26
-                ],
-                "expected": [
-                    "快速咨询"
-                ]
+                "roi": [702, 533, 66, 26],
+                "expected": ["快速咨询"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "[JumpBack]AdviseConfirmAction",
-            "AdviseSettlement"
-        ]
+        "next": ["[JumpBack]AdviseConfirmAction", "AdviseSettlement"]
     },
     "AdviseSettlement": {
         "desc": "咨询结算",
         "post_wait_freezes": {
             "time": 500,
-            "target": [
-                741,
-                357,
-                88,
-                137
-            ]
+            "target": [741, 357, 88, 137]
         },
         "next": [
             "[JumpBack]AdviseRemoveFavorites",
@@ -168,11 +102,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "AdviseFavoriteSelected",
-                    "AdviseMaxLevelVisible",
-                    "AdviseCollectionCompletedVisible"
-                ]
+                "all_of": ["AdviseFavoriteSelected", "AdviseMaxLevelVisible", "AdviseCollectionCompletedVisible"]
             }
         },
         "action": {
@@ -184,15 +114,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    617,
-                    390,
-                    122,
-                    121
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [617, 390, 122, 121],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -205,15 +128,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    615,
-                    357,
-                    73,
-                    78
-                ],
-                "expected": [
-                    "追加能力值"
-                ]
+                "roi": [615, 357, 73, 78],
+                "expected": ["追加能力值"]
             }
         },
         "action": {
@@ -226,15 +142,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    593,
-                    351,
-                    96,
-                    19
-                ],
-                "expected": [
-                    ".*好感度提升.*"
-                ]
+                "roi": [593, 351, 96, 19],
+                "expected": [".*好感度提升.*"]
             }
         }
     },
@@ -243,52 +152,28 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1199,
-                    247,
-                    81,
-                    134
-                ],
-                "template": [
-                    "Advise/NextAdvise.png"
-                ]
+                "roi": [1199, 247, 81, 134],
+                "template": ["Advise/NextAdvise.png"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 200,
-        "next": [
-            "AdviseFlow"
-        ]
+        "next": ["AdviseFlow"]
     },
     "AdviseCollectionNotCompletedFlow": {
         "desc": "未收集完咨询日志",
-        "next": [
-            "AdviseNormalAdvise"
-        ]
+        "next": ["AdviseNormalAdvise"]
     },
     "AdviseFavoriteSelected": {
         "desc": "已收藏",
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    463,
-                    369,
-                    32,
-                    31
-                ],
-                "lower": [
-                    180,
-                    0,
-                    0
-                ],
-                "upper": [
-                    255,
-                    80,
-                    80
-                ],
+                "roi": [463, 369, 32, 31],
+                "lower": [180, 0, 0],
+                "upper": [255, 80, 80],
                 "count": 500
             }
         }
@@ -298,15 +183,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    695,
-                    461,
-                    32,
-                    17
-                ],
-                "expected": [
-                    "MAX"
-                ]
+                "roi": [695, 461, 32, 17],
+                "expected": ["MAX"]
             }
         }
     }

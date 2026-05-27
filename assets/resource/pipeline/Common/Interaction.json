@@ -4,15 +4,8 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    553,
-                    400,
-                    176,
-                    173
-                ],
-                "expected": [
-                    "点击领取奖励"
-                ]
+                "roi": [553, 400, 176, 173],
+                "expected": ["点击领取奖励"]
             }
         },
         "pre_wait_freezes": 500,
@@ -25,15 +18,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    566,
-                    429,
-                    248,
-                    250
-                ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "roi": [566, 429, 248, 250],
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -46,12 +32,7 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    775,
-                    31,
-                    52,
-                    311
-                ],
+                "roi": [775, 31, 52, 311],
                 "template": [
                     "Common/CloseButton1.png",
                     "Common/CloseButton2.png",
@@ -71,15 +52,8 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    708,
-                    380,
-                    138,
-                    125
-                ],
-                "template": [
-                    "Common/MAX.png"
-                ]
+                "roi": [708, 380, 138, 125],
+                "template": ["Common/MAX.png"]
             }
         },
         "action": {
@@ -91,10 +65,7 @@
         "action": {
             "type": "Click",
             "param": {
-                "target": [
-                    150,
-                    650
-                ]
+                "target": [150, 650]
             }
         }
     },

@@ -1,52 +1,31 @@
 {
     "LargeEventMission": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "大活动任务",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    1250,
-                    112,
-                    30,
-                    107
-                ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "roi": [1250, 112, 30, 107],
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -10,
-                    10,
-                    0,
-                    0
-                ]
+                "target_offset": [-10, 10, 0, 0]
             }
         },
-        "next": [
-            "LargeEventMissionFlow"
-        ]
+        "timeout": 60000,
+        "next": ["LargeEventMissionFlow"]
     },
     "LargeEventMissionVisible": {
         "desc": "大活动任务内部的标识",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    680,
-                    624,
-                    137,
-                    35
-                ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "roi": [680, 624, 137, 35],
+                "expected": [".*全部.*"]
             }
         }
     },
@@ -55,40 +34,24 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "LargeEventMissionVisible"
-                ]
+                "all_of": ["LargeEventMissionVisible"]
             }
         },
-        "next": [
-            "LargeEventClickMissionRedDot"
-        ]
+        "next": ["LargeEventClickMissionRedDot"]
     },
     "LargeEventClickMissionRedDot": {
         "desc": "大活动任务的红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    453,
-                    106,
-                    375,
-                    59
-                ],
-                "template": [
-                    "Common/PassRedDot.png"
-                ]
+                "roi": [453, 106, 375, 59],
+                "template": ["Common/PassRedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [
-                    -10,
-                    10,
-                    0,
-                    0
-                ]
+                "target_offset": [-10, 10, 0, 0]
             }
         },
         "next": [
@@ -103,22 +66,9 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    680,
-                    624,
-                    137,
-                    35
-                ],
-                "lower": [
-                    180,
-                    180,
-                    180
-                ],
-                "upper": [
-                    220,
-                    220,
-                    220
-                ],
+                "roi": [680, 624, 137, 35],
+                "lower": [180, 180, 180],
+                "upper": [220, 220, 220],
                 "count": 100
             }
         }
@@ -128,29 +78,18 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "LargeEventMissionClaimed"
-                ]
+                "all_of": ["LargeEventMissionClaimed"]
             }
         },
-        "next": [
-            "CommonGoBack"
-        ]
+        "next": ["CommonGoBack"]
     },
     "LargeEventMissionClaimAll": {
         "desc": "大活动任务奖励领取",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    680,
-                    624,
-                    137,
-                    35
-                ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "roi": [680, 624, 137, 35],
+                "expected": [".*全部.*"]
             }
         },
         "action": {

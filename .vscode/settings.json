@@ -21,30 +21,19 @@
             "url": "/tools/schema/pipeline.schema.json"
         },
         {
-            "fileMatch": [
-                "/assets/interface.json",
-                "/install/interface.json"
-            ],
+            "fileMatch": ["/assets/interface.json", "/install/interface.json"],
             "url": "/tools/schema/interface.schema.json"
         },
         {
-            "fileMatch": [
-                "/assets/tasks/**/*.json",
-                "/install/tasks/**/*.json"
-            ],
+            "fileMatch": ["/assets/tasks/**/*.json", "/install/tasks/**/*.json"],
             "url": "/tools/schema/interface_import.schema.json"
         },
         {
-            "fileMatch": [
-                "/install/config/maa_pi_config.json"
-            ],
+            "fileMatch": ["/install/config/maa_pi_config.json"],
             "url": "/tools/schema/interface_config.schema.json"
         },
         {
-            "fileMatch": [
-                "/tests/**/*.json",
-                "/tests/**/*.jsonc"
-            ],
+            "fileMatch": ["/tests/**/*.json", "/tests/**/*.jsonc"],
             "url": "/tools/schema/test.schema.json"
         }
     ],

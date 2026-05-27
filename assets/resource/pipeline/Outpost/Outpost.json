@@ -1,71 +1,44 @@
 {
     "OutpostMain": {
-        "next": [
-            "HallEnterOutpost",
-            "[JumpBack]NavigationEnterHall"
-        ],
         "action": {
             "type": "Custom",
             "param": {
                 "custom_action": "RuntimeQuotaCheck"
             }
-        }
+        },
+        "next": ["HallEnterOutpost", "[JumpBack]NavigationEnterHall"]
     },
     "HallEnterOutpost": {
         "desc": "进入前哨基地",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [
-                    362,
-                    542,
-                    82,
-                    33
-                ],
-                "expected": [
-                    "前哨基地"
-                ]
+                "roi": [362, 542, 82, 33],
+                "expected": ["前哨基地"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "OutpostTask",
-            "HallEnterOutpost"
-        ]
+        "next": ["OutpostTask", "HallEnterOutpost"]
     },
     "OutpostTask": {
         "desc": "前哨基地任务枢纽",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostMainPageEntered"
-                ]
+                "all_of": ["OutpostMainPageEntered"]
             }
         },
-        "next": [
-            "[JumpBack]DefenseRewards",
-            "[JumpBack]BulletinBoard",
-            "[JumpBack]BriefEncounter",
-            "CommonEndTask"
-        ]
+        "next": ["[JumpBack]DefenseRewards", "[JumpBack]BulletinBoard", "[JumpBack]BriefEncounter", "CommonEndTask"]
     },
     "OutpostMainPageEntered": {
         "desc": "处于前哨基地",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [
-                    591,
-                    578,
-                    98,
-                    62
-                ],
-                "template": [
-                    "Outpost/CommandCenter.png"
-                ]
+                "roi": [591, 578, 98, 62],
+                "template": ["Outpost/CommandCenter.png"]
             }
         }
     }
