@@ -1,6 +1,12 @@
 {
     "RedDotClearMain": {
         "desc": "红点清除入口",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
         "next": [
             "RedDotClearStart",
             "[JumpBack]NavigationEnterHall"
@@ -11,12 +17,11 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
         "next": [
+            "[JumpBack]CommonClosePage",
             "[JumpBack]RedDotClearCashShop",
             "[JumpBack]RedDotClearNotice",
             "CommonEndTask"

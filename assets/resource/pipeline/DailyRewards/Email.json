@@ -18,9 +18,7 @@
                     20,
                     19
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -51,9 +49,7 @@
                     44,
                     24
                 ],
-                "expected": [
-                    "邮箱"
-                ]
+                "expected": ["邮箱"]
             }
         }
     },
@@ -62,9 +58,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsEmailVisible"
-                ]
+                "all_of": ["DailyRewardsEmailVisible"]
             }
         },
         "next": [
@@ -84,9 +78,7 @@
                     24,
                     20
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -95,9 +87,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsEmailRedDotVisible"
-                ]
+                "all_of": ["DailyRewardsEmailRedDotVisible"]
             }
         },
         "next": [
@@ -116,9 +106,7 @@
                     77,
                     28
                 ],
-                "expected": [
-                    "全部领取"
-                ]
+                "expected": ["全部领取"]
             }
         },
         "action": {

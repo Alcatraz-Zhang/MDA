@@ -39,9 +39,7 @@
                     40,
                     24
                 ],
-                "expected": [
-                    "^[1-9]\\d*$"
-                ]
+                "expected": ["^[1-9]\\d*$"]
             }
         }
     },
@@ -56,9 +54,7 @@
                     21,
                     14
                 ],
-                "expected": [
-                    "^[1-9]\\d*$"
-                ]
+                "expected": ["^[1-9]\\d*$"]
             }
         }
     },
@@ -73,18 +69,14 @@
                     183,
                     52
                 ],
-                "template": [
-                    "Outpost/DailyLives.png"
-                ]
+                "template": ["Outpost/DailyLives.png"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "OutpostDailyEventFlow"
-        ]
+        "next": ["OutpostDailyEventFlow"]
     },
     "OutpostDailyEventFlow": {
         "desc": "进入剧情",
@@ -97,9 +89,7 @@
                     41,
                     38
                 ],
-                "template": [
-                    "Outpost/Event.png"
-                ]
+                "template": ["Outpost/Event.png"]
             }
         },
         "action": {
@@ -126,9 +116,7 @@
                     60,
                     32
                 ],
-                "expected": [
-                    "关闭"
-                ]
+                "expected": ["关闭"]
             }
         },
         "action": {
@@ -140,9 +128,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostMainPageEntered"
-                ]
+                "all_of": ["OutpostMainPageEntered"]
             }
         },
         "next": [

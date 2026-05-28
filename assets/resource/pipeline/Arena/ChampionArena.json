@@ -1,7 +1,7 @@
 {
     "ArenaEnterChampionArena": {
-        "max_hit": 5,
         "desc": "进入冠军竞技场",
+        "max_hit": 5,
         "recognition": {
             "type": "And",
             "param": {
@@ -14,9 +14,7 @@
         "action": {
             "type": "Click"
         },
-        "next": [
-            "ChampionArenaCornerFlow"
-        ]
+        "next": ["ChampionArenaCornerFlow"]
     },
     "ChampionArenaMainPageEntered": {
         "desc": "处于冠军竞技场",
@@ -29,9 +27,7 @@
                     70,
                     25
                 ],
-                "expected": [
-                    "冠军竞技场"
-                ]
+                "expected": ["冠军竞技场"]
             }
         },
         "post_wait_freezes": 500
@@ -41,9 +37,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArenaMainPageEntered"
-                ]
+                "all_of": ["ChampionArenaMainPageEntered"]
             }
         },
         "next": [
@@ -88,9 +82,7 @@
                     95,
                     30
                 ],
-                "expected": [
-                    "点击进行下一步"
-                ]
+                "expected": ["点击进行下一步"]
             }
         },
         "action": {
@@ -121,9 +113,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArenaCompetitionEntered"
-                ]
+                "all_of": ["ChampionArenaCompetitionEntered"]
             }
         },
         "next": [
@@ -142,9 +132,7 @@
                     73,
                     21
                 ],
-                "expected": [
-                    ".*应援.*"
-                ]
+                "expected": [".*应援.*"]
             }
         },
         "action": {
@@ -162,9 +150,7 @@
                     141,
                     32
                 ],
-                "expected": [
-                    "应援"
-                ]
+                "expected": ["应援"]
             }
         },
         "action": {
@@ -188,9 +174,7 @@
                     108,
                     38
                 ],
-                "expected": [
-                    ".*关闭.*"
-                ]
+                "expected": [".*关闭.*"]
             }
         },
         "action": {
@@ -208,9 +192,7 @@
                     51,
                     19
                 ],
-                "expected": [
-                    "^[5-9]"
-                ]
+                "expected": ["^[5-9]"]
             }
         }
     },
@@ -219,14 +201,10 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "ChampionArenaCheerUpAvailable"
-                ]
+                "all_of": ["ChampionArenaCheerUpAvailable"]
             }
         },
-        "next": [
-            "ArenaClickCheerUpLeft"
-        ]
+        "next": ["ArenaClickCheerUpLeft"]
     },
     "ArenaClickCheerUpLeft": {
         "desc": "应援左边",
@@ -239,17 +217,13 @@
                     62,
                     25
                 ],
-                "expected": [
-                    "选择"
-                ]
+                "expected": ["选择"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CommonConfirmAction"
-        ]
+        "next": ["CommonConfirmAction"]
     },
     "ChampionArenaClickCheerUpRight": {
         "desc": "应援右边",
@@ -262,17 +236,13 @@
                     63,
                     26
                 ],
-                "expected": [
-                    "选择"
-                ]
+                "expected": ["选择"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CommonConfirmAction"
-        ]
+        "next": ["CommonConfirmAction"]
     },
     "ChampionArenaRedDotVisible": {
         "desc": "冠军竞技场的红点",
@@ -285,9 +255,7 @@
                     26,
                     23
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -302,9 +270,7 @@
                     95,
                     31
                 ],
-                "expected": [
-                    "CHAMPION"
-                ]
+                "expected": ["CHAMPION"]
             }
         }
     }

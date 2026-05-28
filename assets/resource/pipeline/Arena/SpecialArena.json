@@ -1,7 +1,7 @@
 {
     "ArenaEnterSpecialArena": {
-        "max_hit": 5,
         "desc": "进入特殊竞技场",
+        "max_hit": 5,
         "recognition": {
             "type": "And",
             "param": {
@@ -14,9 +14,7 @@
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SpecialArenaCornerFlow"
-        ]
+        "next": ["SpecialArenaCornerFlow"]
     },
     "SpecialArenaMainPageEntered": {
         "desc": "处于特殊竞技场",
@@ -29,9 +27,7 @@
                     70,
                     25
                 ],
-                "expected": [
-                    "特殊竞技场"
-                ]
+                "expected": ["特殊竞技场"]
             }
         }
     },
@@ -40,9 +36,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SpecialArenaMainPageEntered"
-                ]
+                "all_of": ["SpecialArenaMainPageEntered"]
             }
         },
         "next": [
@@ -62,9 +56,7 @@
                     28,
                     27
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         }
     },
@@ -79,9 +71,7 @@
                     67,
                     26
                 ],
-                "expected": [
-                    "SPECIAL"
-                ]
+                "expected": ["SPECIAL"]
             }
         }
     }

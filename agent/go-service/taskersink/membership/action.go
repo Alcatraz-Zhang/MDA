@@ -10,60 +10,67 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// MembershipCheckAction is a custom action that checks membership before executing member-only tasks.
-// It runs synchronously in the pipeline, blocking execution for non-members.
 type MembershipCheckAction struct{}
 
-var _ maa.CustomActionRunner = &MembershipCheckAction{}
+type RuntimeQuotaCheckAction struct{}
+
+var (
+	_ maa.CustomActionRunner = &MembershipCheckAction{}
+	_ maa.CustomActionRunner = &RuntimeQuotaCheckAction{}
+)
 
 var notifyOnce sync.Once
 
 func (a *MembershipCheckAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool {
-	status := GetMembershipStatus()
+	return runRuntimeQuotaCheck(ctx)
+}
 
-	// 构建赞助链接（无论是否会员都显示）
-	sponsorURL := fmt.Sprintf(
-		"https://doropay.top?cpu=%s&uuid=%s&bios=%s&board=%s&disk=%s&guid=%s",
-		status.DeviceCode.CPUHash,
-		status.DeviceCode.UUIDHash,
-		status.DeviceCode.BIOSHash,
-		status.DeviceCode.BoardHash,
-		status.DeviceCode.DiskHash,
-		status.DeviceCode.GUIDHash,
-	)
+func (a *RuntimeQuotaCheckAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool {
+	return runRuntimeQuotaCheck(ctx)
+}
 
-	if status.IsMember {
-		log.Info().
-			Str("tier", status.Tier).
-			Str("plan_code", status.PlanCode).
-			Str("plan_name", status.PlanName).
-			Str("expiry", status.ExpiresOn).
-			Int("remaining_days", status.RemainingDays).
-			Msg("MembershipCheck: member verified, allowing")
+func runRuntimeQuotaCheck(ctx *maa.Context) bool {
+	status := RefreshMembershipStatus()
+	snapshot, ok, err := EnsureQuotaAvailable(status)
+	if err != nil {
+		log.Warn().Err(err).Msg("RuntimeQuotaCheck: failed to read local quota state")
+	}
 
-		// 会员提示只在首次启动时显示
+	log.Info().
+		Str("tier_code", snapshot.TierCode).
+		Str("tier_name", snapshot.TierName).
+		Int64("limit_seconds", snapshot.LimitSeconds).
+		Int64("used_seconds", snapshot.UsedSeconds).
+		Int64("remaining_seconds", snapshot.RemainingSeconds).
+		Bool("unlimited_runtime", snapshot.UnlimitedRuntime).
+		Str("business_date", snapshot.BusinessDate).
+		Msg("RuntimeQuotaCheck: quota evaluated")
+
+	if ok {
 		notifyOnce.Do(func() {
-			planName := status.PlanName
-			if planName == "" {
-				planName = status.Tier
+			if snapshot.UnlimitedRuntime {
+				maafocus.Print(ctx, i18n.T("tasker.membership_check.debug_unlimited"))
+				return
 			}
 			maafocus.Print(ctx, fmt.Sprintf(
 				i18n.T("tasker.membership_check.verified"),
-				planName, status.ExpiresOn,
+				snapshot.TierName,
+				FormatMinutes(snapshot.RemainingSeconds),
+				FormatMinutes(snapshot.LimitSeconds),
 			))
 			maafocus.Print(ctx, fmt.Sprintf(
 				i18n.T("tasker.membership_check.sponsor"),
-				sponsorURL,
+				snapshot.SponsorURL,
 			))
 		})
 		return true
 	}
 
-	// 非会员每次都显示提示
 	maafocus.Print(ctx, fmt.Sprintf(
 		i18n.T("tasker.membership_check.denied"),
-		sponsorURL,
+		snapshot.TierName,
+		FormatMinutes(snapshot.LimitSeconds),
+		snapshot.SponsorURL,
 	))
-
 	return false
 }

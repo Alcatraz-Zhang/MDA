@@ -5,9 +5,7 @@
             "label": "$task.MapPushing.label",
             "entry": "MapPushingFlow",
             "description": "$task.MapPushing.description",
-            "group": [
-                "utility"
-            ]
+            "group": ["utility"]
         }
     ],
     "option": {}

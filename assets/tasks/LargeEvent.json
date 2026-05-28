@@ -10,9 +10,7 @@
                 "LargeEventStoryPriority",
                 "LargeEventContent"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -24,34 +22,26 @@
                 {
                     "name": "StarAnis",
                     "label": "$option.LargeEventTheme.StarAnis",
-                    "option": [
-                        "LargeEventStarAnisMerchBagClick"
-                    ],
+                    "option": ["LargeEventStarAnisMerchBagClick"],
                     "pipeline_override": {
                         "LargeEventEntry": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisLogo.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisLogo.png"]
                                 }
                             }
                         },
                         "LargeEventStory1StageClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory1Stage.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory1Stage.png"]
                                 }
                             }
                         },
                         "LargeEventStory2StageNormalClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory2StageNormal.png"]
                                 }
                             }
                         },
@@ -78,27 +68,21 @@
                         "LargeEventStory1StageRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory1StageRepeatable.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory1StageRepeatable.png"]
                                 }
                             }
                         },
                         "LargeEventStory2StageNormalRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory2StageNormal.png"]
                                 }
                             }
                         },
                         "LargeEventStory2StageHardRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageHardRepeatable.png"
-                                    ]
+                                    "template": ["LargeEvent/StarAnis/StarAnisStory2StageHardRepeatable.png"]
                                 }
                             }
                         }

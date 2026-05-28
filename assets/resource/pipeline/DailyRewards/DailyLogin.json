@@ -12,9 +12,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
         "next": [
@@ -34,9 +32,7 @@
                     151,
                     52
                 ],
-                "template": [
-                    "DailyRewards/DailyLogin/BackStageGift.png"
-                ]
+                "template": ["DailyRewards/DailyLogin/BackStageGift.png"]
             }
         },
         "action": {
@@ -75,9 +71,7 @@
                     139,
                     34
                 ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "expected": [".*全部.*"]
             }
         },
         "action": {

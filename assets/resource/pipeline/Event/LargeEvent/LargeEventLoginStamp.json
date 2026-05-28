@@ -1,9 +1,8 @@
 {
     "LargeEventLoginStamp": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "大活动签到",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -13,17 +12,14 @@
                     308,
                     79
                 ],
-                "expected": [
-                    ".*签到.*"
-                ]
+                "expected": [".*签到.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "LargeEventLoginStampClaim"
-        ]
+        "timeout": 60000,
+        "next": ["LargeEventLoginStampClaim"]
     },
     "LargeEventLoginStampClaim": {
         "desc": "大活动签到奖励领取",
@@ -36,9 +32,7 @@
                     162,
                     37
                 ],
-                "expected": [
-                    "全部领取"
-                ]
+                "expected": ["全部领取"]
             }
         },
         "action": {

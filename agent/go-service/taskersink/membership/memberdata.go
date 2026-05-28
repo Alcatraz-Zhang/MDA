@@ -41,36 +41,45 @@ func isDebugVersion() bool {
 }
 
 type MemberStatusResponse struct {
-	Matched       bool   `json:"matched"`
-	Score         int    `json:"score"`
-	IsMember      bool   `json:"is_member"`
-	UserID        string `json:"user_id"`
-	Tier          string `json:"tier"`
-	PlanCode      string `json:"plan_code"`
-	PlanName      string `json:"plan_name"`
-	StartsOn      string `json:"starts_on"`
-	ExpiresOn     string `json:"expires_on"`
-	RemainingDays int    `json:"remaining_days"`
+	Matched             bool   `json:"matched"`
+	Score               int    `json:"score"`
+	IsMember            bool   `json:"is_member"`
+	UserID              string `json:"user_id"`
+	Tier                string `json:"tier"`
+	TierCode            string `json:"tier_code"`
+	TierName            string `json:"tier_name"`
+	PlanCode            string `json:"plan_code"`
+	PlanName            string `json:"plan_name"`
+	StartsOn            string `json:"starts_on"`
+	ExpiresOn           string `json:"expires_on"`
+	RemainingDays       int    `json:"remaining_days"`
+	DailyRuntimeMinutes int    `json:"daily_runtime_minutes"`
+	AllFeaturesUnlocked bool   `json:"all_features_unlocked"`
 }
 
 // MembershipStatus represents the current membership state.
 type MembershipStatus struct {
-	Tier          string
-	PlanCode      string
-	PlanName      string
-	StartsOn      string
-	ExpiresOn     string
-	RemainingDays int
-	IsMember      bool
-	UserID        string
-	DeviceCode    DeviceCodeV6
+	Tier                string
+	TierCode            string
+	TierName            string
+	PlanCode            string
+	PlanName            string
+	StartsOn            string
+	ExpiresOn           string
+	RemainingDays       int
+	DailyRuntimeMinutes int
+	AllFeaturesUnlocked bool
+	UnlimitedRuntime    bool
+	IsMember            bool
+	UserID              string
+	DeviceCode          DeviceCodeV7
 }
 
 var (
 	cachedStatus     *MembershipStatus
 	cachedStatusMu   sync.RWMutex
 	cachedStatusTime time.Time
-	cachedDeviceCode DeviceCodeV6
+	cachedDeviceCode DeviceCodeV7
 )
 
 const (
@@ -92,36 +101,50 @@ func GetMembershipStatus() *MembershipStatus {
 	return checkMembership()
 }
 
+// RefreshMembershipStatus returns the current membership status after bypassing cache.
+func RefreshMembershipStatus() *MembershipStatus {
+	return checkMembership()
+}
+
 // checkMembership performs the full membership check flow.
 func checkMembership() *MembershipStatus {
-	deviceCode := GenerateDeviceCodeV6()
+	deviceCode := GenerateDeviceCodeV7()
 	cachedDeviceCode = deviceCode
 
 	defaultStatus := &MembershipStatus{
-		Tier:       "普通用户",
-		IsMember:   false,
-		DeviceCode: deviceCode,
+		Tier:                "Orange Free",
+		TierCode:            "orange_free",
+		TierName:            "Orange Free",
+		PlanName:            "Orange Free",
+		DailyRuntimeMinutes: 10,
+		AllFeaturesUnlocked: true,
+		IsMember:            false,
+		DeviceCode:          deviceCode,
 	}
 
 	// Debug versions (below 1.0.0) bypass membership verification
 	if isDebugVersion() {
 		log.Info().Str("version", appVersion).Msg("Debug version detected, bypassing membership verification")
 		return &MembershipStatus{
-			Tier:          "金Doro会员",
-			PlanCode:      "debug",
-			PlanName:      "金Doro会员调试订阅",
-			StartsOn:      "00000000",
-			ExpiresOn:     "99991231",
-			RemainingDays: 9999,
-			IsMember:      true,
-			DeviceCode:    deviceCode,
+			Tier:                "Debug",
+			TierCode:            "debug",
+			TierName:            "Debug",
+			PlanCode:            "debug",
+			PlanName:            "Debug",
+			StartsOn:            "00000000",
+			ExpiresOn:           "99991231",
+			RemainingDays:       9999,
+			AllFeaturesUnlocked: true,
+			UnlimitedRuntime:    true,
+			IsMember:            true,
+			DeviceCode:          deviceCode,
 		}
 	}
 
 	log.Info().
 		Str("cpu_hash", shortHash(deviceCode.CPUHash)).
 		Str("uuid_hash", shortHash(deviceCode.UUIDHash)).
-		Msg("Generated V6 device code")
+		Msg("Generated V7 device code")
 
 	response, err := fetchMemberStatus(deviceCode)
 	if err != nil {
@@ -130,13 +153,7 @@ func checkMembership() *MembershipStatus {
 	}
 
 	if !response.Matched {
-		log.Info().Int("score", response.Score).Msg("No matching member device found")
-		return defaultStatus
-	}
-
-	if !response.IsMember {
-		log.Info().Str("user_id", response.UserID).Int("score", response.Score).Msg("Member device matched but no active subscription")
-		defaultStatus.UserID = response.UserID
+		log.Info().Int("score", response.Score).Msg("No matching member device found, using Orange Free quota")
 		return defaultStatus
 	}
 
@@ -162,26 +179,45 @@ func cacheStatus(status *MembershipStatus) {
 	cachedStatusMu.Unlock()
 }
 
-func statusFromResponse(response *MemberStatusResponse, deviceCode DeviceCodeV6) *MembershipStatus {
-	tier := response.Tier
-	if tier == "" {
-		tier = "普通用户"
+func statusFromResponse(response *MemberStatusResponse, deviceCode DeviceCodeV7) *MembershipStatus {
+	tierCode := response.TierCode
+	if tierCode == "" {
+		tierCode = "orange_free"
+	}
+	tierName := response.TierName
+	if tierName == "" {
+		tierName = response.Tier
+	}
+	if tierName == "" {
+		tierName = "Orange Free"
+	}
+	planName := response.PlanName
+	if planName == "" {
+		planName = tierName
+	}
+	dailyRuntimeMinutes := response.DailyRuntimeMinutes
+	if dailyRuntimeMinutes <= 0 {
+		dailyRuntimeMinutes = 10
 	}
 
 	return &MembershipStatus{
-		Tier:          tier,
-		PlanCode:      response.PlanCode,
-		PlanName:      response.PlanName,
-		StartsOn:      response.StartsOn,
-		ExpiresOn:     response.ExpiresOn,
-		RemainingDays: response.RemainingDays,
-		IsMember:      response.IsMember,
-		UserID:        response.UserID,
-		DeviceCode:    deviceCode,
+		Tier:                tierName,
+		TierCode:            tierCode,
+		TierName:            tierName,
+		PlanCode:            response.PlanCode,
+		PlanName:            planName,
+		StartsOn:            response.StartsOn,
+		ExpiresOn:           response.ExpiresOn,
+		RemainingDays:       response.RemainingDays,
+		DailyRuntimeMinutes: dailyRuntimeMinutes,
+		AllFeaturesUnlocked: response.AllFeaturesUnlocked,
+		IsMember:            response.IsMember,
+		UserID:              response.UserID,
+		DeviceCode:          deviceCode,
 	}
 }
 
-func fetchMemberStatus(deviceCode DeviceCodeV6) (*MemberStatusResponse, error) {
+func fetchMemberStatus(deviceCode DeviceCodeV7) (*MemberStatusResponse, error) {
 	client := &http.Client{Timeout: httpTimeout}
 	payload, err := json.Marshal(deviceCode)
 	if err != nil {

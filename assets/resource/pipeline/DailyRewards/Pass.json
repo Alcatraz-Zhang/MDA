@@ -20,9 +20,7 @@
                     163,
                     66
                 ],
-                "template": [
-                    "DailyRewards/Pass/PassChange.png"
-                ]
+                "template": ["DailyRewards/Pass/PassChange.png"]
             }
         },
         "action": {
@@ -67,9 +65,7 @@
                     163,
                     66
                 ],
-                "template": [
-                    "Common/PassRedDot.png"
-                ]
+                "template": ["Common/PassRedDot.png"]
             }
         },
         "action": {
@@ -96,9 +92,7 @@
                     163,
                     66
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -125,9 +119,7 @@
                     369,
                     36
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -142,9 +134,7 @@
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "DailyRewardsClaimRewardFlow"
-        ]
+        "next": ["DailyRewardsClaimRewardFlow"]
     },
     "DailyRewardsClaimRewardFlow": {
         "desc": "领取Pass奖励流程",
@@ -206,9 +196,7 @@
                     175,
                     30
                 ],
-                "expected": [
-                    ".*全部.*"
-                ]
+                "expected": [".*全部.*"]
             }
         },
         "action": {

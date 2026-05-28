@@ -1,5 +1,11 @@
 {
     "InterceptionMain": {
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
         "next": [
             "ArkEnterInterception",
             "[JumpBack]HallEnterArk"
@@ -16,15 +22,11 @@
                     85,
                     23
                 ],
-                "replace": [
-                    [
+                "expected": ["拦截战"],
+                "replace": [[
                         "载",
                         "截"
-                    ]
-                ],
-                "expected": [
-                    "拦截战"
-                ]
+                    ]]
             }
         },
         "action": {
@@ -48,9 +50,7 @@
                     70,
                     22
                 ],
-                "expected": [
-                    "剩余拦截次数"
-                ]
+                "expected": ["剩余拦截次数"]
             }
         }
     },
@@ -59,9 +59,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "InterceptionMainPageEntered"
-                ]
+                "all_of": ["InterceptionMainPageEntered"]
             }
         },
         "next": [
@@ -73,7 +71,6 @@
     "ManualInterceptionBattle": {
         "desc": "手动拦截战",
         "enabled": false,
-        "inverse": true,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -83,11 +80,10 @@
                     43,
                     17
                 ],
-                "expected": [
-                    "达成阶段"
-                ]
+                "expected": ["达成阶段"]
             }
         },
+        "inverse": true,
         "focus": {
             "Node.Recognition.Succeeded": "$focus.ManualInterceptionBattle.Succeeded"
         }

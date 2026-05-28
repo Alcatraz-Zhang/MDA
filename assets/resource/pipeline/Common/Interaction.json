@@ -10,9 +10,7 @@
                     176,
                     173
                 ],
-                "expected": [
-                    "点击领取奖励"
-                ]
+                "expected": ["点击领取奖励"]
             }
         },
         "pre_wait_freezes": 500,
@@ -31,9 +29,7 @@
                     248,
                     250
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -77,9 +73,7 @@
                     138,
                     125
                 ],
-                "template": [
-                    "Common/MAX.png"
-                ]
+                "template": ["Common/MAX.png"]
             }
         },
         "action": {

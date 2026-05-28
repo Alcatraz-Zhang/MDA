@@ -10,9 +10,7 @@
                     116,
                     115
                 ],
-                "template": [
-                    "SimulationRoom/Rewards0.png"
-                ]
+                "template": ["SimulationRoom/Rewards0.png"]
             }
         },
         "action": {
@@ -43,18 +41,14 @@
                     105,
                     32
                 ],
-                "expected": [
-                    "BIOS SETTING"
-                ]
+                "expected": ["BIOS SETTING"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SimulationRoomBiosSettingFlow"
-        ]
+        "next": ["SimulationRoomBiosSettingFlow"]
     },
     "SimulationRoomBiosSettingFlow": {
         "desc": "BIOS设置",
@@ -75,9 +69,7 @@
                     33,
                     19
                 ],
-                "expected": [
-                    "25"
-                ]
+                "expected": ["25"]
             }
         },
         "action": {
@@ -142,17 +134,13 @@
                     316,
                     36
                 ],
-                "expected": [
-                    "开始模拟"
-                ]
+                "expected": ["开始模拟"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SimulationRoomSelectBattle"
-        ]
+        "next": ["SimulationRoomSelectBattle"]
     },
     "SimulationRoomSelectBattle": {
         "desc": "选择战斗",
@@ -165,9 +153,7 @@
                     333,
                     158
                 ],
-                "template": [
-                    "SimulationRoom/BattleFlag.png"
-                ]
+                "template": ["SimulationRoom/BattleFlag.png"]
             }
         },
         "action": {
@@ -193,18 +179,14 @@
                     249,
                     131
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SimulationRoomSelectBuff"
-        ]
+        "next": ["SimulationRoomSelectBuff"]
     },
     "SimulationRoomSelectBuff": {
         "desc": "选择增益效果",
@@ -228,9 +210,7 @@
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SimulationRoomConfirmBuff"
-        ]
+        "next": ["SimulationRoomConfirmBuff"]
     },
     "SimulationRoomConfirmBuff": {
         "desc": "确认增益",
@@ -243,9 +223,7 @@
                     150,
                     95
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {

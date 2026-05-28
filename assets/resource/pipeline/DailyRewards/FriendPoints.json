@@ -51,9 +51,7 @@
                     21,
                     19
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -84,17 +82,13 @@
                     36,
                     33
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": [
-            "CommonClosePage"
-        ]
+        "next": ["CommonClosePage"]
     }
 }

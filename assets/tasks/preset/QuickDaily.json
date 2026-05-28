@@ -17,9 +17,7 @@
                     "option": {
                         "CommonShopFreeGoods": "Yes",
                         "CommonShopCoreDustCase": "Yes",
-                        "RecyclingShopList": [
-                            "Gem"
-                        ]
+                        "RecyclingShopList": ["Gem"]
                     }
                 },
                 {

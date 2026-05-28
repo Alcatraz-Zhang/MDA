@@ -11,9 +11,7 @@
                 "ArenaShopItemList",
                 "RecyclingShopList"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -130,9 +128,7 @@
         },
         "RecyclingShopList": {
             "type": "checkbox",
-            "default_case": [
-                "Gem"
-            ],
+            "default_case": ["Gem"],
             "label": "$option.RecyclingShopList.label",
             "cases": [
                 {

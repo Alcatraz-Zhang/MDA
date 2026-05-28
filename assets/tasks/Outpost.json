@@ -10,9 +10,7 @@
                 "BulletinBoard",
                 "BriefEncounter"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {

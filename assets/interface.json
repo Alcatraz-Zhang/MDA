@@ -67,9 +67,7 @@
     "resource": [
         {
             "name": "国际服",
-            "path": [
-                "./resource"
-            ]
+            "path": ["./resource"]
         }
     ],
     "agent": {

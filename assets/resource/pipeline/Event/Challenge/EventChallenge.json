@@ -1,18 +1,14 @@
 {
     "EventChallenge": {
         "desc": "活动挑战",
-        "next": [
-            "EventChallengeStagePage"
-        ]
+        "next": ["EventChallengeStagePage"]
     },
     "EventChallengeStagePage": {
         "desc": "活动挑战页面",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "EventChallengeStageVisible"
-                ]
+                "all_of": ["EventChallengeStageVisible"]
             }
         },
         "post_wait_freezes": 500,
@@ -32,9 +28,7 @@
                     379,
                     424
                 ],
-                "expected": [
-                    "(?i).*CHALLENGE.*"
-                ],
+                "expected": ["(?i).*CHALLENGE.*"],
                 "order_by": "Vertical",
                 "index": -1
             }
@@ -59,9 +53,7 @@
                     379,
                     424
                 ],
-                "expected": [
-                    ".*CLEAR.*"
-                ],
+                "expected": [".*CLEAR.*"],
                 "order_by": "Vertical",
                 "index": -1
             }
@@ -86,9 +78,7 @@
                     50,
                     16
                 ],
-                "expected": [
-                    "挑战关卡"
-                ]
+                "expected": ["挑战关卡"]
             }
         }
     }

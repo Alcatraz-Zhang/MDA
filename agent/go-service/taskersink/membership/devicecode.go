@@ -9,32 +9,32 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// DeviceCodeV6 holds six independent SHA-256 hardware hashes.
-type DeviceCodeV6 struct {
-	CPUHash  string `json:"cpu_hash"`
-	UUIDHash string `json:"uuid_hash"`
-	BIOSHash string `json:"bios_hash"`
+// DeviceCodeV7 holds six independent SHA-256 hardware hashes.
+type DeviceCodeV7 struct {
+	CPUHash   string `json:"cpu_hash"`
+	UUIDHash  string `json:"uuid_hash"`
+	BIOSHash  string `json:"bios_hash"`
 	BoardHash string `json:"board_hash"`
 	DiskHash  string `json:"disk_hash"`
 	GUIDHash  string `json:"guid_hash"`
 }
 
-// v6Weights defines the match weight for each hardware hash.
-var v6Weights = map[string]int{
-	"cpu":  15,
-	"uuid": 45,
-	"bios": 5,
+// v7Weights defines the match weight for each hardware hash.
+var v7Weights = map[string]int{
+	"cpu":   15,
+	"uuid":  45,
+	"bios":  5,
 	"board": 10,
-	"disk": 15,
-	"guid": 10,
+	"disk":  15,
+	"guid":  10,
 }
 
-// GenerateDeviceCodeV6 generates a V6 device code by querying hardware identifiers.
-func GenerateDeviceCodeV6() DeviceCodeV6 {
-	code := DeviceCodeV6{
-		CPUHash:  hashString(queryWMI("Win32_Processor", "ProcessorID")),
-		UUIDHash: hashString(queryWMI("Win32_ComputerSystemProduct", "UUID")),
-		BIOSHash: hashString(queryWMIFiltered("Win32_BIOS", "SerialNumber", notPlaceholder)),
+// GenerateDeviceCodeV7 generates a V7 device code by querying hardware identifiers.
+func GenerateDeviceCodeV7() DeviceCodeV7 {
+	code := DeviceCodeV7{
+		CPUHash:   hashString(queryWMI("Win32_Processor", "ProcessorID")),
+		UUIDHash:  hashString(queryWMI("Win32_ComputerSystemProduct", "UUID")),
+		BIOSHash:  hashString(queryWMIFiltered("Win32_BIOS", "SerialNumber", notPlaceholder)),
 		BoardHash: hashString(queryWMIFiltered("Win32_BaseBoard", "SerialNumber", notPlaceholder)),
 		DiskHash:  hashString(queryWMIFirstFixed("Win32_DiskDrive", "SerialNumber")),
 		GUIDHash:  hashString(readMachineGuid()),
@@ -42,27 +42,27 @@ func GenerateDeviceCodeV6() DeviceCodeV6 {
 	return code
 }
 
-// MatchDeviceCodeV6 performs weighted matching between current and saved device codes.
+// MatchDeviceCodeV7 performs weighted matching between current and saved device codes.
 // Returns the match score (0-100). Threshold >= 80 means a match.
-func MatchDeviceCodeV6(current, saved DeviceCodeV6) int {
+func MatchDeviceCodeV7(current, saved DeviceCodeV7) int {
 	score := 0
 	if current.CPUHash != "" && current.CPUHash == saved.CPUHash {
-		score += v6Weights["cpu"]
+		score += v7Weights["cpu"]
 	}
 	if current.UUIDHash != "" && current.UUIDHash == saved.UUIDHash {
-		score += v6Weights["uuid"]
+		score += v7Weights["uuid"]
 	}
 	if current.BIOSHash != "" && current.BIOSHash == saved.BIOSHash {
-		score += v6Weights["bios"]
+		score += v7Weights["bios"]
 	}
 	if current.BoardHash != "" && current.BoardHash == saved.BoardHash {
-		score += v6Weights["board"]
+		score += v7Weights["board"]
 	}
 	if current.DiskHash != "" && current.DiskHash == saved.DiskHash {
-		score += v6Weights["disk"]
+		score += v7Weights["disk"]
 	}
 	if current.GUIDHash != "" && current.GUIDHash == saved.GUIDHash {
-		score += v6Weights["guid"]
+		score += v7Weights["guid"]
 	}
 	return score
 }

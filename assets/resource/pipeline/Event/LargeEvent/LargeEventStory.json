@@ -1,9 +1,8 @@
 {
     "LargeEventStory": {
-        "timeout": 60000,
-        "max_hit": 1,
         "desc": "大活动剧情",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -13,27 +12,22 @@
                     308,
                     79
                 ],
-                "expected": [
-                    ".*STORY.*"
-                ],
+                "expected": [".*STORY.*"],
                 "order_by": "Vertical"
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "LargeEventStoryEventPage"
-        ]
+        "timeout": 60000,
+        "next": ["LargeEventStoryEventPage"]
     },
     "LargeEventStoryEventPage": {
         "desc": "大活动剧情活动页面",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "LargeEventStoryVisible"
-                ]
+                "all_of": ["LargeEventStoryVisible"]
             }
         },
         "action": {
@@ -70,9 +64,7 @@
                     661,
                     294
                 ],
-                "expected": [
-                    ".*剩余.*"
-                ]
+                "expected": [".*剩余.*"]
             }
         },
         "action": {
@@ -87,9 +79,7 @@
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "LargeEventEventStagePageFlow"
-        ]
+        "next": ["LargeEventEventStagePageFlow"]
     },
     "LargeEventEventStagePageEntered": {
         "desc": "已进入大活动活动关卡页面",
@@ -102,9 +92,7 @@
                     50,
                     16
                 ],
-                "expected": [
-                    ".*活动关.*"
-                ]
+                "expected": [".*活动关.*"]
             }
         }
     },
@@ -113,9 +101,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "LargeEventEventStagePageEntered"
-                ]
+                "all_of": ["LargeEventEventStagePageEntered"]
             }
         },
         "post_wait_freezes": {
@@ -127,9 +113,7 @@
                 131
             ]
         },
-        "next": [
-            "LargeEventEventStageBattleFlow"
-        ]
+        "next": ["LargeEventEventStageBattleFlow"]
     },
     "LargeEventEventStageBattleFlow": {
         "desc": "大活动活动关卡页面战斗流程",
@@ -156,9 +140,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "BattleMainVisible"
-                ]
+                "all_of": ["BattleMainVisible"]
             }
         },
         "next": [
@@ -179,9 +161,7 @@
                     50,
                     16
                 ],
-                "expected": [
-                    "剧情活动"
-                ]
+                "expected": ["剧情活动"]
             }
         }
     },

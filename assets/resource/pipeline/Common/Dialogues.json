@@ -10,9 +10,7 @@
                     39,
                     16
                 ],
-                "expected": [
-                    ".*SKI.*"
-                ]
+                "expected": [".*SKI.*"]
             }
         },
         "action": {
@@ -31,9 +29,7 @@
                     336,
                     70
                 ],
-                "template": [
-                    "Dialogues/Continue.png"
-                ]
+                "template": ["Dialogues/Continue.png"]
             }
         },
         "action": {

@@ -1,9 +1,8 @@
 {
     "SmallEventStory": {
-        "timeout": 60000,
-        "max_hit": 1,
         "desc": "小活动剧情",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -13,9 +12,7 @@
                     661,
                     294
                 ],
-                "expected": [
-                    ".*加成.*"
-                ]
+                "expected": [".*加成.*"]
             }
         },
         "action": {
@@ -30,9 +27,8 @@
             }
         },
         "post_wait_freezes": 500,
-        "next": [
-            "SmallEventEventStagePageFlow"
-        ]
+        "timeout": 60000,
+        "next": ["SmallEventEventStagePageFlow"]
     },
     "SmallEventEventStagePageEntered": {
         "desc": "已进入小活动活动关卡页面",
@@ -45,9 +41,7 @@
                     50,
                     16
                 ],
-                "expected": [
-                    ".*活动关.*"
-                ]
+                "expected": [".*活动关.*"]
             }
         }
     },
@@ -57,9 +51,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SmallEventEventStagePageEntered"
-                ]
+                "all_of": ["SmallEventEventStagePageEntered"]
             }
         },
         "post_wait_freezes": {
@@ -71,9 +63,7 @@
                 131
             ]
         },
-        "next": [
-            "SmallEventEventStageBattleFlow"
-        ]
+        "next": ["SmallEventEventStageBattleFlow"]
     },
     "SmallEventEventStageBattleFlow": {
         "desc": "小活动活动关卡页面战斗流程",
@@ -98,9 +88,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "BattleMainVisible"
-                ]
+                "all_of": ["BattleMainVisible"]
             }
         },
         "next": [
@@ -121,9 +109,7 @@
                     50,
                     16
                 ],
-                "expected": [
-                    "剧情活动"
-                ]
+                "expected": ["剧情活动"]
             }
         }
     },

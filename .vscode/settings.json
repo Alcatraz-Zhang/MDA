@@ -35,9 +35,7 @@
             "url": "/tools/schema/interface_import.schema.json"
         },
         {
-            "fileMatch": [
-                "/install/config/maa_pi_config.json"
-            ],
+            "fileMatch": ["/install/config/maa_pi_config.json"],
             "url": "/tools/schema/interface_config.schema.json"
         },
         {

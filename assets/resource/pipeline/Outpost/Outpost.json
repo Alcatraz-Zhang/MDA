@@ -1,5 +1,11 @@
 {
     "OutpostMain": {
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
         "next": [
             "HallEnterOutpost",
             "[JumpBack]NavigationEnterHall"
@@ -16,9 +22,7 @@
                     82,
                     33
                 ],
-                "expected": [
-                    "前哨基地"
-                ]
+                "expected": ["前哨基地"]
             }
         },
         "action": {
@@ -34,9 +38,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostMainPageEntered"
-                ]
+                "all_of": ["OutpostMainPageEntered"]
             }
         },
         "next": [
@@ -57,9 +59,7 @@
                     98,
                     62
                 ],
-                "template": [
-                    "Outpost/CommandCenter.png"
-                ]
+                "template": ["Outpost/CommandCenter.png"]
             }
         }
     }

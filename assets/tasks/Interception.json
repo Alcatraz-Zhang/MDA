@@ -9,9 +9,7 @@
                 "InterceptionType",
                 "ManualInterceptionBattle"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -30,9 +28,7 @@
                             "enabled": false
                         }
                     },
-                    "option": [
-                        "NormalInterceptionLevel"
-                    ]
+                    "option": ["NormalInterceptionLevel"]
                 },
                 {
                     "name": "AnomalyInterception",
@@ -45,9 +41,7 @@
                             "enabled": true
                         }
                     },
-                    "option": [
-                        "AnomalyInterceptionTarget"
-                    ]
+                    "option": ["AnomalyInterceptionTarget"]
                 }
             ],
             "default_case": "AnomalyInterception"

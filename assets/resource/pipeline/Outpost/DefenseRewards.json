@@ -11,17 +11,13 @@
                     47,
                     32
                 ],
-                "expected": [
-                    "%$"
-                ]
+                "expected": ["%$"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "OutpostDefenseRewardsFlow"
-        ]
+        "next": ["OutpostDefenseRewardsFlow"]
     },
     "OutpostDefenseRewardsVisible": {
         "desc": "防御奖励标志",
@@ -34,9 +30,7 @@
                     144,
                     32
                 ],
-                "expected": [
-                    "防御前哨基地"
-                ]
+                "expected": ["防御前哨基地"]
             }
         }
     },
@@ -45,9 +39,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostDefenseRewardsVisible"
-                ]
+                "all_of": ["OutpostDefenseRewardsVisible"]
             }
         },
         "next": [
@@ -71,9 +63,7 @@
                     68,
                     24
                 ],
-                "expected": [
-                    "获得奖励"
-                ]
+                "expected": ["获得奖励"]
             }
         },
         "action": {
@@ -96,9 +86,7 @@
         "action": {
             "type": "Click"
         },
-        "next": [
-            "OutpostConfirmWipeOut"
-        ]
+        "next": ["OutpostConfirmWipeOut"]
     },
     "OutpostConfirmWipeOut": {
         "desc": "确认一举歼灭",
@@ -111,9 +99,7 @@
                     70,
                     24
                 ],
-                "expected": [
-                    "进行歼灭"
-                ]
+                "expected": ["进行歼灭"]
             }
         },
         "action": {
@@ -137,9 +123,7 @@
                     109,
                     39
                 ],
-                "expected": [
-                    "取消"
-                ]
+                "expected": ["取消"]
             }
         },
         "action": {
@@ -157,9 +141,7 @@
                     67,
                     26
                 ],
-                "expected": [
-                    ".*歼灭.*"
-                ]
+                "expected": [".*歼灭.*"]
             }
         }
     },
@@ -174,9 +156,7 @@
                     21,
                     21
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         }
     }

@@ -1,5 +1,11 @@
 {
     "CashShopMain": {
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
         "next": [
             "HallEnterCashShop",
             "[JumpBack]NavigationEnterHall"
@@ -16,9 +22,7 @@
                     59,
                     21
                 ],
-                "expected": [
-                    "付费商店"
-                ]
+                "expected": ["付费商店"]
             }
         },
         "action": {
@@ -40,9 +44,7 @@
                     70,
                     25
                 ],
-                "expected": [
-                    "付费商店"
-                ]
+                "expected": ["付费商店"]
             }
         }
     },
@@ -51,9 +53,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "CashShopMainPageEntered"
-                ]
+                "all_of": ["CashShopMainPageEntered"]
             }
         },
         "next": [
@@ -73,17 +73,13 @@
                     49,
                     28
                 ],
-                "expected": [
-                    "免费"
-                ]
+                "expected": ["免费"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CommonConfirmReward"
-        ]
+        "next": ["CommonConfirmReward"]
     },
     "ShopChooseOrdinaryPackage": {
         "desc": "选择普通礼包",
@@ -96,12 +92,8 @@
                     543,
                     44
                 ],
-                "template": [
-                    "CashShop/OrdinaryPackage.png"
-                ],
-                "threshold": [
-                    0.9
-                ]
+                "template": ["CashShop/OrdinaryPackage.png"],
+                "threshold": [0.9]
             }
         },
         "pre_wait_freezes": 500,
@@ -125,9 +117,7 @@
                     509,
                     91
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ],
+                "template": ["Common/RedDot.png"],
                 "order_by": "Vertical",
                 "index": -1
             }

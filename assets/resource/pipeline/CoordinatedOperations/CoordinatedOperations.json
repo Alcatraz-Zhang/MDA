@@ -5,7 +5,7 @@
         "action": {
             "type": "Custom",
             "param": {
-                "custom_action": "MembershipCheck"
+                "custom_action": "RuntimeQuotaCheck"
             }
         },
         "next": [
@@ -18,9 +18,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
         "next": [
@@ -40,9 +38,7 @@
                     66,
                     59
                 ],
-                "template": [
-                    "CoordinatedOperations/CoordinatedOperations.png"
-                ],
+                "template": ["CoordinatedOperations/CoordinatedOperations.png"],
                 "green_mask": true
             }
         },
@@ -65,9 +61,7 @@
                     70,
                     25
                 ],
-                "expected": [
-                    "协同作战"
-                ]
+                "expected": ["协同作战"]
             }
         },
         "next": [
@@ -87,9 +81,7 @@
                     163,
                     47
                 ],
-                "expected": [
-                    ".*开始匹配.*"
-                ]
+                "expected": [".*开始匹配.*"]
             }
         },
         "action": {
@@ -112,21 +104,16 @@
                     142,
                     60
                 ],
-                "expected": [
-                    ".*普通.*"
-                ]
+                "expected": [".*普通.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CoordinatedOperationsDifficultyConfirm"
-        ]
+        "next": ["CoordinatedOperationsDifficultyConfirm"]
     },
     "CoordinatedOperationsDifficultyConfirm": {
         "desc": "协同作战难度确认",
-        "timeout": 60000,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -136,21 +123,17 @@
                     323,
                     46
                 ],
-                "expected": [
-                    ".*确认.*"
-                ]
+                "expected": [".*确认.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "CoordinatedOperationsMatchConfirm"
-        ]
+        "timeout": 60000,
+        "next": ["CoordinatedOperationsMatchConfirm"]
     },
     "CoordinatedOperationsMatchConfirm": {
         "desc": "协同作战匹配确认",
-        "timeout": 60000,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -160,14 +143,13 @@
                     148,
                     52
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
             "type": "Click"
         },
+        "timeout": 60000,
         "next": [
             "CoordinatedOperationsReady",
             "CoordinatedOperationsMatchConfirm",
@@ -176,7 +158,6 @@
     },
     "CoordinatedOperationsReady": {
         "desc": "协同作战准备就绪",
-        "timeout": 60000,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -186,17 +167,14 @@
                     136,
                     39
                 ],
-                "expected": [
-                    ".*准备.*"
-                ]
+                "expected": [".*准备.*"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "BattleInBattle"
-        ]
+        "timeout": 60000,
+        "next": ["BattleInBattle"]
     },
     "CoordinatedOperationsConnectionInterrupted": {
         "desc": "协同作战连接中断",
@@ -209,9 +187,7 @@
                     33,
                     27
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -254,15 +230,13 @@
                     28,
                     14
                 ],
-                "expected": [
-                    ".*0.*"
-                ]
+                "expected": [".*0.*"]
             }
         }
     },
     "CoordinatedOperationsSlideBanner": {
-        "max_hit": 10,
         "desc": "滑动横幅",
+        "max_hit": 10,
         "action": {
             "type": "Swipe",
             "param": {

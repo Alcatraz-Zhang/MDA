@@ -9,9 +9,7 @@
                 "SmallEventTheme",
                 "SmallEventContent"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -27,45 +25,35 @@
                         "SmallEventEntry": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolLogo.png"
-                                    ]
+                                    "template": ["SmallEvent/B-SideIdol/B-SideIdolLogo.png"]
                                 }
                             }
                         },
                         "SmallEventStageNormalClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormal.png"
-                                    ]
+                                    "template": ["SmallEvent/B-SideIdol/B-SideIdolStageNormal.png"]
                                 }
                             }
                         },
                         "SmallEventStageHardClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageHard.png"
-                                    ]
+                                    "template": ["SmallEvent/B-SideIdol/B-SideIdolStageHard.png"]
                                 }
                             }
                         },
                         "SmallEventStageNormalRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormalRepeatable.png"
-                                    ]
+                                    "template": ["SmallEvent/B-SideIdol/B-SideIdolStageNormalRepeatable.png"]
                                 }
                             }
                         },
                         "SmallEventStageHardRepeatableClick": {
                             "recognition": {
                                 "param": {
-                                    "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageHardRepeatable.png"
-                                    ]
+                                    "template": ["SmallEvent/B-SideIdol/B-SideIdolStageHardRepeatable.png"]
                                 }
                             }
                         }

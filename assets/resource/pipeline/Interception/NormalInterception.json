@@ -10,15 +10,11 @@
                     56,
                     26
                 ],
-                "replace": [
-                    [
+                "expected": [".*拦截战.*"],
+                "replace": [[
                         "载",
                         "截"
-                    ]
-                ],
-                "expected": [
-                    ".*拦截战.*"
-                ]
+                    ]]
             }
         },
         "action": {
@@ -51,9 +47,7 @@
                     29,
                     19
                 ],
-                "expected": [
-                    "LEVEL"
-                ]
+                "expected": ["LEVEL"]
             }
         },
         "action": {
@@ -72,9 +66,7 @@
                     30,
                     20
                 ],
-                "expected": [
-                    "LEVEL"
-                ]
+                "expected": ["LEVEL"]
             }
         },
         "action": {
@@ -93,9 +85,7 @@
                     122,
                     24
                 ],
-                "expected": [
-                    "特殊目标拦截战"
-                ]
+                "expected": ["特殊目标拦截战"]
             }
         },
         "action": {
@@ -113,9 +103,7 @@
                     117,
                     26
                 ],
-                "expected": [
-                    ".*拦截战.*"
-                ]
+                "expected": [".*拦截战.*"]
             }
         },
         "next": [

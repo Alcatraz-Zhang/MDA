@@ -9,9 +9,7 @@
                 "NikkeAdvise",
                 "AdviseEpisodeViewingReward"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {
@@ -27,9 +25,7 @@
                             "enabled": true
                         }
                     },
-                    "option": [
-                        "AdviseEpisodeReward"
-                    ]
+                    "option": ["AdviseEpisodeReward"]
                 },
                 {
                     "name": "No",

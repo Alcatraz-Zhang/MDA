@@ -4,7 +4,7 @@
         "action": {
             "type": "Custom",
             "param": {
-                "custom_action": "MembershipCheck"
+                "custom_action": "RuntimeQuotaCheck"
             }
         },
         "next": [
@@ -18,13 +18,9 @@
         "recognition": {
             "type": "NeuralNetworkDetect",
             "param": {
+                "expected": [0],
                 "model": "MapPushing.onnx",
-                "labels": [
-                    "monster"
-                ],
-                "expected": [
-                    0
-                ],
+                "labels": ["monster"],
                 "order_by": "Area"
             }
         },
@@ -46,13 +42,9 @@
         "recognition": {
             "type": "NeuralNetworkDetect",
             "param": {
+                "expected": [0],
                 "model": "MapPushing.onnx",
-                "labels": [
-                    "plate0"
-                ],
-                "expected": [
-                    0
-                ],
+                "labels": ["plate0"],
                 "order_by": "Area"
             }
         },

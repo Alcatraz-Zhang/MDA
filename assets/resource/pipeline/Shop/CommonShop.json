@@ -48,9 +48,7 @@
                     119,
                     20
                 ],
-                "expected": [
-                    "普通商店"
-                ]
+                "expected": ["普通商店"]
             }
         }
     },
@@ -65,9 +63,7 @@
                     26,
                     26
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -86,9 +82,7 @@
                     109,
                     164
                 ],
-                "template": [
-                    "Shop/CommonShop/CoreDustCase.png"
-                ],
+                "template": ["Shop/CommonShop/CoreDustCase.png"],
                 "threshold": 0.9
             }
         },
@@ -107,9 +101,7 @@
                     56,
                     27
                 ],
-                "template": [
-                    "Shop/CommonShop/FreeReset.png"
-                ]
+                "template": ["Shop/CommonShop/FreeReset.png"]
             }
         },
         "action": {
@@ -139,9 +131,7 @@
                     220,
                     250
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -160,9 +150,7 @@
                     113,
                     34
                 ],
-                "template": [
-                    "Shop/CommonShop/GemCheck.png"
-                ]
+                "template": ["Shop/CommonShop/GemCheck.png"]
             }
         }
     },

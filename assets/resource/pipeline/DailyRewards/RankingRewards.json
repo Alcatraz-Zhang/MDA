@@ -37,9 +37,7 @@
                     50,
                     20
                 ],
-                "expected": [
-                    "方舟"
-                ]
+                "expected": ["方舟"]
             }
         }
     },
@@ -48,9 +46,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "DailyRewardsRankingRewardVisible"
-                ]
+                "all_of": ["DailyRewardsRankingRewardVisible"]
             }
         },
         "next": [
@@ -69,9 +65,7 @@
                     34,
                     33
                 ],
-                "template": [
-                    "Common/RedDot.png"
-                ]
+                "template": ["Common/RedDot.png"]
             }
         },
         "action": {
@@ -102,16 +96,12 @@
                     52,
                     19
                 ],
-                "expected": [
-                    "全部领取"
-                ]
+                "expected": ["全部领取"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "NavigationEnterHall"
-        ]
+        "next": ["NavigationEnterHall"]
     }
 }

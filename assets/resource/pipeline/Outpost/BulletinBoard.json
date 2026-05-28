@@ -11,9 +11,7 @@
                     52,
                     16
                 ],
-                "expected": [
-                    ".*公告.*"
-                ]
+                "expected": [".*公告.*"]
             }
         },
         "action": {
@@ -27,9 +25,7 @@
                 ]
             }
         },
-        "next": [
-            "OutpostBulletinBoardFlow"
-        ]
+        "next": ["OutpostBulletinBoardFlow"]
     },
     "OutpostBulletinBoardVisible": {
         "desc": "派遣公告板标志",
@@ -42,9 +38,7 @@
                     112,
                     28
                 ],
-                "expected": [
-                    "派遣公告栏"
-                ]
+                "expected": ["派遣公告栏"]
             }
         }
     },
@@ -53,9 +47,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "OutpostBulletinBoardVisible"
-                ]
+                "all_of": ["OutpostBulletinBoardVisible"]
             }
         },
         "next": [
@@ -77,9 +69,7 @@
                     64,
                     26
                 ],
-                "expected": [
-                    "全部领取"
-                ]
+                "expected": ["全部领取"]
             }
         },
         "action": {
@@ -103,9 +93,7 @@
                     62,
                     24
                 ],
-                "expected": [
-                    "全部派遣"
-                ]
+                "expected": ["全部派遣"]
             }
         },
         "action": {
@@ -128,9 +116,7 @@
                     106,
                     40
                 ],
-                "expected": [
-                    "派遣"
-                ]
+                "expected": ["派遣"]
             }
         },
         "action": {

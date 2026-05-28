@@ -4,7 +4,7 @@
         "action": {
             "type": "Custom",
             "param": {
-                "custom_action": "MembershipCheck"
+                "custom_action": "RuntimeQuotaCheck"
             }
         },
         "next": [
@@ -17,9 +17,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "NavigationArkVisible"
-                ]
+                "all_of": ["NavigationArkVisible"]
             }
         },
         "next": [
@@ -62,9 +60,7 @@
                     82,
                     30
                 ],
-                "expected": [
-                    ".*剧情.*"
-                ]
+                "expected": [".*剧情.*"]
             }
         }
     },
@@ -73,9 +69,7 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "SmallEventMainPageEntered"
-                ]
+                "all_of": ["SmallEventMainPageEntered"]
             }
         },
         "action": {

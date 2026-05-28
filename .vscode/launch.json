@@ -6,9 +6,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/agent/go-service",
-            "args": [
-                "{AGENT_ID}"
-            ],
+            "args": ["{AGENT_ID}"],
             "cwd": "${workspaceFolder}/install",
             "env": "{AGENT_ENV}"
         }

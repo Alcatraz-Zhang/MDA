@@ -10,9 +10,7 @@
                     148,
                     37
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -30,9 +28,7 @@
                     115,
                     40
                 ],
-                "template": [
-                    "Common/ConfirmWithCircle.png"
-                ]
+                "template": ["Common/ConfirmWithCircle.png"]
             }
         },
         "action": {
@@ -50,9 +46,7 @@
                     91,
                     116
                 ],
-                "template": [
-                    "Common/ServerChoose.png"
-                ]
+                "template": ["Common/ServerChoose.png"]
             }
         },
         "action": {
@@ -78,9 +72,7 @@
                     139,
                     35
                 ],
-                "expected": [
-                    ".*领取.*"
-                ]
+                "expected": [".*领取.*"]
             }
         },
         "action": {

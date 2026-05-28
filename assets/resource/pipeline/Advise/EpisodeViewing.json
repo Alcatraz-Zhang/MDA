@@ -10,9 +10,7 @@
                     27,
                     27
                 ],
-                "template": [
-                    "Common/New.png"
-                ]
+                "template": ["Common/New.png"]
             }
         },
         "action": {
@@ -26,9 +24,7 @@
                 ]
             }
         },
-        "next": [
-            "AdviseClickEpisodeViewingList"
-        ]
+        "next": ["AdviseClickEpisodeViewingList"]
     },
     "AdviseClickEpisodeViewingList": {
         "desc": "点击花絮鉴赏会列表",
@@ -41,9 +37,7 @@
                     79,
                     21
                 ],
-                "expected": [
-                    ".*EPISODE.*"
-                ]
+                "expected": [".*EPISODE.*"]
             }
         },
         "action": {
@@ -68,9 +62,7 @@
                     169,
                     41
                 ],
-                "expected": [
-                    "播放花絮"
-                ]
+                "expected": ["播放花絮"]
             }
         },
         "action": {
@@ -89,9 +81,7 @@
                     83,
                     36
                 ],
-                "expected": [
-                    "领取"
-                ]
+                "expected": ["领取"]
             }
         },
         "action": {

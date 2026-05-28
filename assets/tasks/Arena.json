@@ -11,9 +11,7 @@
                 "ArenaEnterSpecialArena",
                 "ArenaEnterChampionArena"
             ],
-            "group": [
-                "daily"
-            ]
+            "group": ["daily"]
         }
     ],
     "option": {

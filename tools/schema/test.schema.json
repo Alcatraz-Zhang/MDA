@@ -4,18 +4,12 @@
     "description": "`maa-tools` 测试用例文件结构",
     "type": "object",
     "additionalProperties": false,
-    "required": [
-        "configs",
-        "cases"
-    ],
+    "required": ["configs", "cases"],
     "properties": {
         "configs": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-                "resource",
-                "controller"
-            ],
+            "required": ["resource", "controller"],
             "properties": {
                 "name": {
                     "type": "string",
@@ -69,10 +63,7 @@
         "case": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-                "image",
-                "hits"
-            ],
+            "required": ["image", "hits"],
             "properties": {
                 "name": {
                     "type": "string",

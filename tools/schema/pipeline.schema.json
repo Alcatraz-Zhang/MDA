@@ -266,10 +266,7 @@
                     "type": "string"
                 }
             ],
-            "default": [
-                "",
-                ""
-            ]
+            "default": ["", ""]
         },
         "jsonStringStringPairList": {
             "type": "array",
@@ -342,9 +339,7 @@
                     "default": false
                 }
             },
-            "required": [
-                "name"
-            ],
+            "required": ["name"],
             "additionalProperties": false
         },
         "jsonNodeItem": {
@@ -456,12 +451,7 @@
             "$ref": "#/$defs/jsonInt32List",
             "minItems": 4,
             "maxItems": 4,
-            "default": [
-                0,
-                0,
-                0,
-                0
-            ]
+            "default": [0, 0, 0, 0]
         },
         "jsonRectList": {
             "type": "array",
@@ -479,12 +469,7 @@
                     "$ref": "#/$defs/jsonRectList"
                 }
             ],
-            "default": [
-                0,
-                0,
-                0,
-                0
-            ]
+            "default": [0, 0, 0, 0]
         },
         "jsonUInt32List": {
             "type": "array",
@@ -511,10 +496,7 @@
             },
             "minItems": 2,
             "maxItems": 2,
-            "default": [
-                0,
-                0
-            ]
+            "default": [0, 0]
         },
         "jsonRoi": {
             "anyOf": [
@@ -525,12 +507,7 @@
                     "$ref": "#/$defs/jsonRect"
                 }
             ],
-            "default": [
-                0,
-                0,
-                0,
-                0
-            ]
+            "default": [0, 0, 0, 0]
         },
         "jsonTarget": {
             "anyOf": [
@@ -567,14 +544,10 @@
         "TypeWithDependent": {
             "anyOf": [
                 {
-                    "required": [
-                        "param"
-                    ]
+                    "required": ["param"]
                 },
                 {
-                    "required": [
-                        "param_code"
-                    ]
+                    "required": ["param_code"]
                 }
             ]
         },
@@ -651,12 +624,7 @@
                 "order_by": {
                     "title": "Order By Property",
                     "description": "结果排序方式。可选，默认 `Horizontal`。",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical",
-                        "Score",
-                        "Random"
-                    ],
+                    "enum": ["Horizontal", "Vertical", "Score", "Random"],
                     "markdownDescription": "*string*\n\n结果排序方式。可选，默认 `Horizontal`。\n\n可选的值：`Horizontal` | `Vertical` | `Score` | `Random` 。\n\n可结合 `index` 字段使用。",
                     "default": "Horizontal"
                 },
@@ -669,12 +637,7 @@
                 "method": {
                     "title": "Method Property",
                     "description": "模板匹配算法，即 cv::TemplateMatchModes。可选，默认 5 。",
-                    "enum": [
-                        1,
-                        3,
-                        5,
-                        10001
-                    ],
+                    "enum": [1, 3, 5, 10001],
                     "markdownDescription": "*int*\n\n模板匹配算法，即 cv::TemplateMatchModes。可选，默认 5 。\n\n详情请参考 [OpenCV 官方文档](https://docs.opencv.org/4.x/df/dfb/group__imgproc__object.html)。\n\n*10001 为 TM_SQDIFF_NORMED 的反转版本，分数越高越匹配（与原版相反）。*\n\n| method | 算法名称 | 速度 | 颜色敏感度 | 光照鲁棒性 | 适用场景 |\n|--------|---------|------|-----------|-----------|----------|\n| 10001 | TM_SQDIFF_NORMED | 快 | 敏感 | 差 | 精确匹配，阈值易设定 |\n| 3 | TM_CCORR_NORMED | 中等 | 敏感 | 中 | 模板较亮时效果好 |\n| 5 | TM_CCOEFF_NORMED | 较慢 | 不敏感 | 好 | **推荐**，阈值易设定 |",
                     "defaultSnippets": [
                         {
@@ -701,14 +664,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "template"
-                    ]
+                    "required": ["template"]
                 },
                 {
-                    "required": [
-                        "template_code"
-                    ]
+                    "required": ["template_code"]
                 }
             ]
         },
@@ -772,13 +731,7 @@
                 "order_by": {
                     "title": "Order By Property",
                     "description": "结果排序方式。可选，默认 `Horizontal` 。",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical",
-                        "Score",
-                        "Area",
-                        "Random"
-                    ],
+                    "enum": ["Horizontal", "Vertical", "Score", "Area", "Random"],
                     "markdownDescription": "*string*\n\n结果排序方式。可选，默认 `Horizontal` 。\n\n可选的值：`Horizontal` | `Vertical` | `Score` | `Area` | `Random` 。\n\n可结合 `index` 字段使用。",
                     "default": "Horizontal"
                 },
@@ -797,13 +750,7 @@
                 "detector": {
                     "title": "Detector Property",
                     "description": "特征检测器。可选，默认 `SIFT` 。",
-                    "enum": [
-                        "SIFT",
-                        "ORB",
-                        "BRISK",
-                        "KAZE",
-                        "AKAZE"
-                    ],
+                    "enum": ["SIFT", "ORB", "BRISK", "KAZE", "AKAZE"],
                     "markdownDescription": "*string*\n\n特征检测器。可选，默认 `SIFT` 。\n\n| 检测器 | 速度 | 尺度不变性 | 旋转不变性 | 精度 | 适用场景 |\n|--------|------|-----------|-----------|------|----------|\n| SIFT | 慢 | 有 | 有 | 最高 | **推荐**，对精度要求高的场景 |\n| KAZE | 较慢 | 有 | 有 | 高 | 2D/3D 图像，边缘保持好 |\n| AKAZE | 中等 | 有 | 有 | 较高 | 速度与精度平衡 |\n| BRISK | 快 | 有 | 有 | 中等 | 实时性要求高的场景 |\n| ORB | 最快 | **无** | 有 | 较低 | 模板与目标尺寸一致时使用 |",
                     "default": "SIFT"
                 },
@@ -817,14 +764,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "template"
-                    ]
+                    "required": ["template"]
                 },
                 {
-                    "required": [
-                        "template_code"
-                    ]
+                    "required": ["template_code"]
                 }
             ]
         },
@@ -915,13 +858,7 @@
                 "order_by": {
                     "title": "Order By Property",
                     "description": "结果排序方式。可选，默认 `Horizontal` 。",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical",
-                        "Score",
-                        "Area",
-                        "Random"
-                    ],
+                    "enum": ["Horizontal", "Vertical", "Score", "Area", "Random"],
                     "markdownDescription": "*string*\n\n结果排序方式。可选，默认 `Horizontal` 。\n\n可选的值：`Horizontal` | `Vertical` | `Score` | `Area` | `Random` 。\n\n可结合 `index` 字段使用。",
                     "default": "Horizontal"
                 },
@@ -940,28 +877,16 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "lower",
-                        "upper"
-                    ]
+                    "required": ["lower", "upper"]
                 },
                 {
-                    "required": [
-                        "lower_code",
-                        "upper_code"
-                    ]
+                    "required": ["lower_code", "upper_code"]
                 },
                 {
-                    "required": [
-                        "lower_code",
-                        "upper"
-                    ]
+                    "required": ["lower_code", "upper"]
                 },
                 {
-                    "required": [
-                        "lower",
-                        "upper_code"
-                    ]
+                    "required": ["lower", "upper_code"]
                 }
             ]
         },
@@ -1031,14 +956,7 @@
                 "order_by": {
                     "title": "Order By Property",
                     "description": "结果排序方式。可选，默认 `Horizontal`。",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical",
-                        "Area",
-                        "Length",
-                        "Random",
-                        "Expected"
-                    ],
+                    "enum": ["Horizontal", "Vertical", "Area", "Length", "Random", "Expected"],
                     "markdownDescription": "*string*\n\n结果排序方式。可选，默认 `Horizontal`。\n\n可选的值：`Horizontal` | `Vertical` | `Area` | `Length` | `Random` | `Expected` 。\n\n可结合 `index` 字段使用。",
                     "default": "Horizontal"
                 },
@@ -1133,13 +1051,7 @@
                 "order_by": {
                     "title": "Order By Property",
                     "description": "结果排序方式。可选，默认 `Horizontal` 。",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical",
-                        "Score",
-                        "Random",
-                        "Expected"
-                    ],
+                    "enum": ["Horizontal", "Vertical", "Score", "Random", "Expected"],
                     "markdownDescription": "*string*\n\n结果排序方式。可选，默认 `Horizontal` 。\n\n可选的值：`Horizontal` | `Vertical` | `Score` | `Random` | `Expected` 。\n\n可结合 `index` 字段使用。",
                     "default": "Horizontal"
                 },
@@ -1152,14 +1064,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "model"
-                    ]
+                    "required": ["model"]
                 },
                 {
-                    "required": [
-                        "model_code"
-                    ]
+                    "required": ["model_code"]
                 }
             ]
         },
@@ -1235,14 +1143,7 @@
                 "order_by": {
                     "title": "Order By Property",
                     "description": "结果排序方式。可选，默认 `Horizontal` 。",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical",
-                        "Score",
-                        "Area",
-                        "Random",
-                        "Expected"
-                    ],
+                    "enum": ["Horizontal", "Vertical", "Score", "Area", "Random", "Expected"],
                     "markdownDescription": "*string*\n\n结果排序方式。可选，默认 `Horizontal` 。\n\n可选的值：`Horizontal` | `Vertical` | `Score` | `Area` | `Random` | `Expected` 。\n\n可结合 `index` 字段使用。",
                     "default": "Horizontal"
                 },
@@ -1255,14 +1156,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "model"
-                    ]
+                    "required": ["model"]
                 },
                 {
-                    "required": [
-                        "model_code"
-                    ]
+                    "required": ["model_code"]
                 }
             ]
         },
@@ -1342,9 +1239,7 @@
                     "markdownDescription": "*int*\n\n指定输出哪个子识别的识别框（box）作为当前节点的识别框。可选，默认 0 。\n\n需要满足 `0 <= box_index < all_of.size` 。"
                 }
             },
-            "required": [
-                "all_of"
-            ]
+            "required": ["all_of"]
         },
         "AndV1": {
             "properties": {
@@ -1394,9 +1289,7 @@
                     "markdownDescription": "*list<string | object, >*\n\n子识别列表。命中第一个即成功，后续不再识别。必选。\n\n列表元素可以是：\n- 字符串：节点名称引用，运行时使用该节点的识别算法和参数\n- 对象：内联识别定义，写法与普通节点的 `recognition` 一致（兼容 v1/v2，允许混用）"
                 }
             },
-            "required": [
-                "any_of"
-            ]
+            "required": ["any_of"]
         },
         "OrV1": {
             "properties": {
@@ -1462,14 +1355,10 @@
             ],
             "anyOf": [
                 {
-                    "required": [
-                        "custom_recognition"
-                    ]
+                    "required": ["custom_recognition"]
                 },
                 {
-                    "required": [
-                        "custom_recognition_code"
-                    ]
+                    "required": ["custom_recognition_code"]
                 }
             ]
         },
@@ -1510,9 +1399,7 @@
         },
         "RecognitionPropertyFieldsV1": {
             "not": {
-                "required": [
-                    "recognition"
-                ]
+                "required": ["recognition"]
             },
             "allOf": [
                 {
@@ -1522,9 +1409,7 @@
         },
         "RecognitionPropertyFieldsV2": {
             "not": {
-                "required": [
-                    "type"
-                ]
+                "required": ["type"]
             },
             "properties": {
                 "param": {
@@ -1785,10 +1670,7 @@
             }
         },
         "RecognitionProperty": {
-            "type": [
-                "string",
-                "object"
-            ],
+            "type": ["string", "object"],
             "properties": {
                 "type": {
                     "type": "string"
@@ -2347,14 +2229,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "swipes"
-                    ]
+                    "required": ["swipes"]
                 },
                 {
-                    "required": [
-                        "swipes_code"
-                    ]
+                    "required": ["swipes_code"]
                 }
             ]
         },
@@ -2605,14 +2483,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "key"
-                    ]
+                    "required": ["key"]
                 },
                 {
-                    "required": [
-                        "key_code"
-                    ]
+                    "required": ["key_code"]
                 }
             ]
         },
@@ -2669,14 +2543,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "key"
-                    ]
+                    "required": ["key"]
                 },
                 {
-                    "required": [
-                        "key_code"
-                    ]
+                    "required": ["key_code"]
                 }
             ]
         },
@@ -2727,14 +2597,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "key"
-                    ]
+                    "required": ["key"]
                 },
                 {
-                    "required": [
-                        "key_code"
-                    ]
+                    "required": ["key_code"]
                 }
             ]
         },
@@ -2792,14 +2658,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "key"
-                    ]
+                    "required": ["key"]
                 },
                 {
-                    "required": [
-                        "key_code"
-                    ]
+                    "required": ["key_code"]
                 }
             ]
         },
@@ -2850,14 +2712,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "input_text"
-                    ]
+                    "required": ["input_text"]
                 },
                 {
-                    "required": [
-                        "input_text_code"
-                    ]
+                    "required": ["input_text_code"]
                 }
             ]
         },
@@ -2908,14 +2766,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "package"
-                    ]
+                    "required": ["package"]
                 },
                 {
-                    "required": [
-                        "package_code"
-                    ]
+                    "required": ["package_code"]
                 }
             ]
         },
@@ -2966,14 +2820,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "package"
-                    ]
+                    "required": ["package"]
                 },
                 {
-                    "required": [
-                        "package_code"
-                    ]
+                    "required": ["package_code"]
                 }
             ]
         },
@@ -3070,14 +2920,10 @@
             },
             "anyOf": [
                 {
-                    "required": [
-                        "exec"
-                    ]
+                    "required": ["exec"]
                 },
                 {
-                    "required": [
-                        "exec_code"
-                    ]
+                    "required": ["exec_code"]
                 }
             ]
         },
@@ -3133,9 +2979,7 @@
                     "markdownDescription": "*int*\n\n超时时间（毫秒）。可选，默认 20000 (20秒)。\n\n设置为 -1 表示无限等待，永不超时。"
                 }
             },
-            "required": [
-                "cmd"
-            ]
+            "required": ["cmd"]
         },
         "ShellV1": {
             "properties": {
@@ -3185,11 +3029,7 @@
                     "title": "Format Property",
                     "description": "图片格式。可选，默认 \"png\"。",
                     "type": "string",
-                    "enum": [
-                        "png",
-                        "jpg",
-                        "jpeg"
-                    ],
+                    "enum": ["png", "jpg", "jpeg"],
                     "default": "png",
                     "markdownDescription": "*string*\n\n图片格式。可选，默认 `\"png\"`（无损）。\n\n可选值：`\"png\"` | `\"jpg\"` | `\"jpeg\"`"
                 },
@@ -3269,14 +3109,10 @@
             ],
             "anyOf": [
                 {
-                    "required": [
-                        "custom_action"
-                    ]
+                    "required": ["custom_action"]
                 },
                 {
-                    "required": [
-                        "custom_action_code"
-                    ]
+                    "required": ["custom_action_code"]
                 }
             ]
         },
@@ -3317,9 +3153,7 @@
         },
         "ActionPropertyFieldsV1": {
             "not": {
-                "required": [
-                    "action"
-                ]
+                "required": ["action"]
             },
             "allOf": [
                 {
@@ -3329,9 +3163,7 @@
         },
         "ActionPropertyFieldsV2": {
             "not": {
-                "required": [
-                    "type"
-                ]
+                "required": ["type"]
             },
             "properties": {
                 "param": {
@@ -3573,10 +3405,7 @@
             }
         },
         "ActionProperty": {
-            "type": [
-                "string",
-                "object"
-            ],
+            "type": ["string", "object"],
             "properties": {
                 "type": {
                     "type": "string"
@@ -3625,9 +3454,7 @@
                     "body": {
                         "type": "MultiSwipe",
                         "param": {
-                            "swipes": [
-                                {}
-                            ]
+                            "swipes": [{}]
                         }
                     }
                 },
@@ -3786,14 +3613,7 @@
                         "type": "Command",
                         "param": {
                             "exec": "",
-                            "args": [
-                                "{ENTRY}",
-                                "{NODE}",
-                                "{IMAGE}",
-                                "{BOX}",
-                                "{LIBRARY_DIR}",
-                                "{RESOURCE_DIR}"
-                            ]
+                            "args": ["{ENTRY}", "{NODE}", "{IMAGE}", "{BOX}", "{LIBRARY_DIR}", "{RESOURCE_DIR}"]
                         }
                     }
                 },
@@ -4070,11 +3890,7 @@
                 "method": {
                     "title": "Method Property",
                     "description": "判断“没有较大变化”的模板匹配算法，即 cv::TemplateMatchModes。可选，默认 5 。",
-                    "enum": [
-                        1,
-                        3,
-                        5
-                    ],
+                    "enum": [1, 3, 5],
                     "markdownDescription": "*int*\n\n判断“没有较大变化”的模板匹配算法，即 cv::TemplateMatchModes。可选，默认 5 。\n\n仅支持 1、3、5，可简单理解为越大的越精确，但也会更慢。\n\n详情请参考 [OpenCV 官方文档](https://docs.opencv.org/4.x/df/dfb/group__imgproc__object.html)。",
                     "defaultSnippets": [
                         {

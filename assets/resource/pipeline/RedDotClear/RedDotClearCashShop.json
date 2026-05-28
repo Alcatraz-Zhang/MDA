@@ -11,9 +11,7 @@
                     22,
                     20
                 ],
-                "template": [
-                    "Common/New.png"
-                ]
+                "template": ["Common/New.png"]
             }
         },
         "action": {
@@ -27,23 +25,17 @@
                 ]
             }
         },
-        "next": [
-            "RedDotClearCashShopFlow"
-        ]
+        "next": ["RedDotClearCashShopFlow"]
     },
     "RedDotClearCashShopFlow": {
         "desc": "付费商店流程",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "CashShopMainPageEntered"
-                ]
+                "all_of": ["CashShopMainPageEntered"]
             }
         },
-        "next": [
-            "RedDotClearCashShopNewClick"
-        ]
+        "next": ["RedDotClearCashShopNewClick"]
     },
     "RedDotClearCashShopNewClick": {
         "desc": "付费商店点击new",
@@ -56,9 +48,7 @@
                     883,
                     89
                 ],
-                "template": [
-                    "Common/New.png"
-                ],
+                "template": ["Common/New.png"],
                 "order_by": "Vertical",
                 "index": -1
             }
