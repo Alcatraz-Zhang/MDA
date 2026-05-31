@@ -1,23 +1,27 @@
 {
     "EventChallenge": {
         "desc": "活动挑战",
-        "next": ["EventChallengeStagePage"]
+        "next": [
+            "EventChallengeStagePage"
+        ]
     },
     "EventChallengeStagePage": {
         "desc": "活动挑战页面",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["EventChallengeStageVisible"]
+                "all_of": [
+                    "EventChallengeStageVisible"
+                ]
             }
         },
         "post_wait_freezes": 500,
         "next": [
-            "EventChallengeStage",
-            "EventClearStage"
+            "EventClickChallengeStage",
+            "EventClickClearedStage"
         ]
     },
-    "EventChallengeStage": {
+    "EventClickChallengeStage": {
         "desc": "未挑战的关卡",
         "recognition": {
             "type": "OCR",
@@ -28,7 +32,9 @@
                     379,
                     424
                 ],
-                "expected": ["(?i).*CHALLENGE.*"],
+                "expected": [
+                    "(?i).*CHALLENGE.*"
+                ],
                 "order_by": "Vertical",
                 "index": -1
             }
@@ -36,13 +42,21 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 500,
+        "post_wait_freezes": {
+            "time": 500,
+            "target": [
+                442,
+                468,
+                403,
+                245
+            ]
+        },
         "next": [
-            "BattleStart",
-            "EventChallengeStage"
+            "BattleEntryFlow",
+            "EventClickChallengeStage"
         ]
     },
-    "EventClearStage": {
+    "EventClickClearedStage": {
         "desc": "已挑战的关卡",
         "recognition": {
             "type": "OCR",
@@ -53,7 +67,9 @@
                     379,
                     424
                 ],
-                "expected": [".*CLEAR.*"],
+                "expected": [
+                    ".*CLEAR.*"
+                ],
                 "order_by": "Vertical",
                 "index": -1
             }
@@ -61,10 +77,18 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 500,
+        "post_wait_freezes": {
+            "time": 500,
+            "target": [
+                442,
+                468,
+                403,
+                245
+            ]
+        },
         "next": [
-            "BattleStart",
-            "EventClearStage"
+            "BattleEntryFlow",
+            "EventClickClearedStage"
         ]
     },
     "EventChallengeStageVisible": {
@@ -78,7 +102,9 @@
                     50,
                     16
                 ],
-                "expected": ["挑战关卡"]
+                "expected": [
+                    "挑战关卡"
+                ]
             }
         }
     }

@@ -10,7 +10,9 @@
                     148,
                     37
                 ],
-                "template": ["Common/ConfirmWithCircle.png"]
+                "template": [
+                    "Common/ConfirmWithCircle.png"
+                ]
             }
         },
         "action": {
@@ -28,7 +30,9 @@
                     115,
                     40
                 ],
-                "template": ["Common/ConfirmWithCircle.png"]
+                "template": [
+                    "Common/ConfirmWithCircle.png"
+                ]
             }
         },
         "action": {
@@ -46,7 +50,9 @@
                     91,
                     116
                 ],
-                "template": ["Common/ServerChoose.png"]
+                "template": [
+                    "Common/ServerChoose.png"
+                ]
             }
         },
         "action": {
@@ -59,24 +65,6 @@
                     0
                 ]
             }
-        }
-    },
-    "LoginRewardClaim": {
-        "desc": "领取登录奖励",
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    686,
-                    657,
-                    139,
-                    35
-                ],
-                "expected": [".*领取.*"]
-            }
-        },
-        "action": {
-            "type": "Click"
         }
     }
 }

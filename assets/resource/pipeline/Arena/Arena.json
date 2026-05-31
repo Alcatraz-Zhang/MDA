@@ -9,7 +9,7 @@
         "next": [
             "[JumpBack]ArenaSpecialRewardClaim",
             "ArkEnterArena",
-            "[JumpBack]HallEnterArk"
+            "[JumpBack]NavigationEnterArkFlow"
         ]
     },
     "ArenaSpecialRewardClaim": {
@@ -24,7 +24,9 @@
                     26,
                     25
                 ],
-                "expected": ["^[0-9]"]
+                "expected": [
+                    "^[0-9]"
+                ]
             }
         },
         "action": {
@@ -49,7 +51,9 @@
                     85,
                     21
                 ],
-                "expected": ["竞技场"]
+                "expected": [
+                    "竞技场"
+                ]
             }
         },
         "action": {
@@ -64,15 +68,13 @@
     "ArenaMainPageEntered": {
         "desc": "处于竞技场",
         "recognition": {
-            "type": "OCR",
+            "type": "Or",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": ["^竞技场$"]
+                "any_of": [
+                    "RookieArenaVisible",
+                    "SpecialArenaVisible",
+                    "ChampionArenaVisible"
+                ]
             }
         }
     },
@@ -81,7 +83,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["ArenaMainPageEntered"]
+                "all_of": [
+                    "ArenaMainPageEntered"
+                ]
             }
         },
         "next": [
@@ -102,7 +106,9 @@
                     54,
                     26
                 ],
-                "expected": ["免费"]
+                "expected": [
+                    "免费"
+                ]
             }
         },
         "action": {
@@ -125,7 +131,9 @@
                     59,
                     22
                 ],
-                "expected": ["快速战斗"]
+                "expected": [
+                    "快速战斗"
+                ]
             }
         }
     },
@@ -134,12 +142,14 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["ArenaFreeBattleVisible"]
+                "all_of": [
+                    "ArenaFreeBattleVisible"
+                ]
             }
         },
         "next": [
             "[JumpBack]RookieArenaClickQuickBattleToggle",
-            "BattleStart"
+            "BattleEntryFlow"
         ]
     }
 }

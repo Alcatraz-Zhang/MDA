@@ -12,7 +12,9 @@
                 "TribeTowerEnterTetraTower",
                 "TribeTowerEnterPilgrimTower"
             ],
-            "group": ["daily"]
+            "group": [
+                "daily"
+            ]
         }
     ],
     "option": {

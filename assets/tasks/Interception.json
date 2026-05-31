@@ -9,7 +9,9 @@
                 "InterceptionType",
                 "ManualInterceptionBattle"
             ],
-            "group": ["daily"]
+            "group": [
+                "daily"
+            ]
         }
     ],
     "option": {
@@ -28,7 +30,9 @@
                             "enabled": false
                         }
                     },
-                    "option": ["NormalInterceptionLevel"]
+                    "option": [
+                        "NormalInterceptionLevel"
+                    ]
                 },
                 {
                     "name": "AnomalyInterception",
@@ -41,7 +45,9 @@
                             "enabled": true
                         }
                     },
-                    "option": ["AnomalyInterceptionTarget"]
+                    "option": [
+                        "AnomalyInterceptionTarget"
+                    ]
                 }
             ],
             "default_case": "AnomalyInterception"
@@ -88,7 +94,7 @@
                     "name": "InterceptionAnomalyKraken",
                     "label": "$option.InterceptionAnomalyKraken.label",
                     "pipeline_override": {
-                        "InterceptionAnomalyKraken": {
+                        "InterceptionAnomalyKrakenTargetFlow": {
                             "enabled": true
                         }
                     }
@@ -97,7 +103,7 @@
                     "name": "InterceptionAnomalyMirrorContainer",
                     "label": "$option.InterceptionAnomalyMirrorContainer.label",
                     "pipeline_override": {
-                        "InterceptionAnomalyMirrorContainer": {
+                        "InterceptionAnomalyMirrorContainerTargetFlow": {
                             "enabled": true
                         }
                     }
@@ -106,7 +112,7 @@
                     "name": "InterceptionAnomalyIndivilia",
                     "label": "$option.InterceptionAnomalyIndivilia.label",
                     "pipeline_override": {
-                        "InterceptionAnomalyIndivilia": {
+                        "InterceptionAnomalyIndiviliaTargetFlow": {
                             "enabled": true
                         }
                     }
@@ -115,7 +121,7 @@
                     "name": "InterceptionAnomalyUltra",
                     "label": "$option.InterceptionAnomalyUltra.label",
                     "pipeline_override": {
-                        "InterceptionAnomalyUltra": {
+                        "InterceptionAnomalyUltraTargetFlow": {
                             "enabled": true
                         }
                     }
@@ -124,7 +130,7 @@
                     "name": "InterceptionAnomalyHarvester",
                     "label": "$option.InterceptionAnomalyHarvester.label",
                     "pipeline_override": {
-                        "InterceptionAnomalyHarvester": {
+                        "InterceptionAnomalyHarvesterTargetFlow": {
                             "enabled": true
                         }
                     }
@@ -140,7 +146,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "ManualInterceptionBattle": {
+                        "ManualInterceptionBattleRequired": {
                             "enabled": false
                         }
                     }
@@ -148,7 +154,7 @@
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "ManualInterceptionBattle": {
+                        "ManualInterceptionBattleRequired": {
                             "enabled": true
                         }
                     }

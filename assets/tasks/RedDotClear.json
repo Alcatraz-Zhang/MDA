@@ -7,9 +7,13 @@
             "description": "$task.RedDotClear.description",
             "option": [
                 "RedDotClearCashShop",
-                "RedDotClearNotice"
+                "RedDotClearNotice",
+                "RedDotClearSubMenu",
+                "RedDotClearProfilePage"
             ],
-            "group": ["utility"]
+            "group": [
+                "utility"
+            ]
         }
     ],
     "option": {
@@ -51,6 +55,50 @@
                     "name": "No",
                     "pipeline_override": {
                         "RedDotClearNotice": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearSubMenu": {
+            "type": "switch",
+            "label": "$option.RedDotClearSubMenu.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearSubMenu": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearSubMenu": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearProfilePage": {
+            "type": "switch",
+            "label": "$option.RedDotClearProfilePage.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearProfilePage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearProfilePage": {
                             "enabled": false
                         }
                     }

@@ -4,7 +4,7 @@
         "max_hit": 1,
         "next": [
             "[JumpBack]DailyRewardsPassChangeClick",
-            "DailyRewardsPassStart",
+            "DailyRewardsPassFlow",
             "CommonEndTask"
         ]
     },
@@ -20,7 +20,9 @@
                     163,
                     66
                 ],
-                "template": ["DailyRewards/Pass/PassChange.png"]
+                "template": [
+                    "DailyRewards/Pass/PassChange.png"
+                ]
             }
         },
         "action": {
@@ -28,7 +30,7 @@
         },
         "post_wait_freezes": 500
     },
-    "DailyRewardsPassStart": {
+    "DailyRewardsPassFlow": {
         "desc": "Pass入口",
         "recognition": {
             "type": "TemplateMatch",
@@ -49,7 +51,7 @@
             "[JumpBack]DailyRewardsClickPassRewardRedDot",
             "[JumpBack]DailyRewardsEnterPass",
             "[JumpBack]DailyRewardsClickPassRedDot",
-            "DailyRewardsPassStart",
+            "DailyRewardsPassFlow",
             "[JumpBack]CommonClosePage",
             "CommonEndTask"
         ]
@@ -65,7 +67,9 @@
                     163,
                     66
                 ],
-                "template": ["Common/PassRedDot.png"]
+                "template": [
+                    "Common/PassRedDot.png"
+                ]
             }
         },
         "action": {
@@ -90,9 +94,11 @@
                     1116,
                     91,
                     163,
-                    66
+                    182
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -119,7 +125,9 @@
                     369,
                     36
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -134,7 +142,9 @@
             }
         },
         "post_wait_freezes": 500,
-        "next": ["DailyRewardsClaimRewardFlow"]
+        "next": [
+            "DailyRewardsClaimRewardFlow"
+        ]
     },
     "DailyRewardsClaimRewardFlow": {
         "desc": "领取Pass奖励流程",
@@ -175,7 +185,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "DailyRewardsPassTextVisible",
+                    "DailyRewardsPassClaimAllButtonVisible",
                     "DailyRewardsPassAvailable"
                 ]
             }
@@ -185,7 +195,7 @@
         },
         "post_wait_freezes": 500
     },
-    "DailyRewardsPassTextVisible": {
+    "DailyRewardsPassClaimAllButtonVisible": {
         "desc": "Pass文本可见",
         "recognition": {
             "type": "OCR",
@@ -196,7 +206,9 @@
                     175,
                     30
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         },
         "action": {
@@ -209,7 +221,7 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": "DailyRewardsPassTextVisible",
+                "roi": "DailyRewardsPassClaimAllButtonVisible",
                 "lower": [
                     200,
                     200,

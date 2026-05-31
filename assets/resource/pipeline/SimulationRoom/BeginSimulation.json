@@ -38,7 +38,9 @@
                     144,
                     124
                 ],
-                "template": ["SimulationRoom/ClaimImmediately.png"]
+                "template": [
+                    "SimulationRoom/ClaimImmediately.png"
+                ]
             }
         },
         "action": {
@@ -56,7 +58,9 @@
                     181,
                     39
                 ],
-                "expected": ["快速模拟"]
+                "expected": [
+                    "快速模拟"
+                ]
             }
         },
         "action": {
@@ -78,7 +82,9 @@
                     158,
                     171
                 ],
-                "expected": ["模拟结束"]
+                "expected": [
+                    "模拟结束"
+                ]
             }
         },
         "action": {
@@ -100,14 +106,16 @@
                     172,
                     37
                 ],
-                "expected": [".*跳过.*"]
+                "expected": [
+                    ".*跳过.*"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "next": [
-            "[JumpBack]BattleStart",
+            "[JumpBack]BattleEntryFlow",
             "SimulationRoomEndSimulation"
         ]
     },
@@ -122,7 +130,9 @@
                     44,
                     33
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         }
     },
@@ -137,7 +147,9 @@
                     133,
                     40
                 ],
-                "expected": ["开始模拟"]
+                "expected": [
+                    "开始模拟"
+                ]
             }
         }
     }

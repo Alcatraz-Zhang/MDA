@@ -1,8 +1,6 @@
 package main
 
 import (
-	"github.com/1204244136/MDA/agent/go-service/common/myaction"
-	"github.com/1204244136/MDA/agent/go-service/common/myreco"
 	"github.com/1204244136/MDA/agent/go-service/pkg/resource"
 	"github.com/1204244136/MDA/agent/go-service/taskersink/aspectratio"
 	"github.com/1204244136/MDA/agent/go-service/taskersink/hdrcheck"
@@ -20,12 +18,6 @@ func registerAll() {
 	hdrcheck.Register()
 	processcheck.Register()
 	membership.Register()
-
-	// Custom Actions
-	myaction.Register()
-
-	// Custom Recognitions
-	myreco.Register()
 
 	log.Info().
 		Msg("All custom components and sinks registered successfully")

@@ -8,7 +8,7 @@
         },
         "next": [
             "HallEnterShop",
-            "[JumpBack]NavigationEnterHall"
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
     "HallEnterShop": {
@@ -22,7 +22,9 @@
                     58,
                     43
                 ],
-                "expected": ["商店"]
+                "expected": [
+                    "商店"
+                ]
             }
         },
         "action": {
@@ -44,7 +46,9 @@
                     70,
                     25
                 ],
-                "expected": ["百货商店"]
+                "expected": [
+                    "百货商店"
+                ]
             }
         }
     },
@@ -53,7 +57,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["ShopMainPageEntered"]
+                "all_of": [
+                    "ShopMainPageEntered"
+                ]
             }
         },
         "next": [
@@ -74,7 +80,9 @@
                     220,
                     250
                 ],
-                "template": ["Common/ConfirmWithCircle.png"]
+                "template": [
+                    "Common/ConfirmWithCircle.png"
+                ]
             }
         },
         "next": [

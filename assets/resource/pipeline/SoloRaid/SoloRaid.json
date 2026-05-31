@@ -1,0 +1,107 @@
+{
+    "SoloRaidMain": {
+        "desc": "单人突击入口",
+        "max_hit": 1,
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
+        "next": [
+            "SoloRaidEntry",
+            "[JumpBack]NavigationReturnHallFlow"
+        ]
+    },
+    "SoloRaidEntry": {
+        "desc": "进入单人突击",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "SoloRaidClick",
+            "CommonEndTask"
+        ]
+    },
+    "SoloRaidClick": {
+        "desc": "点击单人突击",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    7,
+                    120,
+                    197,
+                    256
+                ],
+                "template": [
+                    "SoloRaid/SoloRaid.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "SoloRaidFlow"
+        ]
+    },
+    "SoloRaidFlow": {
+        "desc": "单人突击流程",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    15,
+                    70,
+                    25
+                ],
+                "expected": [
+                    "单人突击"
+                ]
+            }
+        },
+        "next": [
+            "BattleStartButtonBlocked",
+            "[JumpBack]CommonConfirmAction",
+            "[JumpBack]SoloRaidLevelSelect"
+        ]
+    },
+    "SoloRaidLevelSelect": {
+        "desc": "单人突击选择关卡",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    455,
+                    58,
+                    326,
+                    42
+                ],
+                "template": [
+                    "SoloRaid/SoloRaidLevelⅠ.png",
+                    "SoloRaid/SoloRaidLevelⅡ.png",
+                    "SoloRaid/SoloRaidLevelⅢ.png",
+                    "SoloRaid/SoloRaidLevelⅣ.png",
+                    "SoloRaid/SoloRaidLevelⅤ.png",
+                    "SoloRaid/SoloRaidLevelⅥ.png",
+                    "SoloRaid/SoloRaidLevelⅦ.png"
+                ],
+                "index": -1 //选择最新已解锁的关卡，-1表示最后一个匹配到的模板
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "[JumpBack]CommonConfirmAction",
+            "BattleEntryFlow"
+        ]
+    }
+}

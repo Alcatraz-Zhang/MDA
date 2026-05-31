@@ -1,0 +1,244 @@
+{
+    "RedDotClearProfilePage": {
+        "desc": "清除个人资料页红点",
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    0,
+                    0,
+                    60,
+                    60
+                ],
+                "template": [
+                    "Common/RedDot.png",
+                    "Common/New.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearProfilePageFlow"
+        ]
+    },
+    "RedDotClearProfilePageFlow": {
+        "desc": "个人资料页流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "ProfilePageVisible"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]RedDotClearProfileDecorationClick",
+            "[JumpBack]RedDotClearProfileTitleClick",
+            "[JumpBack]RedDotClearManageProfileClick",
+            "CommonClosePage"
+        ]
+    },
+    "ProfilePageVisible": {
+        "desc": "个人资料页可见",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    531,
+                    654,
+                    66,
+                    23
+                ],
+                "expected": [
+                    ".*基本.*" //基本资讯
+                ]
+            }
+        }
+    },
+    "RedDotClearProfileDecorationClick": {
+        "desc": "点击装饰个人简介",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    789,
+                    118,
+                    38,
+                    35
+                ],
+                "template": [
+                    "Common/New.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearProfileDecorationNewClick"
+        ]
+    },
+    "RedDotClearProfileDecorationNewClick": {
+        "desc": "点击装饰个人简介的New",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    433,
+                    263,
+                    410,
+                    81
+                ],
+                "template": [
+                    "Common/New.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "CommonGoBack"
+        ]
+    },
+    "RedDotClearProfileTitleClick": {
+        "desc": "点击称号",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    690,
+                    152,
+                    43,
+                    42
+                ],
+                "template": [
+                    "Common/New.png",
+                    "Common/RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearProfileTitleClaimAll"
+        ]
+    },
+    "RedDotClearProfileTitleClaimAll": {
+        "desc": "称号全部领取",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    697,
+                    586,
+                    111,
+                    22
+                ],
+                "expected": [
+                    ".*全部领取.*" //全部领取
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500,
+        "next": [
+            "[JumpBack]CommonConfirmReward",
+            "CommonClosePage"
+        ]
+    },
+    "RedDotClearManageProfileClick": {
+        "desc": "点击简介管理",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    531,
+                    147,
+                    30,
+                    27
+                ],
+                "template": [
+                    "Common/New.png",
+                    "Common/RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500,
+        "next": [
+            "RedDotClearManageProfileNewClick"
+        ]
+    },
+    "RedDotClearManageProfileNewClick": {
+        "desc": "点击简介管理的New",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    474,
+                    76,
+                    327,
+                    29
+                ],
+                "template": [
+                    "Common/New.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "CommonClosePage"
+        ]
+    }
+}

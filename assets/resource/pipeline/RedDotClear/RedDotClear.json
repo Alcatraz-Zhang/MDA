@@ -8,22 +8,26 @@
             }
         },
         "next": [
-            "RedDotClearStart",
-            "[JumpBack]NavigationEnterHall"
+            "RedDotClearEntryFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "RedDotClearStart": {
+    "RedDotClearEntryFlow": {
         "desc": "红点清除",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [
             "[JumpBack]CommonClosePage",
             "[JumpBack]RedDotClearCashShop",
             "[JumpBack]RedDotClearNotice",
+            "[JumpBack]RedDotClearSubMenu",
+            "[JumpBack]RedDotClearProfilePage",
             "CommonEndTask"
         ]
     }

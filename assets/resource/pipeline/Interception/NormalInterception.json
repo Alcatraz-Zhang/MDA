@@ -10,11 +10,15 @@
                     56,
                     26
                 ],
-                "expected": [".*拦截战.*"],
-                "replace": [[
+                "expected": [
+                    ".*拦截战.*"
+                ],
+                "replace": [
+                    [
                         "载",
                         "截"
-                    ]]
+                    ]
+                ]
             }
         },
         "action": {
@@ -32,7 +36,7 @@
             "[JumpBack]LevelDChoose",
             "[JumpBack]LevelSChoose",
             "[JumpBack]InterceptionEXChoose",
-            "InterceptionBattle"
+            "InterceptionNormalBattleFlow"
         ]
     },
     "LevelDChoose": {
@@ -47,7 +51,9 @@
                     29,
                     19
                 ],
-                "expected": ["LEVEL"]
+                "expected": [
+                    "LEVEL"
+                ]
             }
         },
         "action": {
@@ -66,7 +72,9 @@
                     30,
                     20
                 ],
-                "expected": ["LEVEL"]
+                "expected": [
+                    "LEVEL"
+                ]
             }
         },
         "action": {
@@ -85,14 +93,16 @@
                     122,
                     24
                 ],
-                "expected": ["特殊目标拦截战"]
+                "expected": [
+                    "特殊目标拦截战"
+                ]
             }
         },
         "action": {
             "type": "Click"
         }
     },
-    "InterceptionBattle": {
+    "InterceptionNormalBattleFlow": {
         "desc": "拦截战战斗",
         "recognition": {
             "type": "OCR",
@@ -103,12 +113,14 @@
                     117,
                     26
                 ],
-                "expected": [".*拦截战.*"]
+                "expected": [
+                    ".*拦截战.*"
+                ]
             }
         },
         "next": [
-            "BattleCannotBattle",
-            "[JumpBack]BattleStart"
+            "BattleCannotBattleBlocked",
+            "[JumpBack]BattleEntryFlow"
         ]
     }
 }

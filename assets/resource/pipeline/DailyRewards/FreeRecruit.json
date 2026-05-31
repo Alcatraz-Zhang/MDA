@@ -4,7 +4,7 @@
         "max_hit": 1,
         "next": [
             "DailyRewardsFreeRecruitEntry",
-            "[JumpBack]NavigationEnterHall"
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
     "DailyRewardsFreeRecruitEntry": {
@@ -12,20 +12,24 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [
-            "DailyRewardsFreeRecruitStart",
+            "DailyRewardsEnterFreeRecruit",
             "CommonEndTask"
         ]
     },
-    "DailyRewardsFreeRecruitStart": {
+    "DailyRewardsEnterFreeRecruit": {
         "desc": "免费招募",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["DailyRewardsFreeRecruitVisible"]
+                "all_of": [
+                    "DailyRewardsFreeRecruitVisible"
+                ]
             }
         },
         "action": {
@@ -33,8 +37,8 @@
         },
         "post_wait_freezes": 1000,
         "next": [
-            "[JumpBack]DailyRewardsFreeRecruit",
-            "NavigationEnterHall"
+            "[JumpBack]DailyRewardsFreeRecruitFlow",
+            "NavigationReturnHallFlow"
         ]
     },
     "DailyRewardsFreeRecruitAvailable": {
@@ -42,16 +46,20 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["DailyRewardsFreeRecruitVisible"]
+                "all_of": [
+                    "DailyRewardsFreeRecruitVisible"
+                ]
             }
         }
     },
-    "DailyRewardsFreeRecruit": {
+    "DailyRewardsFreeRecruitFlow": {
         "desc": "处理免费招募可用",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["DailyRewardsFreeRecruitAvailable"]
+                "all_of": [
+                    "DailyRewardsFreeRecruitAvailable"
+                ]
             }
         },
         "next": [
@@ -70,7 +78,9 @@
                     43,
                     14
                 ],
-                "expected": [".*免费.*"]
+                "expected": [
+                    ".*免费.*"
+                ]
             }
         },
         "action": {
@@ -93,7 +103,9 @@
                     146,
                     34
                 ],
-                "expected": ["确认"]
+                "expected": [
+                    "确认"
+                ]
             }
         },
         "action": {
@@ -112,7 +124,9 @@
                     64,
                     22
                 ],
-                "template": ["DailyRewards/FreeRecruit/FreeRecruit.png"]
+                "template": [
+                    "DailyRewards/FreeRecruit/FreeRecruit.png"
+                ]
             }
         }
     },
@@ -127,7 +141,9 @@
                     46,
                     54
                 ],
-                "template": ["DailyRewards/FreeRecruit/NextRecruit.png"]
+                "template": [
+                    "DailyRewards/FreeRecruit/NextRecruit.png"
+                ]
             }
         },
         "action": {

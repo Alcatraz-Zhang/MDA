@@ -12,14 +12,18 @@
                     308,
                     79
                 ],
-                "expected": [".*签到.*"]
+                "expected": [
+                    ".*签到.*"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "timeout": 60000,
-        "next": ["LargeEventLoginStampClaim"]
+        "next": [
+            "LargeEventLoginStampClaim"
+        ]
     },
     "LargeEventLoginStampClaim": {
         "desc": "大活动签到奖励领取",
@@ -32,7 +36,9 @@
                     162,
                     37
                 ],
-                "expected": ["全部领取"]
+                "expected": [
+                    "全部领取"
+                ]
             }
         },
         "action": {

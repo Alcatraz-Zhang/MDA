@@ -9,7 +9,9 @@
                 "CashShopFreePackage",
                 "StepUpPackage"
             ],
-            "group": ["daily"]
+            "group": [
+                "daily"
+            ]
         }
     ],
     "option": {

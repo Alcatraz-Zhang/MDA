@@ -17,7 +17,9 @@
                     "option": {
                         "CommonShopFreeGoods": "Yes",
                         "CommonShopCoreDustCase": "Yes",
-                        "RecyclingShopList": ["Gem"]
+                        "RecyclingShopList": [
+                            "Gem"
+                        ]
                     }
                 },
                 {
@@ -55,6 +57,9 @@
                         "DailyRewardsDailyLogin": "Yes",
                         "DailyRewardsFreeRecruit": "Yes"
                     }
+                },
+                {
+                    "name": "SoloRaid"
                 }
             ]
         }

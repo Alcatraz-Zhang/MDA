@@ -9,16 +9,18 @@
             }
         },
         "next": [
-            "AdviseStart",
-            "[JumpBack]NavigationEnterHall"
+            "AdviseEntryFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "AdviseStart": {
+    "AdviseEntryFlow": {
         "desc": "开始咨询总流程",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [
@@ -72,7 +74,9 @@
                     58,
                     24
                 ],
-                "expected": ["咨询"]
+                "expected": [
+                    "咨询"
+                ]
             }
         },
         "action": {
@@ -97,7 +101,9 @@
                     56,
                     24
                 ],
-                "expected": [".*RAN.*"]
+                "expected": [
+                    ".*RAN.*"
+                ]
             }
         },
         "action": {
@@ -119,7 +125,9 @@
                     70,
                     25
                 ],
-                "expected": ["咨询"]
+                "expected": [
+                    "咨询"
+                ]
             }
         }
     },
@@ -134,7 +142,9 @@
                     70,
                     25
                 ],
-                "expected": ["妮姬"]
+                "expected": [
+                    "妮姬"
+                ]
             }
         }
     }

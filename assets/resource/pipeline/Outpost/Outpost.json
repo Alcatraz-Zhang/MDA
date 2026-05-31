@@ -8,7 +8,7 @@
         },
         "next": [
             "HallEnterOutpost",
-            "[JumpBack]NavigationEnterHall"
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
     "HallEnterOutpost": {
@@ -22,23 +22,27 @@
                     82,
                     33
                 ],
-                "expected": ["前哨基地"]
+                "expected": [
+                    "前哨基地"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "next": [
-            "OutpostTask",
+            "OutpostTaskFlow",
             "HallEnterOutpost"
         ]
     },
-    "OutpostTask": {
+    "OutpostTaskFlow": {
         "desc": "前哨基地任务枢纽",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["OutpostMainPageEntered"]
+                "all_of": [
+                    "OutpostMainPageEntered"
+                ]
             }
         },
         "next": [
@@ -59,7 +63,9 @@
                     98,
                     62
                 ],
-                "template": ["Outpost/CommandCenter.png"]
+                "template": [
+                    "Outpost/CommandCenter.png"
+                ]
             }
         }
     }

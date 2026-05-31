@@ -1,0 +1,160 @@
+{
+    "RedDotClearSubMenu": {
+        "desc": "清除子菜单红点",
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1242,
+                    7,
+                    37,
+                    35
+                ],
+                "template": [
+                    "Common/RedDot.png",
+                    "Common/New.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearSubMenuFlow"
+        ]
+    },
+    "RedDotClearSubMenuFlow": {
+        "desc": "子菜单流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "SubMenuVisible"
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearLobbyClick"
+        ]
+    },
+    "SubMenuVisible": {
+        "desc": "子菜单可见",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    610,
+                    227,
+                    92,
+                    22
+                ],
+                "expected": [
+                    ".*SUB.*"
+                ]
+            }
+        }
+    },
+    "RedDotClearLobbyClick": {
+        "desc": "点击装饰大厅", //装饰大厅一定会有New
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    502,
+                    277,
+                    283,
+                    150
+                ],
+                "template": [
+                    "Common/New.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearLobbyClick", //防止点击失败
+            "RedDotClearLobbyFlow"
+        ]
+    },
+    "RedDotClearLobbyFlow": {
+        "desc": "装饰大厅流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "RedDotClearLobbyVisible"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]RedDotClearLobbyNewClick",
+            "NavigationReturnHallFlow"
+        ]
+    },
+    "RedDotClearLobbyVisible": {
+        "desc": "左上角装饰大厅可见",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    2,
+                    14,
+                    57,
+                    23
+                ],
+                "expected": [
+                    "装饰大厅"
+                ]
+            }
+        }
+    },
+    "RedDotClearLobbyNewClick": {
+        "desc": "点击装饰大厅的New",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    433,
+                    263,
+                    410,
+                    81
+                ],
+                "template": [
+                    "Common/New.png"
+                ],
+                "order_by": "Vertical", //从下往上找
+                "index": -1
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "task": [
+        {
+            "name": "SoloRaid",
+            "label": "$task.SoloRaid.label",
+            "entry": "SoloRaidMain",
+            "description": "$task.SoloRaid.description",
+            "group": [
+                "daily"
+            ]
+        }
+    ],
+    "option": {}
+}

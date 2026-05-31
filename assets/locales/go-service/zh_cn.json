@@ -22,9 +22,12 @@
     "tasker.membership_warning.tier_free": "Orange Free",
     "tasker.membership_warning.tip": "💡 所有功能均可使用，升级可获得更多每日运行时长",
     "tasker.membership_check.verified": "🍊 当前档位 %s，今日剩余约 %d/%d 分钟",
+    "tasker.membership_check.debt": "🍊 已结转此前超额运行约 %d 分钟，将优先抵扣今日额度。",
     "tasker.membership_check.sponsor": "🍊 设备绑定/订阅地址: %s",
     "tasker.membership_check.denied": "🍊 当前档位 %s 的今日 %d 分钟额度已用尽，任务已停止。设备绑定/订阅地址: %s",
+    "tasker.membership_check.denied_debt": "🍊 当前档位 %s 的今日 %d 分钟额度已被此前超额运行抵扣完，任务已停止。设备绑定/订阅地址: %s",
     "tasker.membership_check.debug_unlimited": "🍊 Debug 版本已启用无限运行，不校验会员订阅。",
+    "tasker.membership_check.update_required": "🍊 当前 MDA 版本已停止支持，请更新到 %s 或更高版本后再运行任务。",
     "tasker.process_warning.title": "⚠️ 注意：检测到以下进程正在运行",
     "tasker.process_warning.recommend_1": "ℹ️ 请注意关闭 OSD 帧率显示、滤镜",
     "tasker.process_warning.note": "💡 这些功能会干扰图像识别"

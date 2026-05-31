@@ -102,12 +102,14 @@
         "tasks/Outpost.json",
         "tasks/Advise.json",
         "tasks/CoordinatedOperations.json",
-        "tasks/DailyRewards.json",
+        "tasks/SoloRaid.json",
         "tasks/MapPushing.json",
         "tasks/RedDotClear.json",
-        "tasks/LargeEvent.json",
         "tasks/SmallEvent.json",
+        "tasks/LargeEvent.json",
+        "tasks/DailyRewards.json",
         "tasks/preset/DailyFull.json",
-        "tasks/preset/QuickDaily.json"
+        "tasks/preset/QuickDaily.json",
+        "tasks/preset/SelfUse.json"
     ]
 }

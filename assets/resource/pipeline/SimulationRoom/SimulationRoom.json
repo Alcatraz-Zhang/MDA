@@ -8,7 +8,7 @@
         },
         "next": [
             "SimulationRoomEnter",
-            "[JumpBack]HallEnterArk"
+            "[JumpBack]NavigationEnterArkFlow"
         ]
     },
     "SimulationRoomEnter": {
@@ -22,7 +22,9 @@
                     85,
                     21
                 ],
-                "expected": ["模拟室"]
+                "expected": [
+                    "模拟室"
+                ]
             }
         },
         "action": {
@@ -45,7 +47,9 @@
                     227,
                     149
                 ],
-                "expected": ["确认"]
+                "expected": [
+                    "确认"
+                ]
             }
         },
         "action": {
@@ -63,7 +67,9 @@
                     70,
                     25
                 ],
-                "expected": ["模拟室"]
+                "expected": [
+                    "模拟室"
+                ]
             }
         }
     },
@@ -72,7 +78,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["SimulationRoomMainPageEntered"]
+                "all_of": [
+                    "SimulationRoomMainPageEntered"
+                ]
             }
         },
         "post_wait_freezes": {

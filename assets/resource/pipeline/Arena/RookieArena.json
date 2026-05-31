@@ -6,7 +6,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "RookieArena",
+                    "RookieArenaVisible",
                     "RookieArenaRedDotVisible"
                 ]
             }
@@ -14,7 +14,9 @@
         "action": {
             "type": "Click"
         },
-        "next": ["RookieArenaCornerFlow"]
+        "next": [
+            "RookieArenaCornerFlow"
+        ]
     },
     "RookieArenaMainPageEntered": {
         "desc": "处于新人竞技场",
@@ -27,7 +29,9 @@
                     70,
                     25
                 ],
-                "expected": ["新人竞技场"]
+                "expected": [
+                    "新人竞技场"
+                ]
             }
         }
     },
@@ -36,7 +40,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["RookieArenaMainPageEntered"]
+                "all_of": [
+                    "RookieArenaMainPageEntered"
+                ]
             }
         },
         "next": [
@@ -56,7 +62,9 @@
                     108,
                     29
                 ],
-                "expected": ["OFF"]
+                "expected": [
+                    "OFF"
+                ]
             }
         },
         "action": {
@@ -74,11 +82,13 @@
                     27,
                     25
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         }
     },
-    "RookieArena": {
+    "RookieArenaVisible": {
         "desc": "新人竞技场",
         "recognition": {
             "type": "OCR",
@@ -89,7 +99,9 @@
                     84,
                     35
                 ],
-                "expected": ["ROOKIE"]
+                "expected": [
+                    "ROOKIE"
+                ]
             }
         }
     }

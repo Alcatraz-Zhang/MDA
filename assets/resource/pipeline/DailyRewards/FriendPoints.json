@@ -3,11 +3,11 @@
         "desc": "友情点入口",
         "max_hit": 1,
         "next": [
-            "DailyRewardsFriendPointsStart",
+            "DailyRewardsEnterFriendPoints",
             "CommonEndTask"
         ]
     },
-    "DailyRewardsFriendPointsStart": {
+    "DailyRewardsEnterFriendPoints": {
         "desc": "友情点",
         "recognition": {
             "type": "TemplateMatch",
@@ -51,7 +51,9 @@
                     21,
                     19
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -82,13 +84,17 @@
                     36,
                     33
                 ],
-                "template": ["Common/ConfirmWithCircle.png"]
+                "template": [
+                    "Common/ConfirmWithCircle.png"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 1000,
-        "next": ["CommonClosePage"]
+        "next": [
+            "CommonClosePage"
+        ]
     }
 }

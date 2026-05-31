@@ -23,7 +23,7 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "OutpostDailyLives",
+            "OutpostEnterDailyLives",
             "OutpostEnterBriefEncounter",
             "CommonEndTask"
         ]
@@ -39,7 +39,9 @@
                     40,
                     24
                 ],
-                "expected": ["^[1-9]\\d*$"]
+                "expected": [
+                    "^[1-9]\\d*$"
+                ]
             }
         }
     },
@@ -54,11 +56,13 @@
                     21,
                     14
                 ],
-                "expected": ["^[1-9]\\d*$"]
+                "expected": [
+                    "^[1-9]\\d*$"
+                ]
             }
         }
     },
-    "OutpostDailyLives": {
+    "OutpostEnterDailyLives": {
         "desc": "日常状态",
         "recognition": {
             "type": "TemplateMatch",
@@ -69,16 +73,20 @@
                     183,
                     52
                 ],
-                "template": ["Outpost/DailyLives.png"]
+                "template": [
+                    "Outpost/DailyLives.png"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": ["OutpostDailyEventFlow"]
+        "next": [
+            "OutpostEnterDailyEvent"
+        ]
     },
-    "OutpostDailyEventFlow": {
+    "OutpostEnterDailyEvent": {
         "desc": "进入剧情",
         "recognition": {
             "type": "TemplateMatch",
@@ -89,7 +97,9 @@
                     41,
                     38
                 ],
-                "template": ["Outpost/Event.png"]
+                "template": [
+                    "Outpost/Event.png"
+                ]
             }
         },
         "action": {
@@ -101,8 +111,8 @@
             "[JumpBack]DialoguesSkipStory",
             "[JumpBack]CommonConfirmReward",
             "[JumpBack]OutpostDailyEventPageClose",
-            "BriefEncounterRepeat",
-            "OutpostDailyEventFlow"
+            "BriefEncounterRepeatFlow",
+            "OutpostEnterDailyEvent"
         ]
     },
     "OutpostDailyEventPageClose": {
@@ -111,24 +121,28 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    631,
+                    549,
                     667,
-                    60,
+                    142,
                     32
                 ],
-                "expected": ["关闭"]
+                "expected": [
+                    "关闭"
+                ]
             }
         },
         "action": {
             "type": "Click"
         }
     },
-    "BriefEncounterRepeat": {
+    "BriefEncounterRepeatFlow": {
         "desc": "再次执行突发活动",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["OutpostMainPageEntered"]
+                "all_of": [
+                    "OutpostMainPageEntered"
+                ]
             }
         },
         "next": [

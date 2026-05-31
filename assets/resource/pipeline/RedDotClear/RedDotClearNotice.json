@@ -11,7 +11,9 @@
                     16,
                     16
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -25,14 +27,18 @@
                 ]
             }
         },
-        "next": ["RedDotClearNoticeFlow"]
+        "next": [
+            "RedDotClearNoticeFlow"
+        ]
     },
     "RedDotClearNoticeFlow": {
         "desc": "公告流程",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationNoticeVisible"]
+                "all_of": [
+                    "NavigationNoticeVisible"
+                ]
             }
         },
         "next": [
@@ -52,7 +58,9 @@
                     46,
                     507
                 ],
-                "template": ["Common/RedDot.png"],
+                "template": [
+                    "Common/RedDot.png"
+                ],
                 "threshold": 0.8
             }
         },
@@ -76,7 +84,9 @@
                 625
             ]
         },
-        "next": ["RedDotClearNoticenClickBlank"]
+        "next": [
+            "RedDotClearNoticenClickBlank"
+        ]
     },
     "RedDotClearNoticeRedDotClickTop": {
         "desc": "公告顶部点击红点",
@@ -89,7 +99,9 @@
                     362,
                     50
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -103,7 +115,9 @@
                 ]
             }
         },
-        "next": ["RedDotClearScrollUp"]
+        "next": [
+            "RedDotClearScrollUp"
+        ]
     },
     "RedDotClearNoticenClickBlank": {
         "desc": "公告点击空白",
@@ -137,7 +151,9 @@
                     362,
                     50
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {

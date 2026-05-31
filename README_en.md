@@ -72,17 +72,10 @@ Recommended approach:
 - After enabling debug mode, **only run the task that has the issue**
 - Stop immediately after reproducing the problem and prepare to package the logs
 
-### Step 3: Package the Logs
+### Step 3: Export the Logs
 
 1. Click the **Export Logs** icon next to **Run Log** in the bottom-right corner
-2. In the `debug` folder that opens, find the generated archive and **extract it**
-3. Drag the **`vision` folder** from the same directory into the extracted folder
-4. Verify the folder contains the following:
-    - `vision` folder
-    - `config` folder
-    - `XXXX-XX-XX-X.log`
-    - `go-service.log`
-    - `maafw.log`
-5. **Re-compress** the entire folder as a ZIP file and send it to the developer
+2. In the `debug` folder that opens, find the generated archive
+3. Send the archive to the developer
 
 > 💡 After submitting feedback, it's recommended to **delete the old `vision` folder** and restart the program. This keeps debug images from different issues separate and makes troubleshooting easier.

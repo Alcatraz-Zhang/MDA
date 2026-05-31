@@ -1,0 +1,131 @@
+{
+    "preset": [
+        {
+            "name": "SelfUse",
+            "label": "$preset.SelfUse.label",
+            "description": "$preset.SelfUse.description",
+            "task": [
+                {
+                    "name": "CashShop",
+                    "option": {
+                        "CashShopFreePackage": "Yes",
+                        "StepUpPackage": "Yes"
+                    }
+                },
+                {
+                    "name": "Shop",
+                    "option": {
+                        "CommonShopFreeGoods": "Yes",
+                        "CommonShopCoreDustCase": "No",
+                        "ArenaShopItemList": [
+                            "ArenaShopElectricCodeManual"
+                        ],
+                        "RecyclingShopList": [
+                            "Gem"
+                        ]
+                    }
+                },
+                {
+                    "name": "SimulationRoom",
+                    "option": {
+                        "BeginSimulation": "Yes",
+                        "StartOverclock": "Yes",
+                        "AutoBIOSSetting": "Yes"
+                    }
+                },
+                {
+                    "name": "Arena",
+                    "option": {
+                        "SpecialReward": "Yes",
+                        "ArenaEnterRookieArena": "Yes",
+                        "ArenaEnterSpecialArena": "Yes",
+                        "ArenaEnterChampionArena": "Yes"
+                    }
+                },
+                {
+                    "name": "TribeTower",
+                    "option": {
+                        "TribeTowerEnterCommonTower": "No",
+                        "TribeTowerEnterElysionTower": "Yes",
+                        "TribeTowerEnterMissilisTower": "Yes",
+                        "TribeTowerEnterTetraTower": "Yes",
+                        "TribeTowerEnterPilgrimTower": "Yes"
+                    }
+                },
+                {
+                    "name": "Interception",
+                    "option": {
+                        "InterceptionType": "AnomalyInterception",
+                        "AnomalyInterceptionTarget": "InterceptionAnomalyKraken",
+                        "ManualInterceptionBattle": "Yes"
+                    }
+                },
+                {
+                    "name": "Outpost",
+                    "option": {
+                        "DefenseRewards": "Yes",
+                        "BulletinBoard": "Yes",
+                        "BriefEncounter": "Yes"
+                    }
+                },
+                {
+                    "name": "Advise",
+                    "option": {
+                        "NikkeAdvise": "Yes",
+                        "AdviseEpisodeReward": "Yes",
+                        "AdviseEpisodeViewingReward": "Yes"
+                    }
+                },
+                {
+                    "name": "CoordinatedOperations"
+                },
+                {
+                    "name": "DailyRewards",
+                    "option": {
+                        "DailyRewardsFriendPoints": "Yes",
+                        "DailyRewardsEmail": "Yes",
+                        "DailyRewardsRankingRewards": "Yes",
+                        "DailyRewardsMission": "Yes",
+                        "DailyRewardsPassMain": "Yes",
+                        "DailyRewardsDailyLogin": "Yes",
+                        "DailyRewardsFreeRecruit": "Yes"
+                    }
+                },
+                {
+                    "name": "SoloRaid"
+                },
+                {
+                    "name": "SmallEvent",
+                    "option": {
+                        "SmallEventTheme": "BitterSpice",
+                        "SmallEventContent": [
+                            "SmallEventChallenge",
+                            "SmallEventStory",
+                            "SmallEventMission"
+                        ]
+                    }
+                },
+                {
+                    "name": "LargeEvent",
+                    "option": {
+                        "LargeEventTheme": "StarAnis",
+                        "LargeEventStoryPriority": "Story2First",
+                        "LargeEventContent": [
+                            "LargeEventLoginStamp",
+                            "LargeEventChallenge",
+                            "LargeEventStory",
+                            "LargeEventMission"
+                        ]
+                    }
+                },
+                {
+                    "name": "RedDotClear",
+                    "option": {
+                        "RedDotClearCashShop": "Yes",
+                        "RedDotClearNotice": "Yes"
+                    }
+                }
+            ]
+        }
+    ]
+}

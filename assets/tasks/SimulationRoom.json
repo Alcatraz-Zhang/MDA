@@ -9,7 +9,9 @@
                 "BeginSimulation",
                 "StartOverclock"
             ],
-            "group": ["daily"]
+            "group": [
+                "daily"
+            ]
         }
     ],
     "option": {
@@ -46,7 +48,9 @@
                             "enabled": true
                         }
                     },
-                    "option": ["AutoBIOSSetting"]
+                    "option": [
+                        "AutoBIOSSetting"
+                    ]
                 },
                 {
                     "name": "No",

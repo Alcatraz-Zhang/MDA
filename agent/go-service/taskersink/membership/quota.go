@@ -11,22 +11,25 @@ import (
 )
 
 type quotaState struct {
-	BusinessDate string `json:"business_date"`
-	DeviceHash   string `json:"device_hash"`
-	TierCode     string `json:"tier_code"`
-	UsedSeconds  int64  `json:"used_seconds"`
-	UpdatedAt    string `json:"updated_at"`
+	BusinessDate       string `json:"business_date"`
+	DeviceHash         string `json:"device_hash"`
+	TierCode           string `json:"tier_code"`
+	LimitSeconds       int64  `json:"limit_seconds"`
+	UsedSeconds        int64  `json:"used_seconds"`
+	CarriedDebtSeconds int64  `json:"carried_debt_seconds,omitempty"`
+	UpdatedAt          string `json:"updated_at"`
 }
 
 type QuotaSnapshot struct {
-	TierName         string
-	TierCode         string
-	LimitSeconds     int64
-	UsedSeconds      int64
-	RemainingSeconds int64
-	BusinessDate     string
-	SponsorURL       string
-	UnlimitedRuntime bool
+	TierName           string
+	TierCode           string
+	LimitSeconds       int64
+	UsedSeconds        int64
+	RemainingSeconds   int64
+	CarriedDebtSeconds int64
+	BusinessDate       string
+	SponsorURL         string
+	UnlimitedRuntime   bool
 }
 
 var quotaMu sync.Mutex
@@ -72,6 +75,62 @@ func saveQuotaState(path string, state quotaState) error {
 	return os.WriteFile(path, data, 0644)
 }
 
+func quotaLimitSeconds(status *MembershipStatus) int64 {
+	limit := int64(status.DailyRuntimeMinutes) * 60
+	if limit <= 0 {
+		return 10 * 60
+	}
+	return limit
+}
+
+func isRuntimeQuotaSubject(status *MembershipStatus) bool {
+	return !status.UnlimitedRuntime
+}
+
+func normalizeTierCode(status *MembershipStatus) string {
+	if status.TierCode != "" {
+		return status.TierCode
+	}
+	return "orange_free"
+}
+
+func parseBusinessDate(date string) (time.Time, bool) {
+	parsed, err := time.Parse("2006-01-02", date)
+	if err != nil {
+		return time.Time{}, false
+	}
+	return parsed, true
+}
+
+func carriedQuotaDebt(state quotaState, businessDate string, fallbackLimit int64) int64 {
+	if state.BusinessDate == "" || state.BusinessDate == businessDate {
+		return state.UsedSeconds
+	}
+
+	previousDate, ok := parseBusinessDate(state.BusinessDate)
+	if !ok {
+		return 0
+	}
+	currentDate, ok := parseBusinessDate(businessDate)
+	if !ok {
+		return 0
+	}
+	days := int64(currentDate.Sub(previousDate).Hours() / 24)
+	if days <= 0 {
+		return state.UsedSeconds
+	}
+
+	limit := state.LimitSeconds
+	if limit <= 0 {
+		limit = fallbackLimit
+	}
+	debt := state.UsedSeconds - limit*days
+	if debt < 0 {
+		return 0
+	}
+	return debt
+}
+
 func normalizeQuotaState(status *MembershipStatus, now time.Time) (string, quotaState, error) {
 	path, err := quotaStatePath()
 	if err != nil {
@@ -80,18 +139,31 @@ func normalizeQuotaState(status *MembershipStatus, now time.Time) (string, quota
 	state := loadQuotaState(path)
 	businessDate := quotaBusinessDate(now)
 	device := deviceHash(status.DeviceCode)
-	if state.BusinessDate != businessDate || state.DeviceHash != device {
-		state = quotaState{
-			BusinessDate: businessDate,
-			DeviceHash:   device,
-			UsedSeconds:  0,
-		}
+	limit := quotaLimitSeconds(status)
+	tierCode := normalizeTierCode(status)
+	updatedAt := now.Format(time.RFC3339)
+
+	if state.DeviceHash != device || !isRuntimeQuotaSubject(status) {
+		return path, quotaState{
+			BusinessDate:       businessDate,
+			DeviceHash:         device,
+			TierCode:           tierCode,
+			LimitSeconds:       limit,
+			UsedSeconds:        0,
+			CarriedDebtSeconds: 0,
+			UpdatedAt:          updatedAt,
+		}, nil
 	}
-	state.TierCode = status.TierCode
-	if state.TierCode == "" {
-		state.TierCode = "orange_free"
+
+	if state.BusinessDate != businessDate {
+		state.UsedSeconds = carriedQuotaDebt(state, businessDate, limit)
+		state.CarriedDebtSeconds = state.UsedSeconds
+		state.BusinessDate = businessDate
 	}
-	state.UpdatedAt = now.Format(time.RFC3339)
+	state.DeviceHash = device
+	state.TierCode = tierCode
+	state.LimitSeconds = limit
+	state.UpdatedAt = updatedAt
 	return path, state, nil
 }
 
@@ -109,20 +181,18 @@ func quotaSnapshotLocked(status *MembershipStatus, now time.Time) (QuotaSnapshot
 func snapshotFromState(status *MembershipStatus, state quotaState) QuotaSnapshot {
 	if status.UnlimitedRuntime {
 		return QuotaSnapshot{
-			TierName:         status.TierName,
-			TierCode:         status.TierCode,
-			LimitSeconds:     0,
-			UsedSeconds:      0,
-			RemainingSeconds: 0,
-			BusinessDate:     state.BusinessDate,
-			UnlimitedRuntime: true,
+			TierName:           status.TierName,
+			TierCode:           status.TierCode,
+			LimitSeconds:       0,
+			UsedSeconds:        0,
+			RemainingSeconds:   0,
+			CarriedDebtSeconds: 0,
+			BusinessDate:       state.BusinessDate,
+			UnlimitedRuntime:   true,
 		}
 	}
 
-	limit := int64(status.DailyRuntimeMinutes) * 60
-	if limit <= 0 {
-		limit = 10 * 60
-	}
+	limit := quotaLimitSeconds(status)
 	used := state.UsedSeconds
 	if used < 0 {
 		used = 0
@@ -131,32 +201,42 @@ func snapshotFromState(status *MembershipStatus, state quotaState) QuotaSnapshot
 	if remaining < 0 {
 		remaining = 0
 	}
+	carriedDebt := state.CarriedDebtSeconds
+	if carriedDebt < 0 {
+		carriedDebt = 0
+	}
 	return QuotaSnapshot{
-		TierName:         status.TierName,
-		TierCode:         status.TierCode,
-		LimitSeconds:     limit,
-		UsedSeconds:      used,
-		RemainingSeconds: remaining,
-		BusinessDate:     state.BusinessDate,
-		SponsorURL:       SponsorURL(status),
-		UnlimitedRuntime: false,
+		TierName:           status.TierName,
+		TierCode:           status.TierCode,
+		LimitSeconds:       limit,
+		UsedSeconds:        used,
+		RemainingSeconds:   remaining,
+		CarriedDebtSeconds: carriedDebt,
+		BusinessDate:       state.BusinessDate,
+		SponsorURL:         SponsorURL(status),
+		UnlimitedRuntime:   false,
 	}
 }
 
 func GetQuotaSnapshot(status *MembershipStatus) (QuotaSnapshot, error) {
-	if status.UnlimitedRuntime {
-		return snapshotFromState(status, quotaState{BusinessDate: quotaBusinessDate(time.Now())}), nil
-	}
 	quotaMu.Lock()
 	defer quotaMu.Unlock()
 	return quotaSnapshotLocked(status, time.Now())
 }
 
 func AddQuotaUsage(status *MembershipStatus, delta time.Duration) (QuotaSnapshot, error) {
-	if status.UnlimitedRuntime {
-		return snapshotFromState(status, quotaState{BusinessDate: quotaBusinessDate(time.Now())}), nil
-	}
 	if delta <= 0 {
+		return GetQuotaSnapshot(status)
+	}
+	seconds := int64(delta.Round(time.Second) / time.Second)
+	if seconds <= 0 {
+		seconds = 1
+	}
+	return AddQuotaUsageSeconds(status, seconds)
+}
+
+func AddQuotaUsageSeconds(status *MembershipStatus, seconds int64) (QuotaSnapshot, error) {
+	if seconds <= 0 {
 		return GetQuotaSnapshot(status)
 	}
 	quotaMu.Lock()
@@ -166,12 +246,10 @@ func AddQuotaUsage(status *MembershipStatus, delta time.Duration) (QuotaSnapshot
 	if err != nil {
 		return QuotaSnapshot{}, err
 	}
-	seconds := int64(delta.Round(time.Second) / time.Second)
-	if seconds <= 0 {
-		seconds = 1
+	if isRuntimeQuotaSubject(status) {
+		state.UsedSeconds += seconds
+		state.UpdatedAt = now.Format(time.RFC3339)
 	}
-	state.UsedSeconds += seconds
-	state.UpdatedAt = now.Format(time.RFC3339)
 	if err := saveQuotaState(path, state); err != nil {
 		return QuotaSnapshot{}, err
 	}

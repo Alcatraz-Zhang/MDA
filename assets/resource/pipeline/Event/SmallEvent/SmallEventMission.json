@@ -12,14 +12,18 @@
                     661,
                     294
                 ],
-                "expected": [".*任务.*"]
+                "expected": [
+                    ".*任务.*"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "timeout": 60000,
-        "next": ["SmallEventMissionFlow"]
+        "next": [
+            "SmallEventMissionFlow"
+        ]
     },
     "SmallEventMissionVisible": {
         "desc": "小活动任务内部的标识",
@@ -32,7 +36,9 @@
                     137,
                     35
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         }
     },
@@ -41,7 +47,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["SmallEventMissionVisible"]
+                "all_of": [
+                    "SmallEventMissionVisible"
+                ]
             }
         },
         "next": [
@@ -81,10 +89,14 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["SmallEventMissionClaimed"]
+                "all_of": [
+                    "SmallEventMissionClaimed"
+                ]
             }
         },
-        "next": ["CommonGoBack"]
+        "next": [
+            "CommonGoBack"
+        ]
     },
     "SmallEventMissionClaimAll": {
         "desc": "小活动任务奖励领取",
@@ -97,7 +109,9 @@
                     137,
                     35
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         },
         "action": {

@@ -1,10 +1,12 @@
 {
-    "AdviseStory": {
+    "AdviseStoryFlow": {
         "desc": "咨询剧情",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["DialoguesMainVisible"]
+                "all_of": [
+                    "DialoguesMainVisible"
+                ]
             }
         },
         "next": [

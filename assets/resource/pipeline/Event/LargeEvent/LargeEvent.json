@@ -8,24 +8,26 @@
             }
         },
         "next": [
-            "LargeEventStart",
-            "[JumpBack]NavigationEnterHall"
+            "LargeEventHallFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "LargeEventStart": {
+    "LargeEventHallFlow": {
         "desc": "大活动开始",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [
-            "LargeEventEntry",
+            "LargeEventEnterMainPage",
             "CommonEndTask"
         ]
     },
-    "LargeEventEntry": {
+    "LargeEventEnterMainPage": {
         "desc": "大活动入口",
         "recognition": {
             "type": "TemplateMatch",
@@ -46,7 +48,7 @@
         },
         "next": [
             "LargeEventMainPageFlow",
-            "LargeEventEntry"
+            "LargeEventEnterMainPage"
         ]
     },
     "LargeEventMainPageEntered": {
@@ -60,7 +62,9 @@
                     82,
                     30
                 ],
-                "expected": [".*活动地.*"]
+                "expected": [
+                    ".*活动地.*"
+                ]
             }
         }
     },
@@ -69,7 +73,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["LargeEventMainPageEntered"]
+                "all_of": [
+                    "LargeEventMainPageEntered"
+                ]
             }
         },
         "pre_wait_freezes": {

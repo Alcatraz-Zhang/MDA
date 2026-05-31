@@ -115,7 +115,11 @@ EventLoginRewardFlow
 ```json
 {
     "ShopPurchaseItemFlow": {
-        "next": ["ShopPurchaseDialogVisible", "[JumpBack]CommonConfirmAction", "CommonConfirmReward"]
+        "next": [
+            "ShopPurchaseDialogVisible",
+            "[JumpBack]CommonConfirmAction",
+            "CommonConfirmReward"
+        ]
     }
 }
 ```
@@ -247,7 +251,10 @@ FlagInMission
         "action": {
             "type": "Click"
         },
-        "next": ["ShopArenaShopEntered", "ShopEnterArenaShop"]
+        "next": [
+            "ShopArenaShopEntered",
+            "ShopEnterArenaShop"
+        ]
     },
     "ShopArenaShopEntered": {
         "desc": "已进入竞技场商店",
@@ -272,10 +279,16 @@ FlagInMission
         "action": {
             "type": "Click"
         },
-        "next": ["ShopMainPageFlow", "ShopEnterMainPage"]
+        "next": [
+            "ShopMainPageFlow",
+            "ShopEnterMainPage"
+        ]
     },
     "ShopMainPageFlow": {
-        "next": ["ShopMainPageEntered", "ShopPurchaseItemFlow"]
+        "next": [
+            "ShopMainPageEntered",
+            "ShopPurchaseItemFlow"
+        ]
     },
     "ShopMainPageEntered": {
         "desc": "已进入商店主页",
@@ -501,7 +514,10 @@ LoginRewardClose
 ```json
 {
     "ShopMain": {
-        "next": ["ShopEnterExchangePage", "[JumpBack]NavigationEnterHome"]
+        "next": [
+            "ShopEnterExchangePage",
+            "[JumpBack]NavigationEnterHome"
+        ]
     },
     "ShopEnterExchangePage": {
         "desc": "进入兑换商店页面",
@@ -511,14 +527,20 @@ LoginRewardClose
         "action": {
             "type": "Click"
         },
-        "next": ["ShopOnExchangePage", "ShopEnterExchangePage"]
+        "next": [
+            "ShopOnExchangePage",
+            "ShopEnterExchangePage"
+        ]
     },
     "ShopOnExchangePage": {
         "desc": "处于兑换商店页面",
         "recognition": {
             "type": "OCR"
         },
-        "next": ["[JumpBack]ShopPurchaseItemFlow", "CommonEndTask"]
+        "next": [
+            "[JumpBack]ShopPurchaseItemFlow",
+            "CommonEndTask"
+        ]
     }
 }
 ```

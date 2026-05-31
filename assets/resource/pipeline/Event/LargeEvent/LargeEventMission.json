@@ -12,7 +12,9 @@
                     30,
                     107
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -27,7 +29,9 @@
             }
         },
         "timeout": 60000,
-        "next": ["LargeEventMissionFlow"]
+        "next": [
+            "LargeEventMissionFlow"
+        ]
     },
     "LargeEventMissionVisible": {
         "desc": "大活动任务内部的标识",
@@ -40,7 +44,9 @@
                     137,
                     35
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         }
     },
@@ -49,10 +55,14 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["LargeEventMissionVisible"]
+                "all_of": [
+                    "LargeEventMissionVisible"
+                ]
             }
         },
-        "next": ["LargeEventClickMissionRedDot"]
+        "next": [
+            "LargeEventClickMissionRedDot"
+        ]
     },
     "LargeEventClickMissionRedDot": {
         "desc": "大活动任务的红点",
@@ -65,7 +75,9 @@
                     375,
                     59
                 ],
-                "template": ["Common/PassRedDot.png"]
+                "template": [
+                    "Common/PassRedDot.png"
+                ]
             }
         },
         "action": {
@@ -116,10 +128,14 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["LargeEventMissionClaimed"]
+                "all_of": [
+                    "LargeEventMissionClaimed"
+                ]
             }
         },
-        "next": ["CommonGoBack"]
+        "next": [
+            "CommonGoBack"
+        ]
     },
     "LargeEventMissionClaimAll": {
         "desc": "大活动任务奖励领取",
@@ -132,7 +148,9 @@
                     137,
                     35
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         },
         "action": {

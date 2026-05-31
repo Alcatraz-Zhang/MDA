@@ -27,7 +27,9 @@
                     55,
                     390
                 ],
-                "template": ["Shop/RecyclingShop/RecyclingShop.png"]
+                "template": [
+                    "Shop/RecyclingShop/RecyclingShop.png"
+                ]
             }
         },
         "action": {
@@ -49,7 +51,9 @@
                     119,
                     20
                 ],
-                "expected": ["废铁商店"]
+                "expected": [
+                    "废铁商店"
+                ]
             }
         }
     },

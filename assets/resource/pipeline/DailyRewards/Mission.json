@@ -3,11 +3,11 @@
         "desc": "任务收取入口",
         "max_hit": 1,
         "next": [
-            "DailyRewardsMissionStart",
+            "DailyRewardsEnterMission",
             "CommonEndTask"
         ]
     },
-    "DailyRewardsMissionStart": {
+    "DailyRewardsEnterMission": {
         "desc": "进入任务页面",
         "recognition": {
             "type": "TemplateMatch",
@@ -18,7 +18,9 @@
                     20,
                     20
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -35,7 +37,7 @@
         "post_wait_freezes": 500,
         "next": [
             "DailyRewardsMissionFlow",
-            "DailyRewardsMissionStart"
+            "DailyRewardsEnterMission"
         ]
     },
     "DailyRewardsMissionFlow": {
@@ -49,7 +51,9 @@
                     53,
                     20
                 ],
-                "expected": ["每日任务"]
+                "expected": [
+                    "每日任务"
+                ]
             }
         },
         "next": [
@@ -68,7 +72,9 @@
                     375,
                     28
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         },
         "action": {
@@ -125,7 +131,9 @@
                     108,
                     35
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         },
         "action": {

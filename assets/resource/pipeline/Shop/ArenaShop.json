@@ -26,7 +26,9 @@
                     55,
                     390
                 ],
-                "template": ["Shop/ArenaShop/ArenaShop.png"]
+                "template": [
+                    "Shop/ArenaShop/ArenaShop.png"
+                ]
             }
         },
         "action": {
@@ -48,7 +50,9 @@
                     119,
                     20
                 ],
-                "expected": ["竞技场商店"]
+                "expected": [
+                    "竞技场商店"
+                ]
             }
         }
     },

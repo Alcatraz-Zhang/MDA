@@ -3,16 +3,18 @@
         "desc": "每日登录奖励",
         "max_hit": 1,
         "next": [
-            "DailyRewardsDailyLoginStart",
+            "DailyRewardsDailyLoginEntryFlow",
             "CommonEndTask"
         ]
     },
-    "DailyRewardsDailyLoginStart": {
+    "DailyRewardsDailyLoginEntryFlow": {
         "desc": "每日登录奖励入口",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [
@@ -32,7 +34,9 @@
                     151,
                     52
                 ],
-                "template": ["DailyRewards/DailyLogin/BackStageGift.png"]
+                "template": [
+                    "Common/RedDot.png" //占位，应该去task页面修改
+                ]
             }
         },
         "action": {
@@ -50,7 +54,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "DailyLoginRewardsTextVisible",
+                    "DailyLoginClaimAllButtonVisible",
                     "DailyLoginRewardsAvailable"
                 ]
             }
@@ -60,7 +64,7 @@
         },
         "post_wait_freezes": 500
     },
-    "DailyLoginRewardsTextVisible": {
+    "DailyLoginClaimAllButtonVisible": {
         "desc": "登录奖励领取文本可见",
         "recognition": {
             "type": "OCR",
@@ -71,7 +75,9 @@
                     139,
                     34
                 ],
-                "expected": [".*全部.*"]
+                "expected": [
+                    ".*全部.*"
+                ]
             }
         },
         "action": {
@@ -84,7 +90,7 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": "DailyLoginRewardsTextVisible",
+                "roi": "DailyLoginClaimAllButtonVisible",
                 "lower": [
                     200,
                     200,

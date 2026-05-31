@@ -52,7 +52,9 @@
                     "description": "在选项激活时生效的 pipeline 配置覆盖"
                 }
             },
-            "required": ["name"],
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
         },
         "inputItem": {
@@ -83,7 +85,11 @@
                     "type": "string",
                     "title": "Pipeline 数据类型",
                     "description": "输入字段在 pipeline_override 中的数据类型，用于类型转换",
-                    "enum": ["string", "int", "bool"]
+                    "enum": [
+                        "string",
+                        "int",
+                        "bool"
+                    ]
                 },
                 "verify": {
                     "type": "string",
@@ -96,7 +102,9 @@
                     "description": "正则校验用户输入错误时显示的信息"
                 }
             },
-            "required": ["name"],
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
         },
         "optionControllerResource": {
@@ -177,7 +185,10 @@
                             "description": "支持使用「名称」格式引用输入字段的值"
                         }
                     },
-                    "required": ["type", "inputs"],
+                    "required": [
+                        "type",
+                        "inputs"
+                    ],
                     "additionalProperties": false
                 },
                 {
@@ -232,7 +243,9 @@
                             "description": "默认选项名称"
                         }
                     },
-                    "required": ["cases"],
+                    "required": [
+                        "cases"
+                    ],
                     "additionalProperties": false
                 },
                 {
@@ -292,7 +305,10 @@
                             }
                         }
                     },
-                    "required": ["type", "cases"],
+                    "required": [
+                        "type",
+                        "cases"
+                    ],
                     "additionalProperties": false
                 },
                 {
@@ -350,7 +366,9 @@
                             "description": "默认选项名称，应为 Yes 或 No"
                         }
                     },
-                    "required": ["cases"],
+                    "required": [
+                        "cases"
+                    ],
                     "additionalProperties": false
                 }
             ]
@@ -382,7 +400,14 @@
                 "type": {
                     "type": "string",
                     "title": "控制器类型",
-                    "enum": ["Adb", "Win32", "MacOS", "PlayCover", "Gamepad", "WlRoots"]
+                    "enum": [
+                        "Adb",
+                        "Win32",
+                        "MacOS",
+                        "PlayCover",
+                        "Gamepad",
+                        "WlRoots"
+                    ]
                 },
                 "display_short_side": {
                     "type": "number",
@@ -506,13 +531,18 @@
                             "type": "string",
                             "title": "输入控制方式",
                             "description": "可选。MacOS 控制器的输入控制方式，不提供则使用默认",
-                            "enum": ["GlobalEvent", "PostToPid"]
+                            "enum": [
+                                "GlobalEvent",
+                                "PostToPid"
+                            ]
                         },
                         "screencap": {
                             "type": "string",
                             "title": "截图方式",
                             "description": "可选。MacOS 控制器的截图方式，不提供则使用默认",
-                            "enum": ["ScreenCaptureKit"]
+                            "enum": [
+                                "ScreenCaptureKit"
+                            ]
                         }
                     },
                     "additionalProperties": false
@@ -526,7 +556,9 @@
                             "type": "string",
                             "title": "Bundle Identifier",
                             "description": "可选。目标应用的 Bundle Identifier，不提供则使用默认 maa.playcover，仅作为控制器标识符，与被操控应用无关",
-                            "examples": ["com.hypergryph.arknights"]
+                            "examples": [
+                                "com.hypergryph.arknights"
+                            ]
                         }
                     },
                     "additionalProperties": false
@@ -550,7 +582,11 @@
                             "type": "string",
                             "title": "手柄类型",
                             "description": "可选。虚拟手柄类型，不提供则默认使用 Xbox360",
-                            "enum": ["Xbox360", "DualShock4", "DS4"],
+                            "enum": [
+                                "Xbox360",
+                                "DualShock4",
+                                "DS4"
+                            ],
                             "default": "Xbox360"
                         },
                         "screencap": {
@@ -582,13 +618,17 @@
                         "use_win32_vk_code": {
                             "type": "boolean",
                             "title": "使用 Win32 VK 键码",
-                            "description": "可选。为 true 时按键被视为 Win32 Virtual-Key 码，内部转换为 Linux evdev 码；否则按原始 evdev 码处理。默认 false"
+                            "description": "可选。为 true 时按键被视为 Win32 Virtual-Key 码，内部转换为 Linux evdev 码；否则按原始 evdev 码处理。默认 false",
+                            "default": false
                         }
                     },
                     "additionalProperties": false
                 }
             },
-            "required": ["name", "type"],
+            "required": [
+                "name",
+                "type"
+            ],
             "additionalProperties": false
         },
         "resourceItem": {
@@ -638,9 +678,18 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "hash": {
+                    "type": "string",
+                    "minLength": 1,
+                    "title": "资源 hash",
+                    "description": "资源校验值，通过 MaaResourceGetHash 获取。校验时机为加载 resource.path 后、加载 controller.attach_resource_path 之前"
                 }
             },
-            "required": ["name", "path"],
+            "required": [
+                "name",
+                "path"
+            ],
             "additionalProperties": false
         },
         "groupItem": {
@@ -674,7 +723,9 @@
                     "default": true
                 }
             },
-            "required": ["name"],
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
         },
         "taskItem": {
@@ -780,7 +831,10 @@
                     }
                 }
             },
-            "required": ["name", "entry"],
+            "required": [
+                "name",
+                "entry"
+            ],
             "additionalProperties": false
         },
         "agentConfig": {
@@ -807,7 +861,9 @@
                     "description": "被用来创建一个通信套接字。填写则会被使用，否则自动创建"
                 }
             },
-            "required": ["child_exec"],
+            "required": [
+                "child_exec"
+            ],
             "additionalProperties": false
         }
     },
@@ -1019,16 +1075,25 @@
                                     "additionalProperties": true
                                 }
                             },
-                            "required": ["name"],
+                            "required": [
+                                "name"
+                            ],
                             "additionalProperties": false
                         }
                     }
                 },
-                "required": ["name"],
+                "required": [
+                    "name"
+                ],
                 "additionalProperties": false
             }
         }
     },
-    "required": ["interface_version", "name", "controller", "resource"],
+    "required": [
+        "interface_version",
+        "name",
+        "controller",
+        "resource"
+    ],
     "additionalProperties": false
 }

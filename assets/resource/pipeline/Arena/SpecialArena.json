@@ -6,7 +6,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "SpecialArena",
+                    "SpecialArenaVisible",
                     "SpecialArenaRedDotVisible"
                 ]
             }
@@ -14,7 +14,9 @@
         "action": {
             "type": "Click"
         },
-        "next": ["SpecialArenaCornerFlow"]
+        "next": [
+            "SpecialArenaCornerFlow"
+        ]
     },
     "SpecialArenaMainPageEntered": {
         "desc": "处于特殊竞技场",
@@ -27,7 +29,9 @@
                     70,
                     25
                 ],
-                "expected": ["特殊竞技场"]
+                "expected": [
+                    "特殊竞技场"
+                ]
             }
         }
     },
@@ -36,7 +40,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["SpecialArenaMainPageEntered"]
+                "all_of": [
+                    "SpecialArenaMainPageEntered"
+                ]
             }
         },
         "next": [
@@ -56,11 +62,13 @@
                     28,
                     27
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         }
     },
-    "SpecialArena": {
+    "SpecialArenaVisible": {
         "desc": "特殊竞技场",
         "recognition": {
             "type": "OCR",
@@ -71,7 +79,9 @@
                     67,
                     26
                 ],
-                "expected": ["SPECIAL"]
+                "expected": [
+                    "SPECIAL"
+                ]
             }
         }
     }

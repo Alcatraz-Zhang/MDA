@@ -71,6 +71,7 @@ func main() {
 
 	// Set version for membership debug-mode detection
 	membership.SetVersion(Version)
+	membership.SetClientName(pienv.ClientName())
 
 	// Register all custom components and sinks
 	registerAll()

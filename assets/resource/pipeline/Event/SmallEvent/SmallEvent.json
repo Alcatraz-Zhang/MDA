@@ -8,24 +8,26 @@
             }
         },
         "next": [
-            "SmallEventStart",
-            "[JumpBack]NavigationEnterHall"
+            "SmallEventHallFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "SmallEventStart": {
+    "SmallEventHallFlow": {
         "desc": "小活动开始",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [
-            "SmallEventEntry",
+            "SmallEventEnterMainPage",
             "CommonEndTask"
         ]
     },
-    "SmallEventEntry": {
+    "SmallEventEnterMainPage": {
         "desc": "小活动入口",
         "recognition": {
             "type": "TemplateMatch",
@@ -45,8 +47,8 @@
             "type": "Click"
         },
         "next": [
-            "SmallEventMainPageFlow",
-            "SmallEventEntry"
+            "SmallEventMainPageClickStoryArea",
+            "SmallEventEnterMainPage"
         ]
     },
     "SmallEventMainPageEntered": {
@@ -60,16 +62,20 @@
                     82,
                     30
                 ],
-                "expected": [".*剧情.*"]
+                "expected": [
+                    ".*剧情.*"
+                ]
             }
         }
     },
-    "SmallEventMainPageFlow": {
+    "SmallEventMainPageClickStoryArea": {
         "desc": "活动地区流程",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["SmallEventMainPageEntered"]
+                "all_of": [
+                    "SmallEventMainPageEntered"
+                ]
             }
         },
         "action": {

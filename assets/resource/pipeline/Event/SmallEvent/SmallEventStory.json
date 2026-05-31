@@ -12,7 +12,9 @@
                     661,
                     294
                 ],
-                "expected": [".*加成.*"]
+                "expected": [
+                    ".*加成.*"
+                ]
             }
         },
         "action": {
@@ -28,7 +30,9 @@
         },
         "post_wait_freezes": 500,
         "timeout": 60000,
-        "next": ["SmallEventEventStagePageFlow"]
+        "next": [
+            "SmallEventEventStagePageFlow"
+        ]
     },
     "SmallEventEventStagePageEntered": {
         "desc": "已进入小活动活动关卡页面",
@@ -41,17 +45,20 @@
                     50,
                     16
                 ],
-                "expected": [".*活动关.*"]
+                "expected": [
+                    ".*活动关.*"
+                ]
             }
         }
     },
     "SmallEventEventStagePageFlow": {
         "desc": "小活动活动关卡页面流程",
-        "max_hit": 2,
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["SmallEventEventStagePageEntered"]
+                "all_of": [
+                    "SmallEventEventStagePageEntered"
+                ]
             }
         },
         "post_wait_freezes": {
@@ -63,7 +70,9 @@
                 131
             ]
         },
-        "next": ["SmallEventEventStageBattleFlow"]
+        "next": [
+            "SmallEventEventStageBattleFlow"
+        ]
     },
     "SmallEventEventStageBattleFlow": {
         "desc": "小活动活动关卡页面战斗流程",
@@ -77,10 +86,10 @@
     "SmallEventEventStageQuickBattleFlow": {
         "desc": "小活动活动关卡页面快速战斗流程",
         "next": [
+            "SmallEventBattleBlocked",
             "SmallEventEventStageBattlePage",
             "[JumpBack]SmallEventStageNormalRepeatableClick",
-            "[JumpBack]SmallEventStageHardRepeatableClick",
-            "SmallEventGoBack"
+            "[JumpBack]SmallEventStageHardRepeatableClick"
         ]
     },
     "SmallEventEventStageBattlePage": {
@@ -88,11 +97,13 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["BattleMainVisible"]
+                "all_of": [
+                    "BattleMainVisible"
+                ]
             }
         },
         "next": [
-            "[JumpBack]BattleStart",
+            "[JumpBack]BattleEntryFlow",
             "SmallEventEventStagePageFlow",
             "[JumpBack]DialoguesSkipStory",
             "SmallEventGoBack"
@@ -109,7 +120,9 @@
                     50,
                     16
                 ],
-                "expected": ["剧情活动"]
+                "expected": [
+                    "剧情活动"
+                ]
             }
         }
     },
@@ -206,5 +219,20 @@
             "type": "Click"
         },
         "post_wait_freezes": 500
+    },
+    "SmallEventBattleBlocked": {
+        "desc": "活动体力耗尽",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "BattleCannotBattleBlocked"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]BattleClosePage",
+            "SmallEventGoBack"
+        ]
     }
 }

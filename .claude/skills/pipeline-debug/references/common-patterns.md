@@ -31,7 +31,10 @@ Wait until a specific element appears.
     },
     "Proceed": {
         "action": "Click",
-        "target": [640, 360]
+        "target": [
+            640,
+            360
+        ]
     }
 }
 ```
@@ -55,11 +58,17 @@ Branch based on what's on screen.
     },
     "HandleStateA": {
         "action": "Click",
-        "target": [100, 200]
+        "target": [
+            100,
+            200
+        ]
     },
     "HandleStateB": {
         "action": "Click",
-        "target": [300, 400]
+        "target": [
+            300,
+            400
+        ]
     }
 }
 ```
@@ -176,7 +185,10 @@ Give up after a certain time.
     },
     "HandleTimeout": {
         "action": "Click",
-        "target": [640, 360],
+        "target": [
+            640,
+            360
+        ],
         "next": ["FailGracefully"]
     }
 }
@@ -194,7 +206,10 @@ Handle multiple possible states.
         "recognition": "TemplateMatch",
         "template": "state_loading.png",
         "next": ["WaitForLoaded"],
-        "interrupt": ["CheckState2", "CheckState3"]
+        "interrupt": [
+            "CheckState2",
+            "CheckState3"
+        ]
     },
     "CheckState2": {
         "recognition": "TemplateMatch",
@@ -213,7 +228,10 @@ Handle multiple possible states.
     },
     "HandleError": {
         "action": "Click",
-        "target": [640, 360],
+        "target": [
+            640,
+            360
+        ],
         "next": ["DetectState"]
     }
 }
@@ -227,7 +245,10 @@ Execute multiple actions simultaneously.
 {
     "StartParallel": {
         "recognition": "DirectHit",
-        "sub": ["Action1", "Action2"],
+        "sub": [
+            "Action1",
+            "Action2"
+        ],
         "next": ["WaitForBoth"]
     },
     "Action1": {
@@ -289,12 +310,20 @@ Read text and validate it.
     "ReadText": {
         "recognition": "OCR",
         "expected": "\\d{4}-\\d{2}-\\d{2}", // Date pattern
-        "roi": [100, 100, 200, 50],
+        "roi": [
+            100,
+            100,
+            200,
+            50
+        ],
         "next": ["ProcessText"]
     },
     "ProcessText": {
         "action": "Click",
-        "target": [640, 360]
+        "target": [
+            640,
+            360
+        ]
     }
 }
 ```
@@ -308,13 +337,23 @@ Handle text that changes.
     "ReadDynamicText": {
         "recognition": "OCR",
         "expected": ".*", // Match any text
-        "roi": [100, 100, 300, 50],
+        "roi": [
+            100,
+            100,
+            300,
+            50
+        ],
         "next": ["CheckTextContent"]
     },
     "CheckTextContent": {
         "recognition": "OCR",
         "expected": "Success|Complete|Done",
-        "roi": [100, 100, 300, 50],
+        "roi": [
+            100,
+            100,
+            300,
+            50
+        ],
         "next": ["HandleSuccess"],
         "interrupt": ["HandleOtherText"]
     }
@@ -332,15 +371,26 @@ Make decisions based on color presence.
     "CheckColor": {
         "recognition": "ColorMatch",
         "method": 4, // RGB
-        "lower": [0, 200, 0], // Green lower bound
-        "upper": [100, 255, 100], // Green upper bound
+        "lower": [
+            0,
+            200,
+            0
+        ], // Green lower bound
+        "upper": [
+            100,
+            255,
+            100
+        ], // Green upper bound
         "count": 100,
         "next": ["GreenDetected"],
         "interrupt": ["NoGreen"]
     },
     "GreenDetected": {
         "action": "Click",
-        "target": [640, 360]
+        "target": [
+            640,
+            360
+        ]
     },
     "NoGreen": {
         "action": "Sleep",
@@ -368,7 +418,10 @@ Use feature matching for variable scenes.
     },
     "InteractWithElement": {
         "action": "Click",
-        "target": [640, 360]
+        "target": [
+            640,
+            360
+        ]
     }
 }
 ```

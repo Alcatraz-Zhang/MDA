@@ -52,7 +52,9 @@
                     "description": "在选项激活时生效的 pipeline 配置覆盖"
                 }
             },
-            "required": ["name"],
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
         },
         "inputItem": {
@@ -83,7 +85,11 @@
                     "type": "string",
                     "title": "Pipeline 数据类型",
                     "description": "输入字段在 pipeline_override 中的数据类型，用于类型转换",
-                    "enum": ["string", "int", "bool"]
+                    "enum": [
+                        "string",
+                        "int",
+                        "bool"
+                    ]
                 },
                 "verify": {
                     "type": "string",
@@ -96,7 +102,9 @@
                     "description": "正则校验用户输入错误时显示的信息"
                 }
             },
-            "required": ["name"],
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
         },
         "optionDefinition": {
@@ -130,13 +138,13 @@
                             "type": "array",
                             "title": "适用的控制器",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的控制器类型列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "resource": {
                             "type": "array",
                             "title": "适用的资源包",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的资源包列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "inputs": {
                             "type": "array",
@@ -152,7 +160,10 @@
                             "description": "支持使用「名称」格式引用输入字段的值"
                         }
                     },
-                    "required": ["type", "inputs"],
+                    "required": [
+                        "type",
+                        "inputs"
+                    ],
                     "additionalProperties": false
                 },
                 {
@@ -182,13 +193,13 @@
                             "type": "array",
                             "title": "适用的控制器",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的控制器类型列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "resource": {
                             "type": "array",
                             "title": "适用的资源包",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的资源包列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "cases": {
                             "type": "array",
@@ -203,7 +214,9 @@
                             "description": "默认选项名称"
                         }
                     },
-                    "required": ["cases"],
+                    "required": [
+                        "cases"
+                    ],
                     "additionalProperties": false
                 },
                 {
@@ -234,13 +247,13 @@
                             "type": "array",
                             "title": "适用的控制器",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的控制器类型列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "resource": {
                             "type": "array",
                             "title": "适用的资源包",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的资源包列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "cases": {
                             "type": "array",
@@ -259,7 +272,10 @@
                             }
                         }
                     },
-                    "required": ["type", "cases"],
+                    "required": [
+                        "type",
+                        "cases"
+                    ],
                     "additionalProperties": false
                 },
                 {
@@ -289,13 +305,13 @@
                             "type": "array",
                             "title": "适用的控制器",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的控制器类型列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "resource": {
                             "type": "array",
                             "title": "适用的资源包",
                             "description": "💡 v2.3.0 可选。指定该配置项适用的资源包列表",
-                            "items": {"type": "string"}
+                            "items": { "type": "string" }
                         },
                         "cases": {
                             "type": "array",
@@ -313,7 +329,9 @@
                             "description": "默认选项名称，应为 Yes 或 No"
                         }
                     },
-                    "required": ["cases"],
+                    "required": [
+                        "cases"
+                    ],
                     "additionalProperties": false
                 }
             ]
@@ -421,7 +439,10 @@
                     }
                 }
             },
-            "required": ["name", "entry"],
+            "required": [
+                "name",
+                "entry"
+            ],
             "additionalProperties": false
         }
     },

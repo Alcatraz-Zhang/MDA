@@ -1,14 +1,16 @@
 {
-    "BattleStart": {
+    "BattleEntryFlow": {
         "desc": "进入战斗",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["BattleMainVisible"]
+                "all_of": [
+                    "BattleMainVisible"
+                ]
             }
         },
         "next": [
-            "ManualInterceptionBattle",
+            "ManualInterceptionBattleRequired",
             "[JumpBack]BattleCanQuickBattle",
             "[JumpBack]BattleCanBattle",
             "[JumpBack]BattleClosePage",
@@ -31,12 +33,12 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "MultipleBattle",
-            "MultipleBattleStart",
+            "MultipleBattleDialogFlow",
+            "MultipleBattleClickStartBattle",
             "BattleOperationComplete"
         ]
     },
-    "MultipleBattle": {
+    "MultipleBattleDialogFlow": {
         "desc": "多次战斗",
         "recognition": {
             "type": "OCR",
@@ -47,12 +49,14 @@
                     54,
                     22
                 ],
-                "expected": ["剩余次数"]
+                "expected": [
+                    "剩余次数"
+                ]
             }
         },
         "next": [
             "MultipleBattleClickMax",
-            "MultipleBattleStart"
+            "MultipleBattleClickStartBattle"
         ]
     },
     "MultipleBattleClickMax": {
@@ -71,7 +75,7 @@
         },
         "next": [
             "MultipleBattleClickMax",
-            "MultipleBattleStart"
+            "MultipleBattleClickStartBattle"
         ]
     },
     "MultipleBattleClickMaxVisible": {
@@ -85,7 +89,9 @@
                     47,
                     30
                 ],
-                "template": ["Common/MAX.png"]
+                "template": [
+                    "Common/MAX.png"
+                ]
             }
         }
     },
@@ -109,26 +115,30 @@
             }
         }
     },
-    "MultipleBattleStart": {
+    "MultipleBattleClickStartBattle": {
         "desc": "多次战斗点击进行战斗",
         "recognition": {
             "type": "OCR",
             "param": {
                 "roi": [
-                    705,
+                    606,
                     536,
-                    88,
+                    187,
                     37
                 ],
-                "expected": ["进行战斗"]
+                "expected": [
+                    "进行战斗"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": ["BattleInBattle"]
+        "next": [
+            "BattleInBattleFlow"
+        ]
     },
-    "BattleInBattle": {
+    "BattleInBattleFlow": {
         "desc": "战斗中",
         "timeout": 180000,
         "next": [
@@ -152,7 +162,9 @@
                     100,
                     40
                 ],
-                "template": ["Battle/AutoBurst.png"],
+                "template": [
+                    "Battle/AutoBurst.png"
+                ],
                 "threshold": 0.9
             }
         },
@@ -172,7 +184,9 @@
                     100,
                     40
                 ],
-                "template": ["Battle/AutoShoot.png"],
+                "template": [
+                    "Battle/AutoShoot.png"
+                ],
                 "threshold": 0.9
             }
         },
@@ -207,7 +221,9 @@
                     122,
                     37
                 ],
-                "expected": [".*关卡.*"]
+                "expected": [
+                    ".*关卡.*"
+                ]
             }
         }
     },
@@ -236,7 +252,9 @@
         "recognition": {
             "type": "Or",
             "param": {
-                "any_of": ["BattleEscVisible"]
+                "any_of": [
+                    "BattleEscVisible"
+                ]
             }
         },
         "action": {
@@ -252,7 +270,9 @@
         "recognition": {
             "type": "Or",
             "param": {
-                "any_of": ["BattleFailedVisible"]
+                "any_of": [
+                    "BattleFailedVisible"
+                ]
             }
         },
         "next": [
@@ -271,7 +291,9 @@
                     160,
                     90
                 ],
-                "expected": ["ESC"]
+                "expected": [
+                    "ESC"
+                ]
             }
         }
     },
@@ -286,7 +308,9 @@
                     48,
                     30
                 ],
-                "expected": ["战败"]
+                "expected": [
+                    "战败"
+                ]
             }
         }
     },
@@ -304,16 +328,19 @@
         "action": {
             "type": "Click"
         },
-        "next": ["BattleInBattle"]
+        "next": [
+            "[JumpBack]CommonConfirmAction",
+            "BattleInBattleFlow"
+        ]
     },
-    "BattleCannotBattle": {
+    "BattleCannotBattleBlocked": {
         "desc": "无法战斗检测",
         "recognition": {
             "type": "And",
             "param": {
                 "all_of": [
                     "BattleMainVisible",
-                    "BattleUnavailable"
+                    "BattleStartButtonBlocked"
                 ]
             }
         }
@@ -329,7 +356,9 @@
                     35,
                     31
                 ],
-                "template": ["Battle/BattleCloseButton.png"]
+                "template": [
+                    "Battle/BattleCloseButton.png"
+                ]
             }
         },
         "action": {
@@ -343,11 +372,13 @@
             "param": {
                 "roi": [
                     671,
-                    571,
+                    536,
                     157,
-                    114
+                    149
                 ],
-                "expected": [".*快速战斗.*"]
+                "expected": [
+                    ".*快速战斗.*"
+                ]
             }
         }
     },
@@ -377,12 +408,15 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    671,
-                    571,
-                    157,
-                    114
+                    534,
+                    534,
+                    294,
+                    151
                 ],
-                "expected": ["进入战斗"]
+                "expected": [
+                    "进入战斗",
+                    "^挑战$"
+                ]
             }
         }
     },
@@ -406,7 +440,7 @@
             }
         }
     },
-    "BattleUnavailable": {
+    "BattleStartButtonBlocked": {
         "desc": "无法战斗的标识",
         "recognition": {
             "type": "ColorMatch",

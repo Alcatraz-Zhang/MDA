@@ -1,132 +1,129 @@
 ---
 name: pipeline-debug
-description: 调试和优化 MaaFramework pipeline JSON 片段。对照 schema 验证配置，检测结构性问题（缺失引用、循环依赖、命名与代码不匹配），识别常见错误，并提供优化建议。用于调试 pipeline 执行、验证配置或提升性能。触发词："debug pipeline"、"validate pipeline"、"optimize pipeline"、"pipeline error"。
+description: 调试和优化 MaaFramework Pipeline JSON。用于对照 schema 验证配置，检测缺失引用、循环依赖、孤立节点、命名与行为不匹配、ROI/阈值问题，并给出可靠性、性能和可维护性改进建议。触发词包括 debug pipeline、validate pipeline、optimize pipeline、pipeline error。
 license: MIT
 compatibility: Designed for Claude Code
-metadata:
-    version: "1.1"
-    project: MDA
-    author: MDA Team
 allowed-tools: Read Grep Glob
 ---
 
+# MaaFramework Pipeline 调试
+
 ## 功能说明
 
-- 对照 `pipeline.schema.json` 及相关 schema 验证 pipeline JSON
-- 检测结构性问题：缺失引用、循环依赖、孤立节点
-- **通过命名规范分析节点角色** — 从节点名推断其功能
-- **检测命名与代码的不匹配**（如节点名为 "Click" 但缺少 action）
-- 提供性能和可维护性的优化建议
-- 生成修正后的 pipeline 片段
-- **允许增删节点** 以实现正确的 pipeline 行为
+- 对照 `tools/schema/pipeline.schema.json` 及相关 schema 验证 Pipeline JSON。
+- 检测结构性问题：缺失引用、循环依赖、孤立节点、意外终止。
+- 通过命名规范分析节点角色，从节点名推断其预期行为。
+- 检测命名与代码不匹配，例如 `Click` 节点没有动作，`Visible` 节点却执行点击。
+- 提供性能、可靠性和可维护性优化建议。
+- 必要时生成修正后的 Pipeline 片段，可以增删节点以实现正确行为。
 
 ## 使用场景
 
-- Pipeline JSON 运行不符合预期
-- 部署前验证 pipeline 配置
-- 优化 pipeline 性能或降低复杂度
-- 调试 pipeline 执行问题
-- 根据命名理解节点功能
-- 验证节点名是否与实际行为匹配
-- 用户提到"debug pipeline"、"validate pipeline"、"optimize pipeline"、"pipeline error"
+- Pipeline JSON 运行不符合预期。
+- 部署前验证 Pipeline 配置。
+- 排查节点跳转、识别失败、重复点击、误点、卡死。
+- 优化 ROI、阈值、流程结构或异常处理。
+- 根据节点名理解流程语义，检查命名是否与实际识别/动作一致。
 
 ## 工作流程
 
-### 第一步：读取规范文件
+### 1. 读取规范文件
 
-从项目 `tools/schema/` 目录读取：
+优先读取当前项目中的 schema：
 
-1. **`pipeline.schema.json`** — Pipeline 节点 schema（识别/动作类型、节点属性）
-2. **`interface_import.schema.json`** — 任务文件 schema（pipeline_override 上下文）
-3. **`interface.schema.json`** — 主 PI schema（resource/controller 上下文）
-4. **`custom.recognition.schema.json`** — 自定义识别扩展
-5. **`custom.action.schema.json`** — 自定义动作扩展
+1. `tools/schema/pipeline.schema.json`
+2. `tools/schema/interface_import.schema.json`
+3. `tools/schema/interface.schema.json`
+4. `tools/schema/custom.recognition.schema.json`
+5. `tools/schema/custom.action.schema.json`
 
-### 第二步：分析 Pipeline 片段
+如果项目缺少某个 schema，说明缺失项并继续基于 MaaFramework 通用协议分析。
 
-1. 解析 JSON，识别所有节点及其属性
-2. 构建节点图：通过 `next[]` 建立父→子映射
-3. 提取关键配置：`recognition`、`action`、`enabled`、`next`、`interrupt`、`sub`、`on_error`
+### 2. 分析 Pipeline 片段
 
-### 第三步：对照 Schema 验证
+1. 解析 JSON，列出所有节点。
+2. 提取关键字段：`recognition`、`action`、`enabled`、`next`、`interrupt`、`sub`、`on_error`、`timeout`、`max_hit`。
+3. 构建节点图：父节点到子节点、反向引用、入口节点、终止节点。
+4. 区分 v1 简写字段和 v2 `{type, param}` 字段。
 
-逐节点检查 `pipeline.schema.json`：
+### 3. 对照 schema 验证
 
-- 必需字段是否齐全
-- 字段类型是否匹配
-- 枚举值、数值范围、字符串模式是否合法
-- 识别类型及参数是否正确
-- 动作类型及参数是否正确
+逐节点检查：
 
-### 第四步：通过命名分析节点语义
+- 必需字段是否齐全。
+- 字段类型是否匹配。
+- 枚举值、数值范围、字符串模式是否合法。
+- 识别类型及参数是否正确。
+- 动作类型及参数是否正确。
+- Custom 节点名和参数是否可能与 agent 注册不一致。
+
+### 4. 通过命名分析节点语义
 
 使用 [Pipeline 节点命名规范](references/pipeline-node-naming.md) 理解节点角色：
 
-1. **解析名称结构**：`<Domain><ActionOrObject><Role>`
-2. **通过后缀识别类型**：
-    - `Main` → 入口节点，组织后续节点
-    - `Flow` → 编排节点，无直接识别/动作
-    - `Enter<Page>` → 导航节点，点击进入某页面
-    - `On<Page>Page` / `Visible` → 状态检测节点
-    - `Click<Object>` / `Select<Object>` / `Claim<Object>` → 动作节点
-    - `Confirm<Object>` → 确认弹窗处理
-    - `Scroll<Direction>` / `Swipe<Object>` → 滚动动作
-    - `End` / `EndTask` → 终止节点
-    - `Entered` → 成功哨兵，确认导航完成
-3. **验证域一致性**：同一模块应使用相同域前缀
-4. **检测命名与代码的不匹配**：
-    - `Click<Object>` 但无 `action` → 可能有误
-    - `Visible` 但有 `action: Click` → 应为 `Click<Object>`
-    - `Flow` 但有识别参数 → 应为纯编排节点
-    - `Enter<Page>` 但无 `next` 重试 → 缺少成功哨兵
+- `<Domain>Main`：入口节点。
+- `<Domain><Subtask>Flow`：流程编排节点。
+- `<Domain>Enter<Page>`：进入页面或功能。
+- `<Domain>On<Page>Page` / `<Domain><Object>Visible`：页面或 UI 状态检测。
+- `<Domain>Click<Object>` / `Select` / `Claim` / `Purchase`：动作节点。
+- `<Domain>Confirm<Object>`：确认弹窗或确认操作。
+- `<Domain><Page>Entered`：进入成功哨兵节点。
+- `<Domain>End` / `EndTask`：终止节点。
 
-### 第五步：分析节点关系
+重点检查命名与行为不匹配：
 
-- **引用验证**：所有 `next[]`、`interrupt[]`、`sub[]` 的目标必须存在
-- **循环检测**：识别 `next` 链中的无限循环
-- **孤立检测**：找到从未被引用的节点
-- **入口点**：未被任何其他节点引用的根节点
-- **死胡同**：无 `next` 且非终止动作的节点
+- `Click<Object>` 但没有 `action: Click` 或等价动作。
+- `Visible` / `On<Page>Page` 却执行点击。
+- `Flow` 节点包含具体识别或动作。
+- `Enter<Page>` 点击后没有成功哨兵或重试/异常处理。
+- `Detected` 暴露底层识别实现，而 `Visible` / `Available` / `Selected` 更符合业务语义。
 
-### 第六步：识别常见问题
+### 5. 分析节点关系
 
-详见[调试规则参考](references/debug-rules.md)。
+- 所有 `next[]`、`interrupt[]`、`sub[]`、`on_error[]` 目标都必须存在。
+- 识别循环是否有退出条件、`max_hit`、`timeout` 或明确终止节点。
+- 找出无法从入口到达的孤立节点。
+- 找出没有 `next` 且不像终止节点的死胡同。
+- 检查 `[JumpBack]`、`[Anchor]` 等节点属性是否用于合适场景。
 
-快速检查项：
+### 6. 识别常见问题
 
-- 缺少识别 / 识别类型错误
-- 缺少动作 / ROI 不当 / 阈值问题
-- 性能瓶颈 / 逻辑错误
+详见 [调试规则参考](references/debug-rules.md)。快速检查：
 
-### 第七步：生成优化建议
+- 缺少识别或识别类型错误。
+- TemplateMatch 缺模板、OCR 缺 expected、ColorMatch 缺 lower/upper。
+- ROI 过大、阈值过低或过高。
+- 点击后没有验证下一画面。
+- 重复点击同一按钮，可能误点到下一页元素。
+- `enabled` 默认值与 Project Interface 选项语义不一致。
 
-1. **性能**：减少不必要的识别、优化 ROI、调整阈值
-2. **可维护性**：简化结构、降低嵌套深度
-3. **可靠性**：添加错误处理、提升识别精度
-4. **可读性**：添加 `desc` 文档、使用有意义的节点名
+### 7. 生成优化建议
 
-### 第八步：提供修正方案
+建议按优先级输出：
 
-如发现问题：生成修正后的 JSON，解释每处改动，提供前后对比。
+1. 正确性问题：会导致执行失败、误点、卡死。
+2. 可靠性问题：弹窗、加载、动画、网络波动下容易失败。
+3. 性能问题：全屏识别、大模板、高频 OCR。
+4. 可维护性问题：命名不清、过度拆分、重复节点、缺少 desc。
 
-响应格式参见[输出格式参考](references/output-format.md)。
+### 8. 提供修正方案
+
+如发现问题，给出修正后的 JSON 片段，并说明每处改动原因。响应格式见 [输出格式](references/output-format.md)。
 
 ## 注意事项
 
-- **V1/V2 模式**：部分节点使用 `recognition`（V1），部分使用 `type`（V2）— 两者均合法
-- **`next` 可选**：无 `next` 的节点是合法的终止节点
-- **`enabled` 默认为 true**：节点默认启用，除非显式设为 `false`
-- **`interrupt` 与 `sub` 的区别**：`interrupt` 暂停当前执行，`sub` 并行运行
-- **ROI 格式**：`[x, y, w, h]` 数组或引用前一节点的字符串
-- **模板路径**：相对于 `image/` 文件夹，而非项目根目录
-- **OCR expected**：支持正则表达式，不仅是字面字符串
-- **自定义节点**：可能包含 base schema 中没有的额外属性
-- **节点命名**：必须遵循 PascalCase 的 Domain + ActionOrObject + Role 格式
+- v1 简写和 v2 object 格式可能共存，应按项目现状判断，不要强行重写无关节点。
+- 无 `next` 的节点可以是合法终止节点，但必须符合流程语义。
+- `enabled` 默认为 true，只有显式 `false` 才默认关闭。
+- `interrupt` / `sub` / `on_error` 的语义依项目使用习惯和 MaaFramework 版本而定，先查 schema 和现有模式。
+- 模板路径通常相对 image/resource 图片目录，具体以当前项目约定为准。
+- OCR `expected` 可能支持正则；是否自动 i18n 取决于当前项目工具链。
+- 输出问题时优先给高置信度结论；不确定项标为“需要运行日志或截图验证”。
 
 ## 参考资料
 
-- [Pipeline Schema](../../../tools/schema/pipeline.schema.json)
 - [Pipeline 节点命名规范](references/pipeline-node-naming.md)
 - [调试规则](references/debug-rules.md)
 - [常见模式](references/common-patterns.md)
 - [输出格式](references/output-format.md)
+- MaaFramework Pipeline Protocol：<https://github.com/MaaXYZ/MaaFramework/blob/main/docs/en_us/3.1-PipelineProtocol.md>

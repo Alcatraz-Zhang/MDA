@@ -8,16 +8,18 @@
             }
         },
         "next": [
-            "DailyRewardsStart",
-            "[JumpBack]NavigationEnterHall"
+            "DailyRewardsEntryFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "DailyRewardsStart": {
+    "DailyRewardsEntryFlow": {
         "desc": "每日奖励",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "next": [

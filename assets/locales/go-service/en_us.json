@@ -22,9 +22,12 @@
     "tasker.membership_warning.tier_free": "Orange Free",
     "tasker.membership_warning.tip": "💡 All features are available. Upgrade for more daily runtime.",
     "tasker.membership_check.verified": "🍊 Current tier %s, about %d/%d minutes remaining today",
+    "tasker.membership_check.debt": "🍊 About %d minutes of previous over-quota runtime have been carried over and will be deducted from today's quota.",
     "tasker.membership_check.sponsor": "🍊 Device binding/subscription URL: %s",
     "tasker.membership_check.denied": "🍊 Today's quota for %s (%d minutes) is exhausted; task stopped. Device binding/subscription URL: %s",
+    "tasker.membership_check.denied_debt": "🍊 Today's quota for %s (%d minutes) has been exhausted by previous over-quota runtime; task stopped. Device binding/subscription URL: %s",
     "tasker.membership_check.debug_unlimited": "🍊 Debug builds have unlimited runtime and skip membership checks.",
+    "tasker.membership_check.update_required": "🍊 This MDA version is no longer supported. Please update to %s or later before running tasks.",
     "tasker.process_warning.title": "⚠️ Note: The following processes are running",
     "tasker.process_warning.recommend_1": "ℹ️ Please turn off OSD FPS overlays and filters",
     "tasker.process_warning.note": "💡 These features interfere with image recognition"

@@ -1,5 +1,5 @@
 {
-    "NavigationEnterHall": {
+    "NavigationReturnHallFlow": {
         "desc": "进入大厅",
         "anchor": "NeedCheck",
         "timeout": 120000,
@@ -11,7 +11,6 @@
             "[JumpBack]NavigationClickHomeButton",
             "[JumpBack]NavigationSkipPlot",
             "[JumpBack]CommonCloseSale",
-            "[JumpBack]LoginRewardClaim",
             "[JumpBack]CommonConfirmReward",
             "[JumpBack]NavigationOutpostBack",
             "NavigationClickFreeState",
@@ -29,7 +28,9 @@
                     39,
                     32
                 ],
-                "template": ["Common/HomeButton.png"]
+                "template": [
+                    "Common/HomeButton.png"
+                ]
             }
         },
         "action": {
@@ -47,7 +48,9 @@
                     50,
                     16
                 ],
-                "expected": ["SKIP"]
+                "expected": [
+                    "SKIP"
+                ]
             }
         },
         "action": {
@@ -65,20 +68,26 @@
                     66,
                     17
                 ],
-                "expected": ["点击关闭画面"]
+                "expected": [
+                    "点击关闭画面"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": ["CommonConfirmAction"]
+        "next": [
+            "CommonConfirmAction"
+        ]
     },
     "NavigationFreeStateVisible": {
         "desc": "自由状态可见",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["CommonBellVisible"]
+                "all_of": [
+                    "CommonMailVisible"
+                ]
             }
         }
     },
@@ -87,7 +96,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationFreeStateVisible"]
+                "all_of": [
+                    "NavigationFreeStateVisible"
+                ]
             }
         },
         "pre_wait_freezes": 500,
@@ -95,7 +106,7 @@
             "type": "Click"
         },
         "next": [
-            "NavigationNoticeFlow",
+            "NavigationMailFlow",
             "[Anchor]NeedCheck"
         ]
     },
@@ -110,7 +121,9 @@
                     60,
                     33
                 ],
-                "expected": ["关闭"]
+                "expected": [
+                    "关闭"
+                ]
             }
         },
         "pre_wait_freezes": 500,
@@ -141,10 +154,29 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationNoticeVisible"]
+                "all_of": [
+                    "NavigationNoticeVisible"
+                ]
             }
         },
-        "next": ["CommonClosePage"]
+        "next": [
+            "CommonClosePage"
+        ]
+    },
+    "NavigationMailFlow": {
+        "desc": "邮件流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonMailVisible"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]CommonClosePage",
+            "CommonEndTask"
+        ]
     },
     "NavigationClickHall": {
         "desc": "点击大厅",
@@ -157,19 +189,21 @@
                     30,
                     18
                 ],
-                "expected": ["大厅"]
+                "expected": [
+                    "大厅"
+                ]
             }
         },
         "action": {
             "type": "Click"
         }
     },
-    "HallEnterArk": {
+    "NavigationEnterArkFlow": {
         "desc": "进入方舟",
         "next": [
             "NavigationArkEntered",
             "NavigationClickArk",
-            "[JumpBack]NavigationEnterHall"
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
     "NavigationArkEntered": {
@@ -183,7 +217,9 @@
                     70,
                     25
                 ],
-                "expected": ["方舟"]
+                "expected": [
+                    "方舟"
+                ]
             }
         }
     },
@@ -192,7 +228,9 @@
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["NavigationArkVisible"]
+                "all_of": [
+                    "NavigationArkVisible"
+                ]
             }
         },
         "action": {
@@ -214,7 +252,9 @@
                     54,
                     36
                 ],
-                "expected": ["方舟"]
+                "expected": [
+                    "方舟"
+                ]
             }
         }
     },
@@ -229,7 +269,9 @@
                     28,
                     25
                 ],
-                "template": ["Common/RedDot.png"]
+                "template": [
+                    "Common/RedDot.png"
+                ]
             }
         }
     },
@@ -244,7 +286,26 @@
                     37,
                     35
                 ],
-                "template": ["Common/Bell.png"]
+                "template": [
+                    "Common/Bell.png"
+                ]
+            }
+        }
+    },
+    "CommonMailVisible": {
+        "desc": "右上角邮件标识",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1211,
+                    9,
+                    30,
+                    31
+                ],
+                "template": [
+                    "Common/Mail.png"
+                ]
             }
         }
     },
