@@ -82,6 +82,11 @@
             "description": "$group.daily.description"
         },
         {
+            "name": "periodic",
+            "label": "$group.periodic.label",
+            "description": "$group.periodic.description"
+        },
+        {
             "name": "realtime",
             "label": "$group.realtime.label",
             "description": "$group.realtime.description"

@@ -15,8 +15,11 @@
                 {
                     "name": "Shop",
                     "option": {
+                        "CommonShop": "Yes",
                         "CommonShopFreeGoods": "Yes",
                         "CommonShopCoreDustCase": "No",
+                        "ArenaShop": "No",
+                        "RecyclingShop": "Yes",
                         "RecyclingShopList": [
                             "Gem"
                         ]

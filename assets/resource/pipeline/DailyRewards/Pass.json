@@ -127,7 +127,9 @@
                 ],
                 "template": [
                     "Common/RedDot.png"
-                ]
+                ],
+                "threshold": 0.75,
+                "index": -1
             }
         },
         "action": {

@@ -11,7 +11,7 @@
                 "LargeEventContent"
             ],
             "group": [
-                "daily"
+                "periodic"
             ]
         }
     ],

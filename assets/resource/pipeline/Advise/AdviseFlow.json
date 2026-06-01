@@ -219,7 +219,7 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 500
+        "post_wait_freezes": 200
     },
     "AdviseBondIncreasedVisible": {
         "desc": "好感度提升的标识",

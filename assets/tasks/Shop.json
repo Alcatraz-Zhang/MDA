@@ -6,10 +6,9 @@
             "entry": "ShopMain",
             "description": "$task.Shop.description",
             "option": [
-                "CommonShopFreeGoods",
-                "CommonShopCoreDustCase",
-                "ArenaShopItemList",
-                "RecyclingShopList"
+                "CommonShop",
+                "ArenaShop",
+                "RecyclingShop"
             ],
             "group": [
                 "daily"
@@ -17,6 +16,33 @@
         }
     ],
     "option": {
+        "CommonShop": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.CommonShop.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "option": [
+                        "CommonShopFreeGoods",
+                        "CommonShopCoreDustCase"
+                    ],
+                    "pipeline_override": {
+                        "CommonShop": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "CommonShop": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
         "CommonShopFreeGoods": {
             "type": "switch",
             "label": "$option.CommonShopFreeGoods.label",
@@ -62,6 +88,32 @@
                     "pipeline_override": {
                         "ShopCoreDustCasePurchase": {
                             "enabled": true
+                        }
+                    }
+                }
+            ]
+        },
+        "ArenaShop": {
+            "type": "switch",
+            "default_case": "No",
+            "label": "$option.ArenaShop.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "option": [
+                        "ArenaShopItemList"
+                    ],
+                    "pipeline_override": {
+                        "ArenaShop": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "ArenaShop": {
+                            "enabled": false
                         }
                     }
                 }
@@ -123,6 +175,32 @@
                     "pipeline_override": {
                         "ShopCodeManualSelectionBoxPurchase": {
                             "enabled": true
+                        }
+                    }
+                }
+            ]
+        },
+        "RecyclingShop": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.RecyclingShop.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "option": [
+                        "RecyclingShopList"
+                    ],
+                    "pipeline_override": {
+                        "RecyclingShop": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RecyclingShop": {
+                            "enabled": false
                         }
                     }
                 }
