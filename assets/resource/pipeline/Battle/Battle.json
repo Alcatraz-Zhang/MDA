@@ -10,7 +10,6 @@
             }
         },
         "next": [
-            "ManualInterceptionBattleRequired",
             "[JumpBack]BattleCanQuickBattle",
             "[JumpBack]BattleCanBattle",
             "[JumpBack]BattleClosePage",

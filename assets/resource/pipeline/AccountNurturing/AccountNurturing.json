@@ -1,6 +1,6 @@
 {
-    "RedDotClearMain": {
-        "desc": "红点清除入口",
+    "AccountNurturingMain": {
+        "desc": "账号养成入口",
         "action": {
             "type": "Custom",
             "param": {
@@ -8,12 +8,12 @@
             }
         },
         "next": [
-            "RedDotClearEntryFlow",
+            "AccountNurturingEntryFlow",
             "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "RedDotClearEntryFlow": {
-        "desc": "红点清除",
+    "AccountNurturingEntryFlow": {
+        "desc": "账号养成流程",
         "recognition": {
             "type": "And",
             "param": {
@@ -23,12 +23,8 @@
             }
         },
         "next": [
-            "[JumpBack]CommonClosePage",
-            "[JumpBack]RedDotClearCashShop",
-            "[JumpBack]RedDotClearNotice",
-            "[JumpBack]RedDotClearSubMenu",
-            "[JumpBack]RedDotClearProfilePage",
-            "[JumpBack]RedDotClearArchives",
+            "[JumpBack]AccountNurturingCharacterBreakthrough",
+            "[JumpBack]AccountNurturingSynchroDeviceEnhance",
             "CommonEndTask"
         ]
     }

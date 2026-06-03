@@ -78,6 +78,7 @@
         "post_wait_freezes": 200,
         "next": [
             "BattleCannotBattleBlocked",
+            "ManualInterceptionBattleRequired",
             "[JumpBack]InterceptionChallengeBattleFlow"
         ]
     },

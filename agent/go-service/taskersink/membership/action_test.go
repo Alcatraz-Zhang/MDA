@@ -11,6 +11,19 @@ func initTestI18n() {
 	i18n.Init()
 }
 
+func TestFormatQuotaVerifiedMessageUsesUsedRuntime(t *testing.T) {
+	initTestI18n()
+	message := formatQuotaVerifiedMessage(QuotaSnapshot{
+		TierName:     "Orange Plus",
+		LimitSeconds: 3600,
+		UsedSeconds:  600,
+	})
+
+	if !strings.Contains(message, "10/60") {
+		t.Fatalf("message does not show used runtime: %s", message)
+	}
+}
+
 func TestFormatQuotaDeniedMessageUsesDebtText(t *testing.T) {
 	initTestI18n()
 	message := formatQuotaDeniedMessage(QuotaSnapshot{

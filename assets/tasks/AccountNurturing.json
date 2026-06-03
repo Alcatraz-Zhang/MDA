@@ -1,16 +1,13 @@
 {
     "task": [
         {
-            "name": "RedDotClear",
-            "label": "$task.RedDotClear.label",
-            "entry": "RedDotClearMain",
-            "description": "$task.RedDotClear.description",
+            "name": "AccountNurturing",
+            "label": "$task.AccountNurturing.label",
+            "entry": "AccountNurturingMain",
+            "description": "$task.AccountNurturing.description",
             "option": [
-                "RedDotClearCashShop",
-                "RedDotClearNotice",
-                "RedDotClearSubMenu",
-                "RedDotClearProfilePage",
-                "RedDotClearArchives"
+                "AccountNurturingCharacterBreakthrough",
+                "AccountNurturingSynchroDeviceEnhance"
             ],
             "group": [
                 "utility"
@@ -18,14 +15,16 @@
         }
     ],
     "option": {
-        "RedDotClearCashShop": {
+        "AccountNurturingCharacterBreakthrough": {
             "type": "switch",
-            "label": "$option.RedDotClearCashShop.label",
+            "default_case": "Yes",
+            "label": "$option.AccountNurturingCharacterBreakthrough.label",
+            "description": "$option.AccountNurturingCharacterBreakthrough.description",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "RedDotClearCashShop": {
+                        "AccountNurturingCharacterBreakthrough": {
                             "enabled": true
                         }
                     }
@@ -33,43 +32,49 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "RedDotClearCashShop": {
+                        "AccountNurturingCharacterBreakthrough": {
                             "enabled": false
                         }
                     }
                 }
             ]
         },
-        "RedDotClearNotice": {
+        "AccountNurturingSynchroDeviceEnhance": {
             "type": "switch",
-            "label": "$option.RedDotClearNotice.label",
+            "default_case": "Yes",
+            "label": "$option.AccountNurturingSynchroDeviceEnhance.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "RedDotClearNotice": {
+                        "AccountNurturingSynchroDeviceEnhance": {
                             "enabled": true
                         }
-                    }
+                    },
+                    "option": [
+                        "AutoAllocation",
+                        "UseConsumables"
+                    ]
                 },
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "RedDotClearNotice": {
+                        "AccountNurturingSynchroDeviceEnhance": {
                             "enabled": false
                         }
                     }
                 }
             ]
         },
-        "RedDotClearSubMenu": {
+        "AutoAllocation": {
             "type": "switch",
-            "label": "$option.RedDotClearSubMenu.label",
+            "default_case": "No",
+            "label": "$option.AutoAllocation.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "RedDotClearSubMenu": {
+                        "AutoAllocation": {
                             "enabled": true
                         }
                     }
@@ -77,21 +82,22 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "RedDotClearSubMenu": {
+                        "AutoAllocation": {
                             "enabled": false
                         }
                     }
                 }
             ]
         },
-        "RedDotClearProfilePage": {
+        "UseConsumables": {
             "type": "switch",
-            "label": "$option.RedDotClearProfilePage.label",
+            "default_case": "No",
+            "label": "$option.UseConsumables.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "RedDotClearProfilePage": {
+                        "UseConsumables": {
                             "enabled": true
                         }
                     }
@@ -99,29 +105,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "RedDotClearProfilePage": {
-                            "enabled": false
-                        }
-                    }
-                }
-            ]
-        },
-        "RedDotClearArchives": {
-            "type": "switch",
-            "label": "$option.RedDotClearArchives.label",
-            "cases": [
-                {
-                    "name": "Yes",
-                    "pipeline_override": {
-                        "RedDotClearArchives": {
-                            "enabled": true
-                        }
-                    }
-                },
-                {
-                    "name": "No",
-                    "pipeline_override": {
-                        "RedDotClearArchives": {
+                        "UseConsumables": {
                             "enabled": false
                         }
                     }

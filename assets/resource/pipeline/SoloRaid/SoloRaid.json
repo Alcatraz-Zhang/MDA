@@ -34,10 +34,10 @@
             "type": "TemplateMatch",
             "param": {
                 "roi": [
-                    7,
+                    0,
                     120,
-                    197,
-                    256
+                    200,
+                    260
                 ],
                 "template": [
                     "SoloRaid/SoloRaid.png"

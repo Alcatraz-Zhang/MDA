@@ -101,6 +101,26 @@
             }
         }
     },
+    "CommonTouchToContinue": {
+        "desc": "点击以继续",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    554,
+                    606,
+                    183,
+                    30
+                ],
+                "expected": [
+                    ".*CONTINUE.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
     "CommonEndTask": {
         "desc": "空节点，用于结束流程"
     }

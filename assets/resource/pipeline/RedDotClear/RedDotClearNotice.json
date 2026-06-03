@@ -116,7 +116,7 @@
             }
         },
         "next": [
-            "RedDotClearScrollUp"
+            "RedDotClearNoticeScrollUp"
         ]
     },
     "RedDotClearNoticenClickBlank": {
@@ -140,7 +140,7 @@
             ]
         }
     },
-    "RedDotClearScrollUp": {
+    "RedDotClearNoticeScrollUp": {
         "desc": "向上滑动",
         "recognition": {
             "type": "TemplateMatch",

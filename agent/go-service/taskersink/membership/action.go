@@ -60,12 +60,7 @@ func runRuntimeQuotaCheck(ctx *maa.Context) bool {
 				maafocus.Print(ctx, i18n.T("tasker.membership_check.debug_unlimited"))
 				return
 			}
-			maafocus.Print(ctx, fmt.Sprintf(
-				i18n.T("tasker.membership_check.verified"),
-				snapshot.TierName,
-				FormatMinutes(snapshot.RemainingSeconds),
-				FormatMinutes(snapshot.LimitSeconds),
-			))
+			maafocus.Print(ctx, formatQuotaVerifiedMessage(snapshot))
 			if snapshot.CarriedDebtSeconds > 0 {
 				maafocus.Print(ctx, fmt.Sprintf(
 					i18n.T("tasker.membership_check.debt"),
@@ -82,6 +77,15 @@ func runRuntimeQuotaCheck(ctx *maa.Context) bool {
 
 	maafocus.Print(ctx, formatQuotaDeniedMessage(snapshot))
 	return false
+}
+
+func formatQuotaVerifiedMessage(snapshot QuotaSnapshot) string {
+	return fmt.Sprintf(
+		i18n.T("tasker.membership_check.verified"),
+		snapshot.TierName,
+		FormatMinutes(snapshot.UsedSeconds),
+		FormatMinutes(snapshot.LimitSeconds),
+	)
 }
 
 func formatQuotaDeniedMessage(snapshot QuotaSnapshot) string {

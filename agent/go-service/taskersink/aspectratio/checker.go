@@ -152,29 +152,37 @@ func (c *AspectRatioChecker) OnTaskerTask(tasker *maa.Tasker, event maa.EventSta
 		Str("entry", detail.Entry).
 		Str("controller_name", pienv.ControllerName()).
 		Str("controller_type", controlType).
-		Str("requirement", "aspect_ratio").
+		Str("requirement", "aspect_ratio_min_resolution").
 		Str("target_resolution", requirement).
-		Str("mode", "aspect_ratio_only").
+		Str("mode", "aspect_ratio_min_resolution").
 		Int32("width", width).
 		Int32("height", height).
+		Int("target_width", targetWidth).
+		Int("target_height", targetHeight).
 		Float64("target_ratio", targetRatio).
-		Msg("Using aspect ratio check for non-ADB controller")
+		Msg("Using aspect ratio and minimum resolution check for non-ADB controller")
 
-	if !isAspectRatio16x9(int(width), int(height)) {
+	aspectRatioOK := isAspectRatio16x9(int(width), int(height))
+	minResolutionOK := isAtLeastTargetResolution(int(width), int(height))
+	if !aspectRatioOK || !minResolutionOK {
 		actualRatio := calculateAspectRatio(int(width), int(height))
 		log.Error().
 			Uint64("task_id", detail.TaskID).
 			Str("entry", detail.Entry).
 			Str("controller_name", pienv.ControllerName()).
 			Str("controller_type", controlType).
-			Str("requirement", "aspect_ratio").
+			Str("requirement", "aspect_ratio_min_resolution").
 			Str("target_resolution", requirement).
 			Bool("stop_task", true).
 			Int32("width", width).
 			Int32("height", height).
+			Int("target_width", targetWidth).
+			Int("target_height", targetHeight).
+			Bool("aspect_ratio_ok", aspectRatioOK).
+			Bool("min_resolution_ok", minResolutionOK).
 			Float64("actual_ratio", actualRatio).
 			Float64("target_ratio", targetRatio).
-			Str("mode", "aspect_ratio_only").
+			Str("mode", "aspect_ratio_min_resolution").
 			Msg("resolution check failed")
 		c.stopWithWarning(tasker, controllerDisplay, int(width), int(height), requirement)
 		return
@@ -185,11 +193,13 @@ func (c *AspectRatioChecker) OnTaskerTask(tasker *maa.Tasker, event maa.EventSta
 		Str("entry", detail.Entry).
 		Str("controller_name", pienv.ControllerName()).
 		Str("controller_type", controlType).
-		Str("requirement", "aspect_ratio").
+		Str("requirement", "aspect_ratio_min_resolution").
 		Str("target_resolution", requirement).
 		Int32("width", width).
 		Int32("height", height).
-		Str("mode", "aspect_ratio_only").
+		Int("target_width", targetWidth).
+		Int("target_height", targetHeight).
+		Str("mode", "aspect_ratio_min_resolution").
 		Msg("resolution check passed")
 }
 
@@ -211,6 +221,19 @@ func isAspectRatio16x9(width, height int) bool {
 
 	// Check if ratio is within tolerance of 16:9
 	return math.Abs(ratio-targetRatio) <= targetRatio*tolerance
+}
+
+func isAtLeastTargetResolution(width, height int) bool {
+	if width <= 0 || height <= 0 {
+		return false
+	}
+
+	longSide := max(width, height)
+	shortSide := min(width, height)
+	targetLongSide := max(targetWidth, targetHeight)
+	targetShortSide := min(targetWidth, targetHeight)
+
+	return longSide >= targetLongSide && shortSide >= targetShortSide
 }
 
 // calculateAspectRatio calculates the aspect ratio, always returning the larger/smaller ratio

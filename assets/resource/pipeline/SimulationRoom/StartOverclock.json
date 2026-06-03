@@ -176,7 +176,6 @@
         "post_wait_freezes": 500,
         "next": [
             "[JumpBack]SimulationRoomEndSimulation",
-            "SimulationRoomConfirmBattleEnd",
             "SimulationRoomSelectBattle",
             "[JumpBack]SimulationRoomSelectBuff",
             "[JumpBack]BattleEntryFlow"
@@ -203,7 +202,8 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "SimulationRoomSelectBuff"
+            "SimulationRoomSelectBuff",
+            "CommonEndTask"
         ]
     },
     "SimulationRoomSelectBuff": {

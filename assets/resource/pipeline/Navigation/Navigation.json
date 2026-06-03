@@ -131,6 +131,26 @@
             "type": "Click"
         }
     },
+    "NavigationEnterOutpost": {
+        "desc": "进入前哨基地",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    362,
+                    542,
+                    82,
+                    33
+                ],
+                "expected": [
+                    "前哨基地"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
     "NavigationNoticeVisible": {
         "desc": "公告可见",
         "recognition": {
