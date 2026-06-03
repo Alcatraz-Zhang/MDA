@@ -80,6 +80,20 @@ function Write-Step ($m) { Write-Host "==> $m" -ForegroundColor Cyan }
 function Write-Ok   ($m) { Write-Host "    [OK] $m" -ForegroundColor Green }
 function Write-Warn2($m) { Write-Host "    [! ] $m" -ForegroundColor Yellow }
 function Write-Err2 ($m) { Write-Host "    [XX] $m" -ForegroundColor Red }
+function Find-BypassMarker ($binaryText) {
+    $markers = @(
+        'Debug version detected, bypassing membership verification',
+        'Debug environment detected, bypassing membership verification'
+    )
+
+    foreach ($candidate in $markers) {
+        if ($binaryText.Contains($candidate)) {
+            return $candidate
+        }
+    }
+
+    return $null
+}
 
 Write-Host ""
 Write-Host "===========================================" -ForegroundColor Magenta
@@ -256,9 +270,10 @@ Write-Ok "built : $($f.LastWriteTime)"
 $bytes = [IO.File]::ReadAllBytes($exe)
 $asStr = [Text.Encoding]::ASCII.GetString($bytes)
 
-$marker = 'Debug version detected, bypassing membership verification'
-if ($asStr.Contains($marker)) {
+$marker = Find-BypassMarker $asStr
+if ($null -ne $marker) {
     Write-Ok "bypass-log string present in binary"
+    Write-Host "         marker: $marker" -ForegroundColor DarkGray
 } else {
     Write-Warn2 "bypass-log string NOT found (compiler may have inlined; bypass should still work if logic intact)"
 }

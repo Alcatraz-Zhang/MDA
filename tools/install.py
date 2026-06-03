@@ -200,15 +200,19 @@ def build_go_agent():
     return True
 
 
-def install_agent():
+def install_agent(force_rebuild=False):
     """安装编译好的 Go Agent 二进制到 install 目录"""
     agent_dir = install_path / "agent"
     agent_dir.mkdir(parents=True, exist_ok=True)
 
-    # 复制已编译的 Go Agent 二进制
     ext = ".exe" if os_name == "win" else ""
     go_binary = agent_dir / f"go-service{ext}"
-    if go_binary.exists():
+    if force_rebuild:
+        print("  Rebuilding Go agent binary...")
+        if not build_go_agent():
+            print("  Error: Go agent rebuild failed.")
+            sys.exit(1)
+    elif go_binary.exists():
         print(f"  Go agent binary found: {go_binary}")
     else:
         print("  Warning: Go agent binary not found, attempting to build...")
@@ -225,6 +229,6 @@ if __name__ == "__main__":
         install_deps()
         install_resource()
         install_chores()
-        install_agent()
+        install_agent(force_rebuild=True)
 
         print(f"Install to {install_path} successfully.")
