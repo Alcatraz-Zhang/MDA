@@ -14,6 +14,7 @@ func initTestI18n() {
 func TestFormatQuotaVerifiedMessageUsesUsedRuntime(t *testing.T) {
 	initTestI18n()
 	message := formatQuotaVerifiedMessage(QuotaSnapshot{
+		Route:        quotaRouteRegular,
 		TierName:     "Orange Plus",
 		LimitSeconds: 3600,
 		UsedSeconds:  600,
@@ -41,6 +42,7 @@ func TestFormatQuotaDeniedMessageUsesDebtText(t *testing.T) {
 func TestFormatQuotaDeniedMessageUsesNormalText(t *testing.T) {
 	initTestI18n()
 	message := formatQuotaDeniedMessage(QuotaSnapshot{
+		Route:        quotaRouteRegular,
 		TierName:     "Orange Free",
 		LimitSeconds: 600,
 		SponsorURL:   "https://example.test",
@@ -48,5 +50,25 @@ func TestFormatQuotaDeniedMessageUsesNormalText(t *testing.T) {
 
 	if strings.Contains(message, "此前超额运行") || strings.Contains(message, "previous over-quota runtime") {
 		t.Fatalf("message unexpectedly mentions carried debt: %s", message)
+	}
+}
+
+func TestFormatQuotaVerifiedMessageUsesSpecialRoute(t *testing.T) {
+	initTestI18n()
+	message := formatQuotaVerifiedMessage(QuotaSnapshot{
+		Route:               quotaRouteSpecialThenRegular,
+		TierName:            "Orange Plus",
+		SpecialLimitSeconds: 36000,
+		SpecialUsedSeconds:  600,
+	})
+
+	if !strings.Contains(message, "专项额度") && !strings.Contains(message, "special quota") {
+		t.Fatalf("message does not mention special quota: %s", message)
+	}
+}
+
+func TestQuotaRouteForRuntimeQuotaCheckEntry(t *testing.T) {
+	if got := quotaRouteForEntry("MapPushingFlow"); got != quotaRouteSpecialThenRegular {
+		t.Fatalf("quotaRouteForEntry(MapPushingFlow) = %s, want %s", got, quotaRouteSpecialThenRegular)
 	}
 }

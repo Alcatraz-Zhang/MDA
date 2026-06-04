@@ -89,10 +89,10 @@
         },
         "action": "DoNothing",
         "next": [
-            "[JumpBack]LargeEventLoginStamp",
-            "[JumpBack]LargeEventChallenge",
-            "[JumpBack]LargeEventStory",
-            "[JumpBack]LargeEventMission",
+            "[JumpBack]LargeEventEnterLoginStamp",
+            "[JumpBack]LargeEventEnterChallenge",
+            "[JumpBack]LargeEventEnterStory",
+            "[JumpBack]LargeEventEnterMission",
             "CommonEndTask"
         ]
     },

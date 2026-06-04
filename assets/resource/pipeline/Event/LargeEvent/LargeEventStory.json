@@ -1,5 +1,5 @@
 {
-    "LargeEventStory": {
+    "LargeEventEnterStory": {
         "desc": "大活动剧情",
         "enabled": false,
         "max_hit": 1,
@@ -135,9 +135,9 @@
         "desc": "大活动活动关卡页面战斗流程",
         "next": [
             "LargeEventEventStageBattlePage",
-            "[JumpBack]LargeEventStory1StageClick",
-            "[JumpBack]LargeEventStory2StageNormalClick",
-            "[JumpBack]LargeEventStory2StageHardClick",
+            "[JumpBack]LargeEventClickStory1Stage",
+            "[JumpBack]LargeEventClickStory2StageNormal",
+            "[JumpBack]LargeEventClickStory2StageHard",
             "LargeEventEventStageQuickBattleFlow"
         ]
     },
@@ -146,9 +146,9 @@
         "next": [
             "LargeEventBattleBlocked",
             "LargeEventEventStageBattlePage",
-            "[JumpBack]LargeEventStory1StageRepeatableClick",
-            "[JumpBack]LargeEventStory2StageNormalRepeatableClick",
-            "[JumpBack]LargeEventStory2StageHardRepeatableClick"
+            "[JumpBack]LargeEventClickStory1StageRepeatable",
+            "[JumpBack]LargeEventClickStory2StageNormalRepeatable",
+            "[JumpBack]LargeEventClickStory2StageHardRepeatable"
         ]
     },
     "LargeEventEventStageBattlePage": {
@@ -185,7 +185,7 @@
             }
         }
     },
-    "LargeEventStory1StageClick": {
+    "LargeEventClickStory1Stage": {
         "desc": "大活动故事1关卡点击",
         "max_hit": 1,
         "recognition": {
@@ -209,7 +209,7 @@
         },
         "post_wait_freezes": 500
     },
-    "LargeEventStory2StageNormalClick": {
+    "LargeEventClickStory2StageNormal": {
         "desc": "大活动故事2普通关卡点击",
         "max_hit": 1,
         "recognition": {
@@ -233,7 +233,7 @@
         },
         "post_wait_freezes": 500
     },
-    "LargeEventStory2StageHardClick": {
+    "LargeEventClickStory2StageHard": {
         "desc": "大活动故事2困难关卡点击",
         "max_hit": 1,
         "recognition": {
@@ -257,7 +257,7 @@
         },
         "post_wait_freezes": 500
     },
-    "LargeEventStory1StageRepeatableClick": {
+    "LargeEventClickStory1StageRepeatable": {
         "desc": "大活动故事1关卡可扫荡点击",
         "recognition": {
             "type": "TemplateMatch",
@@ -280,7 +280,7 @@
         },
         "post_wait_freezes": 500
     },
-    "LargeEventStory2StageNormalRepeatableClick": {
+    "LargeEventClickStory2StageNormalRepeatable": {
         "desc": "大活动故事2普通关卡可扫荡点击",
         "recognition": {
             "type": "TemplateMatch",
@@ -303,7 +303,7 @@
         },
         "post_wait_freezes": 500
     },
-    "LargeEventStory2StageHardRepeatableClick": {
+    "LargeEventClickStory2StageHardRepeatable": {
         "desc": "大活动故事2困难关卡可扫荡点击",
         "recognition": {
             "type": "TemplateMatch",

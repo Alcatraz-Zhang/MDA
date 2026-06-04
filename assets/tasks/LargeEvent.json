@@ -37,7 +37,7 @@
                                 }
                             }
                         },
-                        "LargeEventStory1StageClick": {
+                        "LargeEventClickStory1Stage": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -46,7 +46,7 @@
                                 }
                             }
                         },
-                        "LargeEventStory2StageNormalClick": {
+                        "LargeEventClickStory2StageNormal": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -55,7 +55,7 @@
                                 }
                             }
                         },
-                        "LargeEventStory2StageHardClick": {
+                        "LargeEventClickStory2StageHard": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -75,7 +75,7 @@
                                 }
                             }
                         },
-                        "LargeEventStory1StageRepeatableClick": {
+                        "LargeEventClickStory1StageRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -84,7 +84,7 @@
                                 }
                             }
                         },
-                        "LargeEventStory2StageNormalRepeatableClick": {
+                        "LargeEventClickStory2StageNormalRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -93,7 +93,7 @@
                                 }
                             }
                         },
-                        "LargeEventStory2StageHardRepeatableClick": {
+                        "LargeEventClickStory2StageHardRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -124,7 +124,7 @@
                     "name": "LargeEventLoginStamp",
                     "label": "$option.LargeEventContent.LargeEventLoginStamp",
                     "pipeline_override": {
-                        "LargeEventLoginStamp": {
+                        "LargeEventEnterLoginStamp": {
                             "enabled": true
                         }
                     }
@@ -133,7 +133,7 @@
                     "name": "LargeEventChallenge",
                     "label": "$option.LargeEventContent.LargeEventChallenge",
                     "pipeline_override": {
-                        "LargeEventChallenge": {
+                        "LargeEventEnterChallenge": {
                             "enabled": true
                         }
                     }
@@ -142,7 +142,7 @@
                     "name": "LargeEventStory",
                     "label": "$option.LargeEventContent.LargeEventStory",
                     "pipeline_override": {
-                        "LargeEventStory": {
+                        "LargeEventEnterStory": {
                             "enabled": true
                         }
                     }
@@ -151,7 +151,7 @@
                     "name": "LargeEventMission",
                     "label": "$option.LargeEventContent.LargeEventMission",
                     "pipeline_override": {
-                        "LargeEventMission": {
+                        "LargeEventEnterMission": {
                             "enabled": true
                         }
                     }
@@ -168,11 +168,11 @@
                     "pipeline_override": {
                         "LargeEventMainPageFlow": {
                             "next": [
-                                "[JumpBack]LargeEventLoginStamp",
-                                "[JumpBack]LargeEventChallenge",
-                                "[JumpBack]LargeEventStory",
-                                "[JumpBack]LargeEventMission",
-                                "[JumpBack]LargeEventStarAnisMerchBagClick",
+                                "[JumpBack]LargeEventEnterLoginStamp",
+                                "[JumpBack]LargeEventEnterChallenge",
+                                "[JumpBack]LargeEventEnterStory",
+                                "[JumpBack]LargeEventEnterMission",
+                                "[JumpBack]LargeEventStarAnisClickMerchBag",
                                 "CommonEndTask"
                             ]
                         }
@@ -192,7 +192,7 @@
                     "name": "Story2First",
                     "label": "$option.LargeEventStoryPriority.Story2First",
                     "pipeline_override": {
-                        "LargeEventStory": {
+                        "LargeEventEnterStory": {
                             "recognition": {
                                 "param": {
                                     "index": -1

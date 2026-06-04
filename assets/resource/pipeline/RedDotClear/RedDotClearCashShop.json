@@ -42,10 +42,10 @@
             }
         },
         "next": [
-            "RedDotClearCashShopNewClick"
+            "RedDotClearClickCashShopNew"
         ]
     },
-    "RedDotClearCashShopNewClick": {
+    "RedDotClearClickCashShopNew": {
         "desc": "付费商店点击new",
         "recognition": {
             "type": "TemplateMatch",
@@ -75,7 +75,7 @@
             }
         },
         "next": [
-            "RedDotClearCashShopNewClick",
+            "RedDotClearClickCashShopNew",
             "CommonEndTask"
         ]
     }

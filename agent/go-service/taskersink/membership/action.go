@@ -17,10 +17,14 @@ var _ maa.CustomActionRunner = &RuntimeQuotaCheckAction{}
 var notifyOnce sync.Once
 
 func (a *RuntimeQuotaCheckAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool {
-	return runRuntimeQuotaCheck(ctx)
+	route := quotaRouteRegular
+	if arg != nil {
+		route = quotaRouteForEntry(arg.CurrentTaskName)
+	}
+	return runRuntimeQuotaCheck(ctx, route)
 }
 
-func runRuntimeQuotaCheck(ctx *maa.Context) bool {
+func runRuntimeQuotaCheck(ctx *maa.Context, route quotaRoute) bool {
 	if isDebugEnvironment() {
 		return true
 	}
@@ -38,7 +42,7 @@ func runRuntimeQuotaCheck(ctx *maa.Context) bool {
 		return false
 	}
 
-	snapshot, ok, err := EnsureQuotaAvailable(status)
+	snapshot, ok, err := EnsureQuotaRouteAvailable(status, route)
 	if err != nil {
 		log.Warn().Err(err).Msg("RuntimeQuotaCheck: failed to read local quota state")
 	}
@@ -46,12 +50,16 @@ func runRuntimeQuotaCheck(ctx *maa.Context) bool {
 	log.Info().
 		Str("tier_code", snapshot.TierCode).
 		Str("tier_name", snapshot.TierName).
+		Str("quota_route", string(snapshot.Route)).
+		Str("quota_pool", string(snapshot.Pool)).
 		Int64("limit_seconds", snapshot.LimitSeconds).
 		Int64("used_seconds", snapshot.UsedSeconds).
 		Int64("remaining_seconds", snapshot.RemainingSeconds).
+		Int64("special_remaining_seconds", snapshot.SpecialRemainingSeconds).
+		Int64("regular_remaining_seconds", snapshot.RegularRemainingSeconds).
 		Int64("carried_debt_seconds", snapshot.CarriedDebtSeconds).
 		Bool("unlimited_runtime", snapshot.UnlimitedRuntime).
-		Str("business_date", snapshot.BusinessDate).
+		Str("period_key", snapshot.PeriodKey).
 		Msg("RuntimeQuotaCheck: quota evaluated")
 
 	if ok {
@@ -80,8 +88,25 @@ func runRuntimeQuotaCheck(ctx *maa.Context) bool {
 }
 
 func formatQuotaVerifiedMessage(snapshot QuotaSnapshot) string {
+	if snapshot.Route == quotaRouteSpecialThenRegular {
+		if snapshot.FallbackToRegular {
+			return fmt.Sprintf(
+				i18n.T("tasker.membership_check.verified_special_fallback_regular"),
+				snapshot.TierName,
+				FormatMinutes(snapshot.SpecialLimitSeconds),
+				FormatMinutes(snapshot.RegularUsedSeconds),
+				FormatMinutes(snapshot.RegularLimitSeconds),
+			)
+		}
+		return fmt.Sprintf(
+			i18n.T("tasker.membership_check.verified_special"),
+			snapshot.TierName,
+			FormatMinutes(snapshot.SpecialUsedSeconds),
+			FormatMinutes(snapshot.SpecialLimitSeconds),
+		)
+	}
 	return fmt.Sprintf(
-		i18n.T("tasker.membership_check.verified"),
+		i18n.T("tasker.membership_check.verified_regular"),
 		snapshot.TierName,
 		FormatMinutes(snapshot.UsedSeconds),
 		FormatMinutes(snapshot.LimitSeconds),
@@ -89,7 +114,16 @@ func formatQuotaVerifiedMessage(snapshot QuotaSnapshot) string {
 }
 
 func formatQuotaDeniedMessage(snapshot QuotaSnapshot) string {
-	messageKey := "tasker.membership_check.denied"
+	if snapshot.Route == quotaRouteSpecialThenRegular {
+		return fmt.Sprintf(
+			i18n.T("tasker.membership_check.denied_special"),
+			snapshot.TierName,
+			FormatMinutes(snapshot.SpecialLimitSeconds),
+			FormatMinutes(snapshot.RegularLimitSeconds),
+			snapshot.SponsorURL,
+		)
+	}
+	messageKey := "tasker.membership_check.denied_regular"
 	if snapshot.CarriedDebtSeconds > 0 {
 		messageKey = "tasker.membership_check.denied_debt"
 	}

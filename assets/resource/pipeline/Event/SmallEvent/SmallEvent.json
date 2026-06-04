@@ -97,9 +97,9 @@
             ]
         },
         "next": [
-            "[JumpBack]SmallEventChallenge",
-            "[JumpBack]SmallEventStory",
-            "[JumpBack]SmallEventMission",
+            "[JumpBack]SmallEventEnterChallenge",
+            "[JumpBack]SmallEventEnterStory",
+            "[JumpBack]SmallEventEnterMission",
             "CommonEndTask"
         ]
     },

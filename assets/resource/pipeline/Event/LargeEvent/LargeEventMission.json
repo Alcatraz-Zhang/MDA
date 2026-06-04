@@ -1,5 +1,5 @@
 {
-    "LargeEventMission": {
+    "LargeEventEnterMission": {
         "desc": "大活动任务",
         "enabled": false,
         "max_hit": 1,

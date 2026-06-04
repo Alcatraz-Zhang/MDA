@@ -12,7 +12,7 @@
             "[JumpBack]NavigationSkipPlot",
             "[JumpBack]CommonCloseSale",
             "[JumpBack]CommonConfirmReward",
-            "[JumpBack]NavigationOutpostBack",
+            "[JumpBack]NavigationReturnOutpost",
             "NavigationClickFreeState",
             "[JumpBack]NavigationClickHall"
         ]
@@ -110,7 +110,7 @@
             "[Anchor]NeedCheck"
         ]
     },
-    "NavigationOutpostBack": {
+    "NavigationReturnOutpost": {
         "desc": "前哨基地误触返回",
         "recognition": {
             "type": "OCR",

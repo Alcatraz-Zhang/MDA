@@ -46,7 +46,7 @@
             }
         },
         "next": [
-            "[JumpBack]ArenaFreeBattle",
+            "[JumpBack]ArenaClickFreeBattle",
             "ArenaCornerFlow",
             "[JumpBack]CommonGoBack"
         ]

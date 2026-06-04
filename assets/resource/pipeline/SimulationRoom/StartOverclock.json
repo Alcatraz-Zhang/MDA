@@ -28,7 +28,7 @@
         },
         "next": [
             "[JumpBack]SimulationRoomOpenBiosSetting",
-            "SimulationRoomBeginOverclockSimulation",
+            "SimulationRoomStartOverclockSimulation",
             "SimulationRoomStartOverclock"
         ]
     },
@@ -131,7 +131,7 @@
         },
         "post_wait_freezes": 20
     },
-    "SimulationRoomBeginOverclockSimulation": {
+    "SimulationRoomStartOverclockSimulation": {
         "desc": "开始超频",
         "recognition": {
             "type": "OCR",
@@ -175,7 +175,7 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "[JumpBack]SimulationRoomEndSimulation",
+            "[JumpBack]SimulationRoomConfirmEndSimulation",
             "SimulationRoomSelectBattle",
             "[JumpBack]SimulationRoomSelectBuff",
             "[JumpBack]BattleEntryFlow"

@@ -64,7 +64,7 @@
         },
         "next": [
             "DailyRewardsClickFreeRecruit",
-            "DailyRewardsFreeRecruitNextRecruitClick"
+            "DailyRewardsFreeRecruitClickNextRecruit"
         ]
     },
     "DailyRewardsClickFreeRecruit": {
@@ -130,7 +130,7 @@
             }
         }
     },
-    "DailyRewardsFreeRecruitNextRecruitClick": {
+    "DailyRewardsFreeRecruitClickNextRecruit": {
         "desc": "下一个招募",
         "recognition": {
             "type": "TemplateMatch",

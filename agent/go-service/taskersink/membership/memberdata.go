@@ -57,20 +57,22 @@ func isDebugEnvironment() bool {
 }
 
 type MemberStatusResponse struct {
-	Matched             bool   `json:"matched"`
-	Score               int    `json:"score"`
-	IsMember            bool   `json:"is_member"`
-	UserID              string `json:"user_id"`
-	Tier                string `json:"tier"`
-	TierCode            string `json:"tier_code"`
-	TierName            string `json:"tier_name"`
-	PlanCode            string `json:"plan_code"`
-	PlanName            string `json:"plan_name"`
-	StartsOn            string `json:"starts_on"`
-	ExpiresOn           string `json:"expires_on"`
-	RemainingDays       int    `json:"remaining_days"`
-	DailyRuntimeMinutes int    `json:"daily_runtime_minutes"`
-	AllFeaturesUnlocked bool   `json:"all_features_unlocked"`
+	Matched                     bool   `json:"matched"`
+	Score                       int    `json:"score"`
+	IsMember                    bool   `json:"is_member"`
+	UserID                      string `json:"user_id"`
+	Tier                        string `json:"tier"`
+	TierCode                    string `json:"tier_code"`
+	TierName                    string `json:"tier_name"`
+	PlanCode                    string `json:"plan_code"`
+	PlanName                    string `json:"plan_name"`
+	StartsOn                    string `json:"starts_on"`
+	ExpiresOn                   string `json:"expires_on"`
+	RemainingDays               int    `json:"remaining_days"`
+	DailyRuntimeMinutes         int    `json:"daily_runtime_minutes"`
+	RegularDailyRuntimeMinutes  int    `json:"regular_daily_runtime_minutes"`
+	SpecialPeriodRuntimeMinutes int    `json:"special_period_runtime_minutes"`
+	AllFeaturesUnlocked         bool   `json:"all_features_unlocked"`
 }
 
 type updateRequiredResponse struct {
@@ -96,23 +98,25 @@ func (e *updateRequiredError) Error() string {
 
 // MembershipStatus represents the current membership state.
 type MembershipStatus struct {
-	Tier                    string
-	TierCode                string
-	TierName                string
-	PlanCode                string
-	PlanName                string
-	StartsOn                string
-	ExpiresOn               string
-	RemainingDays           int
-	DailyRuntimeMinutes     int
-	AllFeaturesUnlocked     bool
-	UnlimitedRuntime        bool
-	IsMember                bool
-	UpdateRequired          bool
-	UpdateMessage           string
-	MinimumSupportedVersion string
-	UserID                  string
-	DeviceCode              DeviceCodeV7
+	Tier                        string
+	TierCode                    string
+	TierName                    string
+	PlanCode                    string
+	PlanName                    string
+	StartsOn                    string
+	ExpiresOn                   string
+	RemainingDays               int
+	DailyRuntimeMinutes         int
+	RegularDailyRuntimeMinutes  int
+	SpecialPeriodRuntimeMinutes int
+	AllFeaturesUnlocked         bool
+	UnlimitedRuntime            bool
+	IsMember                    bool
+	UpdateRequired              bool
+	UpdateMessage               string
+	MinimumSupportedVersion     string
+	UserID                      string
+	DeviceCode                  DeviceCodeV7
 }
 
 var (
@@ -167,14 +171,16 @@ func checkMembership() *MembershipStatus {
 	cachedDeviceCode = deviceCode
 
 	defaultStatus := &MembershipStatus{
-		Tier:                "Orange Free",
-		TierCode:            "orange_free",
-		TierName:            "Orange Free",
-		PlanName:            "Orange Free",
-		DailyRuntimeMinutes: 10,
-		AllFeaturesUnlocked: true,
-		IsMember:            false,
-		DeviceCode:          deviceCode,
+		Tier:                        "Orange Free",
+		TierCode:                    "orange_free",
+		TierName:                    "Orange Free",
+		PlanName:                    "Orange Free",
+		DailyRuntimeMinutes:         10,
+		RegularDailyRuntimeMinutes:  10,
+		SpecialPeriodRuntimeMinutes: 0,
+		AllFeaturesUnlocked:         true,
+		IsMember:                    false,
+		DeviceCode:                  deviceCode,
 	}
 
 	log.Info().
@@ -187,16 +193,18 @@ func checkMembership() *MembershipStatus {
 		var updateErr *updateRequiredError
 		if errors.As(err, &updateErr) {
 			status := &MembershipStatus{
-				Tier:                    defaultStatus.Tier,
-				TierCode:                defaultStatus.TierCode,
-				TierName:                defaultStatus.TierName,
-				PlanName:                defaultStatus.PlanName,
-				DailyRuntimeMinutes:     defaultStatus.DailyRuntimeMinutes,
-				AllFeaturesUnlocked:     defaultStatus.AllFeaturesUnlocked,
-				UpdateRequired:          true,
-				UpdateMessage:           updateErr.Message,
-				MinimumSupportedVersion: updateErr.MinimumSupportedVersion,
-				DeviceCode:              deviceCode,
+				Tier:                        defaultStatus.Tier,
+				TierCode:                    defaultStatus.TierCode,
+				TierName:                    defaultStatus.TierName,
+				PlanName:                    defaultStatus.PlanName,
+				DailyRuntimeMinutes:         defaultStatus.DailyRuntimeMinutes,
+				RegularDailyRuntimeMinutes:  defaultStatus.RegularDailyRuntimeMinutes,
+				SpecialPeriodRuntimeMinutes: defaultStatus.SpecialPeriodRuntimeMinutes,
+				AllFeaturesUnlocked:         defaultStatus.AllFeaturesUnlocked,
+				UpdateRequired:              true,
+				UpdateMessage:               updateErr.Message,
+				MinimumSupportedVersion:     updateErr.MinimumSupportedVersion,
+				DeviceCode:                  deviceCode,
 			}
 			cacheStatus(status)
 			return status
@@ -248,25 +256,45 @@ func statusFromResponse(response *MemberStatusResponse, deviceCode DeviceCodeV7)
 	if planName == "" {
 		planName = tierName
 	}
-	dailyRuntimeMinutes := response.DailyRuntimeMinutes
-	if dailyRuntimeMinutes <= 0 {
-		dailyRuntimeMinutes = 10
+	regularDailyRuntimeMinutes := response.RegularDailyRuntimeMinutes
+	if regularDailyRuntimeMinutes <= 0 {
+		regularDailyRuntimeMinutes = response.DailyRuntimeMinutes
+	}
+	if regularDailyRuntimeMinutes <= 0 {
+		regularDailyRuntimeMinutes = 10
+	}
+	specialPeriodRuntimeMinutes := response.SpecialPeriodRuntimeMinutes
+	if specialPeriodRuntimeMinutes <= 0 {
+		specialPeriodRuntimeMinutes = defaultSpecialPeriodRuntimeMinutes(tierCode)
 	}
 
 	return &MembershipStatus{
-		Tier:                tierName,
-		TierCode:            tierCode,
-		TierName:            tierName,
-		PlanCode:            response.PlanCode,
-		PlanName:            planName,
-		StartsOn:            response.StartsOn,
-		ExpiresOn:           response.ExpiresOn,
-		RemainingDays:       response.RemainingDays,
-		DailyRuntimeMinutes: dailyRuntimeMinutes,
-		AllFeaturesUnlocked: response.AllFeaturesUnlocked,
-		IsMember:            response.IsMember,
-		UserID:              response.UserID,
-		DeviceCode:          deviceCode,
+		Tier:                        tierName,
+		TierCode:                    tierCode,
+		TierName:                    tierName,
+		PlanCode:                    response.PlanCode,
+		PlanName:                    planName,
+		StartsOn:                    response.StartsOn,
+		ExpiresOn:                   response.ExpiresOn,
+		RemainingDays:               response.RemainingDays,
+		DailyRuntimeMinutes:         regularDailyRuntimeMinutes,
+		RegularDailyRuntimeMinutes:  regularDailyRuntimeMinutes,
+		SpecialPeriodRuntimeMinutes: specialPeriodRuntimeMinutes,
+		AllFeaturesUnlocked:         response.AllFeaturesUnlocked,
+		IsMember:                    response.IsMember,
+		UserID:                      response.UserID,
+		DeviceCode:                  deviceCode,
+	}
+}
+
+func defaultSpecialPeriodRuntimeMinutes(tierCode string) int {
+	switch tierCode {
+	case "orange_plus":
+		return 600
+	case "orange_pro":
+		return 1500
+	default:
+		return 0
 	}
 }
 

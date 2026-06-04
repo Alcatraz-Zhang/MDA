@@ -33,11 +33,11 @@
             }
         },
         "next": [
-            "SynchroDeviceRedDotClick",
+            "SynchroDeviceClickRedDot",
             "CommonEndTask"
         ]
     },
-    "SynchroDeviceRedDotClick": {
+    "SynchroDeviceClickRedDot": {
         "desc": "点击同步器红点",
         "recognition": {
             "type": "TemplateMatch",
@@ -65,10 +65,10 @@
             }
         },
         "next": [
-            "SynchroDeviceEnter"
+            "SynchroDeviceEnterDevice"
         ]
     },
-    "SynchroDeviceEnter": {
+    "SynchroDeviceEnterDevice": {
         "desc": "进入同步器",
         "recognition": {
             "type": "OCR",
@@ -102,11 +102,11 @@
             }
         },
         "next": [
-            "[JumpBack]AutoAllocation",
-            "SynchroDeviceEnhanceEnter"
+            "[JumpBack]SynchroDeviceClickAutoAllocation",
+            "SynchroDeviceEnterEnhancePage"
         ]
     },
-    "AutoAllocation": {
+    "SynchroDeviceClickAutoAllocation": {
         "desc": "自动配置",
         "max_hit": 1,
         "recognition": {
@@ -127,7 +127,7 @@
             "type": "Click"
         }
     },
-    "SynchroDeviceEnhanceEnter": {
+    "SynchroDeviceEnterEnhancePage": {
         "desc": "进入同步器增强页面",
         "recognition": {
             "type": "OCR",
@@ -147,11 +147,11 @@
             "type": "Click"
         },
         "next": [
-            "[JumpBack]UseConsumables",
-            "SynchroDeviceClickAutoSelect"
+            "[JumpBack]SynchroDeviceUseConsumables",
+            "SynchroDeviceClickAutoSelectButton"
         ]
     },
-    "UseConsumables": {
+    "SynchroDeviceUseConsumables": {
         "desc": "使用消耗道具",
         "recognition": {
             "type": "TemplateMatch",
@@ -171,7 +171,7 @@
             "type": "Click"
         }
     },
-    "SynchroDeviceClickAutoSelect": {
+    "SynchroDeviceClickAutoSelectButton": {
         "desc": "点击自动选择",
         "recognition": {
             "type": "OCR",
@@ -214,10 +214,10 @@
             "type": "Click"
         },
         "next": [
-            "SynchroDeviceClickEnhanceConfirm"
+            "SynchroDeviceConfirmEnhance"
         ]
     },
-    "SynchroDeviceClickEnhanceConfirm": {
+    "SynchroDeviceConfirmEnhance": {
         "desc": "增强确认",
         "recognition": {
             "type": "OCR",

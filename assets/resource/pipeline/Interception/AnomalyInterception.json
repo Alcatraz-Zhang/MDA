@@ -1,5 +1,5 @@
 {
-    "AnomalyInterception": {
+    "InterceptionEnterAnomalyInterception": {
         "desc": "异常个体拦截战",
         "recognition": {
             "type": "OCR",
@@ -32,7 +32,7 @@
             "InterceptionAnomalyIndiviliaTargetFlow",
             "InterceptionAnomalyHarvesterTargetFlow",
             "InterceptionAnomalyUltraTargetFlow",
-            "[JumpBack]InterceptionNextAnomaly"
+            "[JumpBack]InterceptionClickNextAnomaly"
         ]
     },
     "InterceptionAnomalyKrakenTargetFlow": {
@@ -53,10 +53,10 @@
             }
         },
         "next": [
-            "InterceptionChallengeClick"
+            "InterceptionClickChallenge"
         ]
     },
-    "InterceptionChallengeClick": {
+    "InterceptionClickChallenge": {
         "desc": "点击挑战",
         "recognition": {
             "type": "OCR",
@@ -121,7 +121,7 @@
             }
         },
         "next": [
-            "InterceptionChallengeClick"
+            "InterceptionClickChallenge"
         ]
     },
     "InterceptionAnomalyIndiviliaTargetFlow": {
@@ -142,7 +142,7 @@
             }
         },
         "next": [
-            "InterceptionChallengeClick"
+            "InterceptionClickChallenge"
         ]
     },
     "InterceptionAnomalyHarvesterTargetFlow": {
@@ -163,7 +163,7 @@
             }
         },
         "next": [
-            "InterceptionChallengeClick"
+            "InterceptionClickChallenge"
         ]
     },
     "InterceptionAnomalyUltraTargetFlow": {
@@ -184,10 +184,10 @@
             }
         },
         "next": [
-            "InterceptionChallengeClick"
+            "InterceptionClickChallenge"
         ]
     },
-    "InterceptionNextAnomaly": {
+    "InterceptionClickNextAnomaly": {
         "desc": "切换异常个体",
         "recognition": {
             "type": "TemplateMatch",

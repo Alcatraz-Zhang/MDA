@@ -42,10 +42,10 @@
             }
         },
         "next": [
-            "CharacterBreakthroughHollowDotClick"
+            "CharacterBreakthroughClickHollowDot"
         ]
     },
-    "CharacterBreakthroughHollowDotClick": {
+    "CharacterBreakthroughClickHollowDot": {
         "desc": "点击空心圆点", //筛选出可以突破的角色
         "recognition": {
             "type": "TemplateMatch",
@@ -74,11 +74,11 @@
             ]
         },
         "next": [
-            "[JumpBack]CharacterBreakthroughCharacterRedDotClick",
+            "[JumpBack]CharacterBreakthroughClickCharacterRedDot",
             "CommonEndTask"
         ]
     },
-    "CharacterBreakthroughCharacterRedDotClick": {
+    "CharacterBreakthroughClickCharacterRedDot": {
         "desc": "点击角色红点",
         "recognition": {
             "type": "TemplateMatch",
@@ -106,10 +106,10 @@
             }
         },
         "next": [
-            "CharacterBreakthroughBreakthroughRedDotClick"
+            "CharacterBreakthroughClickBreakthroughRedDot"
         ]
     },
-    "CharacterBreakthroughBreakthroughRedDotClick": {
+    "CharacterBreakthroughClickBreakthroughRedDot": {
         "desc": "点击突破红点",
         "recognition": {
             "type": "TemplateMatch",
@@ -138,8 +138,8 @@
         },
         "next": [
             "[JumpBack]CharacterBreakthroughClickMax",
-            "CharacterBreakthroughLimitBreak",
-            "CharacterBreakthroughBreakthroughRedDotClick" //兜底
+            "CharacterBreakthroughClickLimitBreak",
+            "CharacterBreakthroughClickBreakthroughRedDot" //兜底
         ]
     },
     "CharacterBreakthroughClickMax": {
@@ -194,7 +194,7 @@
             }
         }
     },
-    "CharacterBreakthroughLimitBreak": {
+    "CharacterBreakthroughClickLimitBreak": {
         "desc": "点击极限突破/核心强化",
         "recognition": {
             "type": "OCR",
@@ -216,10 +216,10 @@
         },
         "next": [
             "[JumpBack]CommonConfirmAction",
-            "CharacterBreakthroughLimitBreakConfirm"
+            "CharacterBreakthroughConfirmLimitBreak"
         ]
     },
-    "CharacterBreakthroughLimitBreakConfirm": {
+    "CharacterBreakthroughConfirmLimitBreak": {
         "desc": "极限突破/核心强化确认",
         "recognition": {
             "type": "OCR",
@@ -241,7 +241,7 @@
         "next": [
             "[JumpBack]CommonClosePage",
             "CommonGoBack",
-            "CharacterBreakthroughLimitBreakConfirm" //兜底
+            "CharacterBreakthroughConfirmLimitBreak" //兜底
         ]
     }
 }

@@ -33,7 +33,7 @@
                                 }
                             }
                         },
-                        "SmallEventStageNormalClick": {
+                        "SmallEventClickStageNormal": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -43,7 +43,7 @@
                                 }
                             }
                         },
-                        "SmallEventStageNormalRepeatableClick": {
+                        "SmallEventClickStageNormalRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -68,7 +68,7 @@
                                 }
                             }
                         },
-                        "SmallEventStageNormalClick": {
+                        "SmallEventClickStageNormal": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -77,7 +77,7 @@
                                 }
                             }
                         },
-                        "SmallEventStageHardClick": {
+                        "SmallEventClickStageHard": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -86,7 +86,7 @@
                                 }
                             }
                         },
-                        "SmallEventStageNormalRepeatableClick": {
+                        "SmallEventClickStageNormalRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -95,7 +95,7 @@
                                 }
                             }
                         },
-                        "SmallEventStageHardRepeatableClick": {
+                        "SmallEventClickStageHardRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
@@ -125,7 +125,7 @@
                     "name": "SmallEventChallenge",
                     "label": "$option.SmallEventContent.SmallEventChallenge",
                     "pipeline_override": {
-                        "SmallEventChallenge": {
+                        "SmallEventEnterChallenge": {
                             "enabled": true
                         }
                     }
@@ -134,7 +134,7 @@
                     "name": "SmallEventStory",
                     "label": "$option.SmallEventContent.SmallEventStory",
                     "pipeline_override": {
-                        "SmallEventStory": {
+                        "SmallEventEnterStory": {
                             "enabled": true
                         }
                     }
@@ -143,7 +143,7 @@
                     "name": "SmallEventMission",
                     "label": "$option.SmallEventContent.SmallEventMission",
                     "pipeline_override": {
-                        "SmallEventMission": {
+                        "SmallEventEnterMission": {
                             "enabled": true
                         }
                     }

@@ -9,11 +9,11 @@
         },
         "next": [
             "[JumpBack]BattleEntryFlow",
-            "[JumpBack]MapPushingMonsterClick",
-            "[JumpBack]MapPushingplateClick"
+            "[JumpBack]MapPushingClickMonster",
+            "[JumpBack]MapPushingClickPlate"
         ]
     },
-    "MapPushingMonsterClick": {
+    "MapPushingClickMonster": {
         "desc": "推图点击怪物",
         "recognition": {
             "type": "NeuralNetworkDetect",
@@ -41,7 +41,7 @@
             ]
         }
     },
-    "MapPushingplateClick": {
+    "MapPushingClickPlate": {
         "desc": "推图点击机关",
         "recognition": {
             "type": "NeuralNetworkDetect",

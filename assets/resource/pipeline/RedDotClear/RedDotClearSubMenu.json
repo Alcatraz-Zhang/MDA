@@ -43,7 +43,7 @@
             }
         },
         "next": [
-            "RedDotClearLobbyClick"
+            "RedDotClearClickLobby"
         ]
     },
     "SubMenuVisible": {
@@ -63,7 +63,7 @@
             }
         }
     },
-    "RedDotClearLobbyClick": {
+    "RedDotClearClickLobby": {
         "desc": "点击装饰大厅", //装饰大厅一定会有New
         "recognition": {
             "type": "TemplateMatch",
@@ -91,7 +91,7 @@
             }
         },
         "next": [
-            "RedDotClearLobbyClick", //防止点击失败
+            "RedDotClearClickLobby", //防止点击失败
             "RedDotClearLobbyFlow"
         ]
     },
@@ -106,7 +106,7 @@
             }
         },
         "next": [
-            "[JumpBack]RedDotClearLobbyNewClick",
+            "[JumpBack]RedDotClearClickLobbyNew",
             "NavigationReturnHallFlow"
         ]
     },
@@ -127,7 +127,7 @@
             }
         }
     },
-    "RedDotClearLobbyNewClick": {
+    "RedDotClearClickLobbyNew": {
         "desc": "点击装饰大厅的New",
         "recognition": {
             "type": "TemplateMatch",

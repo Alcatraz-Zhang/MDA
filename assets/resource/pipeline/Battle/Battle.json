@@ -10,14 +10,14 @@
             }
         },
         "next": [
-            "[JumpBack]BattleCanQuickBattle",
-            "[JumpBack]BattleCanBattle",
+            "[JumpBack]BattleEnterQuickBattle",
+            "[JumpBack]BattleEnterNormalBattle",
             "[JumpBack]BattleClosePage",
             "CommonEndTask"
         ]
     },
-    "BattleCanQuickBattle": {
-        "desc": "快速战斗可行性检测",
+    "BattleEnterQuickBattle": {
+        "desc": "进入快速战斗",
         "recognition": {
             "type": "And",
             "param": {
@@ -34,7 +34,7 @@
         "next": [
             "MultipleBattleDialogFlow",
             "MultipleBattleClickStartBattle",
-            "BattleOperationComplete"
+            "BattleConfirmOperationComplete"
         ]
     },
     "MultipleBattleDialogFlow": {
@@ -144,8 +144,8 @@
             "[JumpBack]BattleClickAutoBurst",
             "[JumpBack]BattleClickAutoShoot",
             "[JumpBack]DialoguesSkipStory",
-            "[JumpBack]BattleNextState",
-            "BattleOperationComplete",
+            "[JumpBack]BattleClickNextStage",
+            "BattleConfirmOperationComplete",
             "BattleOperationFailed"
         ]
     },
@@ -193,7 +193,7 @@
             "type": "Click"
         }
     },
-    "BattleNextState": {
+    "BattleClickNextStage": {
         "desc": "下一关卡",
         "recognition": {
             "type": "And",
@@ -246,7 +246,7 @@
             }
         }
     },
-    "BattleOperationComplete": {
+    "BattleConfirmOperationComplete": {
         "desc": "战斗胜利结算",
         "recognition": {
             "type": "Or",
@@ -260,7 +260,7 @@
             "type": "Click"
         },
         "next": [
-            "BattleOperationComplete",
+            "BattleConfirmOperationComplete",
             "CommonEndTask"
         ]
     },
@@ -308,13 +308,14 @@
                     30
                 ],
                 "expected": [
-                    "战败"
+                    "战败",
+                    "逾时"
                 ]
             }
         }
     },
-    "BattleCanBattle": {
-        "desc": "战斗可行性检测",
+    "BattleEnterNormalBattle": {
+        "desc": "进入普通战斗",
         "recognition": {
             "type": "And",
             "param": {

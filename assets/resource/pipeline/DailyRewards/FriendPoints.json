@@ -36,11 +36,11 @@
             }
         },
         "next": [
-            "DailyRewardsSendAndReceive",
+            "DailyRewardsClickSendAndReceiveButton",
             "CommonClosePage"
         ]
     },
-    "DailyRewardsSendAndReceive": {
+    "DailyRewardsClickSendAndReceiveButton": {
         "desc": "友情点收发",
         "recognition": {
             "type": "TemplateMatch",
@@ -69,7 +69,7 @@
         },
         "next": [
             "DailyRewardsConfirmReceive",
-            "DailyRewardsSendAndReceive",
+            "DailyRewardsClickSendAndReceiveButton",
             "CommonEndTask"
         ]
     },

@@ -84,7 +84,7 @@
         },
         "post_wait_freezes": 500,
         "next": [
-            "[JumpBack]AdviseEpisodeViewing",
+            "[JumpBack]AdviseEpisodeViewingEntry",
             "AdviseChooseNikke",
             "[JumpBack]AdviseMainPageEntered",
             "AdviseEnterAdvisePage"

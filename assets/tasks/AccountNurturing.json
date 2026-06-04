@@ -74,7 +74,7 @@
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "AutoAllocation": {
+                        "SynchroDeviceClickAutoAllocation": {
                             "enabled": true
                         }
                     }
@@ -82,7 +82,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "AutoAllocation": {
+                        "SynchroDeviceClickAutoAllocation": {
                             "enabled": false
                         }
                     }
@@ -97,7 +97,7 @@
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "UseConsumables": {
+                        "SynchroDeviceUseConsumables": {
                             "enabled": true
                         }
                     }
@@ -105,7 +105,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "UseConsumables": {
+                        "SynchroDeviceUseConsumables": {
                             "enabled": false
                         }
                     }

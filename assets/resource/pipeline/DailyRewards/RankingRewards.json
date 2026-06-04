@@ -87,11 +87,11 @@
         },
         "post_wait_freezes": 2000,
         "next": [
-            "DailyRewardsRankingRewardClaim",
+            "DailyRewardsClaimRankingReward",
             "DailyRewardsClickRankingRewardRedDot"
         ]
     },
-    "DailyRewardsRankingRewardClaim": {
+    "DailyRewardsClaimRankingReward": {
         "desc": "排名奖励领取",
         "recognition": {
             "type": "OCR",

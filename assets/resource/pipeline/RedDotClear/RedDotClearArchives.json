@@ -110,7 +110,7 @@
             }
         },
         "next": [
-            "ArchivesUnlockClick"
+            "ArchivesClickUnlock"
         ]
     },
     "ArchivesRedDotLeft": {
@@ -147,7 +147,7 @@
             }
         }
     },
-    "ArchivesUnlockClick": {
+    "ArchivesClickUnlock": {
         "desc": "档案馆点击解锁",
         "recognition": {
             "type": "OCR",

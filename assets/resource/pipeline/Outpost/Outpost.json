@@ -46,8 +46,8 @@
             }
         },
         "next": [
-            "[JumpBack]DefenseRewards",
-            "[JumpBack]BulletinBoard",
+            "[JumpBack]OutpostEnterDefenseRewards",
+            "[JumpBack]OutpostEnterBulletinBoard",
             "[JumpBack]BriefEncounter",
             "CommonEndTask"
         ]

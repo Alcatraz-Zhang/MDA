@@ -1,5 +1,5 @@
 {
-    "AdviseEpisodeReward": {
+    "AdviseEpisodeRewardEntry": {
         "desc": "花絮奖励",
         "recognition": {
             "type": "TemplateMatch",
