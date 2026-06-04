@@ -1,6 +1,7 @@
 {
     "scripts": {
         "utf8-cmd": "scripts\\utf8-cmd.cmd",
+        "smoke:task-exposure": "python -m unittest tools.tests.test_task_exposure_smoke",
         "format": "prettier --write \"**/*.{json,yml,yaml,md}\"",
         "format:aggressive": "prettier --print-width 20 --write \"assets/resource/pipeline/**/*.json\" \"assets/tasks/**/*.json\" && prettier --write \"assets/resource/pipeline/**/*.json\" \"assets/tasks/**/*.json\"",
         "format:check": "prettier --check \"**/*.{json,yml,yaml,md}\""
