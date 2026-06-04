@@ -15,6 +15,13 @@
 - Prefer PowerShell-native commands, modern PowerShell 7 features, or repository-provided npm/scripts commands to avoid shell-syntax trial and error.
 - Do not switch to `cmd`, Git Bash, WSL Bash, or other shells unless the task explicitly requires it.
 
+## Canonical Crack Sync Workflow
+
+- The single source of truth for upstream-to-crack synchronization is `.agents\skills\MDA-sync-crack\SKILL.md`.
+- Future crack-sync automation must load and follow that `.agents` skill; do not copy its workflow into `.claude` or another agent-specific directory.
+- `.claude\skills\MDA-sync-crack\SKILL.md` is only a compatibility redirect. If it conflicts with `.agents\skills\MDA-sync-crack\SKILL.md`, the `.agents` file wins.
+- The final build and verification entrypoint remains `pwsh tools\build-cracked.ps1`; `tools\install.py` is only an internal dependency or debugging aid.
+
 ## Common PowerShell Equivalents
 
 | Linux/macOS | PowerShell                                      |

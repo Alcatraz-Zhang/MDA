@@ -10,6 +10,8 @@ metadata:
 
 # Sync Upstream → Crack
 
+本文件是本仓库 crack-sync 自动化的唯一权威流程。不要在 `.claude` 或其它工具目录维护第二份步骤正文；需要兼容其它 agent 时，只能写跳转说明并指向 `.agents\skills\MDA-sync-crack\SKILL.md`。
+
 固化本仓库特有的双远程 + 双分支同步流程。MDA 在本地有两个 remote、两个分支：
 
 ```
