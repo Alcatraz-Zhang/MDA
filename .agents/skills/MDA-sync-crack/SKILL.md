@@ -50,6 +50,7 @@ git fetch upstream
 git log --oneline HEAD..upstream/main      # 看 incoming commit
 git diff --stat HEAD..upstream/main        # 看影响范围
 git diff --name-only HEAD..upstream/main   # 看具体改动的文件列表（用于构建模式判断）
+git diff --name-only HEAD..upstream/main | python tools\crack_build_mode.py --format json
 ```
 
 如果输出为空 → **上游没新东西，直接告诉用户"已经是最新，无需重建"**。流程结束。
@@ -67,8 +68,10 @@ git diff --name-only HEAD..upstream/main   # 看具体改动的文件列表（�
 | 仅 `.gitignore` | **否** | 纯 git 配置，go-only 即可 |
 
 判断逻辑：
-- 如果 **有任何一行匹配上方 `-Full`=是 的规则** → 记录 `BUILD_MODE = "-Full"`，并在报告中说明原因。
-- 否则 → `BUILD_MODE = "--build-go-only"`（默认快速构建）。
+- 优先使用 `tools\crack_build_mode.py` 对 `git diff --name-only` 的输出自动判定构建模式。
+- 如果输出 `mode=full` / `script_args=["-Full","-Yes"]` → 记录 `BUILD_MODE = "-Full"`，并在报告中说明 `reason`。
+- 如果输出 `mode=go-only` / `script_args=["-Yes"]` → 记录 `BUILD_MODE = "--build-go-only"`（默认快速构建），并在报告中说明 `reason`。
+- 人工复核只用于发现 helper 规则遗漏；不要临时绕过 helper 的结果而不补测试。
 
 > 注意：绝大多数 upstream commit 只改 pipeline JSON，走 go-only 就够了。`-Full` 只在上游升级 MaaFramework 核心或重构 Go agent 时才需要。
 
