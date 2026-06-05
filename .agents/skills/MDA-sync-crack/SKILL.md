@@ -19,7 +19,7 @@ remote  upstream → 1204244136/MDA        (真正上游)
 remote  origin   → Alcatraz-Zhang/MDA    (你的 fork，可写)
 
 branch  main   ←─tracks── origin/main    (单纯镜像上游，永不放破解物)
-branch  crack  ←─tracks── origin/crack   (工作分支：上游内容 + tools/build-cracked.ps1 + graphify-out/)
+branch  crack  ←─tracks── origin/crack   (工作分支：上游内容 + tools/build-cracked.ps1)
 ```
 
 破解机制是 **build-time 版本号注入**（`-ldflags -X main.Version=v0.0.1` 触发 `isDebugVersion()` 短路），**没有任何 Go 源码修改**。所以 99% 的上游更新都能无冲突 ff-merge，构建脚本永远复用。
