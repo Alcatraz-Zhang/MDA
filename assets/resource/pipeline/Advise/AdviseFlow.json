@@ -56,9 +56,9 @@
                     14
                 ],
                 "expected": [
-                    "0",
-                    "O",
-                    "o"
+                    "^0$",
+                    "^O$",
+                    "^o$"
                 ],
                 "threshold": 0.2
             }
@@ -323,16 +323,16 @@
     "AdviseMaxLevelVisible": {
         "desc": "已max",
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
                 "roi": [
-                    695,
-                    461,
-                    32,
-                    17
+                    687,
+                    457,
+                    45,
+                    21
                 ],
-                "expected": [
-                    "MAX"
+                "template": [
+                    "Advise/MAX.png"
                 ]
             }
         }

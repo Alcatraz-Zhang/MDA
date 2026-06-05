@@ -18,7 +18,8 @@
             }
         },
         "next": [
-            "RedDotClearArchivesClickEntry"
+            "RedDotClearArchivesClickEntry",
+            "CommonEndTask"
         ]
     },
     "RedDotClearArchivesClickEntry": {

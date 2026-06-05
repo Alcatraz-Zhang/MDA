@@ -18,7 +18,8 @@
             }
         },
         "next": [
-            "RedDotClearProfilePageClickEntry"
+            "RedDotClearProfilePageClickEntry",
+            "CommonEndTask"
         ]
     },
     "RedDotClearProfilePageClickEntry": {

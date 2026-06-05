@@ -18,7 +18,8 @@
             }
         },
         "next": [
-            "RedDotClearCashShopClickEntry"
+            "RedDotClearCashShopClickEntry",
+            "CommonEndTask"
         ]
     },
     "RedDotClearCashShopClickEntry": {

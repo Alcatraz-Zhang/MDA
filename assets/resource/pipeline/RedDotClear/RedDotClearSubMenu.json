@@ -18,7 +18,8 @@
             }
         },
         "next": [
-            "RedDotClearSubMenuClickEntry"
+            "RedDotClearSubMenuClickEntry",
+            "CommonEndTask"
         ]
     },
     "RedDotClearSubMenuClickEntry": {

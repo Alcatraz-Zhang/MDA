@@ -69,10 +69,28 @@
             }
         },
         "next": [
+            "SoloRaidBattleLocked",
             "BattleStartButtonBlocked",
             "[JumpBack]CommonConfirmAction",
             "[JumpBack]SoloRaidSelectLevel"
         ]
+    },
+    "SoloRaidBattleLocked": {
+        "desc": "单人突击结算中",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    629,
+                    274,
+                    22,
+                    22
+                ],
+                "template": [
+                    "SoloRaid/SoloRaidBattleLocked.png"
+                ]
+            }
+        }
     },
     "SoloRaidSelectLevel": {
         "desc": "单人突击选择关卡",

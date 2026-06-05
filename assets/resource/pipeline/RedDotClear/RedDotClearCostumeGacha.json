@@ -18,7 +18,8 @@
             }
         },
         "next": [
-            "RedDotClearCostumeGachaClickEntry"
+            "RedDotClearCostumeGachaClickEntry",
+            "CommonEndTask"
         ]
     },
     "RedDotClearCostumeGachaClickEntry": {

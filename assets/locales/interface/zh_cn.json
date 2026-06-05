@@ -94,7 +94,7 @@
     "task.Advise.label": "💬咨询",
     "task.Advise.description": "进入咨询界面，完成咨询任务",
     "option.NikkeAdvise.label": "NIKKE咨询",
-    "task.NikkeAdvise.description": "会始终对前10个妮姬进行咨询，可以通过收藏来提升优先级，好感度满了会自动取消收藏",
+    "task.NikkeAdvise.description": "会始终对列表中的前10个妮姬进行咨询，可以通过收藏来提升优先级（不要收藏无法咨询的联动角色），好感度满了且已获得贴纸会自动取消收藏",
     "option.AdviseEpisodeReward.label": "领取花絮奖励",
     "option.AdviseEpisodeViewingReward.label": "领取花絮鉴赏会奖励",
     "task.CoordinatedOperations.label": "🤝协同作战",
