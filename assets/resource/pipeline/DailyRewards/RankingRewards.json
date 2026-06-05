@@ -13,8 +13,8 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationArkVisible",
-                    "NavigationArkRedDotVisible"
+                    "CommonArkVisible",
+                    "CommonArkRedDotVisible"
                 ]
             }
         },
@@ -55,7 +55,7 @@
         },
         "next": [
             "DailyRewardsClickRankingRewardRedDot",
-            "NavigationReturnHallFlow"
+            "CommonReturnHall"
         ]
     },
     "DailyRewardsClickRankingRewardRedDot": {
@@ -111,7 +111,7 @@
             "type": "Click"
         },
         "next": [
-            "NavigationReturnHallFlow"
+            "CommonReturnHall"
         ]
     }
 }

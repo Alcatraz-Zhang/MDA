@@ -2,6 +2,27 @@
     "RedDotClearProfilePage": {
         "desc": "清除个人资料页红点",
         "max_hit": 1,
+        "next": [
+            "RedDotClearProfilePageEnterHall",
+            "[JumpBack]CommonReturnHall"
+        ]
+    },
+    "RedDotClearProfilePageEnterHall": {
+        "desc": "个人资料页入口",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearProfilePageClickEntry"
+        ]
+    },
+    "RedDotClearProfilePageClickEntry": {
+        "desc": "点击个人资料页红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {

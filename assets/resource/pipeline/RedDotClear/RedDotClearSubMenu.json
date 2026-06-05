@@ -2,6 +2,27 @@
     "RedDotClearSubMenu": {
         "desc": "清除子菜单红点",
         "max_hit": 1,
+        "next": [
+            "RedDotClearSubMenuEnterHall",
+            "[JumpBack]CommonReturnHall"
+        ]
+    },
+    "RedDotClearSubMenuEnterHall": {
+        "desc": "子菜单入口",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearSubMenuClickEntry"
+        ]
+    },
+    "RedDotClearSubMenuClickEntry": {
+        "desc": "点击子菜单红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -107,7 +128,7 @@
         },
         "next": [
             "[JumpBack]RedDotClearClickLobbyNew",
-            "NavigationReturnHallFlow"
+            "CommonReturnHall"
         ]
     },
     "RedDotClearLobbyVisible": {

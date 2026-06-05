@@ -10,7 +10,7 @@
         },
         "next": [
             "SoloRaidEntry",
-            "[JumpBack]NavigationReturnHallFlow"
+            "[JumpBack]CommonReturnHall"
         ]
     },
     "SoloRaidEntry": {
@@ -19,7 +19,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationArkVisible"
+                    "CommonArkVisible"
                 ]
             }
         },

@@ -15,7 +15,8 @@
             "type": "Click"
         },
         "next": [
-            "SpecialArenaCornerFlow"
+            "SpecialArenaCornerFlow",
+            "ArenaEnterSpecialArena" //兜底
         ]
     },
     "SpecialArenaMainPageEntered": {

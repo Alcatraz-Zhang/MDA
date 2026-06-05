@@ -11,7 +11,7 @@
             "[JumpBack]ShopPurchaseGem",
             "[JumpBack]ShopPurchaseVoucher",
             "[JumpBack]ShopPurchaseUpgradeMaterials",
-            "[JumpBack]CommonScrollUp",
+            "[JumpBack]CommonSwipeUp",
             "CommonEndTask"
         ]
     },

@@ -9,7 +9,7 @@
         },
         "next": [
             "RedDotClearEntryFlow",
-            "[JumpBack]NavigationReturnHallFlow"
+            "[JumpBack]CommonReturnHall"
         ]
     },
     "RedDotClearEntryFlow": {
@@ -18,7 +18,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationArkVisible"
+                    "CommonArkVisible"
                 ]
             }
         },
@@ -29,6 +29,7 @@
             "[JumpBack]RedDotClearSubMenu",
             "[JumpBack]RedDotClearProfilePage",
             "[JumpBack]RedDotClearArchives",
+            "[JumpBack]RedDotClearCostumeGacha",
             "CommonEndTask"
         ]
     }

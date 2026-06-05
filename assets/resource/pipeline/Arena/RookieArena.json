@@ -15,7 +15,8 @@
             "type": "Click"
         },
         "next": [
-            "RookieArenaCornerFlow"
+            "RookieArenaCornerFlow",
+            "ArenaEnterRookieArena" //兜底
         ]
     },
     "RookieArenaMainPageEntered": {

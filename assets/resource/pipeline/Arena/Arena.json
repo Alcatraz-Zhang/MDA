@@ -9,7 +9,7 @@
         "next": [
             "[JumpBack]ArenaClaimSpecialReward",
             "ArkEnterArena",
-            "[JumpBack]NavigationEnterArkFlow"
+            "[JumpBack]CommonEnterArk"
         ]
     },
     "ArenaClaimSpecialReward": {

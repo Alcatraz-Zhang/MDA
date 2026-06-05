@@ -9,7 +9,7 @@
         },
         "next": [
             "AccountNurturingEntryFlow",
-            "[JumpBack]NavigationReturnHallFlow"
+            "[JumpBack]CommonReturnHall"
         ]
     },
     "AccountNurturingEntryFlow": {
@@ -18,7 +18,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationArkVisible"
+                    "CommonArkVisible"
                 ]
             }
         },

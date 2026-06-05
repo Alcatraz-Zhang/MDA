@@ -2,6 +2,27 @@
     "RedDotClearArchives": {
         "desc": "清除档案馆红点",
         "max_hit": 1,
+        "next": [
+            "RedDotClearArchivesEnterHall",
+            "[JumpBack]CommonReturnHall"
+        ]
+    },
+    "RedDotClearArchivesEnterHall": {
+        "desc": "档案馆入口",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearArchivesClickEntry"
+        ]
+    },
+    "RedDotClearArchivesClickEntry": {
+        "desc": "点击档案馆红点",
         "recognition": {
             "type": "And",
             "param": {

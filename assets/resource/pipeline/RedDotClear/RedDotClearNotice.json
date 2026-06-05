@@ -2,6 +2,27 @@
     "RedDotClearNotice": {
         "desc": "清除公告红点",
         "max_hit": 1,
+        "next": [
+            "RedDotClearNoticeEnterHall",
+            "[JumpBack]CommonReturnHall"
+        ]
+    },
+    "RedDotClearNoticeEnterHall": {
+        "desc": "公告入口",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearNoticeClickEntry"
+        ]
+    },
+    "RedDotClearNoticeClickEntry": {
+        "desc": "点击公告红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -37,7 +58,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationNoticeVisible"
+                    "CommonNoticeVisible"
                 ]
             }
         },

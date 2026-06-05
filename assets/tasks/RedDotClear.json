@@ -10,7 +10,8 @@
                 "RedDotClearNotice",
                 "RedDotClearSubMenu",
                 "RedDotClearProfilePage",
-                "RedDotClearArchives"
+                "RedDotClearArchives",
+                "RedDotClearCostumeGacha"
             ],
             "group": [
                 "utility"
@@ -122,6 +123,28 @@
                     "name": "No",
                     "pipeline_override": {
                         "RedDotClearArchives": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearCostumeGacha": {
+            "type": "switch",
+            "label": "$option.RedDotClearCostumeGacha.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearCostumeGacha": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearCostumeGacha": {
                             "enabled": false
                         }
                     }

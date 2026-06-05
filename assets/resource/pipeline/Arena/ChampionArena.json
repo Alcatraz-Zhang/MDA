@@ -15,7 +15,8 @@
             "type": "Click"
         },
         "next": [
-            "ChampionArenaCornerFlow"
+            "ChampionArenaCornerFlow",
+            "ArenaEnterChampionArena" //兜底
         ]
     },
     "ChampionArenaMainPageEntered": {

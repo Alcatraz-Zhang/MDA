@@ -10,7 +10,7 @@
         },
         "next": [
             "CoordinatedOperationsEntryFlow",
-            "[JumpBack]NavigationReturnHallFlow"
+            "[JumpBack]CommonReturnHall"
         ]
     },
     "CoordinatedOperationsEntryFlow": {
@@ -19,7 +19,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationArkVisible"
+                    "CommonArkVisible"
                 ]
             }
         },

@@ -147,16 +147,12 @@
     "AdviseSettlementFlow": {
         "desc": "咨询结算",
         "recognition": {
-            "type": "OCR",
+            "type": "Or",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "咨询"
+                "any_of": [
+                    "AdviseCornerVisible",
+                    "AdviseConfirmRankIncrease",
+                    "AdviseBondIncreasedVisible"
                 ]
             }
         },
@@ -176,6 +172,23 @@
             "[JumpBack]AdviseEpisodeRewardEntry",
             "AdviseClickNextAdvise"
         ]
+    },
+    "AdviseCornerVisible": {
+        "desc": "左上角的咨询文本",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    15,
+                    70,
+                    25
+                ],
+                "expected": [
+                    "咨询"
+                ]
+            }
+        }
     },
     "AdviseRemoveFavorites": {
         "desc": "移除收藏",

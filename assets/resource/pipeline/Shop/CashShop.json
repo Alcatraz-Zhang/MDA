@@ -8,7 +8,7 @@
         },
         "next": [
             "HallEnterCashShop",
-            "[JumpBack]NavigationReturnHallFlow"
+            "[JumpBack]CommonReturnHall"
         ]
     },
     "HallEnterCashShop": {

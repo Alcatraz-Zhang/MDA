@@ -8,7 +8,7 @@
         },
         "next": [
             "ArkEnterInterception",
-            "[JumpBack]NavigationEnterArkFlow"
+            "[JumpBack]CommonEnterArk"
         ]
     },
     "ArkEnterInterception": {

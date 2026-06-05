@@ -128,8 +128,30 @@
             ]
         },
         "next": [
+            "[JumpBack]LargeEventUnlockStage",
             "LargeEventEventStageBattleFlow"
         ]
+    },
+    "LargeEventUnlockStage": {
+        "desc": "大活动关卡解锁",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    601,
+                    441,
+                    74,
+                    28
+                ],
+                "expected": [
+                    ".*点击继续.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500
     },
     "LargeEventEventStageBattleFlow": {
         "desc": "大活动活动关卡页面战斗流程",

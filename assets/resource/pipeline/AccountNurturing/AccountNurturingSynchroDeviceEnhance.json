@@ -4,7 +4,7 @@
         "max_hit": 1,
         "next": [
             "AccountNurturingSynchroDeviceEnhanceEnterHall",
-            "[JumpBack]NavigationReturnHallFlow"
+            "[JumpBack]CommonReturnHall"
         ]
     },
     "AccountNurturingSynchroDeviceEnhanceEnterHall": {
@@ -13,13 +13,13 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "NavigationArkVisible"
+                    "CommonArkVisible"
                 ]
             }
         },
         "next": [
             "AccountNurturingSynchroDeviceEnhanceEnterFlow",
-            "[JumpBack]NavigationEnterOutpost"
+            "[JumpBack]CommonEnterOutpost"
         ]
     },
     "AccountNurturingSynchroDeviceEnhanceEnterFlow": {
