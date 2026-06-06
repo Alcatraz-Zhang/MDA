@@ -112,7 +112,22 @@
         "post_wait_freezes": 2000
     },
     "CommonClickMax": {
-        "desc": "点击MAX",
+        "desc": "有可点击的MAX则点击",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonClickMaxVisible",
+                    "CommonClickMaxAvailable"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "CommonClickMaxVisible": {
+        "desc": "MAX可见",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -129,9 +144,26 @@
                     0.8
                 ]
             }
-        },
-        "action": {
-            "type": "Click"
+        }
+    },
+    "CommonClickMaxAvailable": {
+        "desc": "MAX可点击",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "CommonClickMaxVisible",
+                "lower": [
+                    140,
+                    140,
+                    140
+                ],
+                "upper": [
+                    255,
+                    255,
+                    255
+                ],
+                "count": 50
+            }
         }
     },
     "CommonClickBlank": {
@@ -234,7 +266,8 @@
             "[JumpBack]CommonConfirmReward",
             "[JumpBack]CommonReturnOutpost",
             "CommonClickFreeState",
-            "[JumpBack]CommonClickHall"
+            "[JumpBack]CommonClickHall",
+            "[JumpBack]CommonClickBlank"
         ]
     },
     "CommonReturnOutpost": {

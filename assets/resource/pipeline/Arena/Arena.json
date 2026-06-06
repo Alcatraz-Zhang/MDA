@@ -114,7 +114,7 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 200,
+        "post_wait_freezes": 500, //再低会出现双击从而跳过流程
         "next": [
             "ArenaFreeBattleFlow",
             "ArenaClickFreeBattle"
