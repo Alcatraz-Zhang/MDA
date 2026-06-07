@@ -331,6 +331,7 @@
         },
         "next": [
             "[JumpBack]CommonConfirmAction",
+            "BattleEnterNormalBattle", //兜底
             "BattleInBattleFlow"
         ]
     },
