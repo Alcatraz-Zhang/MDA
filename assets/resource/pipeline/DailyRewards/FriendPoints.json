@@ -8,7 +8,7 @@
         ]
     },
     "DailyRewardsEnterFriendPoints": {
-        "desc": "友情点",
+        "desc": "进入友情点收发界面",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -35,9 +35,11 @@
                 ]
             }
         },
+        "post_wait_freezes": 500,
         "next": [
             "DailyRewardsClickSendAndReceiveButton",
-            "CommonClosePage"
+            "CommonClosePage",
+            "DailyRewardsEnterFriendPoints" //兜底
         ]
     },
     "DailyRewardsClickSendAndReceiveButton": {
