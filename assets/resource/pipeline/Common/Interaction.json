@@ -32,7 +32,8 @@
                     250
                 ],
                 "template": [
-                    "Common/ConfirmWithCircle.png"
+                    "Common/ConfirmWithCircle.png",
+                    "Common/ConfirmWithCircle2.png"
                 ]
             }
         },
@@ -102,7 +103,8 @@
                 ],
                 "template": [
                     "Common/GoBack1.png",
-                    "Common/GoBack2.png"
+                    "Common/GoBack2.png",
+                    "Common/GoBack3.png"
                 ]
             }
         },

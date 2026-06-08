@@ -11,7 +11,8 @@
                 "RedDotClearSubMenu",
                 "RedDotClearProfilePage",
                 "RedDotClearArchives",
-                "RedDotClearCostumeGacha"
+                "RedDotClearCostumeGacha",
+                "RedDotClearRhythmGame"
             ],
             "group": [
                 "utility"
@@ -145,6 +146,28 @@
                     "name": "No",
                     "pipeline_override": {
                         "RedDotClearCostumeGacha": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearRhythmGame": {
+            "type": "switch",
+            "label": "$option.RedDotClearRhythmGame.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearRhythmGame": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearRhythmGame": {
                             "enabled": false
                         }
                     }

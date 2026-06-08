@@ -120,6 +120,7 @@
     "option.RedDotClearProfilePage.label": "Clear Profile Page Red Dots, automatically claim titles",
     "option.RedDotClearArchives.label": "Clear Archives Red Dots",
     "option.RedDotClearCostumeGacha.label": "Clear Costume Gacha Red Dots, automatically claim free tickets and pull as much as possible",
+    "option.RedDotClearRhythmGame.label": "Clear Rhythm Game Red Dots",
     "task.LargeEvent.label": "🎪Large Event",
     "task.LargeEvent.description": "Enter the large event interface and complete related tasks. (Events with SD characters are called Large Events)",
     "option.LargeEventTheme.label": "Event Theme",

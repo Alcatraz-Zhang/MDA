@@ -9,8 +9,16 @@ func TestStatusFromResponseUsesNewQuotaFields(t *testing.T) {
 		DailyRuntimeMinutes:         180,
 		RegularDailyRuntimeMinutes:  60,
 		SpecialPeriodRuntimeMinutes: 1500,
+		PaidThroughOn:               "20260701",
+		HasFutureRenewal:            true,
 	}, DeviceCodeV7{})
 
+	if status.PaidThroughOn != "20260701" {
+		t.Fatalf("PaidThroughOn = %q, want 20260701", status.PaidThroughOn)
+	}
+	if !status.HasFutureRenewal {
+		t.Fatalf("HasFutureRenewal = false, want true")
+	}
 	if status.RegularDailyRuntimeMinutes != 60 {
 		t.Fatalf("RegularDailyRuntimeMinutes = %d, want 60", status.RegularDailyRuntimeMinutes)
 	}

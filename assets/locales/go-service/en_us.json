@@ -33,6 +33,7 @@
     "tasker.membership_check.denied_special": "🍊 Special quota for %s (%d minutes) and regular quota (%d minutes) are both exhausted; task stopped. Device binding/subscription URL: %s",
     "tasker.membership_check.debug_unlimited": "🍊 Debug builds have unlimited runtime and skip membership checks.",
     "tasker.membership_check.update_required": "🍊 This MDA version is no longer supported. Please update to %s or later before running tasks.",
+    "tasker.membership_check.renewal_reminder": "🍊 Your membership has %d day(s) remaining and expires on %s. Device binding/renewal URL: %s",
     "tasker.process_warning.title": "⚠️ Note: The following processes are running",
     "tasker.process_warning.recommend_1": "ℹ️ Please turn off OSD FPS overlays and filters",
     "tasker.process_warning.note": "💡 These features interfere with image recognition"

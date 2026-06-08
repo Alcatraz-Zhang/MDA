@@ -68,6 +68,8 @@ type MemberStatusResponse struct {
 	PlanName                    string `json:"plan_name"`
 	StartsOn                    string `json:"starts_on"`
 	ExpiresOn                   string `json:"expires_on"`
+	PaidThroughOn               string `json:"paid_through_on"`
+	HasFutureRenewal            bool   `json:"has_future_renewal"`
 	RemainingDays               int    `json:"remaining_days"`
 	DailyRuntimeMinutes         int    `json:"daily_runtime_minutes"`
 	RegularDailyRuntimeMinutes  int    `json:"regular_daily_runtime_minutes"`
@@ -105,6 +107,8 @@ type MembershipStatus struct {
 	PlanName                    string
 	StartsOn                    string
 	ExpiresOn                   string
+	PaidThroughOn               string
+	HasFutureRenewal            bool
 	RemainingDays               int
 	DailyRuntimeMinutes         int
 	RegularDailyRuntimeMinutes  int
@@ -276,6 +280,8 @@ func statusFromResponse(response *MemberStatusResponse, deviceCode DeviceCodeV7)
 		PlanName:                    planName,
 		StartsOn:                    response.StartsOn,
 		ExpiresOn:                   response.ExpiresOn,
+		PaidThroughOn:               response.PaidThroughOn,
+		HasFutureRenewal:            response.HasFutureRenewal,
 		RemainingDays:               response.RemainingDays,
 		DailyRuntimeMinutes:         regularDailyRuntimeMinutes,
 		RegularDailyRuntimeMinutes:  regularDailyRuntimeMinutes,

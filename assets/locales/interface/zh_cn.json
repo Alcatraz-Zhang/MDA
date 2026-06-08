@@ -120,6 +120,7 @@
     "option.RedDotClearProfilePage.label": "清除个人资料页红点，会自动领取称号",
     "option.RedDotClearArchives.label": "清除档案馆红点",
     "option.RedDotClearCostumeGacha.label": "清除时装抽取红点，会自动领取免费票券并尽量抽取",
+    "option.RedDotClearRhythmGame.label": "清除音游红点",
     "task.LargeEvent.label": "🎪大活动",
     "task.LargeEvent.description": "进入大活动界面，完成相关任务。（有SD小人的活动叫做大活动）",
     "option.LargeEventTheme.label": "活动主题",
