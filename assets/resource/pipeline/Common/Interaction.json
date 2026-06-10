@@ -515,5 +515,22 @@
     },
     "CommonEndTask": {
         "desc": "空节点，用于结束流程"
+    },
+    "CommonArkCornerVisible": {
+        "desc": "左上角的方舟可见",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    17,
+                    16,
+                    50,
+                    20
+                ],
+                "expected": [
+                    "方舟"
+                ]
+            }
+        }
     }
 }

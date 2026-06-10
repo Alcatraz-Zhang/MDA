@@ -1,0 +1,4 @@
+./logger.go
+./main.go
+./register.go
+./version.go

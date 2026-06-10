@@ -100,10 +100,10 @@
             }
         },
         "next": [
+            "CommonConfirmAction",
             "[JumpBack]RhythmGameClickLargeNEW",
             "[JumpBack]RhythmGameClickSmallNEW",
             "[JumpBack]RhythmGameSwipeUp",
-            "CommonConfirmAction",
             "[JumpBack]CommonGoBack"
         ]
     },

@@ -456,6 +456,7 @@ install/
 maafw/*
 mxu*
 deps
+3rdparty
 
 config
 debug
@@ -477,7 +478,6 @@ Temporary Items
 
 # python
 venv/
-.venv/
 .cache/
 
 # maa-tools
@@ -485,15 +485,10 @@ tests/maatools
 
 # oh-my-opencode
 .sisyphus/
-.omo/
 
 # Local AI/code intelligence preferences
 .codegraph/
 .cursor/
-.codex/
-.go-build-cache/
-agent/go-service/.codex-go-cache/
-
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
 !tools/build-cracked.ps1

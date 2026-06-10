@@ -26,30 +26,13 @@
             "DailyRewardsEnterRankingRewards"
         ]
     },
-    "DailyRewardsRankingRewardVisible": {
-        "desc": "排名奖励可见",
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    17,
-                    16,
-                    50,
-                    20
-                ],
-                "expected": [
-                    "方舟"
-                ]
-            }
-        }
-    },
     "DailyRewardsRankingRewardFlow": {
         "desc": "排名奖励流程",
         "recognition": {
             "type": "And",
             "param": {
                 "all_of": [
-                    "DailyRewardsRankingRewardVisible"
+                    "CommonArkCornerVisible"
                 ]
             }
         },

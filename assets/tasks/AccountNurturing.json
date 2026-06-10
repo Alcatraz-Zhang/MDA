@@ -7,7 +7,9 @@
             "description": "$task.AccountNurturing.description",
             "option": [
                 "AccountNurturingCharacterBreakthrough",
-                "AccountNurturingSynchroDeviceEnhance"
+                "AccountNurturingSynchroDeviceEnhance",
+                "AccountNurturingCubeEnhancement",
+                "AccountNurturingRecycleRoomUpgrade"
             ],
             "group": [
                 "utility"
@@ -60,6 +62,52 @@
                     "name": "No",
                     "pipeline_override": {
                         "AccountNurturingSynchroDeviceEnhance": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "AccountNurturingCubeEnhancement": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.AccountNurturingCubeEnhancement.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "AccountNurturingCubeEnhancement": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "AccountNurturingCubeEnhancement": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "AccountNurturingRecycleRoomUpgrade": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.AccountNurturingRecycleRoomUpgrade.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "AccountNurturingRecycleRoomUpgrade": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "AccountNurturingRecycleRoomUpgrade": {
                             "enabled": false
                         }
                     }

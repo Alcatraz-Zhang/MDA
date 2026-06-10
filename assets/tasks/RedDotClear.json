@@ -12,7 +12,8 @@
                 "RedDotClearProfilePage",
                 "RedDotClearArchives",
                 "RedDotClearCostumeGacha",
-                "RedDotClearRhythmGame"
+                "RedDotClearRhythmGame",
+                "RedDotClearBlaBla"
             ],
             "group": [
                 "utility"
@@ -89,6 +90,7 @@
         "RedDotClearProfilePage": {
             "type": "switch",
             "label": "$option.RedDotClearProfilePage.label",
+            "description": "$option.RedDotClearProfilePage.description",
             "cases": [
                 {
                     "name": "Yes",
@@ -133,6 +135,7 @@
         "RedDotClearCostumeGacha": {
             "type": "switch",
             "label": "$option.RedDotClearCostumeGacha.label",
+            "description": "$option.RedDotClearCostumeGacha.description",
             "cases": [
                 {
                     "name": "Yes",
@@ -168,6 +171,28 @@
                     "name": "No",
                     "pipeline_override": {
                         "RedDotClearRhythmGame": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearBlaBla": {
+            "type": "switch",
+            "label": "$option.RedDotClearBlaBla.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearBlaBla": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearBlaBla": {
                             "enabled": false
                         }
                     }
