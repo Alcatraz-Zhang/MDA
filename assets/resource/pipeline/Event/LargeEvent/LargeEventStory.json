@@ -1,8 +1,49 @@
 {
     "LargeEventEnterStory": {
-        "desc": "大活动剧情",
+        "desc": "大活动剧情", //默认进入story2
         "enabled": false,
         "max_hit": 1,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    485,
+                    536,
+                    308,
+                    79
+                ],
+                "expected": [
+                    ".*STORY.*"
+                ],
+                "order_by": "Vertical",
+                "index": -1
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "timeout": 60000,
+        "next": [
+            "LargeEventEnterStory1Flow",
+            "LargeEventOpenStoryEventStagePage"
+        ]
+    },
+    "LargeEventEnterStory1Flow": {
+        "desc": "大活动剧情1流程", //如果story2未开放则进入story1
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "LargeEventStoryLocked"
+                ]
+            }
+        },
+        "next": [
+            "LargeEventEnterStory1"
+        ]
+    },
+    "LargeEventEnterStory1": {
+        "desc": "大活动剧情1", //如果story2未开放则进入story1
         "recognition": {
             "type": "OCR",
             "param": {
@@ -25,6 +66,23 @@
         "next": [
             "LargeEventOpenStoryEventStagePage"
         ]
+    },
+    "LargeEventStoryLocked": {
+        "desc": "大活动剧情未解锁",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    716,
+                    337,
+                    57,
+                    18
+                ],
+                "expected": [
+                    ".*需要通关.*"
+                ]
+            }
+        }
     },
     "LargeEventOpenStoryEventStagePage": {
         "desc": "大活动剧情活动页面",

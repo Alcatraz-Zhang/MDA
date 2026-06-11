@@ -53,8 +53,7 @@
         "next": [
             "[JumpBack]AdviseStoryFlow",
             "[JumpBack]AdvisePlayEpisode",
-            "[JumpBack]AdviseEpisodeViewingClaimReward",
-            "CommonClosePage"
+            "AdviseEpisodeViewingClaimReward"
         ]
     },
     "AdvisePlayEpisode": {
@@ -99,7 +98,8 @@
         },
         "post_wait_freezes": 1000,
         "next": [
-            "CommonConfirmReward"
+            "[JumpBack]CommonConfirmReward",
+            "CommonClosePage"
         ]
     }
 }

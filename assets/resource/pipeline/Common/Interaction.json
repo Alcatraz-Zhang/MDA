@@ -337,13 +337,12 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "CommonMailIconVisible"
+                    "CommonNoticeVisible"
                 ]
             }
         },
         "next": [
-            "[JumpBack]CommonClosePage",
-            "CommonEndTask"
+            "CommonClosePage"
         ]
     },
     "CommonClickHomeButton": {
@@ -392,7 +391,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "CommonMailIconVisible"
+                    "CommonBellIconVisible"
                 ]
             }
         }

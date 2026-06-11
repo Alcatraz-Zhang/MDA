@@ -162,7 +162,7 @@ func (c *AspectRatioChecker) OnTaskerTask(tasker *maa.Tasker, event maa.EventSta
 		Float64("target_ratio", targetRatio).
 		Msg("Using aspect ratio and minimum resolution check for non-ADB controller")
 
-	aspectRatioOK := isAspectRatio16x9(int(width), int(height))
+	aspectRatioOK := isLandscapeAspectRatio16x9(int(width), int(height))
 	minResolutionOK := isAtLeastTargetResolution(int(width), int(height))
 	if !aspectRatioOK || !minResolutionOK {
 		actualRatio := calculateAspectRatio(int(width), int(height))
@@ -210,10 +210,11 @@ func (c *AspectRatioChecker) stopWithWarning(tasker *maa.Tasker, controllerDispl
 	tasker.PostStop()
 }
 
-// isAspectRatio16x9 checks if the given dimensions are approximately 16:9
-// This handles both landscape (16:9) and portrait (9:16) orientations
-func isAspectRatio16x9(width, height int) bool {
+func isLandscapeAspectRatio16x9(width, height int) bool {
 	if width <= 0 || height <= 0 {
+		return false
+	}
+	if width <= height {
 		return false
 	}
 
@@ -228,25 +229,14 @@ func isAtLeastTargetResolution(width, height int) bool {
 		return false
 	}
 
-	longSide := max(width, height)
-	shortSide := min(width, height)
-	targetLongSide := max(targetWidth, targetHeight)
-	targetShortSide := min(targetWidth, targetHeight)
-
-	return longSide >= targetLongSide && shortSide >= targetShortSide
+	return width >= targetWidth && height >= targetHeight
 }
 
-// calculateAspectRatio calculates the aspect ratio, always returning the larger/smaller ratio
-// This normalizes both landscape and portrait orientations
 func calculateAspectRatio(width, height int) float64 {
 	w := float64(width)
 	h := float64(height)
 
-	// Always return wider/narrower to normalize orientation
-	if w > h {
-		return w / h
-	}
-	return h / w
+	return w / h
 }
 
 func buildWarningData(controllerDisplay string, width, height int, requirement string) map[string]any {

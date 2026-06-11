@@ -18,9 +18,58 @@
     "option": {
         "LargeEventTheme": {
             "type": "select",
-            "default_case": "StarAnis",
+            "default_case": "ArkRanger",
             "label": "$option.LargeEventTheme.label",
             "cases": [
+                {
+                    "name": "ArkRanger",
+                    "label": "$option.LargeEventTheme.ArkRanger",
+                    "pipeline_override": {
+                        "LargeEventEnterMainPage": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "LargeEvent/ArkRanger/ArkRangerLogo.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "LargeEventClickStory1Stage": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "LargeEvent/ArkRanger/ArkRangerStory1Stage.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "LargeEventClickStory1StageRepeatable": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "LargeEvent/ArkRanger/ArkRangerStory1StageRepeatable.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "LargeEventMissionClaimed": {
+                            "recognition": {
+                                "param": {
+                                    "lower": [
+                                        15,
+                                        25,
+                                        55
+                                    ],
+                                    "upper": [
+                                        35,
+                                        35,
+                                        65
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
                 {
                     "name": "StarAnis",
                     "label": "$option.LargeEventTheme.StarAnis",

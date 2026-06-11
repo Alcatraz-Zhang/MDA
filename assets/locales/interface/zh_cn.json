@@ -129,6 +129,7 @@
     "task.LargeEvent.label": "🎪大活动",
     "task.LargeEvent.description": "进入大活动界面，完成相关任务。（有SD小人的活动叫做大活动）",
     "option.LargeEventTheme.label": "活动主题",
+    "option.LargeEventTheme.ArkRanger": "ARK RANGER",
     "option.LargeEventTheme.StarAnis": "STAR ANIS",
     "option.LargeEventTheme.Other": "其他",
     "option.LargeEventContent.label": "大活动内容",

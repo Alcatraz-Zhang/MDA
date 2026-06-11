@@ -129,6 +129,7 @@
     "task.LargeEvent.label": "🎪Large Event",
     "task.LargeEvent.description": "Enter the large event interface and complete related tasks. (Events with SD characters are called Large Events)",
     "option.LargeEventTheme.label": "Event Theme",
+    "option.LargeEventTheme.ArkRanger": "ARK RANGER",
     "option.LargeEventTheme.StarAnis": "STAR ANIS",
     "option.LargeEventTheme.Other": "Other",
     "option.LargeEventContent.label": "Large Event Content",
