@@ -68,7 +68,8 @@
             "[JumpBack]RedDotClearClickProfileDecoration",
             "[JumpBack]RedDotClearClickProfileTitle",
             "[JumpBack]RedDotClearClickManageProfile",
-            "CommonClosePage"
+            "CommonClosePage",
+            "CommonEndTask" //关不了页面也结束任务
         ]
     },
     "ProfilePageVisible": {

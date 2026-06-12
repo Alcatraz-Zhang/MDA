@@ -3,6 +3,7 @@
         "desc": "开始咨询流程",
         "next": [
             "AdviseAttemptsExhausted",
+            "AdviseCurrentTargetCompletedFlow",
             "AdviseCollectionCompletedFlow",
             "AdviseCollectionNotCompletedFlow"
         ]
@@ -44,6 +45,31 @@
             }
         }
     },
+    "AdviseQuickAdviseGrayButtonVisible": {
+        "desc": "快速咨询按钮变灰",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    647,
+                    527,
+                    155,
+                    35
+                ],
+                "lower": [
+                    100,
+                    100,
+                    100
+                ],
+                "upper": [
+                    180,
+                    180,
+                    180
+                ],
+                "count": 500
+            }
+        }
+    },
     "Advise0AttemptsVisible": {
         "desc": "次数变0",
         "recognition": {
@@ -67,17 +93,25 @@
     "AdviseCollectionCompletedVisible": {
         "desc": "已收集完咨询日志",
         "recognition": {
-            "type": "OCR",
+            "type": "ColorMatch",
             "param": {
                 "roi": [
-                    790,
-                    469,
-                    19,
-                    20
+                    815,
+                    483,
+                    8,
+                    13
                 ],
-                "expected": [
-                    ".*20.*"
-                ]
+                "lower": [
+                    200,
+                    40,
+                    30
+                ],
+                "upper": [
+                    255,
+                    80,
+                    80
+                ],
+                "count": 10
             }
         }
     },
@@ -93,6 +127,21 @@
         },
         "next": [
             "AdviseClickQuickAdvise"
+        ]
+    },
+    "AdviseCurrentTargetCompletedFlow": {
+        "desc": "当前咨询对象已完成",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "AdviseQuickAdviseGrayButtonVisible",
+                    "AdviseGrayButtonVisible"
+                ]
+            }
+        },
+        "next": [
+            "AdviseClickNextAdvise"
         ]
     },
     "AdviseClickNormalAdvise": {
@@ -246,7 +295,15 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 200
+        "post_wait_freezes": {
+            "time": 200,
+            "target": [
+                742,
+                351,
+                80,
+                142
+            ]
+        }
     },
     "AdviseBondIncreasedVisible": {
         "desc": "好感度提升的标识",

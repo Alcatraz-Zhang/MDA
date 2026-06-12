@@ -11,6 +11,7 @@
         },
         "next": [
             "[JumpBack]BattleEnterCharacterPage",
+            "[JumpBack]BattleFieldChanged",
             "[JumpBack]BattleEnterQuickBattle",
             "[JumpBack]BattleEnterNormalBattle",
             "[JumpBack]BattleClosePage",
@@ -641,5 +642,25 @@
                 "count": 100
             }
         }
+    },
+    "BattleFieldChanged": {
+        "desc": "战斗流程中区域变化",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    357,
+                    226,
+                    562,
+                    243
+                ],
+                "expected": [
+                    ".*前往区域.*"
+                ]
+            }
+        },
+        "next": [
+            "CommonClickBlank"
+        ]
     }
 }

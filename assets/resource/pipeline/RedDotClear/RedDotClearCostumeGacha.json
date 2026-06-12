@@ -269,6 +269,7 @@
         },
         "post_wait_freezes": 1000,
         "next": [
+            "CommonConfirmAction",
             "[JumpBack]CommonSkipPlot",
             "[JumpBack]CommonConfirmReward",
             "RedDotClearCostumeGachaFlow"
