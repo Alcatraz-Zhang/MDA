@@ -1,7 +1,6 @@
 {
     "LargeEventEnterStory": {
         "desc": "大活动剧情", //默认进入story2
-        "enabled": false,
         "max_hit": 1,
         "recognition": {
             "type": "OCR",
@@ -244,8 +243,7 @@
         "next": [
             "[JumpBack]BattleEntryFlow",
             "LargeEventEventStagePageFlow",
-            "[JumpBack]DialoguesSkipStory",
-            "LargeEventGoBack"
+            "[JumpBack]DialoguesSkipStory"
         ]
     },
     "LargeEventStoryVisible": {

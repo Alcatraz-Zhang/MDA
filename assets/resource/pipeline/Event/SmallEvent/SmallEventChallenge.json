@@ -1,7 +1,6 @@
 {
     "SmallEventEnterChallenge": {
         "desc": "小活动挑战",
-        "enabled": false,
         "max_hit": 1,
         "recognition": {
             "type": "OCR",

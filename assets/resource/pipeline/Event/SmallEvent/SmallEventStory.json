@@ -1,7 +1,6 @@
 {
     "SmallEventEnterStory": {
         "desc": "小活动剧情",
-        "enabled": false,
         "max_hit": 1,
         "recognition": {
             "type": "OCR",

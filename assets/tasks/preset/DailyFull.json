@@ -6,117 +6,43 @@
             "description": "$preset.DailyFull.description",
             "task": [
                 {
-                    "name": "CashShop",
-                    "option": {
-                        "CashShopFreePackage": "Yes",
-                        "StepUpPackage": "Yes"
-                    }
+                    "name": "CashShop"
                 },
                 {
-                    "name": "Shop",
-                    "option": {
-                        "CommonShop": "Yes",
-                        "CommonShopFreeGoods": "Yes",
-                        "CommonShopCoreDustCase": "No",
-                        "ArenaShop": "No",
-                        "RecyclingShop": "Yes",
-                        "RecyclingShopList": [
-                            "Gem"
-                        ]
-                    }
+                    "name": "Shop"
                 },
                 {
-                    "name": "SimulationRoom",
-                    "option": {
-                        "BeginSimulation": "Yes",
-                        "StartOverclock": "Yes",
-                        "AutoBIOSSetting": "Yes"
-                    }
+                    "name": "SimulationRoom"
                 },
                 {
-                    "name": "Arena",
-                    "option": {
-                        "SpecialReward": "Yes",
-                        "ArenaEnterRookieArena": "Yes",
-                        "ArenaEnterSpecialArena": "Yes",
-                        "ArenaEnterChampionArena": "Yes"
-                    }
+                    "name": "Arena"
                 },
                 {
-                    "name": "TribeTower",
-                    "option": {
-                        "TribeTowerEnterCommonTower": "No",
-                        "TribeTowerEnterElysionTower": "Yes",
-                        "TribeTowerEnterMissilisTower": "Yes",
-                        "TribeTowerEnterTetraTower": "Yes",
-                        "TribeTowerEnterPilgrimTower": "Yes"
-                    }
+                    "name": "TribeTower"
                 },
                 {
-                    "name": "Interception",
-                    "option": {
-                        "InterceptionType": "AnomalyInterception",
-                        "AnomalyInterceptionTarget": "InterceptionAnomalyKraken",
-                        "ManualInterceptionBattle": "No"
-                    }
+                    "name": "Interception"
                 },
                 {
-                    "name": "Outpost",
-                    "option": {
-                        "DefenseRewards": "Yes",
-                        "BulletinBoard": "Yes",
-                        "BriefEncounter": "Yes"
-                    }
+                    "name": "Outpost"
                 },
                 {
-                    "name": "Advise",
-                    "option": {
-                        "NikkeAdvise": "Yes",
-                        "AdviseEpisodeReward": "Yes",
-                        "AdviseEpisodeViewingReward": "Yes"
-                    }
+                    "name": "Advise"
                 },
                 {
                     "name": "CoordinatedOperations"
                 },
                 {
-                    "name": "DailyRewards",
-                    "option": {
-                        "DailyRewardsFriendPoints": "Yes",
-                        "DailyRewardsEmail": "Yes",
-                        "DailyRewardsRankingRewards": "Yes",
-                        "DailyRewardsMission": "Yes",
-                        "DailyRewardsPassMain": "Yes",
-                        "DailyRewardsDailyLogin": "Yes",
-                        "DailyRewardsFreeRecruit": "Yes"
-                    }
+                    "name": "DailyRewards"
                 },
                 {
                     "name": "SoloRaid"
                 },
                 {
-                    "name": "SmallEvent",
-                    "option": {
-                        "SmallEventTheme": "BitterSpice",
-                        "SmallEventContent": [
-                            "SmallEventChallenge",
-                            "SmallEventStory",
-                            "SmallEventMission"
-                        ]
-                    }
+                    "name": "SmallEvent"
                 },
                 {
-                    "name": "LargeEvent",
-                    "option": {
-                        "LargeEventTheme": "StarAnis",
-                        "LargeEventStoryPriority": "Story2First",
-                        "LargeEventContent": [
-                            "LargeEventLoginStamp",
-                            "LargeEventChallenge",
-                            "LargeEventStory",
-                            "LargeEventMission"
-                        ]
-                    }
+                    "name": "LargeEvent"
                 }
             ]
         }

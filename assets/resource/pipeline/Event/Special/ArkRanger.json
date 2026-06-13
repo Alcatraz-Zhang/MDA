@@ -1,0 +1,391 @@
+{
+    "LargeEventArkRangerMiniGame": {
+        "desc": "小游戏",
+        "max_hit": 1,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    485,
+                    536,
+                    308,
+                    79
+                ],
+                "expected": [
+                    ".*小游戏.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 1000,
+        "next": [
+            "LargeEventArkRangerMiniGameFlow"
+        ]
+    },
+    "LargeEventArkRangerMiniGameFlow": {
+        "desc": "小游戏流程",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    633,
+                    513,
+                    42,
+                    29
+                ],
+                "expected": [
+                    ".*化.*" //强化
+                ]
+            }
+        },
+        "next": [
+            "ArkRangerMiniGameClickStart"
+        ]
+    },
+    "ArkRangerMiniGameClickStart": {
+        "desc": "小游戏点击开始",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    548,
+                    455,
+                    184,
+                    54
+                ],
+                "expected": [
+                    ".*START.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 200,
+        "next": [
+            "ArkRangerMiniGameSelectPlayer"
+        ]
+    },
+    "ArkRangerMiniGameSelectPlayer": {
+        "desc": "小游戏选择玩家",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    548,
+                    558,
+                    186,
+                    53
+                ],
+                "expected": [
+                    ".*START.*"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 200,
+        "next": [
+            "ArkRangerMiniGameClickBattleBegin",
+            "ArkRangerMiniGameExpandInventoryFlow"
+        ]
+    },
+    "ArkRangerMiniGameClickBattleBegin": {
+        "desc": "小游戏点击战斗开始",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    457,
+                    441,
+                    365,
+                    279
+                ],
+                "expected": [
+                    "战斗开始"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ArkRangerMiniGameBattleFlow"
+        ]
+    },
+    "ArkRangerMiniGameExpandInventoryFlow": {
+        "desc": "小游戏扩充物品栏流程",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    573,
+                    121,
+                    136,
+                    35
+                ],
+                "expected": [
+                    "扩充物品栏"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]ArkRangerMiniGameClickExpandFlag",
+            "ArkRangerMiniGameClickBattleBegin"
+        ]
+    },
+    "ArkRangerMiniGameClickExpandFlag": {
+        "desc": "小游戏点击物品栏标识",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    314,
+                    103,
+                    661,
+                    604
+                ],
+                "template": [
+                    "LargeEvent/ArkRanger/ArkRangerMiniGameExpandFlag.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ArkRangerMiniGameClickExpandFinished"
+        ]
+    },
+    "ArkRangerMiniGameClickExpandFinished": {
+        "desc": "小游戏点击扩充完成",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    690,
+                    565,
+                    67,
+                    25
+                ],
+                "expected": [
+                    "扩充完成"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "ArkRangerMiniGameBattleFlow": {
+        "desc": "小游戏战斗流程",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    465,
+                    33,
+                    57,
+                    30
+                ],
+                "expected": [
+                    "[1-9]"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]ArkRangerMiniGameCheckFeature",
+            "ArkRangerMiniGameClickBattleBegin",
+            "ArkRangerMiniGameCheckWave"
+        ]
+    },
+    "ArkRangerMiniGameCheckFeature": {
+        "desc": "小游戏检查特性",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    587,
+                    0,
+                    109,
+                    180
+                ],
+                "expected": [
+                    "特性选择"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ArkRangerMiniGameClickText"
+        ]
+    },
+    "ArkRangerMiniGameClickText": {
+        "desc": "小游戏点击文本",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    454,
+                    200,
+                    370,
+                    276
+                ],
+                "expected": [
+                    ".*生效.*" //生效枪械
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ArkRangerMiniGameClickSelect"
+        ]
+    },
+    "ArkRangerMiniGameClickSelect": {
+        "desc": "小游戏点击选择",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    639,
+                    472,
+                    173,
+                    238
+                ],
+                "expected": [
+                    "选择"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "ArkRangerMiniGameCheckWave": {
+        "desc": "小游戏检查波次",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    465,
+                    33,
+                    57,
+                    30
+                ],
+                "expected": [
+                    "3"
+                ]
+            }
+        },
+        "next": [
+            "ArkRangerMiniGameClickPause"
+        ]
+    },
+    "ArkRangerMiniGameClickPause": {
+        "desc": "小游戏点击暂停",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    791,
+                    54,
+                    39,
+                    20
+                ],
+                "expected": [
+                    "ESC"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    0,
+                    -30,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "ArkRangerMiniGameClickQuickComplete"
+        ]
+    },
+    "ArkRangerMiniGameClickQuickComplete": {
+        "desc": "小游戏点击快速完成",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    643,
+                    592,
+                    165,
+                    47
+                ],
+                "expected": [
+                    "快速完成"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ArkRangerMiniGameClickBack"
+        ]
+    },
+    "ArkRangerMiniGameClickBack": {
+        "desc": "小游戏点击返回",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    488,
+                    569,
+                    150,
+                    43
+                ],
+                "expected": [
+                    "返回"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "ArkRangerMiniGameEventGoBack"
+        ]
+    },
+    "ArkRangerMiniGameEventGoBack": {
+        "desc": "小游戏返回至主页面",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    12,
+                    658,
+                    88,
+                    38
+                ],
+                "expected": [
+                    "返回"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "CommonConfirmAction"
+        ]
+    }
+}

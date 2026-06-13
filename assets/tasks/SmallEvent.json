@@ -7,7 +7,9 @@
             "description": "$task.SmallEvent.description",
             "option": [
                 "SmallEventTheme",
-                "SmallEventContent"
+                "SmallEventChallenge",
+                "SmallEventStory",
+                "SmallEventMission"
             ],
             "group": [
                 "periodic"
@@ -130,18 +132,13 @@
                 }
             ]
         },
-        "SmallEventContent": {
-            "type": "checkbox",
-            "default_case": [
-                "SmallEventChallenge",
-                "SmallEventStory",
-                "SmallEventMission"
-            ],
-            "label": "$option.SmallEventContent.label",
+        "SmallEventChallenge": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.SmallEventContent.SmallEventChallenge",
             "cases": [
                 {
-                    "name": "SmallEventChallenge",
-                    "label": "$option.SmallEventContent.SmallEventChallenge",
+                    "name": "Yes",
                     "pipeline_override": {
                         "SmallEventEnterChallenge": {
                             "enabled": true
@@ -149,8 +146,22 @@
                     }
                 },
                 {
-                    "name": "SmallEventStory",
-                    "label": "$option.SmallEventContent.SmallEventStory",
+                    "name": "No",
+                    "pipeline_override": {
+                        "SmallEventEnterChallenge": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "SmallEventStory": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.SmallEventContent.SmallEventStory",
+            "cases": [
+                {
+                    "name": "Yes",
                     "pipeline_override": {
                         "SmallEventEnterStory": {
                             "enabled": true
@@ -158,11 +169,33 @@
                     }
                 },
                 {
-                    "name": "SmallEventMission",
-                    "label": "$option.SmallEventContent.SmallEventMission",
+                    "name": "No",
+                    "pipeline_override": {
+                        "SmallEventEnterStory": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "SmallEventMission": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.SmallEventContent.SmallEventMission",
+            "cases": [
+                {
+                    "name": "Yes",
                     "pipeline_override": {
                         "SmallEventEnterMission": {
                             "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "SmallEventEnterMission": {
+                            "enabled": false
                         }
                     }
                 }
