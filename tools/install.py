@@ -74,20 +74,28 @@ def install_resource():
 
     configure_ocr_model()
 
+    # shutil.copytree(dirs_exist_ok=True) does NOT delete files in the
+    # destination that are absent from the source, so stale files in
+    # install/ survive every rebuild and can later collide with the
+    # source (e.g. a duplicated pipeline key crashing the resource
+    # load). Wipe the three subtree destinations first to keep
+    # install/ a clean mirror of assets/.
+    for sub in ("resource", "tasks", "locales"):
+        dst = install_path / sub
+        if dst.exists():
+            shutil.rmtree(dst)
+
     shutil.copytree(
         working_dir / "assets" / "resource",
         install_path / "resource",
-        dirs_exist_ok=True,
     )
     shutil.copytree(
         working_dir / "assets" / "tasks",
         install_path / "tasks",
-        dirs_exist_ok=True,
     )
     shutil.copytree(
         working_dir / "assets" / "locales",
         install_path / "locales",
-        dirs_exist_ok=True,
     )
     shutil.copy2(
         working_dir / "assets" / "interface.json",
