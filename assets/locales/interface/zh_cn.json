@@ -152,10 +152,10 @@
     "option.SmallEventContent.SmallEventChallenge": "小活动挑战",
     "option.SmallEventContent.SmallEventStory": "小活动剧情",
     "option.SmallEventContent.SmallEventMission": "小活动任务",
-    "preset.DailyFull.label": "全量日常",
-    "preset.DailyFull.description": "执行所有日常任务",
+    "preset.DailyFull.label": "全套日常",
+    "preset.DailyFull.description": "覆盖所有每日例行任务，适合每天上线时一键执行",
     "preset.QuickDaily.label": "快速日常",
-    "preset.QuickDaily.description": "仅执行部分日常任务，快速拿满每日奖励",
+    "preset.QuickDaily.description": "只做奖励会每日重置且耗时较短的任务，省时省力",
     "preset.SelfUse.label": "自用",
     "preset.SelfUse.description": "开发人员专属",
     "focus.ManualInterceptionBattle.Succeeded": "检测到拦截战已刷新，请手动开始拦截战"

@@ -6,60 +6,22 @@
             "description": "$preset.QuickDaily.description",
             "task": [
                 {
-                    "name": "CashShop",
-                    "option": {
-                        "CashShopFreePackage": "Yes",
-                        "StepUpPackage": "No"
-                    }
+                    "name": "CashShop"
                 },
                 {
-                    "name": "Shop",
-                    "option": {
-                        "CommonShop": "Yes",
-                        "CommonShopFreeGoods": "Yes",
-                        "CommonShopCoreDustCase": "Yes",
-                        "ArenaShop": "No",
-                        "RecyclingShop": "Yes",
-                        "RecyclingShopList": [
-                            "Gem"
-                        ]
-                    }
+                    "name": "Shop"
                 },
                 {
-                    "name": "SimulationRoom",
-                    "option": {
-                        "BeginSimulation": "Yes",
-                        "StartOverclock": "Yes",
-                        "AutoBIOSSetting": "Yes"
-                    }
+                    "name": "SimulationRoom"
                 },
                 {
-                    "name": "Interception",
-                    "option": {
-                        "InterceptionType": "AnomalyInterception",
-                        "AnomalyInterceptionTarget": "InterceptionAnomalyKraken",
-                        "ManualInterceptionBattle": "No"
-                    }
+                    "name": "Interception"
                 },
                 {
-                    "name": "Outpost",
-                    "option": {
-                        "DefenseRewards": "Yes",
-                        "BulletinBoard": "Yes",
-                        "BriefEncounter": "Yes"
-                    }
+                    "name": "Outpost"
                 },
                 {
-                    "name": "DailyRewards",
-                    "option": {
-                        "DailyRewardsFriendPoints": "Yes",
-                        "DailyRewardsEmail": "Yes",
-                        "DailyRewardsRankingRewards": "Yes",
-                        "DailyRewardsMission": "Yes",
-                        "DailyRewardsPassMain": "Yes",
-                        "DailyRewardsDailyLogin": "Yes",
-                        "DailyRewardsFreeRecruit": "Yes"
-                    }
+                    "name": "DailyRewards"
                 },
                 {
                     "name": "SoloRaid"

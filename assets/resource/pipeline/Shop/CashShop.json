@@ -117,6 +117,7 @@
         "next": [
             "[JumpBack]CashShopClickRedDot",
             "[JumpBack]CommonConfirmReward",
+            "ShopChooseOrdinaryPackage", //兜底
             "CommonEndTask"
         ]
     },

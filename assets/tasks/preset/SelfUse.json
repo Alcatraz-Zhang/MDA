@@ -55,11 +55,7 @@
                     "name": "LargeEvent"
                 },
                 {
-                    "name": "RedDotClear",
-                    "option": {
-                        "RedDotClearCashShop": "Yes",
-                        "RedDotClearNotice": "Yes"
-                    }
+                    "name": "RedDotClear"
                 }
             ]
         }

@@ -342,7 +342,8 @@
             }
         },
         "next": [
-            "CommonClosePage"
+            "[JumpBack]CommonClosePage",
+            "CommonEndTask"
         ]
     },
     "CommonClickHomeButton": {

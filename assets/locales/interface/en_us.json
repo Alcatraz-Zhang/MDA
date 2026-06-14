@@ -152,10 +152,10 @@
     "option.SmallEventContent.SmallEventChallenge": "Challenge",
     "option.SmallEventContent.SmallEventStory": "Story",
     "option.SmallEventContent.SmallEventMission": "Mission",
-    "preset.DailyFull.label": "Daily Full",
-    "preset.DailyFull.description": "Execute all daily tasks, including simulation room, arena, interception, tribe tower, etc.",
+    "preset.DailyFull.label": "Full Daily Routine",
+    "preset.DailyFull.description": "Covers every daily routine task, ideal for one-click runs when logging in each day.",
     "preset.QuickDaily.label": "Quick Daily",
-    "preset.QuickDaily.description": "Only execute simulation room, interception, advise, outpost, shop, and daily rewards",
+    "preset.QuickDaily.description": "Only runs shorter tasks with rewards that reset daily, saving time and effort.",
     "preset.SelfUse.label": "Personal Use",
     "preset.SelfUse.description": "For developers only",
     "focus.ManualInterceptionBattle.Succeeded": "Interception battle has been refreshed, please start the battle manually"
