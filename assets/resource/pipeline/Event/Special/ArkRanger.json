@@ -362,7 +362,8 @@
             "type": "Click"
         },
         "next": [
-            "ArkRangerMiniGameEventGoBack"
+            "ArkRangerMiniGameEventGoBack",
+            "ArkRangerMiniGameClickBack" //兜底
         ]
     },
     "ArkRangerMiniGameEventGoBack": {
