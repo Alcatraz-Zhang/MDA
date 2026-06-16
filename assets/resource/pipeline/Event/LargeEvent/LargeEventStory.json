@@ -243,7 +243,8 @@
         "next": [
             "[JumpBack]BattleEntryFlow",
             "LargeEventEventStagePageFlow",
-            "[JumpBack]DialoguesSkipStory"
+            "[JumpBack]DialoguesSkipStory",
+            "[JumpBack]LargeEventFieldChanged"
         ]
     },
     "LargeEventStoryVisible": {
