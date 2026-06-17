@@ -1,0 +1,119 @@
+{
+    "RedDotClearArcade": {
+        "desc": "清除Arcade红点",
+        "max_hit": 1,
+        "next": [
+            "RedDotClearArcadeEnterHall",
+            "[JumpBack]CommonReturnHall"
+        ]
+    },
+    "RedDotClearArcadeEnterHall": {
+        "desc": "Arcade入口",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "RedDotClearArcadeClickEntry",
+            "CommonEndTask"
+        ]
+    },
+    "RedDotClearArcadeClickEntry": {
+        "desc": "点击Arcade红点",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "ArcadeVisible",
+                    "ArcadeNew"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": {
+            "time": 1000,
+            "target": [
+                578,
+                297,
+                124,
+                117
+            ]
+        },
+        "next": [
+            "RedDotClearArcadeFlow",
+            "RedDotClearArcadeClickEntry" //兜底
+        ]
+    },
+    "ArcadeVisible": {
+        "desc": "Arcade可见",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    0,
+                    120,
+                    200,
+                    260
+                ],
+                "template": [
+                    "RedDotClear/Arcade.png"
+                ]
+            }
+        }
+    },
+    "ArcadeNew": {
+        "desc": "Arcade有New的图标",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": "ArcadeVisible",
+                "roi_offset": [
+                    20,
+                    -20,
+                    20,
+                    20
+                ],
+                "template": [
+                    "Common/New.png"
+                ]
+            }
+        }
+    },
+    "RedDotClearArcadeFlow": {
+        "desc": "Arcade流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "ArcadeEntered"
+                ]
+            }
+        },
+        "next": [
+            "CommonEndTask"
+        ]
+    },
+    "ArcadeEntered": {
+        "desc": "处于Arcade界面",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    493,
+                    140,
+                    63,
+                    29
+                ],
+                "expected": [
+                    ".*任务.*"
+                ]
+            }
+        }
+    }
+}

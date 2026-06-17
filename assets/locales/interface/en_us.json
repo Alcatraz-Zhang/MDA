@@ -126,6 +126,7 @@
     "option.RedDotClearCostumeGacha.description": "Automatically claim free tickets and pull as much as possible",
     "option.RedDotClearRhythmGame.label": "Clear Rhythm Game Red Dots",
     "option.RedDotClearBlaBla.label": "Clear BlaBla Red Dots",
+    "option.RedDotClearArcade.label": "Clear Arcade Red Dots",
     "task.LargeEvent.label": "🎪Large Event",
     "task.LargeEvent.description": "Enter the large event interface and complete related tasks. (Events with SD characters are called Large Events)",
     "option.LargeEventTheme.label": "Event Theme",
