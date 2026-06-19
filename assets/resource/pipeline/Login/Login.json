@@ -32,7 +32,8 @@
                     40
                 ],
                 "template": [
-                    "Common/ConfirmWithCircle.png"
+                    "Common/ConfirmWithCircle.png",
+                    "Common/ConfirmWithoutCircle.png"
                 ]
             }
         },

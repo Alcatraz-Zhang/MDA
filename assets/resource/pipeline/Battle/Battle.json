@@ -326,6 +326,7 @@
             "[JumpBack]BattleClickAutoShoot",
             "[JumpBack]DialoguesSkipStory",
             "[JumpBack]BattleClickNextStage",
+            "[JumpBack]CommonConfirmAction",
             "BattleConfirmOperationComplete",
             "BattleOperationFailed"
         ]
