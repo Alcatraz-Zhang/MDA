@@ -35,39 +35,23 @@
                                 }
                             }
                         },
-                        "SmallEventClickStageNormal": {
+                        "SmallEventClickStage": {
                             "recognition": {
                                 "param": {
                                     "template": [
                                         "SmallEvent/BitterSpice/BitterSpiceStageNormal.png",
-                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalSP.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "SmallEventClickStageHard": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
+                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalSP.png",
                                         "SmallEvent/BitterSpice/BitterSpiceStageHard.png"
                                     ]
                                 }
                             }
                         },
-                        "SmallEventClickStageNormalRepeatable": {
+                        "SmallEventClickStageRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
                                         "SmallEvent/BitterSpice/BitterSpiceStageNormalRepeatable.png",
-                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalRepeatableSP.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "SmallEventClickStageHardRepeatable": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
+                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalRepeatableSP.png",
                                         "SmallEvent/BitterSpice/BitterSpiceStageHardRepeatable.png"
                                     ]
                                 }
@@ -88,37 +72,21 @@
                                 }
                             }
                         },
-                        "SmallEventClickStageNormal": {
+                        "SmallEventClickStage": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormal.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "SmallEventClickStageHard": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
+                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormal.png",
                                         "SmallEvent/B-SideIdol/B-SideIdolStageHard.png"
                                     ]
                                 }
                             }
                         },
-                        "SmallEventClickStageNormalRepeatable": {
+                        "SmallEventClickStageRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormalRepeatable.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "SmallEventClickStageHardRepeatable": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
+                                        "SmallEvent/B-SideIdol/B-SideIdolStageNormalRepeatable.png",
                                         "SmallEvent/B-SideIdol/B-SideIdolStageHardRepeatable.png"
                                     ]
                                 }

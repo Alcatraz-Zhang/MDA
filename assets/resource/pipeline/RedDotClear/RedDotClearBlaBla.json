@@ -97,7 +97,7 @@
         },
         "next": [
             "[JumpBack]BlaBlaRedDotClickTop",
-            "CommonEndTask"
+            "CommonClosePage"
         ]
     },
     "BlaBlaEntered": {
@@ -131,9 +131,6 @@
                 "template": [
                     "RedDotClear/BlaBlaRedDot.png",
                     "RedDotClear/BlaBlaNew.png"
-                ],
-                "threshold": [
-                    0.8
                 ]
             }
         },

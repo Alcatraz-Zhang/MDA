@@ -106,6 +106,7 @@
         "tasks/Interception.json",
         "tasks/Outpost.json",
         "tasks/AccountNurturing.json",
+        "tasks/LuckyBoxOpening.json",
         "tasks/Advise.json",
         "tasks/CoordinatedOperations.json",
         "tasks/SoloRaid.json",

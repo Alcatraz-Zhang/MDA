@@ -1,0 +1,167 @@
+{
+    "task": [
+        {
+            "name": "LuckyBoxOpening",
+            "label": "$task.LuckyBoxOpening.label",
+            "entry": "LuckyBoxOpeningMain",
+            "description": "$task.LuckyBoxOpening.description",
+            "option": [
+                "LuckyBoxOpeningRecruitmentRelatedPage",
+                "LuckyBoxOpeningEquipmentRelatedPage",
+                "LuckyBoxOpeningCollectionRelatedPage",
+                "LuckyBoxOpeningUpgradingRelatedPage",
+                "LuckyBoxOpeningSkillsRelatedPage",
+                "LuckyBoxOpeningOthersRelatedPage"
+            ],
+            "group": [
+                "utility"
+            ]
+        }
+    ],
+    "option": {
+        "LuckyBoxOpeningRecruitmentRelatedPage": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LuckyBoxOpeningRecruitmentRelatedPage.label",
+            "description": "$option.LuckyBoxOpeningRecruitmentRelatedPage.description",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterRecruitmentRelatedPage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterRecruitmentRelatedPage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "LuckyBoxOpeningEquipmentRelatedPage": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LuckyBoxOpeningEquipmentRelatedPage.label",
+            "description": "$option.LuckyBoxOpeningEquipmentRelatedPage.description",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterEquipmentRelatedPage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterEquipmentRelatedPage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "LuckyBoxOpeningCollectionRelatedPage": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LuckyBoxOpeningCollectionRelatedPage.label",
+            "description": "$option.LuckyBoxOpeningCollectionRelatedPage.description",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterCollectionRelatedPage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterCollectionRelatedPage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "LuckyBoxOpeningUpgradingRelatedPage": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LuckyBoxOpeningUpgradingRelatedPage.label",
+            "description": "$option.LuckyBoxOpeningUpgradingRelatedPage.description",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterUpgradingRelatedPage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterUpgradingRelatedPage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "LuckyBoxOpeningSkillsRelatedPage": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LuckyBoxOpeningSkillsRelatedPage.label",
+            "description": "$option.LuckyBoxOpeningSkillsRelatedPage.description",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterSkillsRelatedPage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterSkillsRelatedPage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "LuckyBoxOpeningOthersRelatedPage": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LuckyBoxOpeningOthersRelatedPage.label",
+            "description": "$option.LuckyBoxOpeningOthersRelatedPage.description",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterOthersRelatedPage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "LuckyBoxOpeningEnterOthersRelatedPage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

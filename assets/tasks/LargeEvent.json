@@ -40,20 +40,22 @@
                                 }
                             }
                         },
-                        "LargeEventClickStory1Stage": {
+                        "LargeEventClickStoryStage": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "LargeEvent/ArkRanger/ArkRangerStory1Stage.png"
+                                        "LargeEvent/ArkRanger/ArkRangerStory1Stage.png",
+                                        "LargeEvent/ArkRanger/ArkRangerStory2StageNormal.png"
                                     ]
                                 }
                             }
                         },
-                        "LargeEventClickStory1StageRepeatable": {
+                        "LargeEventClickStoryStageRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "LargeEvent/ArkRanger/ArkRangerStory1StageRepeatable.png"
+                                        "LargeEvent/ArkRanger/ArkRangerStory1StageRepeatable.png",
+                                        "LargeEvent/ArkRanger/ArkRangerStory2StageNormalRepeatable.png"
                                     ]
                                 }
                             }
@@ -93,66 +95,24 @@
                                 }
                             }
                         },
-                        "LargeEventClickStory1Stage": {
+                        "LargeEventClickStoryStage": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory1Stage.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "LargeEventClickStory2StageNormal": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "LargeEventClickStory2StageHard": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
+                                        "LargeEvent/StarAnis/StarAnisStory1Stage.png",
+                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png",
                                         "LargeEvent/StarAnis/StarAnisStory2StageHard.png",
                                         "LargeEvent/StarAnis/StarAnisStory2StageHardSP.png"
                                     ]
                                 }
-                            },
-                            "action": {
-                                "param": {
-                                    "target_offset": [
-                                        70,
-                                        -70,
-                                        0,
-                                        0
-                                    ]
-                                }
                             }
                         },
-                        "LargeEventClickStory1StageRepeatable": {
+                        "LargeEventClickStoryStageRepeatable": {
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory1StageRepeatable.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "LargeEventClickStory2StageNormalRepeatable": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
-                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png"
-                                    ]
-                                }
-                            }
-                        },
-                        "LargeEventClickStory2StageHardRepeatable": {
-                            "recognition": {
-                                "param": {
-                                    "template": [
+                                        "LargeEvent/StarAnis/StarAnisStory1StageRepeatable.png",
+                                        "LargeEvent/StarAnis/StarAnisStory2StageNormal.png",
                                         "LargeEvent/StarAnis/StarAnisStory2StageHardRepeatable.png"
                                     ]
                                 }

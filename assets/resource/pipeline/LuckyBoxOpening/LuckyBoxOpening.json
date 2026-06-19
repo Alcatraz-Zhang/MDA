@@ -1,0 +1,206 @@
+{
+    "LuckyBoxOpeningMain": {
+        "desc": "宝箱开启",
+        "max_hit": 1,
+        "next": [
+            "LuckyBoxOpeningEnterHall",
+            "[JumpBack]CommonReturnHall"
+        ]
+    },
+    "LuckyBoxOpeningEnterHall": {
+        "desc": "宝箱开启入口",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonArkVisible"
+                ]
+            }
+        },
+        "next": [
+            "LuckyBoxOpeningClickEntryRedDot",
+            "CommonEndTask"
+        ]
+    },
+    "LuckyBoxOpeningClickEntryRedDot": {
+        "desc": "点击宝箱开启红点",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    720,
+                    635,
+                    17,
+                    16
+                ],
+                "template": [
+                    "Common/RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -20,
+                    20,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "LuckyBoxOpeningEnterFlow"
+        ]
+    },
+    "LuckyBoxOpeningEnterFlow": {
+        "desc": "宝箱开启进入流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "InventoryPageEntered"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]LuckyBoxOpeningEnterRecruitmentRelatedPage",
+            "[JumpBack]LuckyBoxOpeningEnterEquipmentRelatedPage",
+            "[JumpBack]LuckyBoxOpeningEnterCollectionRelatedPage",
+            "[JumpBack]LuckyBoxOpeningEnterUpgradingRelatedPage",
+            "[JumpBack]LuckyBoxOpeningEnterSkillsRelatedPage",
+            "[JumpBack]LuckyBoxOpeningEnterOthersRelatedPage",
+            "CommonEndTask"
+        ]
+    },
+    "InventoryPageEntered": {
+        "desc": "处于物品栏界面",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    15,
+                    70,
+                    25
+                ],
+                "expected": [
+                    "物品栏"
+                ]
+            }
+        }
+    },
+    "LuckyBoxOpeningClickRedDot": {
+        "desc": "点击红点",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    61,
+                    173,
+                    1170,
+                    447
+                ],
+                "template": [
+                    "Common/RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -20,
+                    20,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "LuckyBoxOpeningClickMax",
+            "LuckyBoxOpeningClickConfirm"
+        ]
+    },
+    "LuckyBoxOpeningClickMax": {
+        "desc": "点击max",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "LuckyBoxOpeningClickMaxVisible",
+                    "LuckyBoxOpeningClickMaxAvailable"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "LuckyBoxOpeningClickConfirm"
+        ]
+    },
+    "LuckyBoxOpeningClickMaxVisible": {
+        "desc": "max可见",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    743,
+                    450,
+                    66,
+                    159
+                ],
+                "template": [
+                    "Common/MAX.png"
+                ]
+            }
+        }
+    },
+    "LuckyBoxOpeningClickMaxAvailable": {
+        "desc": "max可点击",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "LuckyBoxOpeningClickMaxVisible",
+                "lower": [
+                    140,
+                    140,
+                    140
+                ],
+                "upper": [
+                    255,
+                    255,
+                    255
+                ],
+                "count": 50
+            }
+        }
+    },
+    "LuckyBoxOpeningClickConfirm": {
+        "desc": "点击确认",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    479,
+                    523,
+                    323,
+                    168
+                ],
+                "template": [
+                    "Common/ConfirmWithFilledCircle.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500,
+        "next": [
+            "DailyRewardsConfirmRecruit",
+            "CommonConfirmReward",
+            "CommonClosePage"
+        ]
+    }
+}

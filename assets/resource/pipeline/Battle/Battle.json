@@ -11,9 +11,8 @@
         },
         "next": [
             "[JumpBack]BattleEnterCharacterPage",
-            "[JumpBack]BattleFieldChanged",
-            "[JumpBack]BattleEnterQuickBattle",
-            "[JumpBack]BattleEnterNormalBattle",
+            "BattleEnterQuickBattleFlow",
+            "BattleEnterNormalBattleFlow",
             "[JumpBack]BattleClosePage",
             "CommonEndTask"
         ]
@@ -197,6 +196,21 @@
             "type": "Click"
         }
     },
+    "BattleEnterQuickBattleFlow": {
+        "desc": "进入快速战斗流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "QuickBattleVisible",
+                    "QuickBattleAvailable"
+                ]
+            }
+        },
+        "next": [
+            "BattleEnterQuickBattle"
+        ]
+    },
     "BattleEnterQuickBattle": {
         "desc": "进入快速战斗",
         "recognition": {
@@ -215,7 +229,8 @@
         "next": [
             "MultipleBattleDialogFlow",
             "MultipleBattleClickStartBattle",
-            "BattleConfirmOperationComplete"
+            "BattleConfirmOperationComplete",
+            "BattleEnterQuickBattle"
         ]
     },
     "MultipleBattleDialogFlow": {
@@ -315,6 +330,7 @@
             "type": "Click"
         },
         "next": [
+            "MultipleBattleClickStartBattle",
             "BattleInBattleFlow"
         ]
     },
@@ -326,6 +342,8 @@
             "[JumpBack]BattleClickAutoShoot",
             "[JumpBack]DialoguesSkipStory",
             "[JumpBack]BattleClickNextStage",
+            "[JumpBack]CommonConfirmAction",
+            "[JumpBack]BattleFieldChanged",
             "BattleConfirmOperationComplete",
             "BattleOperationFailed"
         ]
@@ -514,6 +532,21 @@
             "[JumpBack]CommonConfirmAction",
             "BattleEnterNormalBattle", //兜底
             "BattleInBattleFlow"
+        ]
+    },
+    "BattleEnterNormalBattleFlow": {
+        "desc": "进入普通战斗流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "BattleMainVisible",
+                    "BattleAvailable"
+                ]
+            }
+        },
+        "next": [
+            "BattleEnterNormalBattle"
         ]
     },
     "BattleCannotBattleBlocked": {

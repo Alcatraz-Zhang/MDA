@@ -164,7 +164,7 @@
             }
         },
         "next": [
-            "CubeEnhancementClickRedDot",
+            "[JumpBack]CubeEnhancementClickRedDot",
             "[JumpBack]CubeEnhancementSwipeUp",
             "CommonEndTask"
         ]

@@ -113,6 +113,25 @@
     "SoloRaidSelectLevel": {
         "desc": "单人突击选择关卡",
         "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "SoloRaidSelectLevelVisible",
+                    "SoloRaidSelectLevelAvailable"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "[JumpBack]CommonConfirmAction",
+            "BattleEntryFlow"
+        ]
+    },
+    "SoloRaidSelectLevelVisible": {
+        "desc": "单人突击关卡可见",
+        "recognition": {
             "type": "TemplateMatch",
             "param": {
                 "roi": [
@@ -132,13 +151,26 @@
                 ],
                 "index": -1 //选择最新已解锁的关卡，-1表示最后一个匹配到的模板
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "[JumpBack]CommonConfirmAction",
-            "BattleEntryFlow"
-        ]
+        }
+    },
+    "SoloRaidSelectLevelAvailable": {
+        "desc": "单人突击关卡已开放",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "SoloRaidSelectLevelVisible",
+                "lower": [
+                    150,
+                    100,
+                    0
+                ],
+                "upper": [
+                    255,
+                    210,
+                    90
+                ],
+                "count": 10
+            }
+        }
     }
 }

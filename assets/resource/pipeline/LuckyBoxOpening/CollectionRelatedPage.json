@@ -1,0 +1,59 @@
+{
+    "LuckyBoxOpeningEnterCollectionRelatedPage": {
+        "desc": "进入藏品相关界面", //开收藏品积分箱和保养工具箱
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    14,
+                    184,
+                    46,
+                    263
+                ],
+                "template": [
+                    "LuckyBoxOpening/CollectionRelatedPage.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": {
+            "time": 500,
+            "target": [
+                61,
+                173,
+                1170,
+                447
+            ]
+        },
+        "next": [
+            "[JumpBack]LuckyBoxOpeningClickRedDot",
+            "[JumpBack]LuckyBoxOpeningClickMaintenanceKitBox",
+            "CommonEndTask"
+        ]
+    },
+    "LuckyBoxOpeningClickMaintenanceKitBox": {
+        "desc": "点击保养工具箱",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    61,
+                    173,
+                    1170,
+                    447
+                ],
+                "template": "Shop/RecyclingShop/MaintenanceKitBox.png"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "LuckyBoxOpeningClickMax",
+            "LuckyBoxOpeningClickConfirm"
+        ]
+    }
+}

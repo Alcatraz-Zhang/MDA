@@ -98,19 +98,15 @@
     "SmallEventEventStageBattleFlow": {
         "desc": "小活动活动关卡页面战斗流程",
         "next": [
-            "SmallEventEventStageBattlePage",
-            "[JumpBack]SmallEventClickStageNormal",
-            "[JumpBack]SmallEventClickStageHard",
+            "SmallEventClickStage",
             "SmallEventEventStageQuickBattleFlow"
         ]
     },
     "SmallEventEventStageQuickBattleFlow": {
         "desc": "小活动活动关卡页面快速战斗流程",
         "next": [
-            "SmallEventBattleBlocked",
-            "SmallEventEventStageBattlePage",
-            "[JumpBack]SmallEventClickStageNormalRepeatable",
-            "[JumpBack]SmallEventClickStageHardRepeatable"
+            "SmallEventClickStageRepeatable",
+            "SmallEventGoBack"
         ]
     },
     "SmallEventEventStageBattlePage": {
@@ -124,9 +120,35 @@
             }
         },
         "next": [
+            "SmallEventBattleBlocked",
             "[JumpBack]BattleEntryFlow",
-            "SmallEventEventStagePageFlow",
+            "SmallEventEventStageAfterBattleFlow",
             "[JumpBack]DialoguesSkipStory"
+        ]
+    },
+    "SmallEventEventStageAfterBattleFlow": {
+        "desc": "小活动活动关卡战斗后补体力流程",
+        "max_hit": 1,
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "SmallEventEventStagePageEntered"
+                ]
+            }
+        },
+        "post_wait_freezes": {
+            "time": 500,
+            "target": [
+                494,
+                505,
+                294,
+                131
+            ]
+        },
+        "next": [
+            "[JumpBack]SmallEventUnlockStage",
+            "SmallEventEventStageQuickBattleFlow"
         ]
     },
     "SmallEventStoryVisible": {
@@ -146,9 +168,8 @@
             }
         }
     },
-    "SmallEventClickStageNormal": {
-        "desc": "小活动普通关卡点击",
-        "max_hit": 1,
+    "SmallEventClickStage": {
+        "desc": "小活动关卡点击",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -168,11 +189,14 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 500
+        "post_wait_freezes": 500,
+        "next": [
+            "SmallEventEventStageBattlePage",
+            "SmallEventEventStageQuickBattleFlow"
+        ]
     },
-    "SmallEventClickStageHard": {
-        "desc": "小活动困难关卡点击",
-        "max_hit": 1,
+    "SmallEventClickStageRepeatable": {
+        "desc": "小活动关卡可扫荡点击",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -192,53 +216,11 @@
         "action": {
             "type": "Click"
         },
-        "post_wait_freezes": 500
-    },
-    "SmallEventClickStageNormalRepeatable": {
-        "desc": "小活动普通关卡可扫荡点击",
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
-                "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
-                ],
-                "order_by": "Vertical",
-                "index": -1
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_wait_freezes": 500
-    },
-    "SmallEventClickStageHardRepeatable": {
-        "desc": "小活动困难关卡可扫荡点击",
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    314,
-                    103,
-                    661,
-                    604
-                ],
-                "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
-                ],
-                "order_by": "Vertical",
-                "index": -1
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_wait_freezes": 500
+        "post_wait_freezes": 500,
+        "next": [
+            "SmallEventEventStageBattlePage",
+            "SmallEventGoBack"
+        ]
     },
     "SmallEventBattleBlocked": {
         "desc": "活动体力耗尽",

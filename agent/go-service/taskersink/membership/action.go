@@ -30,6 +30,10 @@ func runRuntimeQuotaCheck(ctx *maa.Context, route quotaRoute) bool {
 	}
 
 	status := GetMembershipStatus()
+	if status.VerificationUnavailable {
+		maafocus.Print(ctx, formatMembershipVerificationUnavailableMessage())
+		return false
+	}
 	if status.UpdateRequired {
 		if status.UpdateMessage != "" {
 			maafocus.Print(ctx, status.UpdateMessage)
@@ -87,6 +91,10 @@ func runRuntimeQuotaCheck(ctx *maa.Context, route quotaRoute) bool {
 
 	maafocus.Print(ctx, formatQuotaDeniedMessage(snapshot))
 	return false
+}
+
+func formatMembershipVerificationUnavailableMessage() string {
+	return i18n.T("tasker.membership_check.service_unavailable")
 }
 
 func formatQuotaVerifiedMessage(snapshot QuotaSnapshot) string {

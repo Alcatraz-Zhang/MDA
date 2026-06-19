@@ -72,3 +72,12 @@ func TestQuotaRouteForRuntimeQuotaCheckEntry(t *testing.T) {
 		t.Fatalf("quotaRouteForEntry(MapPushingFlow) = %s, want %s", got, quotaRouteSpecialThenRegular)
 	}
 }
+
+func TestFormatMembershipVerificationUnavailableMessage(t *testing.T) {
+	initTestI18n()
+	message := formatMembershipVerificationUnavailableMessage()
+
+	if !strings.Contains(message, "会员校验服务暂不可用") && !strings.Contains(message, "temporarily unavailable") {
+		t.Fatalf("message does not mention membership verification service unavailable: %s", message)
+	}
+}

@@ -116,6 +116,7 @@ type MembershipStatus struct {
 	AllFeaturesUnlocked         bool
 	UnlimitedRuntime            bool
 	IsMember                    bool
+	VerificationUnavailable     bool
 	UpdateRequired              bool
 	UpdateMessage               string
 	MinimumSupportedVersion     string
@@ -213,8 +214,19 @@ func checkMembership() *MembershipStatus {
 			cacheStatus(status)
 			return status
 		}
-		log.Warn().Err(err).Msg("Membership verification unavailable, treating as non-member for this check")
-		return defaultStatus
+		log.Warn().Err(err).Msg("Membership verification unavailable, stopping task until service recovers")
+		return &MembershipStatus{
+			Tier:                        defaultStatus.Tier,
+			TierCode:                    defaultStatus.TierCode,
+			TierName:                    defaultStatus.TierName,
+			PlanName:                    defaultStatus.PlanName,
+			DailyRuntimeMinutes:         defaultStatus.DailyRuntimeMinutes,
+			RegularDailyRuntimeMinutes:  defaultStatus.RegularDailyRuntimeMinutes,
+			SpecialPeriodRuntimeMinutes: defaultStatus.SpecialPeriodRuntimeMinutes,
+			AllFeaturesUnlocked:         defaultStatus.AllFeaturesUnlocked,
+			VerificationUnavailable:     true,
+			DeviceCode:                  deviceCode,
+		}
 	}
 
 	if !response.Matched {

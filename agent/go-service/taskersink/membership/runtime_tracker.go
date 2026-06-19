@@ -17,6 +17,7 @@ type RuntimeTracker struct {
 	last           time.Time
 	multiplier     quotaMultiplier
 	route          quotaRoute
+	status         *MembershipStatus
 	realNs         int64
 	chargedSeconds int64
 	stopCh         chan struct{}
@@ -87,6 +88,11 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 	t.finish()
 
 	status := GetMembershipStatus()
+	if status.VerificationUnavailable {
+		printMembershipVerificationUnavailable()
+		tasker.PostStop()
+		return
+	}
 	route := quotaRouteForEntry(detail.Entry)
 	snapshot, ok, err := EnsureQuotaRouteAvailable(status, route)
 	if err != nil {
@@ -109,6 +115,7 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 	t.last = now
 	t.multiplier = multiplier
 	t.route = route
+	t.status = status
 	t.realNs = 0
 	t.chargedSeconds = 0
 	t.stopCh = make(chan struct{})
@@ -145,13 +152,21 @@ func (t *RuntimeTracker) finish() {
 	last := t.last
 	multiplier := t.multiplier
 	route := t.route
+	status := t.status
 	stopCh := t.stopCh
 	t.active = false
+	t.status = nil
 	t.stopCh = nil
 	close(stopCh)
 	t.mu.Unlock()
 
-	status := GetMembershipStatus()
+	if status == nil {
+		status = GetMembershipStatus()
+		if status.VerificationUnavailable {
+			log.Warn().Msg("RuntimeTracker: skipped final quota usage flush because membership verification is unavailable")
+			return
+		}
+	}
 	realDelta := time.Since(last)
 	billableSeconds := t.consumeBillableSeconds(realDelta, true)
 	if _, err := AddQuotaRouteUsageSeconds(status, route, billableSeconds); err != nil {
@@ -257,4 +272,8 @@ func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatu
 
 func printQuotaExhausted(snapshot QuotaSnapshot) {
 	maafocus.PrintLargeContentTrimNewline(formatQuotaDeniedMessage(snapshot))
+}
+
+func printMembershipVerificationUnavailable() {
+	maafocus.PrintLargeContentTrimNewline(formatMembershipVerificationUnavailableMessage())
 }
