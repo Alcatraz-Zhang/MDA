@@ -45,7 +45,8 @@
                                 "param": {
                                     "template": [
                                         "LargeEvent/ArkRanger/ArkRangerStory1Stage.png",
-                                        "LargeEvent/ArkRanger/ArkRangerStory2StageNormal.png"
+                                        "LargeEvent/ArkRanger/ArkRangerStory2StageNormal.png",
+                                        "LargeEvent/ArkRanger/ArkRangerStory2StageHard.png"
                                     ]
                                 }
                             }
@@ -55,7 +56,8 @@
                                 "param": {
                                     "template": [
                                         "LargeEvent/ArkRanger/ArkRangerStory1StageRepeatable.png",
-                                        "LargeEvent/ArkRanger/ArkRangerStory2StageNormalRepeatable.png"
+                                        "LargeEvent/ArkRanger/ArkRangerStory2StageNormalRepeatable.png",
+                                        "LargeEvent/ArkRanger/ArkRangerStory2StageHardRepeatable.png"
                                     ]
                                 }
                             }

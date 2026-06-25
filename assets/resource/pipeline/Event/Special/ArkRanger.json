@@ -316,7 +316,8 @@
             }
         },
         "next": [
-            "ArkRangerMiniGameClickQuickComplete"
+            "ArkRangerMiniGameClickQuickComplete",
+            "ArkRangerMiniGameBattleFlow" //兜底
         ]
     },
     "ArkRangerMiniGameClickQuickComplete": {

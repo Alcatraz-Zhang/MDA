@@ -171,6 +171,7 @@
     },
     "CommonClickBlank": {
         "desc": "点击空白",
+        "max_hit": 120,
         "action": {
             "type": "Click",
             "param": {

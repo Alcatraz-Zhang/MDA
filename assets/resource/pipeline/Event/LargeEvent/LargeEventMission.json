@@ -60,7 +60,8 @@
             }
         },
         "next": [
-            "LargeEventClickMissionRedDot"
+            "[JumpBack]LargeEventClickMissionRedDot",
+            "CommonGoBack"
         ]
     },
     "LargeEventClickMissionRedDot": {
@@ -97,7 +98,7 @@
             "LargeEventMissionClaimedFlow",
             "[JumpBack]LargeEventMissionClaimAll",
             "[JumpBack]CommonConfirmReward",
-            "LargeEventClickMissionRedDot"
+            "LargeEventClickMissionRedDot" //兜底
         ]
     },
     "LargeEventMissionClaimed": {
@@ -134,10 +135,7 @@
                     "LargeEventMissionClaimed"
                 ]
             }
-        },
-        "next": [
-            "CommonGoBack"
-        ]
+        }
     },
     "LargeEventMissionClaimAll": {
         "desc": "大活动任务奖励领取",

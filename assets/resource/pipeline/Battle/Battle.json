@@ -338,8 +338,8 @@
         "desc": "战斗中",
         "timeout": 180000,
         "next": [
-            "[JumpBack]BattleClickAutoBurst",
-            "[JumpBack]BattleClickAutoShoot",
+            "[JumpBack]BattleSkipBossCutscene",
+            "[JumpBack]BattleClickAuto",
             "[JumpBack]DialoguesSkipStory",
             "[JumpBack]BattleClickNextStage",
             "[JumpBack]CommonConfirmAction",
@@ -348,30 +348,33 @@
             "BattleOperationFailed"
         ]
     },
-    "BattleClickAutoBurst": {
-        "desc": "点击自动爆裂",
-        "max_hit": 1,
+    "BattleSkipBossCutscene": {
+        "desc": "跳过Boss过场动画",
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
                 "roi": [
-                    0,
-                    0,
-                    100,
-                    40
+                    602,
+                    282,
+                    72,
+                    22
                 ],
-                "template": [
-                    "Battle/AutoBurst.png"
-                ],
-                "threshold": 0.9
+                "expected": [
+                    ".*RNI.*" //WARNING
+                ]
             }
         },
         "action": {
             "type": "Click"
-        }
+        },
+        "next": [
+            "CommonConfirmAction",
+            "BattleSkipBossCutscene", //兜底
+            "CommonEndTask"
+        ]
     },
-    "BattleClickAutoShoot": {
-        "desc": "点击自动射击",
+    "BattleClickAuto": {
+        "desc": "点击自动爆裂或自动射击",
         "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
@@ -383,6 +386,7 @@
                     40
                 ],
                 "template": [
+                    "Battle/AutoBurst.png",
                     "Battle/AutoShoot.png"
                 ],
                 "threshold": 0.9
