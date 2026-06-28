@@ -154,7 +154,8 @@
         "post_wait_freezes": 200,
         "next": [
             "[JumpBack]RecycleRoomClickMax",
-            "RecycleRoomClickUpgrade"
+            "RecycleRoomClickUpgrade",
+            "RecycleRoomClickRedDot" //兜底
         ]
     },
     "RecycleRoomClickMax": {
@@ -212,6 +213,27 @@
     "RecycleRoomClickUpgrade": {
         "desc": "点击升级",
         "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "RecycleRoomClickUpgradeVisible",
+                    "RecycleRoomClickUpgradeAvailable"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500,
+        "next": [
+            "[JumpBack]RecycleRoomUpgradeConfirm",
+            "RecycleRoomClickUpgrade", //兜底
+            "CommonClosePage"
+        ]
+    },
+    "RecycleRoomClickUpgradeVisible": {
+        "desc": "升级可见",
+        "recognition": {
             "type": "OCR",
             "param": {
                 "roi": [
@@ -224,15 +246,27 @@
                     "升级"
                 ]
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_wait_freezes": 500,
-        "next": [
-            "[JumpBack]RecycleRoomUpgradeConfirm",
-            "CommonClosePage"
-        ]
+        }
+    },
+    "RecycleRoomClickUpgradeAvailable": {
+        "desc": "升级可点击",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "RecycleRoomClickUpgradeVisible",
+                "lower": [
+                    220,
+                    220,
+                    220
+                ],
+                "upper": [
+                    255,
+                    255,
+                    255
+                ],
+                "count": 30
+            }
+        }
     },
     "RecycleRoomUpgradeConfirm": {
         "desc": "升级结果确认",

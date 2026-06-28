@@ -80,11 +80,15 @@ func quotaSpecialPeriodKey(status *MembershipStatus) string {
 }
 
 func quotaStatePath() (string, error) {
-	dir, err := os.UserConfigDir()
-	if err != nil || dir == "" {
-		dir = "."
+	dir := os.Getenv("MDA_QUOTA_STATE_DIR")
+	if dir == "" {
+		var err error
+		dir, err = os.Getwd()
+		if err != nil || dir == "" {
+			dir = "."
+		}
 	}
-	path := filepath.Join(dir, "MDA", "go-service")
+	path := filepath.Join(dir, "go-service")
 	if err := os.MkdirAll(path, 0755); err != nil {
 		return "", err
 	}

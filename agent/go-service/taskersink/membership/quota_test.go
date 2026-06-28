@@ -24,13 +24,31 @@ func testStatus(minutes int, device string) *MembershipStatus {
 func isolateQuotaState(t *testing.T) string {
 	t.Helper()
 	dir := t.TempDir()
-	t.Setenv("APPDATA", dir)
-	t.Setenv("XDG_CONFIG_HOME", dir)
+	t.Setenv("MDA_QUOTA_STATE_DIR", dir)
 	path, err := quotaStatePath()
 	if err != nil {
 		t.Fatalf("quotaStatePath() failed: %v", err)
 	}
 	return path
+}
+
+func TestQuotaStatePathUsesSoftwareDirectory(t *testing.T) {
+	dir := t.TempDir()
+	t.Setenv("MDA_QUOTA_STATE_DIR", dir)
+	t.Setenv("APPDATA", filepath.Join(t.TempDir(), "AppData", "Roaming"))
+
+	path, err := quotaStatePath()
+	if err != nil {
+		t.Fatalf("quotaStatePath() failed: %v", err)
+	}
+
+	want := filepath.Join(dir, "go-service", "membership-quota.json")
+	if path != want {
+		t.Fatalf("quotaStatePath() = %q, want %q", path, want)
+	}
+	if _, err := os.Stat(filepath.Dir(path)); err != nil {
+		t.Fatalf("quotaStatePath() did not create directory: %v", err)
+	}
 }
 
 func mustSaveQuotaState(t *testing.T, path string, state quotaState) {

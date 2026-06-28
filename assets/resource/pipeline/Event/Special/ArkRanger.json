@@ -280,12 +280,13 @@
                     30
                 ],
                 "expected": [
-                    "3"
+                    "[2-9]"
                 ]
             }
         },
         "next": [
-            "ArkRangerMiniGameClickPause"
+            "ArkRangerMiniGameClickPause",
+            "ArkRangerMiniGameClickBattleBegin" //兜底
         ]
     },
     "ArkRangerMiniGameClickPause": {
