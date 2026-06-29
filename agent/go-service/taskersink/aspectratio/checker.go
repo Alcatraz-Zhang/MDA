@@ -84,7 +84,6 @@ func (c *AspectRatioChecker) OnTaskerTask(tasker *maa.Tasker, event maa.EventSta
 		Msg("Got resolution")
 
 	controlType := strings.ToLower(strings.TrimSpace(pienv.ControllerType()))
-	isADBController := controlType == "adb"
 	controllerDisplay := displayController(pienv.ControllerName(), controlType)
 
 	log.Debug().
@@ -92,59 +91,9 @@ func (c *AspectRatioChecker) OnTaskerTask(tasker *maa.Tasker, event maa.EventSta
 		Str("entry", detail.Entry).
 		Str("controller_name", pienv.ControllerName()).
 		Str("controller_type", controlType).
-		Bool("is_adb_controller", isADBController).
 		Int32("width", width).
 		Int32("height", height).
 		Msg("Detected controller type for aspect ratio check")
-
-	if isADBController {
-		requirement := exactResolutionRequirement()
-		log.Debug().
-			Uint64("task_id", detail.TaskID).
-			Str("entry", detail.Entry).
-			Str("controller_name", pienv.ControllerName()).
-			Str("controller_type", controlType).
-			Str("requirement", "exact_resolution").
-			Str("target_resolution", requirement).
-			Str("mode", "adb_exact_resolution").
-			Int32("width", width).
-			Int32("height", height).
-			Int("target_width", targetWidth).
-			Int("target_height", targetHeight).
-			Msg("Using exact resolution check for ADB controller")
-
-		if int(width) == targetWidth && int(height) == targetHeight {
-			log.Debug().
-				Uint64("task_id", detail.TaskID).
-				Str("entry", detail.Entry).
-				Str("controller_name", pienv.ControllerName()).
-				Str("controller_type", controlType).
-				Str("requirement", "exact_resolution").
-				Str("target_resolution", requirement).
-				Int32("width", width).
-				Int32("height", height).
-				Str("mode", "adb_exact_resolution").
-				Msg("resolution check passed")
-			return
-		}
-
-		log.Error().
-			Uint64("task_id", detail.TaskID).
-			Str("entry", detail.Entry).
-			Str("controller_name", pienv.ControllerName()).
-			Str("controller_type", controlType).
-			Str("requirement", "exact_resolution").
-			Str("target_resolution", requirement).
-			Bool("stop_task", true).
-			Int32("width", width).
-			Int32("height", height).
-			Int("target_width", targetWidth).
-			Int("target_height", targetHeight).
-			Str("mode", "adb_exact_resolution").
-			Msg("resolution check failed")
-		c.stopWithWarning(tasker, controllerDisplay, int(width), int(height), requirement)
-		return
-	}
 
 	requirement := aspectRatioRequirement()
 	log.Debug().
@@ -160,7 +109,7 @@ func (c *AspectRatioChecker) OnTaskerTask(tasker *maa.Tasker, event maa.EventSta
 		Int("target_width", targetWidth).
 		Int("target_height", targetHeight).
 		Float64("target_ratio", targetRatio).
-		Msg("Using aspect ratio and minimum resolution check for non-ADB controller")
+		Msg("Using aspect ratio and minimum resolution check")
 
 	aspectRatioOK := isLandscapeAspectRatio16x9(int(width), int(height))
 	minResolutionOK := isAtLeastTargetResolution(int(width), int(height))
@@ -270,10 +219,6 @@ func displayControllerType(controllerType string) string {
 	default:
 		return controllerType
 	}
-}
-
-func exactResolutionRequirement() string {
-	return i18n.T("tasker.aspect_ratio_warning.requirement_exact", targetWidth, targetHeight)
 }
 
 func aspectRatioRequirement() string {
