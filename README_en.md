@@ -17,6 +17,14 @@ MDA is a game automation assistant built on [MaaFramework](https://github.com/Ma
 
 ---
 
+## ⚠️ Account Ban Risk
+
+Some users have recently reported that their game accounts were banned after using this software. MDA is a third-party automation assistant, and using it may violate the game's terms of service or risk-control rules.
+
+**Please use this software only after fully understanding and accepting the risks, including account bans and data loss.**
+
+---
+
 ## Member Features
 
 To provide a more stable and efficient automation experience, this project is currently **maintained and updated full-time**. Due to the significant time and effort required for ongoing development, adapting to game updates, and maintaining the project, MDA adopts a **daily runtime quota by membership tier** model to ensure the long-term healthy development of the project.

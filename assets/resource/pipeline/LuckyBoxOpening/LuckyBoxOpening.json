@@ -199,8 +199,8 @@
         "post_wait_freezes": 500,
         "next": [
             "DailyRewardsConfirmRecruit",
-            "CommonConfirmReward",
-            "CommonClosePage"
+            "CommonConfirmReward"
+            // "CommonClosePage"
         ]
     }
 }
