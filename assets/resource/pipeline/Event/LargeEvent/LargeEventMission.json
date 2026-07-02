@@ -101,10 +101,10 @@
             "LargeEventClickMissionRedDot" //兜底
         ]
     },
-    "LargeEventMissionClaimed": {
-        "desc": "大活动任务奖励已领取",
+    "LargeEventMissionClaimedVisible": {
+        "desc": "大活动任务奖励已领取文本可见",
         "recognition": {
-            "type": "ColorMatch",
+            "type": "OCR",
             "param": {
                 "roi": [
                     680,
@@ -112,17 +112,29 @@
                     137,
                     35
                 ],
+                "expected": [
+                    "全部领取"
+                ]
+            }
+        }
+    },
+    "LargeEventMissionClaimed": {
+        "desc": "大活动任务奖励已领取文本颜色",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "LargeEventMissionClaimedVisible",
                 "lower": [
-                    180,
-                    180,
-                    180
+                    190,
+                    190,
+                    190
                 ],
                 "upper": [
-                    220,
-                    220,
-                    220
+                    219,
+                    219,
+                    219
                 ],
-                "count": 100
+                "count": 120
             }
         }
     },
@@ -132,6 +144,7 @@
             "type": "And",
             "param": {
                 "all_of": [
+                    "LargeEventMissionClaimedVisible",
                     "LargeEventMissionClaimed"
                 ]
             }

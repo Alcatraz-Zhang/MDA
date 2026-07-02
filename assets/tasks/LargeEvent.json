@@ -21,7 +21,7 @@
     "option": {
         "LargeEventTheme": {
             "type": "select",
-            "default_case": "ArkRanger",
+            "default_case": "WaveToYou",
             "label": "$option.LargeEventTheme.label",
             "cases": [
                 {
@@ -123,6 +123,42 @@
                     }
                 },
                 {
+                    "name": "WaveToYou",
+                    "label": "$option.LargeEventTheme.WaveToYou",
+                    "option": [
+                        "LargeEventWaveToYouMiniGame"
+                    ],
+                    "pipeline_override": {
+                        "LargeEventEnterMainPage": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "LargeEvent/WaveToYou/WaveToYouLogo.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "LargeEventClickStoryStage": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "LargeEvent/WaveToYou/WaveToYouStory1Stage.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "LargeEventClickStoryStageRepeatable": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "LargeEvent/WaveToYou/WaveToYouStory1StageRepeatable.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
                     "name": "Other",
                     "label": "$option.LargeEventTheme.Other"
                 }
@@ -143,6 +179,31 @@
                                 "[JumpBack]LargeEventEnterStory",
                                 "[JumpBack]LargeEventEnterMission",
                                 "[JumpBack]LargeEventArkRangerMiniGame",
+                                "CommonEndTask"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "No"
+                }
+            ]
+        },
+        "LargeEventWaveToYouMiniGame": {
+            "type": "switch",
+            "default_case": "Yes",
+            "label": "$option.LargeEventWaveToYouMiniGame.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "LargeEventMainPageFlow": {
+                            "next": [
+                                "[JumpBack]LargeEventEnterLoginStamp",
+                                "[JumpBack]LargeEventEnterChallenge",
+                                "[JumpBack]LargeEventEnterStory",
+                                "[JumpBack]LargeEventEnterMission",
+                                "[JumpBack]LargeEventWaveToYouMiniGame",
                                 "CommonEndTask"
                             ]
                         }
