@@ -492,3 +492,4 @@ tests/maatools
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
 !tools/build-cracked.ps1
+.go-build-cache/
