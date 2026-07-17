@@ -70,14 +70,14 @@
             }
         },
         "next": [
-            "SoloRaidBattleLocked",
-            "BattleStartButtonBlocked",
             "[JumpBack]CommonConfirmAction",
+            "SoloRaidBattleLocked",
+            "SoloRaidBattleAttemptsExhausted",
             "[JumpBack]SoloRaidSelectLevel"
         ]
     },
     "SoloRaidBattleLocked": {
-        "desc": "单人突击结算中",
+        "desc": "单人突击关卡未解锁",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -89,6 +89,23 @@
                 ],
                 "template": [
                     "SoloRaid/SoloRaidBattleLocked.png"
+                ]
+            }
+        }
+    },
+    "SoloRaidBattleAttemptsExhausted": {
+        "desc": "单人突击挑战次数耗尽",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    570,
+                    625,
+                    140,
+                    30
+                ],
+                "expected": [
+                    ".*0/3.*"
                 ]
             }
         }

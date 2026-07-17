@@ -125,10 +125,13 @@ type MembershipStatus struct {
 }
 
 var (
-	cachedStatus     *MembershipStatus
-	cachedStatusMu   sync.RWMutex
-	cachedStatusTime time.Time
-	cachedDeviceCode DeviceCodeV7
+	cachedStatus      *MembershipStatus
+	cachedStatusMu    sync.RWMutex
+	cachedStatusTime  time.Time
+	membershipCheckMu sync.Mutex
+	cachedDeviceCode  DeviceCodeV7
+	deviceCodeCached  bool
+	deviceCodeMu      sync.Mutex
 )
 
 const (
@@ -137,17 +140,48 @@ const (
 	maxFetchAttempts = 3
 )
 
+var (
+	generateDeviceCodeV7 = GenerateDeviceCodeV7
+	fetchMemberStatusFn  = fetchMemberStatus
+)
+
 // GetMembershipStatus returns the current membership status, using cache if available.
 func GetMembershipStatus() *MembershipStatus {
-	cachedStatusMu.RLock()
-	if cachedStatus != nil && time.Since(cachedStatusTime) < cacheExpiry {
-		status := cachedStatus
-		cachedStatusMu.RUnlock()
+	if status := getCachedStatus(); status != nil {
 		return status
 	}
-	cachedStatusMu.RUnlock()
+
+	membershipCheckMu.Lock()
+	defer membershipCheckMu.Unlock()
+
+	if status := getCachedStatus(); status != nil {
+		return status
+	}
 
 	return checkMembership()
+}
+
+func getCachedStatus() *MembershipStatus {
+	cachedStatusMu.RLock()
+	defer cachedStatusMu.RUnlock()
+	if cachedStatus == nil || time.Since(cachedStatusTime) >= cacheExpiry {
+		return nil
+	}
+	return cachedStatus
+}
+
+func getDeviceCode() DeviceCodeV7 {
+	deviceCodeMu.Lock()
+	defer deviceCodeMu.Unlock()
+	if !deviceCodeCached {
+		deviceCode := generateDeviceCodeV7()
+		if deviceCode == (DeviceCodeV7{}) {
+			return deviceCode
+		}
+		cachedDeviceCode = deviceCode
+		deviceCodeCached = true
+	}
+	return cachedDeviceCode
 }
 
 // checkMembership performs the full membership check flow.
@@ -172,8 +206,7 @@ func checkMembership() *MembershipStatus {
 		}
 	}
 
-	deviceCode := GenerateDeviceCodeV7()
-	cachedDeviceCode = deviceCode
+	deviceCode := getDeviceCode()
 
 	defaultStatus := &MembershipStatus{
 		Tier:                        "Orange Free",
@@ -193,7 +226,7 @@ func checkMembership() *MembershipStatus {
 		Str("uuid_hash", shortHash(deviceCode.UUIDHash)).
 		Msg("Generated V7 device code")
 
-	response, err := fetchMemberStatus(deviceCode)
+	response, err := fetchMemberStatusFn(deviceCode)
 	if err != nil {
 		var updateErr *updateRequiredError
 		if errors.As(err, &updateErr) {
@@ -214,23 +247,15 @@ func checkMembership() *MembershipStatus {
 			cacheStatus(status)
 			return status
 		}
-		log.Warn().Err(err).Msg("Membership verification unavailable, stopping task until service recovers")
-		return &MembershipStatus{
-			Tier:                        defaultStatus.Tier,
-			TierCode:                    defaultStatus.TierCode,
-			TierName:                    defaultStatus.TierName,
-			PlanName:                    defaultStatus.PlanName,
-			DailyRuntimeMinutes:         defaultStatus.DailyRuntimeMinutes,
-			RegularDailyRuntimeMinutes:  defaultStatus.RegularDailyRuntimeMinutes,
-			SpecialPeriodRuntimeMinutes: defaultStatus.SpecialPeriodRuntimeMinutes,
-			AllFeaturesUnlocked:         defaultStatus.AllFeaturesUnlocked,
-			VerificationUnavailable:     true,
-			DeviceCode:                  deviceCode,
-		}
+		log.Warn().Err(err).Msg("Membership verification unavailable, using Orange Free quota until service recovers")
+		status := *defaultStatus
+		status.VerificationUnavailable = true
+		return &status
 	}
 
 	if !response.Matched {
 		log.Info().Int("score", response.Score).Msg("No matching member device found, using Orange Free quota")
+		cacheStatus(defaultStatus)
 		return defaultStatus
 	}
 

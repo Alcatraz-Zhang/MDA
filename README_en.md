@@ -19,7 +19,7 @@ MDA is a game automation assistant built on [MaaFramework](https://github.com/Ma
 
 ## ⚠️ Account Ban Risk
 
-Some users have recently reported that their game accounts were banned after using this software. MDA is a third-party automation assistant, and using it may violate the game's terms of service or risk-control rules.
+Some users have recently reported that their game accounts were banned after using this software; some have also reported that their accounts have since been unbanned, so those bans may have included official mistakes or false positives from risk controls. MDA is a third-party automation assistant, and using it may still violate the game's terms of service or risk-control rules.
 
 **Please use this software only after fully understanding and accepting the risks, including account bans and data loss.**
 
@@ -33,7 +33,7 @@ Details are as follows:
 
 - **All features available**: Free users can use all tasks. Tasks are no longer divided into member-only tasks with the 🍊 marker.
 - **Daily runtime quota**: Different membership tiers provide different daily runtime limits. The default free tier is **Orange Free**, with **10 minutes** of runtime per day.
-- **Quota reset time**: Daily runtime quota refreshes by tier at **4:00 AM** every day.
+- **Quota reset time**: Daily runtime quota refreshes by tier at **4:00 AM Beijing Time (UTC+8)** every day.
 - **Sponsorship Method**: When running tasks, the run log displays your current tier, today's remaining quota, and the device binding/subscription link. You can sponsor the project through that link.
 
 Thank you to all contributors for their efforts, and to every user for their understanding and support! Your sponsorship is the biggest motivation for me to continuously optimize MDA.

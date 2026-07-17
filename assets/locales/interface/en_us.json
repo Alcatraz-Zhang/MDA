@@ -175,5 +175,7 @@
     "preset.QuickDaily.description": "Only runs shorter tasks with rewards that reset daily, saving time and effort.",
     "preset.SelfUse.label": "Personal Use",
     "preset.SelfUse.description": "For developers only",
-    "focus.ManualInterceptionBattle.Succeeded": "Interception battle has been refreshed, please start the battle manually"
+    "focus.ManualInterceptionBattle.Succeeded": "Interception battle has been refreshed, please start the battle manually",
+    "focus.CoordinatedOperationsConfirmConnectionInterrupted.Succeeded": "Coordinated operations connection interrupted, task has been stopped",
+    "focus.MapPushingFlow.Action.Succeeded": "Auto map pushing has started. This task consumes runtime quota at 5x."
 }

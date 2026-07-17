@@ -10,6 +10,7 @@ import json
 import tempfile
 from pathlib import Path
 import time
+import stat
 
 from cli_support import Console, init_localization
 
@@ -19,20 +20,46 @@ MFW_REPO: str = "MaaXYZ/MaaFramework"
 MXU_REPO: str = "MistEO/MXU"
 
 
+def is_directory_link(path: Path) -> bool:
+    """Return True for directory symlinks and Windows junction/reparse points."""
+    if path.is_symlink():
+        return True
+
+    if platform.system() != "Windows":
+        return False
+
+    if hasattr(path, "is_junction") and path.is_junction():
+        return True
+
+    try:
+        attrs = path.lstat().st_file_attributes
+    except (AttributeError, FileNotFoundError, OSError):
+        return False
+
+    reparse_point = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+    return bool(attrs & reparse_point)
+
+
+def remove_path_for_replacement(path: Path) -> None:
+    """Remove a path before replacing it, without recursing into directory links."""
+    if path.is_symlink():
+        path.unlink(missing_ok=True)
+    elif is_directory_link(path):
+        path.rmdir()
+    elif path.is_dir():
+        shutil.rmtree(path)
+    elif path.exists():
+        path.unlink()
+
+
 def create_directory_link(src: Path, dst: Path) -> bool:
     """
     在指定位置创建一个指定目录的链接
     - Windows：Junction
     - Unix/macOS：symlink
     """
-    if dst.exists() or dst.is_symlink():
-        if dst.is_dir() and not dst.is_symlink():
-            try:
-                dst.rmdir()
-            except OSError:
-                shutil.rmtree(dst)
-        else:
-            dst.unlink(missing_ok=True)
+    if dst.exists() or dst.is_symlink() or is_directory_link(dst):
+        remove_path_for_replacement(dst)
 
     dst.parent.mkdir(parents=True, exist_ok=True)
 
@@ -527,9 +554,15 @@ def install_maafw(
     real_install_root = install_root.resolve()
     maafw_dest = real_install_root / "maafw"
     maafw_deps = PROJECT_BASE / "deps"
+    maafw_bin = maafw_deps / "bin"
     maafw_installed = maafw_deps.exists() and any(maafw_deps.iterdir())
 
     if skip_if_exist and maafw_installed:
+        if maafw_bin.exists() and not is_directory_link(maafw_dest):
+            print(Console.info(t("inf_creating_link", link=maafw_dest, target=maafw_bin)))
+            if not create_directory_link(maafw_bin, maafw_dest):
+                print(Console.err(t("err_create_link_failed")))
+                return False, local_version, False
         print(Console.ok(t("inf_maafw_installed_skip")))
         return True, local_version, False
 
@@ -558,25 +591,20 @@ def install_maafw(
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
 
-        maafw_dest_is_link = maafw_dest.is_symlink()
-        if hasattr(maafw_dest, 'is_junction'):
-            maafw_dest_is_link = maafw_dest_is_link or maafw_dest.is_junction()
+        maafw_dest_is_link = is_directory_link(maafw_dest)
 
         if maafw_dest_is_link:
             print(Console.ok(t("inf_link_already_exists", path=maafw_dest)))
-        elif maafw_dest.exists():
-            if maafw_dest.is_dir():
-                def _delete_maafw_dest():
-                    print(Console.info(t("inf_delete_old_dir", path=maafw_dest)))
-                    shutil.rmtree(maafw_dest)
-                try:
-                    if not _retry_on_permission(_delete_maafw_dest, error_key="err_cannot_delete_maafw", path=maafw_dest):
-                        return False, local_version, False
-                except Exception as e:
-                    print(Console.err(t("err_unknown_error_delete", error=e)))
+        elif maafw_dest.exists() or maafw_dest.is_symlink():
+            def _delete_maafw_dest():
+                print(Console.info(t("inf_delete_old_dir", path=maafw_dest)))
+                remove_path_for_replacement(maafw_dest)
+            try:
+                if not _retry_on_permission(_delete_maafw_dest, error_key="err_cannot_delete_maafw", path=maafw_dest):
                     return False, local_version, False
-            else:
-                maafw_dest.unlink(missing_ok=True)
+            except Exception as e:
+                print(Console.err(t("err_unknown_error_delete", error=e)))
+                return False, local_version, False
 
         print(Console.info(t("inf_extract_maafw")))
         try:
@@ -597,17 +625,16 @@ def install_maafw(
 
             print(Console.info(t("inf_copying_sdk", dest=maafw_deps)))
             def _copy_sdk():
-                if maafw_deps.exists():
-                    shutil.rmtree(maafw_deps)
+                if maafw_deps.exists() or maafw_deps.is_symlink() or is_directory_link(maafw_deps):
+                    remove_path_for_replacement(maafw_deps)
                 shutil.copytree(sdk_root, maafw_deps)
             if not _retry_on_permission(_copy_sdk, error_key="err_cannot_access_deps", path=maafw_deps):
                 return False, local_version, False
             print(Console.ok(t("inf_sdk_copied", dest=maafw_deps)))
 
             if not maafw_dest_is_link:
-                bin_path = maafw_deps / "bin"
-                print(Console.info(t("inf_creating_link", link=maafw_dest, target=bin_path)))
-                if not create_directory_link(bin_path, maafw_dest):
+                print(Console.info(t("inf_creating_link", link=maafw_dest, target=maafw_bin)))
+                if not create_directory_link(maafw_bin, maafw_dest):
                     print(Console.err(t("err_create_link_failed")))
                     return False, local_version, False
 

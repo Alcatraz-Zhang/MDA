@@ -32,7 +32,6 @@ func runRuntimeQuotaCheck(ctx *maa.Context, route quotaRoute) bool {
 	status := GetMembershipStatus()
 	if status.VerificationUnavailable {
 		maafocus.Print(ctx, formatMembershipVerificationUnavailableMessage())
-		return false
 	}
 	if status.UpdateRequired {
 		if status.UpdateMessage != "" {

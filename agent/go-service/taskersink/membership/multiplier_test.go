@@ -57,3 +57,57 @@ func TestConsumeBillableSecondsCeilsOnFlush(t *testing.T) {
 		t.Fatalf("flush consumeBillableSeconds() = %d, want 1", got)
 	}
 }
+
+func TestConsumeTickIgnoresStaleGeneration(t *testing.T) {
+	isolateQuotaState(t)
+	status := testStatus(10, "device-a")
+	tracker := &RuntimeTracker{
+		active:     true,
+		generation: 2,
+		last:       time.Now().Add(-time.Minute),
+		multiplier: quotaMultiplier{
+			BasePermille:  multiplierScale,
+			ExtraPermille: multiplierScale,
+		},
+	}
+
+	if _, done := tracker.consumeTick(nil, status, quotaRouteRegular, 1); !done {
+		t.Fatalf("consumeTick() with stale generation should stop")
+	}
+
+	snapshot, err := GetQuotaSnapshot(status, quotaPoolRegularDaily)
+	if err != nil {
+		t.Fatalf("GetQuotaSnapshot() failed: %v", err)
+	}
+	if snapshot.UsedSeconds != 0 {
+		t.Fatalf("UsedSeconds = %d, want 0", snapshot.UsedSeconds)
+	}
+}
+
+func TestFinishFlushesOnlyUnchargedTail(t *testing.T) {
+	isolateQuotaState(t)
+	status := testStatus(10, "device-a")
+	tracker := &RuntimeTracker{
+		active: true,
+		route:  quotaRouteRegular,
+		status: status,
+		last:   time.Now().Add(-500 * time.Millisecond),
+		multiplier: quotaMultiplier{
+			BasePermille:  multiplierScale,
+			ExtraPermille: multiplierScale,
+		},
+		realNs:         int64(time.Minute),
+		chargedSeconds: 60,
+		stopCh:         make(chan struct{}),
+	}
+
+	tracker.finish()
+
+	snapshot, err := GetQuotaSnapshot(status, quotaPoolRegularDaily)
+	if err != nil {
+		t.Fatalf("GetQuotaSnapshot() failed: %v", err)
+	}
+	if snapshot.UsedSeconds != 1 {
+		t.Fatalf("UsedSeconds = %d, want 1", snapshot.UsedSeconds)
+	}
+}

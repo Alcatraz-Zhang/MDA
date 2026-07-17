@@ -119,4 +119,7 @@ func TestFormatMembershipVerificationUnavailableMessage(t *testing.T) {
 	if !strings.Contains(message, "会员校验服务暂不可用") && !strings.Contains(message, "temporarily unavailable") {
 		t.Fatalf("message does not mention membership verification service unavailable: %s", message)
 	}
+	if strings.Contains(message, "任务已停止") || strings.Contains(message, "Task stopped") {
+		t.Fatalf("message should not say task stopped: %s", message)
+	}
 }

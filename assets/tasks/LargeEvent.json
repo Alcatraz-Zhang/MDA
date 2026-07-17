@@ -142,7 +142,10 @@
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "LargeEvent/WaveToYou/WaveToYouStory1Stage.png"
+                                        "LargeEvent/WaveToYou/WaveToYouStory1Stage.png",
+                                        "LargeEvent/WaveToYou/WaveToYouStory2StageNormal.png",
+                                        "LargeEvent/WaveToYou/WaveToYouStory2StageHard.png",
+                                        "LargeEvent/WaveToYou/WaveToYouStory2StageHardSP.png"
                                     ]
                                 }
                             }
@@ -151,7 +154,9 @@
                             "recognition": {
                                 "param": {
                                     "template": [
-                                        "LargeEvent/WaveToYou/WaveToYouStory1StageRepeatable.png"
+                                        "LargeEvent/WaveToYou/WaveToYouStory1StageRepeatable.png",
+                                        "LargeEvent/WaveToYou/WaveToYouStory2StageNormalRepeatable.png",
+                                        "LargeEvent/WaveToYou/WaveToYouStory2StageHardRepeatable.png"
                                     ]
                                 }
                             }
@@ -202,8 +207,8 @@
                                 "[JumpBack]LargeEventEnterLoginStamp",
                                 "[JumpBack]LargeEventEnterChallenge",
                                 "[JumpBack]LargeEventEnterStory",
-                                "[JumpBack]LargeEventEnterMission",
                                 "[JumpBack]LargeEventWaveToYouMiniGame",
+                                "[JumpBack]LargeEventEnterMission",
                                 "CommonEndTask"
                             ]
                         }

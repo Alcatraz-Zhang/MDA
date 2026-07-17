@@ -24,7 +24,8 @@ func testStatus(minutes int, device string) *MembershipStatus {
 func isolateQuotaState(t *testing.T) string {
 	t.Helper()
 	dir := t.TempDir()
-	t.Setenv("MDA_QUOTA_STATE_DIR", dir)
+	t.Setenv("APPDATA", dir)
+	t.Setenv("XDG_CONFIG_HOME", dir)
 	path, err := quotaStatePath()
 	if err != nil {
 		t.Fatalf("quotaStatePath() failed: %v", err)
@@ -32,29 +33,42 @@ func isolateQuotaState(t *testing.T) string {
 	return path
 }
 
-func TestQuotaStatePathUsesSoftwareDirectory(t *testing.T) {
-	dir := t.TempDir()
-	t.Setenv("MDA_QUOTA_STATE_DIR", dir)
-	t.Setenv("APPDATA", filepath.Join(t.TempDir(), "AppData", "Roaming"))
-
-	path, err := quotaStatePath()
-	if err != nil {
-		t.Fatalf("quotaStatePath() failed: %v", err)
-	}
-
-	want := filepath.Join(dir, "go-service", "membership-quota.json")
-	if path != want {
-		t.Fatalf("quotaStatePath() = %q, want %q", path, want)
-	}
-	if _, err := os.Stat(filepath.Dir(path)); err != nil {
-		t.Fatalf("quotaStatePath() did not create directory: %v", err)
-	}
-}
-
 func mustSaveQuotaState(t *testing.T, path string, state quotaState) {
 	t.Helper()
 	if err := saveQuotaState(path, state); err != nil {
 		t.Fatalf("saveQuotaState() failed: %v", err)
+	}
+}
+
+func TestQuotaBusinessDateUsesBeijingTime(t *testing.T) {
+	tests := []struct {
+		name string
+		now  time.Time
+		want string
+	}{
+		{
+			name: "before 4 AM Beijing time",
+			now:  time.Date(2026, 5, 29, 19, 59, 59, 0, time.UTC),
+			want: "2026-05-29",
+		},
+		{
+			name: "at 4 AM Beijing time",
+			now:  time.Date(2026, 5, 29, 20, 0, 0, 0, time.UTC),
+			want: "2026-05-30",
+		},
+		{
+			name: "ignores source timezone",
+			now:  time.Date(2026, 5, 29, 22, 0, 0, 0, time.FixedZone("UTC-7", -7*60*60)),
+			want: "2026-05-30",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := quotaBusinessDate(tt.now); got != tt.want {
+				t.Fatalf("quotaBusinessDate(%s) = %s, want %s", tt.now, got, tt.want)
+			}
+		})
 	}
 }
 

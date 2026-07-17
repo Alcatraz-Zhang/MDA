@@ -335,7 +335,7 @@
         ]
     },
     "BattleInBattleFlow": {
-        "desc": "战斗中",
+        "desc": "战斗中及结算",
         "timeout": 180000,
         "next": [
             "[JumpBack]BattleSkipBossCutscene",
@@ -350,6 +350,26 @@
     },
     "BattleSkipBossCutscene": {
         "desc": "跳过Boss过场动画",
+        "max_hit": 5,
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "BattleBossCutsceneVisible"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "CommonConfirmAction",
+            "BattleSkipBossCutscene", //兜底
+            "CommonEndTask"
+        ]
+    },
+    "BattleBossCutsceneVisible": {
+        "desc": "Boss过场动画可见",
         "recognition": {
             "type": "OCR",
             "param": {
@@ -363,19 +383,25 @@
                     ".*RNI.*" //WARNING
                 ]
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "CommonConfirmAction",
-            "BattleSkipBossCutscene", //兜底
-            "CommonEndTask"
-        ]
+        }
     },
     "BattleClickAuto": {
         "desc": "点击自动爆裂或自动射击",
         "max_hit": 1,
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "BattleAutoVisible"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "BattleAutoVisible": {
+        "desc": "自动爆裂或自动射击可见",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -391,9 +417,6 @@
                 ],
                 "threshold": 0.9
             }
-        },
-        "action": {
-            "type": "Click"
         }
     },
     "BattleClickNextStage": {
@@ -531,12 +554,7 @@
         },
         "action": {
             "type": "Click"
-        },
-        "next": [
-            "[JumpBack]CommonConfirmAction",
-            "BattleEnterNormalBattle", //兜底
-            "BattleInBattleFlow"
-        ]
+        }
     },
     "BattleEnterNormalBattleFlow": {
         "desc": "进入普通战斗流程",
@@ -550,7 +568,27 @@
             }
         },
         "next": [
-            "BattleEnterNormalBattle"
+            "BattleEntered",
+            "[JumpBack]CommonConfirmAction",
+            "[JumpBack]BattleEnterNormalBattle"
+        ]
+    },
+    "BattleEntered": {
+        "desc": "已进入战斗",
+        "recognition": {
+            "type": "Or",
+            "param": {
+                "any_of": [
+                    "BattleBossCutsceneVisible",
+                    "BattleAutoVisible",
+                    "DialoguesMainVisible",
+                    "BattleEscVisible",
+                    "BattleFailedVisible"
+                ]
+            }
+        },
+        "next": [
+            "BattleInBattleFlow"
         ]
     },
     "BattleCannotBattleBlocked": {

@@ -2,6 +2,7 @@ import argparse
 import os
 import platform
 import shutil
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -28,20 +29,46 @@ def t(key: str, **kwargs) -> str:
     return _local_t(key, **kwargs)
 
 
+def is_directory_link(path: Path) -> bool:
+    """Return True for directory symlinks and Windows junction/reparse points."""
+    if path.is_symlink():
+        return True
+
+    if platform.system() != "Windows":
+        return False
+
+    if hasattr(path, "is_junction") and path.is_junction():
+        return True
+
+    try:
+        attrs = path.lstat().st_file_attributes
+    except (AttributeError, FileNotFoundError, OSError):
+        return False
+
+    reparse_point = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+    return bool(attrs & reparse_point)
+
+
+def remove_path_for_replacement(path: Path) -> None:
+    """Remove a path before replacing it, without recursing into directory links."""
+    if path.is_symlink():
+        path.unlink(missing_ok=True)
+    elif is_directory_link(path):
+        path.rmdir()
+    elif path.is_dir():
+        shutil.rmtree(path)
+    elif path.exists():
+        path.unlink()
+
+
 def create_directory_link(src: Path, dst: Path) -> bool:
     """
     在指定位置创建一个指定目录的链接
     - Windows：Junction
     - Unix/macOS：symlink
     """
-    if dst.exists() or dst.is_symlink():
-        if dst.is_dir() and not dst.is_symlink():
-            try:
-                dst.rmdir()
-            except OSError:
-                shutil.rmtree(dst)
-        else:
-            dst.unlink(missing_ok=True)
+    if dst.exists() or dst.is_symlink() or is_directory_link(dst):
+        remove_path_for_replacement(dst)
 
     dst.parent.mkdir(parents=True, exist_ok=True)
 
@@ -97,8 +124,8 @@ def create_file_link(src: Path, dst: Path) -> bool:
 
 def copy_directory(src: Path, dst: Path) -> bool:
     """复制目录（替换）"""
-    if dst.exists():
-        shutil.rmtree(dst)
+    if dst.exists() or dst.is_symlink() or is_directory_link(dst):
+        remove_path_for_replacement(dst)
     shutil.copytree(src, dst)
     return True
 
@@ -353,36 +380,9 @@ def main() -> None:
         runtime_dir = install_dir / runtime_dir_name
         runtime_dir.mkdir(parents=True, exist_ok=True)
 
-    # 4b. Ensure maafw junction or directory exists
-    #     If install_maafw() skipped (deps already exist), the junction may not
-    #     have been created yet. Ensure it exists.
     maafw_dir = install_dir / "maafw"
-    deps_bin = PROJECT_BASE / "deps" / "bin"
-
-    maafw_is_link = maafw_dir.is_symlink()
-    if hasattr(maafw_dir, 'is_junction'):
-        maafw_is_link = maafw_is_link or maafw_dir.is_junction()
-
-    if maafw_is_link:
-        print(f"  {Console.ok('->')} {maafw_dir} {t('link_already_exists')}")
-    elif maafw_dir.exists() and deps_bin.exists():
-        # Old copy-based install — replace with junction
-        print(Console.info(t("inf_delete_old_dir", path=maafw_dir)))
-        shutil.rmtree(maafw_dir)
-        if use_copy:
-            copy_directory(deps_bin, maafw_dir)
-        else:
-            create_directory_link(deps_bin, maafw_dir)
-        print(f"  {Console.ok('->')} {maafw_dir}")
-    elif not maafw_dir.exists():
-        if deps_bin.exists():
-            if use_copy:
-                copy_directory(deps_bin, maafw_dir)
-            else:
-                create_directory_link(deps_bin, maafw_dir)
-        else:
-            maafw_dir.mkdir(parents=True, exist_ok=True)
-        print(f"  {Console.ok('->')} {maafw_dir}")
+    maafw_dir.mkdir(parents=True, exist_ok=True)
+    print(f"  {Console.ok('->')} {maafw_dir}")
 
     # Ensure MaaAgentBinary is present inside maafw
     agent_binary_src = PROJECT_BASE / "deps" / "share" / "MaaAgentBinary"

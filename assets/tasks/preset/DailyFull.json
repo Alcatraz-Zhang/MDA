@@ -33,9 +33,6 @@
                     "name": "CoordinatedOperations"
                 },
                 {
-                    "name": "DailyRewards"
-                },
-                {
                     "name": "SoloRaid"
                 },
                 {
@@ -43,6 +40,9 @@
                 },
                 {
                     "name": "LargeEvent"
+                },
+                {
+                    "name": "DailyRewards"
                 }
             ]
         }

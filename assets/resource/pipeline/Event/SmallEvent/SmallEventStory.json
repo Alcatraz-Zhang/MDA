@@ -123,8 +123,7 @@
             "SmallEventBattleBlocked",
             "[JumpBack]BattleEntryFlow",
             "SmallEventEventStageAfterBattleFlow",
-            "[JumpBack]DialoguesSkipStory",
-            "SmallEventGoBack"
+            "[JumpBack]DialoguesSkipStory"
         ]
     },
     "SmallEventEventStageAfterBattleFlow": {

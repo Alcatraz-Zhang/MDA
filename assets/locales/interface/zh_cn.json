@@ -175,5 +175,7 @@
     "preset.QuickDaily.description": "只做奖励会每日重置且耗时较短的任务，省时省力",
     "preset.SelfUse.label": "自用",
     "preset.SelfUse.description": "开发人员专属",
-    "focus.ManualInterceptionBattle.Succeeded": "检测到拦截战已刷新，请手动开始拦截战"
+    "focus.ManualInterceptionBattle.Succeeded": "检测到拦截战已刷新，请手动开始拦截战",
+    "focus.CoordinatedOperationsConfirmConnectionInterrupted.Succeeded": "协同作战连接中断，已停止该任务",
+    "focus.MapPushingFlow.Action.Succeeded": "自动推图已启动，本任务会按 5 倍额度消耗计时"
 }

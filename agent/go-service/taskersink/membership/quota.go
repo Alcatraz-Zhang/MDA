@@ -68,8 +68,10 @@ type QuotaSnapshot struct {
 
 var quotaMu sync.Mutex
 
+var beijingLocation = time.FixedZone("Asia/Shanghai", 8*60*60)
+
 func quotaBusinessDate(now time.Time) string {
-	return now.Add(-4 * time.Hour).Format("2006-01-02")
+	return now.In(beijingLocation).Add(-4 * time.Hour).Format("2006-01-02")
 }
 
 func quotaSpecialPeriodKey(status *MembershipStatus) string {
@@ -80,15 +82,11 @@ func quotaSpecialPeriodKey(status *MembershipStatus) string {
 }
 
 func quotaStatePath() (string, error) {
-	dir := os.Getenv("MDA_QUOTA_STATE_DIR")
-	if dir == "" {
-		var err error
-		dir, err = os.Getwd()
-		if err != nil || dir == "" {
-			dir = "."
-		}
+	dir, err := os.UserConfigDir()
+	if err != nil || dir == "" {
+		dir = "."
 	}
-	path := filepath.Join(dir, "go-service")
+	path := filepath.Join(dir, "MDA", "go-service")
 	if err := os.MkdirAll(path, 0755); err != nil {
 		return "", err
 	}

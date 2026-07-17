@@ -112,12 +112,12 @@
             ]
         },
         "next": [
-            "LargeEventClickStoryEventPageRedDot",
+            "LargeEventEnterStagePage",
             "[JumpBack]CommonClickBlank"
         ]
     },
-    "LargeEventClickStoryEventPageRedDot": {
-        "desc": "大活动剧情活动页面的红点",
+    "LargeEventEnterStagePage": {
+        "desc": "大活动剧情进入活动关卡页面",
         "recognition": {
             "type": "OCR",
             "param": {
@@ -128,7 +128,11 @@
                     294
                 ],
                 "expected": [
-                    ".*剩余.*"
+                    ".*剩余.*" //剩余时间
+                ],
+                "replace": [
+                    "到",
+                    "剩"
                 ]
             }
         },
@@ -239,8 +243,7 @@
             "[JumpBack]BattleEntryFlow",
             "LargeEventEventStageAfterBattleFlow",
             "[JumpBack]DialoguesSkipStory",
-            "[JumpBack]LargeEventFieldChanged",
-            "LargeEventGoBack"
+            "[JumpBack]LargeEventFieldChanged"
         ]
     },
     "LargeEventEventStageAfterBattleFlow": {

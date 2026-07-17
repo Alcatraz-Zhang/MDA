@@ -18,6 +18,7 @@ type RuntimeTracker struct {
 	multiplier     quotaMultiplier
 	route          quotaRoute
 	status         *MembershipStatus
+	generation     uint64
 	realNs         int64
 	chargedSeconds int64
 	stopCh         chan struct{}
@@ -52,6 +53,14 @@ func (t *RuntimeTracker) consumeBillableSeconds(delta time.Duration, flush bool)
 
 	t.mu.Lock()
 	defer t.mu.Unlock()
+	return t.consumeBillableSecondsLocked(delta, flush)
+}
+
+func (t *RuntimeTracker) consumeBillableSecondsLocked(delta time.Duration, flush bool) int64 {
+	if delta < 0 {
+		delta = 0
+	}
+
 	t.realNs += delta.Nanoseconds()
 	billableNs := t.multiplier.billableDuration(time.Duration(t.realNs)).Nanoseconds()
 	seconds := billableNs / int64(time.Second)
@@ -90,8 +99,6 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 	status := GetMembershipStatus()
 	if status.VerificationUnavailable {
 		printMembershipVerificationUnavailable()
-		tasker.PostStop()
-		return
 	}
 	route := quotaRouteForEntry(detail.Entry)
 	snapshot, ok, err := EnsureQuotaRouteAvailable(status, route)
@@ -116,10 +123,12 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 	t.multiplier = multiplier
 	t.route = route
 	t.status = status
+	t.generation++
 	t.realNs = 0
 	t.chargedSeconds = 0
 	t.stopCh = make(chan struct{})
 	t.stopped = false
+	generation := t.generation
 	stopCh := t.stopCh
 	t.mu.Unlock()
 
@@ -140,7 +149,7 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 		return
 	}
 
-	go t.tick(tasker, status, route, snapshot.RemainingSeconds, stopCh)
+	go t.tick(tasker, status, route, generation, snapshot.RemainingSeconds, stopCh)
 }
 
 func (t *RuntimeTracker) finish() {
@@ -149,26 +158,22 @@ func (t *RuntimeTracker) finish() {
 		t.mu.Unlock()
 		return
 	}
-	last := t.last
 	multiplier := t.multiplier
 	route := t.route
 	status := t.status
 	stopCh := t.stopCh
+	realDelta := time.Since(t.last)
+	billableSeconds := t.consumeBillableSecondsLocked(realDelta, true)
 	t.active = false
 	t.status = nil
 	t.stopCh = nil
+	t.generation++
 	close(stopCh)
 	t.mu.Unlock()
 
 	if status == nil {
 		status = GetMembershipStatus()
-		if status.VerificationUnavailable {
-			log.Warn().Msg("RuntimeTracker: skipped final quota usage flush because membership verification is unavailable")
-			return
-		}
 	}
-	realDelta := time.Since(last)
-	billableSeconds := t.consumeBillableSeconds(realDelta, true)
 	if _, err := AddQuotaRouteUsageSeconds(status, route, billableSeconds); err != nil {
 		log.Warn().Err(err).Msg("RuntimeTracker: failed to flush final quota usage")
 	}
@@ -183,12 +188,12 @@ func (t *RuntimeTracker) finish() {
 		Msg("RuntimeTracker: final quota usage flushed")
 }
 
-func (t *RuntimeTracker) tick(tasker *maa.Tasker, status *MembershipStatus, route quotaRoute, remainingSeconds int64, stopCh <-chan struct{}) {
+func (t *RuntimeTracker) tick(tasker *maa.Tasker, status *MembershipStatus, route quotaRoute, generation uint64, remainingSeconds int64, stopCh <-chan struct{}) {
 	for {
 		timer := time.NewTimer(nextQuotaTickInterval(remainingSeconds))
 		select {
 		case <-timer.C:
-			snapshot, done := t.consumeTick(tasker, status, route)
+			snapshot, done := t.consumeTick(tasker, status, route, generation)
 			if done {
 				return
 			}
@@ -219,10 +224,10 @@ func nextQuotaTickInterval(remainingSeconds int64) time.Duration {
 	return interval
 }
 
-func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatus, route quotaRoute) (QuotaSnapshot, bool) {
+func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatus, route quotaRoute, generation uint64) (QuotaSnapshot, bool) {
 	now := time.Now()
 	t.mu.Lock()
-	if !t.active {
+	if !t.active || t.generation != generation {
 		t.mu.Unlock()
 		return QuotaSnapshot{}, true
 	}
@@ -232,9 +237,9 @@ func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatu
 	entry := t.entry
 	multiplier := t.multiplier
 	alreadyStopped := t.stopped
+	billableSeconds := t.consumeBillableSecondsLocked(delta, false)
 	t.mu.Unlock()
 
-	billableSeconds := t.consumeBillableSeconds(delta, false)
 	snapshot, err := AddQuotaRouteUsageSeconds(status, route, billableSeconds)
 	if err != nil {
 		log.Warn().Err(err).Msg("RuntimeTracker: failed to record quota usage")
@@ -263,10 +268,15 @@ func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatu
 	}
 
 	t.mu.Lock()
-	t.stopped = true
+	shouldStop := t.active && t.generation == generation
+	if shouldStop {
+		t.stopped = true
+	}
 	t.mu.Unlock()
-	printQuotaExhausted(snapshot)
-	tasker.PostStop()
+	if shouldStop {
+		printQuotaExhausted(snapshot)
+		tasker.PostStop()
+	}
 	return snapshot, false
 }
 

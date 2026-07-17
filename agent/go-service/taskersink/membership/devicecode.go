@@ -3,8 +3,10 @@ package membership
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"os/exec"
 	"strings"
+	"time"
 
 	"github.com/rs/zerolog/log"
 )
@@ -29,17 +31,93 @@ var v7Weights = map[string]int{
 	"guid":  10,
 }
 
+type deviceIdentifierValues struct {
+	CPU   []string `json:"cpu"`
+	UUID  []string `json:"uuid"`
+	BIOS  []string `json:"bios"`
+	Board []string `json:"board"`
+	Disk  []string `json:"disk"`
+	GUID  []string `json:"guid"`
+}
+
+const deviceIdentifierScript = `
+$ErrorActionPreference = 'Stop'
+function Get-CimValues([string]$ClassName, [string]$Property, [string]$Filter = '') {
+    try {
+        $params = @{ ClassName = $ClassName; ErrorAction = 'Stop' }
+        if ($Filter) { $params.Filter = $Filter }
+        return @((Get-CimInstance @params | ForEach-Object { $_.$Property }))
+    } catch {
+        return @()
+    }
+}
+function Get-MachineGuid {
+    try {
+        return @((Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Microsoft\Cryptography' -Name MachineGuid -ErrorAction Stop))
+    } catch {
+        return @()
+    }
+}
+[ordered]@{
+    cpu = @(Get-CimValues 'Win32_Processor' 'ProcessorID')
+    uuid = @(Get-CimValues 'Win32_ComputerSystemProduct' 'UUID')
+    bios = @(Get-CimValues 'Win32_BIOS' 'SerialNumber')
+    board = @(Get-CimValues 'Win32_BaseBoard' 'SerialNumber')
+    disk = @(Get-CimValues 'Win32_DiskDrive' 'SerialNumber' "MediaType='Fixed hard disk media'")
+    guid = @(Get-MachineGuid)
+} | ConvertTo-Json -Compress
+`
+
 // GenerateDeviceCodeV7 generates a V7 device code by querying hardware identifiers.
 func GenerateDeviceCodeV7() DeviceCodeV7 {
-	code := DeviceCodeV7{
-		CPUHash:   hashString(queryWMI("Win32_Processor", "ProcessorID")),
-		UUIDHash:  hashString(queryWMI("Win32_ComputerSystemProduct", "UUID")),
-		BIOSHash:  hashString(queryWMIFiltered("Win32_BIOS", "SerialNumber", notPlaceholder)),
-		BoardHash: hashString(queryWMIFiltered("Win32_BaseBoard", "SerialNumber", notPlaceholder)),
-		DiskHash:  hashString(queryWMIFirstFixed("Win32_DiskDrive", "SerialNumber")),
-		GUIDHash:  hashString(readMachineGuid()),
+	started := time.Now()
+	values, err := queryDeviceIdentifiers()
+	if err != nil {
+		log.Debug().Err(err).Dur("duration", time.Since(started)).Msg("Failed to query device identifiers")
+		return DeviceCodeV7{}
 	}
-	return code
+	log.Debug().Dur("duration", time.Since(started)).Msg("Queried device identifiers")
+	return deviceCodeFromIdentifiers(values)
+}
+
+func queryDeviceIdentifiers() (deviceIdentifierValues, error) {
+	out, err := exec.Command("powershell", "-NoProfile", "-Command", deviceIdentifierScript).Output()
+	if err != nil {
+		return deviceIdentifierValues{}, err
+	}
+	var values deviceIdentifierValues
+	if err := json.Unmarshal(out, &values); err != nil {
+		return deviceIdentifierValues{}, err
+	}
+	return values, nil
+}
+
+func deviceCodeFromIdentifiers(values deviceIdentifierValues) DeviceCodeV7 {
+	return DeviceCodeV7{
+		CPUHash:   hashString(firstValue(values.CPU)),
+		UUIDHash:  hashString(firstValue(values.UUID)),
+		BIOSHash:  hashString(firstValidValue(values.BIOS, notPlaceholder, "UNKNOWN")),
+		BoardHash: hashString(firstValidValue(values.Board, notPlaceholder, "UNKNOWN")),
+		DiskHash:  hashString(firstValidValue(values.Disk, notPlaceholder, "UNKNOWN")),
+		GUIDHash:  hashString(firstValidValue(values.GUID, notPlaceholder, "UNKNOWN")),
+	}
+}
+
+func firstValue(values []string) string {
+	if len(values) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(values[0])
+}
+
+func firstValidValue(values []string, valid func(string) bool, fallback string) string {
+	for _, value := range values {
+		value = strings.TrimSpace(value)
+		if valid(value) {
+			return value
+		}
+	}
+	return fallback
 }
 
 // MatchDeviceCodeV7 performs weighted matching between current and saved device codes.
@@ -85,66 +163,4 @@ func notPlaceholder(s string) bool {
 		return false
 	}
 	return true
-}
-
-// queryWMI runs a PowerShell WMI query and returns the first value of the specified property.
-func queryWMI(class, property string) string {
-	cmd := exec.Command("powershell", "-NoProfile", "-Command",
-		"Get-CimInstance -ClassName "+class+" | Select-Object -First 1 -ExpandProperty "+property)
-	out, err := cmd.Output()
-	if err != nil {
-		log.Debug().Str("class", class).Str("property", property).Err(err).Msg("WMI query failed")
-		return ""
-	}
-	return strings.TrimSpace(string(out))
-}
-
-// queryWMIFiltered runs a WMI query and returns the first value that passes the filter.
-func queryWMIFiltered(class, property string, filter func(string) bool) string {
-	cmd := exec.Command("powershell", "-NoProfile", "-Command",
-		"Get-CimInstance -ClassName "+class+" | ForEach-Object { $_."+property+" }")
-	out, err := cmd.Output()
-	if err != nil {
-		log.Debug().Str("class", class).Str("property", property).Err(err).Msg("WMI query failed")
-		return ""
-	}
-	for _, line := range strings.Split(string(out), "\n") {
-		val := strings.TrimSpace(line)
-		if filter(val) {
-			return val
-		}
-	}
-	return "UNKNOWN"
-}
-
-// queryWMIFirstFixed queries Win32_DiskDrive for the first fixed disk serial number.
-func queryWMIFirstFixed(class, property string) string {
-	cmd := exec.Command("powershell", "-NoProfile", "-Command",
-		"Get-CimInstance -ClassName "+class+" -Filter \"MediaType='Fixed hard disk media'\" | Select-Object -First 1 -ExpandProperty "+property)
-	out, err := cmd.Output()
-	if err != nil {
-		log.Debug().Str("class", class).Err(err).Msg("WMI query failed for fixed disk")
-		return ""
-	}
-	result := strings.TrimSpace(string(out))
-	if result == "" {
-		return "UNKNOWN"
-	}
-	return result
-}
-
-// readMachineGuid reads the Windows MachineGuid from the registry.
-func readMachineGuid() string {
-	cmd := exec.Command("powershell", "-NoProfile", "-Command",
-		"Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Cryptography' -Name MachineGuid")
-	out, err := cmd.Output()
-	if err != nil {
-		log.Debug().Err(err).Msg("Failed to read MachineGuid from registry")
-		return "UNKNOWN"
-	}
-	result := strings.TrimSpace(string(out))
-	if result == "" {
-		return "UNKNOWN"
-	}
-	return result
 }

@@ -3,7 +3,6 @@ package membership
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"testing"
 )
 
@@ -26,22 +25,51 @@ func TestHashConsistency(t *testing.T) {
 		"GUID":  "25a63f5fe7d9c0ebb0fef90d2225d598c18ef8e124981bd1f16036e83ebaa4e6",
 	}
 
-	allMatch := true
 	for key, value := range testCases {
 		h := sha256.Sum256([]byte(value))
 		actual := hex.EncodeToString(h[:])
-		match := actual == expected[key]
-		status := "✅"
-		if !match {
-			status = "❌"
-			allMatch = false
+		if actual != expected[key] {
+			t.Errorf("hash for %s = %s, want %s", key, actual, expected[key])
 		}
-		fmt.Printf("%s %s:\n  MDA:     %s\n  DoroPay: %s\n", status, key, actual, expected[key])
+	}
+}
+
+func TestDeviceCodeFromIdentifiersUsesFirstValidValues(t *testing.T) {
+	values := deviceIdentifierValues{
+		CPU:   []string{" cpu-id ", "ignored"},
+		UUID:  []string{" uuid-id "},
+		BIOS:  []string{"To Be Filled By O.E.M.", " bios-id "},
+		Board: []string{"Default string", " board-id "},
+		Disk:  []string{"", " disk-id "},
+		GUID:  []string{" guid-id "},
 	}
 
-	if allMatch {
-		fmt.Println("\n✅ All hashes match!")
-	} else {
-		t.Fatal("❌ Some hashes do not match!")
+	got := deviceCodeFromIdentifiers(values)
+	want := DeviceCodeV7{
+		CPUHash:   hashString("cpu-id"),
+		UUIDHash:  hashString("uuid-id"),
+		BIOSHash:  hashString("bios-id"),
+		BoardHash: hashString("board-id"),
+		DiskHash:  hashString("disk-id"),
+		GUIDHash:  hashString("guid-id"),
+	}
+	if got != want {
+		t.Fatalf("deviceCodeFromIdentifiers() = %+v, want %+v", got, want)
+	}
+}
+
+func TestDeviceCodeFromIdentifiersPreservesMissingValueFallback(t *testing.T) {
+	got := deviceCodeFromIdentifiers(deviceIdentifierValues{
+		BIOS: []string{"UNKNOWN", "Default string"},
+	})
+	unknownHash := hashString("UNKNOWN")
+	want := DeviceCodeV7{
+		BIOSHash:  unknownHash,
+		BoardHash: unknownHash,
+		DiskHash:  unknownHash,
+		GUIDHash:  unknownHash,
+	}
+	if got != want {
+		t.Fatalf("deviceCodeFromIdentifiers() = %+v, want %+v", got, want)
 	}
 }

@@ -216,6 +216,12 @@
         },
         "action": {
             "type": "Click"
+        },
+        "next": [
+            "CommonStopTask"
+        ],
+        "focus": {
+            "Node.Recognition.Succeeded": "$focus.CoordinatedOperationsConfirmConnectionInterrupted.Succeeded"
         }
     },
     "CoordinatedOperationsUnable": {
