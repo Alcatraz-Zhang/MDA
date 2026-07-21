@@ -135,7 +135,8 @@
                 "all_of": [
                     "SoloRaidSelectLevelVisible",
                     "SoloRaidSelectLevelAvailable"
-                ]
+                ],
+                "box_index": 1
             }
         },
         "action": {
@@ -165,8 +166,7 @@
                     "SoloRaid/SoloRaidLevelⅤ.png",
                     "SoloRaid/SoloRaidLevelⅥ.png",
                     "SoloRaid/SoloRaidLevelⅦ.png"
-                ],
-                "index": -1 //选择最新已解锁的关卡，-1表示最后一个匹配到的模板
+                ]
             }
         }
     },
@@ -186,7 +186,9 @@
                     210,
                     90
                 ],
-                "count": 10
+                "count": 10,
+                "order_by": "Horizontal",
+                "index": -1 //选择最右侧的已开放关卡
             }
         }
     }

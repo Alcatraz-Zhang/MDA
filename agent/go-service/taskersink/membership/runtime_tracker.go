@@ -23,6 +23,7 @@ type RuntimeTracker struct {
 	chargedSeconds int64
 	stopCh         chan struct{}
 	stopped        bool
+	stopPosted     bool
 }
 
 var _ maa.TaskerEventSink = &RuntimeTracker{}
@@ -76,21 +77,57 @@ func (t *RuntimeTracker) consumeBillableSecondsLocked(delta time.Duration, flush
 }
 
 func (t *RuntimeTracker) OnNodePipelineNode(ctx *maa.Context, event maa.EventStatus, detail maa.NodePipelineNodeDetail) {
+	t.postPendingStop(ctx)
 }
 
 func (t *RuntimeTracker) OnNodeRecognitionNode(ctx *maa.Context, event maa.EventStatus, detail maa.NodeRecognitionNodeDetail) {
+	t.postPendingStop(ctx)
 }
 
 func (t *RuntimeTracker) OnNodeActionNode(ctx *maa.Context, event maa.EventStatus, detail maa.NodeActionNodeDetail) {
+	t.postPendingStop(ctx)
 }
 
 func (t *RuntimeTracker) OnNodeNextList(ctx *maa.Context, event maa.EventStatus, detail maa.NodeNextListDetail) {
+	t.postPendingStop(ctx)
 }
 
 func (t *RuntimeTracker) OnNodeRecognition(ctx *maa.Context, event maa.EventStatus, detail maa.NodeRecognitionDetail) {
+	t.postPendingStop(ctx)
 }
 
 func (t *RuntimeTracker) OnNodeAction(ctx *maa.Context, event maa.EventStatus, detail maa.NodeActionDetail) {
+	t.postPendingStop(ctx)
+}
+
+func (t *RuntimeTracker) postPendingStop(ctx *maa.Context) {
+	if !t.takePendingStop() {
+		return
+	}
+
+	// Keep Agent proxy calls inside MaaFramework's callback dispatch lifetime
+	// instead of retaining a callback handle in the quota timer goroutine.
+	ctx.GetTasker().PostStop()
+}
+
+func (t *RuntimeTracker) takePendingStop() bool {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	if !t.active || !t.stopped || t.stopPosted {
+		return false
+	}
+	t.stopPosted = true
+	return true
+}
+
+func (t *RuntimeTracker) requestStop(generation uint64) bool {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	if !t.active || t.generation != generation || t.stopped {
+		return false
+	}
+	t.stopped = true
+	return true
 }
 
 func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) {
@@ -128,6 +165,7 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 	t.chargedSeconds = 0
 	t.stopCh = make(chan struct{})
 	t.stopped = false
+	t.stopPosted = false
 	generation := t.generation
 	stopCh := t.stopCh
 	t.mu.Unlock()
@@ -149,7 +187,7 @@ func (t *RuntimeTracker) start(tasker *maa.Tasker, detail maa.TaskerTaskDetail) 
 		return
 	}
 
-	go t.tick(tasker, status, route, generation, snapshot.RemainingSeconds, stopCh)
+	go t.tick(status, route, generation, snapshot.RemainingSeconds, stopCh)
 }
 
 func (t *RuntimeTracker) finish() {
@@ -188,12 +226,12 @@ func (t *RuntimeTracker) finish() {
 		Msg("RuntimeTracker: final quota usage flushed")
 }
 
-func (t *RuntimeTracker) tick(tasker *maa.Tasker, status *MembershipStatus, route quotaRoute, generation uint64, remainingSeconds int64, stopCh <-chan struct{}) {
+func (t *RuntimeTracker) tick(status *MembershipStatus, route quotaRoute, generation uint64, remainingSeconds int64, stopCh <-chan struct{}) {
 	for {
 		timer := time.NewTimer(nextQuotaTickInterval(remainingSeconds))
 		select {
 		case <-timer.C:
-			snapshot, done := t.consumeTick(tasker, status, route, generation)
+			snapshot, done := t.consumeTick(status, route, generation)
 			if done {
 				return
 			}
@@ -224,7 +262,7 @@ func nextQuotaTickInterval(remainingSeconds int64) time.Duration {
 	return interval
 }
 
-func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatus, route quotaRoute, generation uint64) (QuotaSnapshot, bool) {
+func (t *RuntimeTracker) consumeTick(status *MembershipStatus, route quotaRoute, generation uint64) (QuotaSnapshot, bool) {
 	now := time.Now()
 	t.mu.Lock()
 	if !t.active || t.generation != generation {
@@ -243,7 +281,8 @@ func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatu
 	snapshot, err := AddQuotaRouteUsageSeconds(status, route, billableSeconds)
 	if err != nil {
 		log.Warn().Err(err).Msg("RuntimeTracker: failed to record quota usage")
-		return QuotaSnapshot{}, false
+		t.requestStop(generation)
+		return QuotaSnapshot{}, true
 	}
 
 	log.Debug().
@@ -267,15 +306,8 @@ func (t *RuntimeTracker) consumeTick(tasker *maa.Tasker, status *MembershipStatu
 		return snapshot, false
 	}
 
-	t.mu.Lock()
-	shouldStop := t.active && t.generation == generation
-	if shouldStop {
-		t.stopped = true
-	}
-	t.mu.Unlock()
-	if shouldStop {
+	if t.requestStop(generation) {
 		printQuotaExhausted(snapshot)
-		tasker.PostStop()
 	}
 	return snapshot, false
 }

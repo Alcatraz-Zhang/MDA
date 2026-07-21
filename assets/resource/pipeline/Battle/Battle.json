@@ -339,7 +339,8 @@
         "timeout": 180000,
         "next": [
             "[JumpBack]BattleSkipBossCutscene",
-            "[JumpBack]BattleClickAuto",
+            "[JumpBack]BattleEnableAutoAim",
+            "[JumpBack]BattleEnableAutoCombat",
             "[JumpBack]DialoguesSkipStory",
             "[JumpBack]BattleClickNextStage",
             "[JumpBack]CommonConfirmAction",
@@ -385,23 +386,9 @@
             }
         }
     },
-    "BattleClickAuto": {
-        "desc": "点击自动爆裂或自动射击",
+    "BattleEnableAutoAim": {
+        "desc": "开启自动瞄准",
         "max_hit": 1,
-        "recognition": {
-            "type": "And",
-            "param": {
-                "all_of": [
-                    "BattleAutoVisible"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        }
-    },
-    "BattleAutoVisible": {
-        "desc": "自动爆裂或自动射击可见",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -412,11 +399,35 @@
                     40
                 ],
                 "template": [
-                    "Battle/AutoBurst.png",
                     "Battle/AutoShoot.png"
                 ],
                 "threshold": 0.9
             }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "BattleEnableAutoCombat": {
+        "desc": "开启自动战斗",
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    0,
+                    0,
+                    100,
+                    40
+                ],
+                "template": [
+                    "Battle/AutoBurst.png"
+                ],
+                "threshold": 0.9
+            }
+        },
+        "action": {
+            "type": "Click"
         }
     },
     "BattleClickNextStage": {
@@ -478,7 +489,7 @@
             "type": "Or",
             "param": {
                 "any_of": [
-                    "BattleEscVisible"
+                    "BattleSettlementEscVisible"
                 ]
             }
         },
@@ -506,8 +517,8 @@
             "BattleOperationFailed"
         ]
     },
-    "BattleEscVisible": {
-        "desc": "Esc可见",
+    "BattleSettlementEscVisible": {
+        "desc": "战斗结算 ESC 可见",
         "recognition": {
             "type": "OCR",
             "param": {
@@ -567,6 +578,7 @@
                 ]
             }
         },
+        "timeout": 60000,
         "next": [
             "BattleEntered",
             "[JumpBack]CommonConfirmAction",
@@ -579,10 +591,10 @@
             "type": "Or",
             "param": {
                 "any_of": [
+                    "BattleCombatHudVisible",
                     "BattleBossCutsceneVisible",
-                    "BattleAutoVisible",
                     "DialoguesMainVisible",
-                    "BattleEscVisible",
+                    "BattleSettlementEscVisible",
                     "BattleFailedVisible"
                 ]
             }
@@ -590,6 +602,23 @@
         "next": [
             "BattleInBattleFlow"
         ]
+    },
+    "BattleCombatHudVisible": {
+        "desc": "战斗界面可见",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1210,
+                    25,
+                    70,
+                    50
+                ],
+                "expected": [
+                    "ESC"
+                ]
+            }
+        }
     },
     "BattleCannotBattleBlocked": {
         "desc": "无法战斗检测",
@@ -656,7 +685,7 @@
                     255,
                     255
                 ],
-                "count": 100
+                "count": 90
             }
         }
     },

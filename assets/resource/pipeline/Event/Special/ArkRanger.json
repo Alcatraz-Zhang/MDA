@@ -389,7 +389,8 @@
             "type": "Click"
         },
         "next": [
-            "CommonConfirmAction"
+            "LargeEventMainPageEntered",
+            "[JumpBack]CommonConfirmAction"
         ]
     }
 }

@@ -71,7 +71,7 @@ func TestConsumeTickIgnoresStaleGeneration(t *testing.T) {
 		},
 	}
 
-	if _, done := tracker.consumeTick(nil, status, quotaRouteRegular, 1); !done {
+	if _, done := tracker.consumeTick(status, quotaRouteRegular, 1); !done {
 		t.Fatalf("consumeTick() with stale generation should stop")
 	}
 
@@ -81,6 +81,37 @@ func TestConsumeTickIgnoresStaleGeneration(t *testing.T) {
 	}
 	if snapshot.UsedSeconds != 0 {
 		t.Fatalf("UsedSeconds = %d, want 0", snapshot.UsedSeconds)
+	}
+}
+
+func TestPendingStopIsTakenOnce(t *testing.T) {
+	tracker := &RuntimeTracker{
+		active:     true,
+		generation: 3,
+	}
+
+	if !tracker.requestStop(3) {
+		t.Fatal("requestStop() = false, want true")
+	}
+	if !tracker.takePendingStop() {
+		t.Fatal("first takePendingStop() = false, want true")
+	}
+	if tracker.takePendingStop() {
+		t.Fatal("second takePendingStop() = true, want false")
+	}
+}
+
+func TestRequestStopIgnoresStaleGeneration(t *testing.T) {
+	tracker := &RuntimeTracker{
+		active:     true,
+		generation: 4,
+	}
+
+	if tracker.requestStop(3) {
+		t.Fatal("requestStop() with stale generation = true, want false")
+	}
+	if tracker.takePendingStop() {
+		t.Fatal("takePendingStop() = true without a valid request")
 	}
 }
 

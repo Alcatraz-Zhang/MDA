@@ -40,6 +40,15 @@ func mustSaveQuotaState(t *testing.T, path string, state quotaState) {
 	}
 }
 
+func mustLoadQuotaState(t *testing.T, path string) quotaState {
+	t.Helper()
+	state, err := loadQuotaState(path)
+	if err != nil {
+		t.Fatalf("loadQuotaState() failed: %v", err)
+	}
+	return state
+}
+
 func TestQuotaBusinessDateUsesBeijingTime(t *testing.T) {
 	tests := []struct {
 		name string
@@ -183,6 +192,65 @@ func TestNormalizeQuotaStateResetsOnDeviceChange(t *testing.T) {
 	}
 	if state.DeviceHash != deviceHash(newStatus.DeviceCode) {
 		t.Fatalf("DeviceHash was not updated")
+	}
+}
+
+func TestNormalizeQuotaStatePreservesRedeemedCoupons(t *testing.T) {
+	path := isolateQuotaState(t)
+	oldStatus := testStatus(10, "device-a")
+	newStatus := testStatus(10, "device-b")
+	mustSaveQuotaState(t, path, quotaState{
+		Version:    quotaStateVersion,
+		DeviceHash: deviceHash(oldStatus.DeviceCode),
+		TierCode:   "orange_free",
+		RedeemedCoupons: map[string]quotaCouponRedemption{
+			"00112233445566778899aabbccddeeff": {
+				RedeemedAt: "2026-06-03T12:00:00+08:00",
+				RefillType: QuotaRefillTypeDaily,
+			},
+		},
+	})
+
+	_, state, err := normalizeQuotaState(newStatus, time.Date(2026, 6, 3, 12, 0, 0, 0, time.Local))
+	if err != nil {
+		t.Fatalf("normalizeQuotaState() failed: %v", err)
+	}
+	if _, ok := state.RedeemedCoupons["00112233445566778899aabbccddeeff"]; !ok {
+		t.Fatal("redeemed coupon was lost when the device changed")
+	}
+}
+
+func TestLoadQuotaStateRejectsMalformedJSON(t *testing.T) {
+	path := isolateQuotaState(t)
+	malformed := []byte(`{"version":3,"redeemed_coupons":`)
+	if err := os.WriteFile(path, malformed, 0644); err != nil {
+		t.Fatalf("WriteFile() failed: %v", err)
+	}
+
+	if _, err := loadQuotaState(path); err == nil {
+		t.Fatal("loadQuotaState() accepted malformed JSON")
+	}
+	got, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("ReadFile() failed: %v", err)
+	}
+	if string(got) != string(malformed) {
+		t.Fatal("malformed quota state was overwritten")
+	}
+}
+
+func TestQuotaChecksFailClosedForMalformedState(t *testing.T) {
+	path := isolateQuotaState(t)
+	if err := os.WriteFile(path, []byte(`{"version":`), 0644); err != nil {
+		t.Fatalf("WriteFile() failed: %v", err)
+	}
+	status := testStatus(10, "device-a")
+
+	if _, ok, err := EnsureQuotaAvailable(status, quotaPoolRegularDaily); err == nil || ok {
+		t.Fatalf("EnsureQuotaAvailable() = ok %v, err %v; want fail closed", ok, err)
+	}
+	if _, ok, err := EnsureQuotaRouteAvailable(status, quotaRouteRegular); err == nil || ok {
+		t.Fatalf("EnsureQuotaRouteAvailable() = ok %v, err %v; want fail closed", ok, err)
 	}
 }
 
