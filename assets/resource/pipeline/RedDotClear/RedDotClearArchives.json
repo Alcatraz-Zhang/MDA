@@ -18,8 +18,9 @@
             }
         },
         "next": [
+            "[JumpBack]RedDotClearClickMore",
             "RedDotClearArchivesClickEntry",
-            "CommonEndTask"
+            "CommonClickBlank"
         ]
     },
     "RedDotClearArchivesClickEntry": {
@@ -193,13 +194,16 @@
         "action": {
             "type": "Click"
         },
+        "post_wait_freezes": 1000,
+        "timeout": 30000,
         "next": [
             "[JumpBack]CommonConfirmReward",
             "[JumpBack]CommonConfirmAction",
             "[JumpBack]DialoguesSkipStory",
             "CommonClosePage",
             "[JumpBack]CommonGoBack",
-            "[JumpBack]CommonTouchToContinue"
+            "[JumpBack]CommonTouchToContinue",
+            "[JumpBack]CommonClickBlank"
         ]
     },
     "ArchivesRedDotClickTop": {
@@ -214,7 +218,8 @@
                     33
                 ],
                 "template": [
-                    "Common/RedDot.png"
+                    "Common/RedDot.png",
+                    "Common/New.png"
                 ]
             }
         },
@@ -245,7 +250,8 @@
                     50
                 ],
                 "template": [
-                    "Common/RedDot.png"
+                    "Common/RedDot.png",
+                    "Common/New.png"
                 ]
             }
         },
