@@ -489,6 +489,10 @@ tests/maatools
 # Local AI/code intelligence preferences
 .codegraph/
 .cursor/
+
+# DSH session artifacts
+.dsh-filess/
+
 # crack branch: un-ignore our local PowerShell build script
 # (would otherwise be caught by `build-*` rule above)
 !tools/build-cracked.ps1
