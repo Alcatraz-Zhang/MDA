@@ -45,29 +45,28 @@ func (a *ScanBeginAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool {
 }
 
 // scanNextItems 返回当前部位扫描完成后的路由：
-//   - 非腿部：关闭详情页 → 打开下一部位详情；
-//   - 腿部 + stopAfterScan=false：关闭详情页 → EquipmentRerollDecide（完整洗词条任务继续）；
-//   - 腿部 + stopAfterScan=true：普通引用关闭详情页，任务结束（独立运行 EquipmentRerollScanMain 时使用）。
-// 注意：中间切换部位的“关闭”必须用 [JumpBack] 回跳父节点后再打开下一部位；
-// 独立收尾的“关闭”不能带 [JumpBack]，否则会回到父节点重复找关闭按钮导致超时。
-func scanNextItems(part string, stopAfterScan ...bool) ([]maa.NextItem, bool) {
+//   - 单件模式：只扫用户选定的那一件，扫完直接“物资检测”（不再链到下一部位）；
+//   - 角色模式非腿部：关闭详情页 → 打开下一部位详情；
+//   - 角色模式腿部：先“物资检测”（进入效果锁定页读取材料库存），退出后由
+//     EquipmentRerollAfterMaterialCheck 分支：独立扫描 → 结束；洗词条任务 → 对应模式的决策。
+//
+// 注意：中间切换部位的“关闭”必须用 [JumpBack] 回跳父节点后再打开下一部位。
+func scanNextItems(part string, single bool) ([]maa.NextItem, bool) {
+	// 物资检测点击的是“当前已打开详情页”的第一槽，与具体部位无关，
+	// 因此单件模式在自己那一件上做物资检测与腿部一样有效。
+	if single || part == "腿部" {
+		return []maa.NextItem{
+			{Name: "EquipmentRerollMaterialCheckEnter"},
+		}, true
+	}
 	nextByPart := map[string]string{
 		"头部": "EquipmentRerollOpenArmsDetails",
 		"臂部": "EquipmentRerollOpenTorsoDetails",
 		"身躯": "EquipmentRerollOpenLegsDetails",
-		"腿部": "EquipmentRerollDecide",
 	}
 	next, ok := nextByPart[part]
 	if !ok {
 		return nil, false
-	}
-	if part == "腿部" && len(stopAfterScan) > 0 && stopAfterScan[0] {
-		// 独立全量扫描收尾：普通引用而非 [JumpBack]。
-		// [JumpBack] 会在关闭后回到父节点 EquipmentRerollScanSlot3 重新识别，
-		// 导致已关闭页面再次查找关闭按钮而超时；普通引用执行完关闭即结束任务。
-		return []maa.NextItem{
-			{Name: "EquipmentRerollScanCloseDetails"},
-		}, true
 	}
 	return []maa.NextItem{
 		{Name: "[JumpBack]EquipmentRerollScanCloseDetails"},
@@ -100,15 +99,28 @@ type scanRouteParam struct {
 	IsLast bool `json:"is_last"`
 }
 
+// buildPartEffectsMessage 生成一个部位的四行用户可见词条消息。
+// key 用于区分初次扫描与接受效果变更后的提示文案。
+func buildPartEffectsMessage(part string, scan partScan, key string) string {
+	lines := displayScanLines(scan, emptySlotDisplayLabel())
+	return fmt.Sprintf(
+		i18n.T(key),
+		part,
+		lines[0],
+		lines[1],
+		lines[2],
+	)
+}
+
 // EquipmentRerollScanRouteAction 全量扫描路由：扫描完最后一个槽位后
-// 展示该部位扫描摘要（词条 / 数值 / 锁定），并把流程路由到下一部位；
-// 腿部扫描完成后按当前任务入口决定是否继续进入 EquipmentRerollDecide。
+// 检查洗词条任务的前置条件（所有槽位必须无锁），再展示该部位扫描摘要
+// （词条 / 数值 / 锁定）并把流程路由到下一部位；独立扫描入口保留原有观察行为。
 type EquipmentRerollScanRouteAction struct{}
 
 var _ maa.CustomActionRunner = &EquipmentRerollScanRouteAction{}
 
 func (a *EquipmentRerollScanRouteAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool {
-	if arg == nil {
+	if ctx == nil || arg == nil {
 		log.Error().Str("component", "EquipmentReroll").Msg("scan route argument is nil")
 		return false
 	}
@@ -137,19 +149,32 @@ func (a *EquipmentRerollScanRouteAction) Run(ctx *maa.Context, arg *maa.CustomAc
 		return false
 	}
 
-	lines := displayScanLines(scan, i18n.T("tasker.equipment_reroll.empty_slot"))
-	maafocus.Print(ctx, fmt.Sprintf(
-		i18n.T("tasker.equipment_reroll.effects"),
-		part,
-		lines[0],
-		lines[1],
-		lines[2],
-	))
+	if !isStandaloneScanEntry(ctx, arg) {
+		if slot, lock, found := firstExistingLock(scan); found {
+			lockLabel := lockDisplayLabel(lock)
+			log.Error().
+				Str("component", "EquipmentReroll").
+				Int64("task_id", arg.TaskID).
+				Str("part", part).
+				Int("slot", slot).
+				Str("lock", lock.String()).
+				Msg("precheck found an existing equipment lock; task failed")
+			// 通过标准输出发送提示，避免为一次失败通知创建临时 Go focus 节点并污染 Maa 日志。
+			maafocus.PrintLargeContentTrimNewline(fmt.Sprintf(
+				i18n.T("tasker.equipment_reroll.preexisting_lock"),
+				part,
+				slot,
+				lockLabel,
+			))
+			// CustomAction 返回 false 即表示当前任务失败；不要再调用 PostStop，
+			// 否则 Maa 会额外创建“停止任务”的伪任务。
+			return false
+		}
+	}
 
-	// 独立运行 EquipmentRerollScanMain 时，扫描完腿部后停止，不进入后续洗词条任务；
-	// 完整 EquipmentRerollMain 任务内运行时，继续路由到 EquipmentRerollDecide。
-	standalone := isStandaloneScanEntry(ctx, arg)
-	next, ok := scanNextItems(part, standalone)
+	maafocus.Print(ctx, buildPartEffectsMessage(part, scan, "tasker.equipment_reroll.effects"))
+
+	next, ok := scanNextItems(part, loadCarrierConfig(ctx).isSingle())
 	if !ok {
 		log.Error().Str("component", "EquipmentReroll").Str("part", part).Msg("no next node for equipment part")
 		return false
@@ -166,7 +191,6 @@ func (a *EquipmentRerollScanRouteAction) Run(ctx *maa.Context, arg *maa.CustomAc
 		Str("component", "EquipmentReroll").
 		Int64("task_id", arg.TaskID).
 		Str("part", part).
-		Bool("standalone", standalone).
 		Strs("next", nextNames).
 		Msg("equipment scan routed")
 	return true
