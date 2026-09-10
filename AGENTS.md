@@ -77,18 +77,86 @@
 
 ## 活动主题「当前活动」路由
 
+### 机制
+
 - `LargeEventTheme` 和 `SmallEventTheme` 的首个 case 固定为 `CurrentEvent`（显示名「当前活动」），并且是该选项的 `default_case`。
-- `CurrentEvent` 的 `pipeline_override` 和 `cases[].option` 必须与**最新发布主题**的 case 逐字一致：模板路径列表、`lower` / `upper` / `count` 等颜色阈值覆盖、子选项列表全部对齐，该主题没有的覆盖项 `CurrentEvent` 也不要写。
-- 之所以需要这一项：客户端把用户选中的 case 名写进 `config\maa_pi_config.json`，只改 `default_case` 对新用户有效，老用户仍停留在旧主题；只有选了 `CurrentEvent` 的用户会在更新资源包后自动跟上最新活动。
-- 每次适配新主题时，先把新主题自己的 case 完整写好，再把 `CurrentEvent` 的 override 与子选项整体替换为新主题内容；不要沿用上一个主题，也不要留空 override。
-- `CurrentEvent` 留空等于坏掉：`LargeEventEnterMainPage` / `SmallEventEnterMainPage` 的 base 节点只有 `Common/RedDot.png` 占位模板，必须靠 override 才能识别活动入口。
-- 往期主题 case 保留各自的 `pipeline_override` 不动，供用户显式回选仍在开放的老活动。
+- 客户端把用户选中的 case 名写进 `config\maa_pi_config.json`，且存的是**当时选的具体 case 名**（真实样例：`"SmallEventTheme": "GreatVillainUnion"`）。框架按 `case.name == 配置值` 精确查找，命中则应用该 case 的 override，未命中则 `LogWarn` 后跳过。由此推出两条重要结论：
+    - 只改 `default_case` 只影响**新用户**与**未配置过的用户**；已配置的老用户配置里存的是具体 case 名，不会因 `default_case` 改动而变化。
+    - 选了 `CurrentEvent` 的用户配置里存的是字符串 `"CurrentEvent"`，该 case 永久存在，因此会随 base 自动跟随最新活动——这是「当前活动」机制成立的根本原因。
+- `CurrentEvent` **不携带 `pipeline_override`**。它靠 resource 侧 base 节点承载最新主题模板来工作，用户选它即可在下次更新后自动跟随，无需重写。
 - `CurrentEvent` 不是主题名，locale 显示名用「当前活动」/ `Current Event`，不适用全大写约定；同时在 `zh_cn`、`en_us` 中补上 `option.{LargeEventTheme,SmallEventTheme}.CurrentEvent` 与对应 `.description`。
+- `CurrentEvent` 可以带 `option`（子选项列表，如 `LargeEventPersonaOnFrontlineMiniGame`），这不属于 override，必须保留。
+
+### base 节点承载最新主题
+
+- `LargeEvent` / `SmallEvent` 的以下 base 节点，其 `template` 直接写**最新主题**的真实模板，并加注释 `//当前活动，随最新主题更新`：
+    - `LargeEventEnterMainPage`、`LargeEventClickStoryStage`、`LargeEventClickStoryStageRepeatable`
+    - `SmallEventEnterMainPage`、`SmallEventClickStage`、`SmallEventClickStageRepeatable`
+- 这些节点原先写 `Common/RedDot.png //占位，应该去task页面修改`，已不再需要占位——base 本身就是当前活动的真实配置。
+- `LargeEventEnterMission` 是**中性红点检测**（`Common/RedDot.png` + `Common/RedDotSP.png`），不是主题模板节点，**不要改动**。
+- `LargeEventMissionClaimed` 是**颜色阈值特例节点**（base 灰白 `[190,190,190]`~`[219,219,219]`，`ArkRanger` 覆盖为蓝紫 `[15,25,55]`~`[35,35,65]`）。它**不纳入 base 承载范围**，保持 base 原值；只有需要特例的主题才在自己的 case 里覆盖。
+
+### 适配新主题的操作顺序
+
+1. 为新主题写好完整的 case（含 `label`、`option`、三个模板类节点的 `pipeline_override`）。
+2. 把 base 节点的 `template` 换成新主题的模板列表（即把「当前活动」升级为新主题）。
+3. `CurrentEvent` **不动**：它没有 override，base 一改就自动跟随。
+4. 往期主题 case 的 `pipeline_override` 一律保留不动，供用户显式回选仍在开放的老活动。
+5. 跑 `npm run check:theme` 校验。
+6. **本次适配是否下架或重命名了某个往期主题 case？** 若是，见下节「用户影响与提示话术」，需要在更新说明里提示这批用户重选主题；若否，不要发提示。
+
+### 用户影响与提示话术
+
+改动前先判断自己属于哪种情况——框架在 `Configurator.cpp:447-468` 按 `case.name == 配置里的值` 查找，找不到就 `LogWarn` 后跳过该 option 的全部 override：
+
+| 用户配置里存的值                                   | 改 base 后的行为                                            | 是否要提示                 |
+| -------------------------------------------------- | ----------------------------------------------------------- | -------------------------- |
+| 某个**仍在的**具体主题名（如 `GreatVillainUnion`） | case 命中，override 照常应用，行为与改动前完全一致          | 不需要，无感               |
+| `CurrentEvent`                                     | case 命中，`pipeline_override` 为空 → 落到 base = 最新主题  | 不需要，**这就是自动跟随** |
+| **已下架主题**的名字                               | `case not found` → 跳过全部 override → 落到 base = 最新主题 | **需要，用户需重选主题**   |
+
+- 大多数用户存的是**具体主题名**（真实配置样例：`"SmallEventTheme": "GreatVillainUnion"`），因此改 base **不会打扰他们**，不要过度提示。
+- 只有「往期主题 case 被删除 / 重命名」才会让用户失配。此时该用户想打的老活动已识别不到，必须重选。
+- 提示时给可操作的信息，不要只丢结论。建议话术：
+
+    > 本次更新下架了往期主题活动 XXX，若你在「活动主题」中选的是它，请在任务设置里重新选择当前开放的主题（或直接选「当前活动」以后自动跟随）。
+
+- 反过来说：**适配新主题本身不需要任何提示**。只有「操作顺序」第 6 步确认删了 case 才提示，避免每次更新都发无用公告。
+- `case not found` 的降级是"吃 base"而非报错崩溃，所以用户侧表现为"识别不到关卡"而非程序异常，缺少日志的用户很难自己定位——这正是必须主动提示的原因。
+
+### 护栏：`npm run check:theme`
+
+`scripts/check-theme-sync.mjs` 自动守住两条不变量，违规时退出码 1：
+
+- **断言 A**：`CurrentEvent` 不得携带非空 `pipeline_override`（否则自动跟随失效）。
+- **断言 B**：所有往期主题 case 必须逐个覆盖同一批模板类节点。漏覆盖的主题在 base 换新后会**静默继承新主题模板**，导致回选老活动时永远匹配不上且不报错——这正是护栏存在的意义。
+
+新增主题或调整 base 时，若模板类节点的集合发生变化，需同步更新脚本顶部的 `TARGETS[].expectedTemplateNodes`。
 
 ## 大型小活动适配
 
-- 部分归入 `SmallEvent` 的特殊大型小活动包含 `STORY I` / `STORY II` 两篇剧情，活动主页通过独立按钮切换 Story。
-- 不适配 Story 切换按钮。Story 2 开放后，活动页面会自动切换到 Story 2，无需 Pipeline 额外点击；不要照搬 `LargeEvent` 的 Story 优先级或 Story 入口切换流程。
-- 关卡模板必须按实际 Story 语义命名。Story 1 使用 `{Theme}Story1Stage.png` 和 `{Theme}Story1StageRepeatable.png`；Story 2 普通难度使用 `{Theme}Story2StageNormal.png` 和 `{Theme}Story2StageNormalRepeatable.png`。不要用 `SP` 代指 Story 2。
+### 先判断：这个 SmallEvent 主题有没有 Story
+
+小活动分两类，**命名体系完全不同**，适配前先确认属于哪一类：
+
+| 类型                          | 判断依据                                  | 命名体系                                                                                 | 实例                                            |
+| ----------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| **无 Story** 的普通小活动     | 活动主页没有 STORY I / STORY II 切换按钮  | `{Theme}StageNormal.png` / `{Theme}StageHard.png`                                        | `BitterSpice`、`BSideIdol`、`GreatVillainUnion` |
+| **有 Story** 的特殊大型小活动 | 活动主页有独立按钮切换 STORY I / STORY II | `{Theme}Story1Stage.png` / `{Theme}Story2StageNormal.png` / `{Theme}Story2StageHard.png` | `ProjectMatis`                                  |
+
+- **不要把 `Story1` / `Story2` 用在没有 Story 的小活动上。** `GreatVillainUnion` 曾误用这套前缀（`Story1Stage` / `Story2StageHard`），已被纠正为 `StageNormal` / `StageHard`。
+- 判据是**活动主页有没有 Story 切换按钮**，不是"有没有两批关卡"。普通小活动也可能有多个关卡，但那是同一 Story 下的关卡序号（`1-01`、`1-02`…），不是 Story。
+- `Normal` / `Hard` 指**难度模式**。同一模式下 EVENT 可点击标记的外观不同（颜色、字号、装饰），因此两种模式各自需要独立模板。Repeatable（扫荡按钮）同理，两种模式各一张。
+
+### Story 切换与覆盖
+
+- 有 Story 的活动，不适配 Story 切换按钮。Story 2 开放后，活动页面会自动切换到 Story 2，无需 Pipeline 额外点击；不要照搬 `LargeEvent` 的 Story 优先级或 Story 入口切换流程。
+- 有 Story 时，关卡模板必须按实际 Story 语义命名。Story 1 使用 `{Theme}Story1Stage.png` 和 `{Theme}Story1StageRepeatable.png`；Story 2 普通难度使用 `{Theme}Story2StageNormal.png` 和 `{Theme}Story2StageNormalRepeatable.png`。不要用 `SP` 代指 Story 2。
 - 将 Story 1、Story 2 模板共同加入 `SmallEventClickStage` 和 `SmallEventClickStageRepeatable` 的主题覆盖，由现有统一关卡流程识别并推进。
 - Story 2 Hard 未开放时，不添加 `{Theme}Story2StageHard*` 模板或配置；开放后再根据实际素材适配。
+
+### 关卡已全清（CLEAR）时截不到 EVENT
+
+- **Normal / Hard 关卡全部 CLEAR 后，关卡行显示 `CLEAR` 而不是 `EVENT`，此时无法截到该模式的 EVENT 模板。**
+- 判断图层归属时不要因为"截图里没有 EVENT"就断定模板作废。更可靠的方式是**用该模板对截图做模板匹配**：若在 ROI 内找不到高分命中（如 < 0.5），才可疑；若截图上该模式已全 CLEAR，属于正常现象。
+- 需要补某模式的模板时，必须在该模式**仍有未 CLEAR 关卡**的状态下截图。
