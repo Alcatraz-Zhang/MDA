@@ -45,7 +45,9 @@
 - commit 信息应使用中文并遵守 Conventional Commits 风格。
 - commit scope 涉及具体任务时，使用任务本身的正式名称并保持原有大小写和连续拼写（例如 `SoloRaid`，不要写成 `solo-raid`）。
 - commit scope 涉及活动主题时，使用对应任务的正式名称 `LargeEvent` 或 `SmallEvent`，不要使用具体主题名（例如 `ProjectMatis`）。
-- 编辑 i18 本地化文件时，保持与参考文件一致的排序。
+- 编辑 i18 本地化文件时，保持与参考文件一致的排序；界面任务顺序由 `assets/interface.json` 的 `import` 顺序决定（客户端按 import 逐个追加任务再按 `group` 归桶，桶内不二次排序），调整任务显示顺序时改 `import`，不要改 `tasks/*.json` 的书写顺序。
+- `locales/interface/<lang>.json` 的键序统一以「声明顺序」为基准：任务块按 `import` 顺序排列；任务块内固定为 `label`、`description`、`doc`；每个选项块紧随其首个引用任务之后，选项之间按该任务 `option` 的声明顺序；不属于任何任务选项的孤儿选项置于末尾。
+- 新增任务或选项时，i18n 键追加到末尾即可，不要按语义插进中间——中间插入点的分歧正是过去 `zh_cn` 与 `en_us` 键序互相漂移的根因。
 - 大活动和小活动的主题 i18n 显示名统一使用全大写；新增或调整主题时，同时检查 `LargeEventTheme` 和 `SmallEventTheme` 的往期主题是否保持一致。
 - Go 测试从仓库根目录运行；Go module 位于 `agent\go-service`。
 - 若本次修改涉及 Go 相关代码，则在会话收尾时自动重新构建 Go（`agent\go-service`），确保改动后的 Go Agent 已编译可用；未改动 Go 代码时不构建。
@@ -94,7 +96,7 @@
     - `SmallEventEnterMainPage`、`SmallEventClickStage`、`SmallEventClickStageRepeatable`
 - 这些节点原先写 `Common/RedDot.png //占位，应该去task页面修改`，已不再需要占位——base 本身就是当前活动的真实配置。
 - `LargeEventEnterMission` 是**中性红点检测**（`Common/RedDot.png` + `Common/RedDotSP.png`），不是主题模板节点，**不要改动**。
-- `LargeEventMissionClaimed` 是**颜色阈值特例节点**（base 灰白 `[190,190,190]`~`[219,219,219]`，`ArkRanger` 覆盖为蓝紫 `[15,25,55]`~`[35,35,65]`）。它**不纳入 base 承载范围**，保持 base 原值；只有需要特例的主题才在自己的 case 里覆盖。
+- `LargeEventMissionClaimed` 是**颜色阈值特例节点**（base 灰白 `[190,190,190]`~~`[219,219,219]`，`ArkRanger` 覆盖为蓝紫 `[15,25,55]`~~`[35,35,65]`）。它**不纳入 base 承载范围**，保持 base 原值；只有需要特例的主题才在自己的 case 里覆盖。
 
 ### 适配新主题的操作顺序
 
