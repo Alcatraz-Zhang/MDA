@@ -58,6 +58,20 @@
             "permission_required": true
         },
         {
+            "name": "AAA",
+            "label": "$controller.AAA.label",
+            "description": "$controller.AAA.description",
+            "type": "Win32",
+            "win32": {
+                "class_regex": "UnityWndClass",
+                "window_regex": "(NIKKE|勝利女神：妮姬)",
+                "screencap": "ScreenDC",
+                "mouse": "Interception",
+                "keyboard": "Seize"
+            },
+            "permission_required": true
+        },
+        {
             "name": "ADB",
             "label": "$controller.ADB.label",
             "description": "$controller.ADB.description",
@@ -67,7 +81,9 @@
     "resource": [
         {
             "name": "国际服",
-            "path": ["./resource"]
+            "path": [
+                "./resource"
+            ]
         }
     ],
     "agent": {

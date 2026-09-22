@@ -7,6 +7,39 @@ import (
 
 // Register registers EquipmentReroll custom actions and recognitions.
 func Register() {
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollValuePrepareAction", &EquipmentRerollValuePrepareAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register value prepare")
+	}
+	if err := maa.AgentServerRegisterCustomRecognition("EquipmentRerollValueLocksVerifyRecognition", &EquipmentRerollValueLocksVerifyRecognition{}); err != nil {
+		log.Error().Err(err).Msg("failed to register value lock verification")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollValueLocksDoneAction", &EquipmentRerollValueLocksDoneAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register value lock commit")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollConfigCheckAction", &EquipmentRerollConfigCheckAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollConfigCheckAction")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollValueDecideAction", &EquipmentRerollValueDecideAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollValueDecideAction")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollFailAction", &EquipmentRerollFailAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollFailAction")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollLockAbortAction", &EquipmentRerollLockAbortAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollLockAbortAction")
+	}
+	if err := maa.AgentServerRegisterCustomRecognition("EquipmentRerollReloadLocksPlanRecognition", &EquipmentRerollReloadLocksPlanRecognition{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollReloadLocksPlanRecognition")
+	}
+	if err := maa.AgentServerRegisterCustomRecognition("EquipmentRerollReloadLocksVerifyRecognition", &EquipmentRerollReloadLocksVerifyRecognition{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollReloadLocksVerifyRecognition")
+	}
+	if err := maa.AgentServerRegisterCustomRecognition("EquipmentRerollCostRecognition", &EquipmentRerollCostRecognition{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollCostRecognition")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollReloadLocksDoneAction", &EquipmentRerollReloadLocksDoneAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollReloadLocksDoneAction")
+	}
 	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollScanBeginAction", &ScanBeginAction{}); err != nil {
 		log.Error().Err(err).Msg("failed to register EquipmentRerollScanBeginAction")
 	}
@@ -58,6 +91,9 @@ func Register() {
 	if err := maa.AgentServerRegisterCustomRecognition("EquipmentRerollMaterialCheckRecognition", &EquipmentRerollMaterialCheckRecognition{}); err != nil {
 		log.Error().Err(err).Msg("failed to register EquipmentRerollMaterialCheckRecognition")
 	}
+	if err := maa.AgentServerRegisterCustomRecognition("EquipmentRerollSyncInventoryRecognition", &EquipmentRerollSyncInventoryRecognition{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollSyncInventoryRecognition")
+	}
 	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollFinalSummaryAction", &EquipmentRerollFinalSummaryAction{}); err != nil {
 		log.Error().Err(err).Msg("failed to register EquipmentRerollFinalSummaryAction")
 	}
@@ -69,6 +105,9 @@ func Register() {
 	}
 	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollSingleScanRouteAction", &EquipmentRerollSingleScanRouteAction{}); err != nil {
 		log.Error().Err(err).Msg("failed to register EquipmentRerollSingleScanRouteAction")
+	}
+	if err := maa.AgentServerRegisterCustomAction("EquipmentRerollRetryGateAction", &EquipmentRerollRetryGateAction{}); err != nil {
+		log.Error().Err(err).Msg("failed to register EquipmentRerollRetryGateAction")
 	}
 	maa.AgentServerAddTaskerSink(&taskLifecycle{})
 }

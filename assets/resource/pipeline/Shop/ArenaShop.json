@@ -11,6 +11,8 @@
             "[JumpBack]ShopPurchaseElectricCodeManual",
             "[JumpBack]ShopPurchaseIronCodeManual",
             "[JumpBack]ShopPurchaseCodeManualSelectionBox",
+            "[JumpBack]ArenaShopPurchaseProfileCustomPack",
+            "[JumpBack]ArenaShopPurchaseManufacturerArmsFurnace",
             "CommonEndTask"
         ]
     },
@@ -57,7 +59,7 @@
         }
     },
     "ShopPurchaseFireCodeManual": {
-        "desc": "购买燃烧属性代码手册",
+        "desc": "购买H.S.T.A.代码手册",
         "enabled": false,
         "max_hit": 3,
         "recognition": {
@@ -78,7 +80,7 @@
         }
     },
     "ShopPurchaseWaterCodeManual": {
-        "desc": "购买水冷属性代码手册",
+        "desc": "购买P.S.I.D.代码手册",
         "enabled": false,
         "max_hit": 3,
         "recognition": {
@@ -99,7 +101,7 @@
         }
     },
     "ShopPurchaseWindCodeManual": {
-        "desc": "购买风压属性代码手册",
+        "desc": "购买A.N.M.I.代码手册",
         "enabled": false,
         "max_hit": 3,
         "recognition": {
@@ -120,7 +122,7 @@
         }
     },
     "ShopPurchaseElectricCodeManual": {
-        "desc": "购买电击属性代码手册",
+        "desc": "购买Z.E.U.S.代码手册",
         "enabled": false,
         "max_hit": 3,
         "recognition": {
@@ -141,7 +143,7 @@
         }
     },
     "ShopPurchaseIronCodeManual": {
-        "desc": "购买铁甲属性代码手册",
+        "desc": "购买D.M.T.R.代码手册",
         "enabled": false,
         "max_hit": 3,
         "recognition": {
@@ -175,6 +177,52 @@
                     325
                 ],
                 "template": "Shop/ArenaShop/CodeManualSelectionBox.png",
+                "threshold": 0.9
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "ArenaShopPurchaseProfileCustomPack": {
+        "desc": "购买简介个性化礼包",
+        "enabled": false,
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    58,
+                    338,
+                    1222,
+                    325
+                ],
+                "template": [
+                    "Shop/CommonShop/ProfileCustomPack.png" //与普通商店同一素材，竞技场商店内实测 0.9999
+                ],
+                "threshold": 0.9
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "ArenaShopPurchaseManufacturerArmsFurnace": {
+        "desc": "购买公司武器熔炉",
+        "enabled": false,
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    58,
+                    338,
+                    1222,
+                    325
+                ],
+                "template": [
+                    "Shop/ArenaShop/ManufacturerArmsFurnace.png" //按竞技场商店网格尺寸裁剪，换位置/尺寸需另裁
+                ],
                 "threshold": 0.9
             }
         },

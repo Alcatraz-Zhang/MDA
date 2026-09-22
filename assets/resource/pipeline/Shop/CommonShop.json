@@ -7,7 +7,9 @@
             "[JumpBack]ShopPurchaseFlow",
             "[JumpBack]ShopPurchaseFreeGoods",
             "[JumpBack]ShopPurchaseCoreDustCase",
-            "[JumpBack]ShopClickFreeReset",
+            "[JumpBack]ShopPurchaseProfileCustomPack",
+            "[JumpBack]ShopPurchaseDarlingForADay",
+            "[JumpBack]ShopClickFreeRefresh",
             "CommonEndTask"
         ]
     },
@@ -56,6 +58,7 @@
     },
     "ShopPurchaseFreeGoods": {
         "desc": "购买免费商品",
+        "enabled": false,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -72,11 +75,11 @@
         },
         "action": {
             "type": "Click"
-        },
-        "post_wait_freezes": 2000
+        }
     },
     "ShopPurchaseCoreDustCase": {
         "desc": "购买芯尘盒",
+        "enabled": false,
         "max_hit": 2,
         "recognition": {
             "type": "TemplateMatch",
@@ -97,8 +100,55 @@
             "type": "Click"
         }
     },
-    "ShopClickFreeReset": {
+    "ShopPurchaseProfileCustomPack": {
+        "desc": "购买简介个性化礼包",
+        "enabled": false,
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    58,
+                    338,
+                    1222,
+                    325
+                ],
+                "template": [
+                    "Shop/CommonShop/ProfileCustomPack.png"
+                ],
+                "threshold": 0.9
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "ShopPurchaseDarlingForADay": {
+        "desc": "购买指挥官自由使用券",
+        "enabled": false,
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    58,
+                    338,
+                    1222,
+                    325
+                ],
+                "template": [
+                    "Shop/Voucher/DarlingForADay.png"
+                ],
+                "threshold": 0.9
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "ShopClickFreeRefresh": {
         "desc": "免费刷新",
+        "enabled": false,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -109,7 +159,7 @@
                     27
                 ],
                 "template": [
-                    "Shop/CommonShop/FreeReset.png"
+                    "Shop/CommonShop/FreeRefresh.png"
                 ]
             }
         },
@@ -125,11 +175,11 @@
             }
         },
         "next": [
-            "ShopConfirmReset",
-            "ShopClickFreeReset"
+            "ShopConfirmRefresh",
+            "ShopClickFreeRefresh"
         ]
     },
-    "ShopConfirmReset": {
+    "ShopConfirmRefresh": {
         "desc": "确认刷新",
         "recognition": {
             "type": "TemplateMatch",
@@ -151,7 +201,7 @@
         "post_wait_freezes": 1000
     },
     "ShopGemVisible": {
-        "desc": "宝珠可见",
+        "desc": "珠宝可见",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
