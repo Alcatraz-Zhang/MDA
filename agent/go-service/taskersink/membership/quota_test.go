@@ -7,14 +7,17 @@ import (
 	"time"
 )
 
+// testStatus 返回一个处于有效订阅周期内的会员状态。订阅周期取“今天起一个月”，
+// 专项额度的失效时刻因此永远晚于常规额度（次日 4 点），测试不会随真实日期漂移。
 func testStatus(minutes int, device string) *MembershipStatus {
+	today := time.Now().In(beijingLocation)
 	return &MembershipStatus{
 		TierCode:                   "orange_free",
 		TierName:                   "Orange Free",
 		DailyRuntimeMinutes:        minutes,
 		RegularDailyRuntimeMinutes: minutes,
-		StartsOn:                   "2026-05-01",
-		ExpiresOn:                  "2026-06-01",
+		StartsOn:                   today.Format("2006-01-02"),
+		ExpiresOn:                  today.AddDate(0, 1, 0).Format("2006-01-02"),
 		DeviceCode: DeviceCodeV7{
 			CPUHash: device,
 		},
@@ -370,7 +373,7 @@ func TestAddQuotaUsageUsesBillableDuration(t *testing.T) {
 	}
 }
 
-func TestSpecialThenRegularRouteConsumesSpecialFirstThenRegular(t *testing.T) {
+func TestRouteConsumesRegularBeforeSpecial(t *testing.T) {
 	isolateQuotaState(t)
 	status := testStatus(10, "device-a")
 	status.IsMember = true
@@ -382,11 +385,34 @@ func TestSpecialThenRegularRouteConsumesSpecialFirstThenRegular(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AddQuotaRouteUsageSeconds() failed: %v", err)
 	}
-	if snapshot.SpecialUsedSeconds != 60 {
-		t.Fatalf("SpecialUsedSeconds = %d, want 60", snapshot.SpecialUsedSeconds)
+	if snapshot.SpecialUsedSeconds != 0 {
+		t.Fatalf("SpecialUsedSeconds = %d, want 0 (regular quota is charged first)", snapshot.SpecialUsedSeconds)
 	}
-	if snapshot.RegularUsedSeconds != 30 {
-		t.Fatalf("RegularUsedSeconds = %d, want 30", snapshot.RegularUsedSeconds)
+	if snapshot.RegularUsedSeconds != 90 {
+		t.Fatalf("RegularUsedSeconds = %d, want 90", snapshot.RegularUsedSeconds)
+	}
+}
+
+func TestRouteSpillsIntoSpecialAfterRegularIsFull(t *testing.T) {
+	isolateQuotaState(t)
+	status := testStatus(1, "device-a") // 常规额度 60 秒
+	status.IsMember = true
+	status.TierCode = "orange_plus"
+	status.TierName = "Orange Plus"
+	status.SpecialPeriodRuntimeMinutes = 1 // 专项额度 60 秒
+
+	snapshot, exhausted, err := addQuotaRouteUsageSeconds(status, quotaRouteSpecialThenRegular, 90)
+	if err != nil {
+		t.Fatalf("addQuotaRouteUsageSeconds() failed: %v", err)
+	}
+	if exhausted {
+		t.Fatal("special quota still remains, so the route must not report exhaustion")
+	}
+	if snapshot.RegularUsedSeconds != 60 {
+		t.Fatalf("RegularUsedSeconds = %d, want 60", snapshot.RegularUsedSeconds)
+	}
+	if snapshot.SpecialUsedSeconds != 30 {
+		t.Fatalf("SpecialUsedSeconds = %d, want 30", snapshot.SpecialUsedSeconds)
 	}
 }
 
@@ -406,7 +432,7 @@ func TestAddQuotaRouteUsageCapsAtDailyLimit(t *testing.T) {
 	}
 }
 
-func TestSpecialRouteAvailableFallsBackToRegular(t *testing.T) {
+func TestSpecialRouteFallsBackToRegularWhenSpecialQuotaUnavailable(t *testing.T) {
 	isolateQuotaState(t)
 	status := testStatus(10, "device-a")
 	status.SpecialPeriodRuntimeMinutes = 0
@@ -418,18 +444,24 @@ func TestSpecialRouteAvailableFallsBackToRegular(t *testing.T) {
 	if !ok {
 		t.Fatalf("special route should fall back to regular quota")
 	}
-	if !snapshot.FallbackToRegular {
-		t.Fatalf("FallbackToRegular = false, want true")
+	if snapshot.Pool != quotaPoolRegularDaily {
+		t.Fatalf("Pool = %s, want %s", snapshot.Pool, quotaPoolRegularDaily)
+	}
+	if snapshot.SpecialRemainingSeconds != 0 {
+		t.Fatalf("SpecialRemainingSeconds = %d, want 0", snapshot.SpecialRemainingSeconds)
 	}
 }
 
 func TestSpecialPeriodResetsWhenSubscriptionPeriodChanges(t *testing.T) {
-	isolateQuotaState(t)
+	path := isolateQuotaState(t)
 	status := testStatus(10, "device-a")
 	status.SpecialPeriodRuntimeMinutes = 1
-	if _, err := AddQuotaRouteUsageSeconds(status, quotaRouteSpecialThenRegular, 60); err != nil {
-		t.Fatalf("AddQuotaRouteUsageSeconds() failed: %v", err)
-	}
+	// 常规额度优先扣减，专项额度只会在常规额度打满后被动用，因此这里直接构造已用尽状态。
+	state := normalizeQuotaPools(status, quotaState{}, []quotaPool{quotaPoolRegularDaily, quotaPoolSpecialPeriod}, time.Now())
+	special := state.Pools[string(quotaPoolSpecialPeriod)]
+	special.UsedSeconds = special.LimitSeconds
+	state.Pools[string(quotaPoolSpecialPeriod)] = special
+	mustSaveQuotaState(t, path, state)
 
 	status.StartsOn = "2026-06-01"
 	status.ExpiresOn = "2026-07-01"

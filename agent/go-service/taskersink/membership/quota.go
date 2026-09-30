@@ -6,8 +6,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 	"sync"
 	"time"
 
@@ -19,7 +22,7 @@ type quotaPool string
 type quotaRoute string
 
 const (
-	quotaStateVersion                = 4
+	quotaStateVersion                = 5
 	quotaPoolRegularDaily  quotaPool = "regular_daily"
 	quotaPoolSpecialPeriod quotaPool = "special_period"
 	quotaPoolEvent         quotaPool = "event"
@@ -41,8 +44,12 @@ type quotaCouponRedemption struct {
 	DeviceHash string          `json:"device_hash,omitempty"`
 }
 
+// eventQuotaGrant 是一笔活动额度的发放记录。
+// ExpiresAt 为空表示永久有效；否则为 RFC3339 时间戳，到期后该笔额度不再计入剩余、
+// 也不再参与扣减，但记录会保留下来供「额度显示」提示用户。
 type eventQuotaGrant struct {
 	TaskEntry    string `json:"task_entry,omitempty"`
+	ExpiresAt    string `json:"expires_at,omitempty"`
 	LimitSeconds int64  `json:"limit_seconds"`
 	UsedSeconds  int64  `json:"used_seconds"`
 }
@@ -67,7 +74,6 @@ type QuotaSnapshot struct {
 	Route                   quotaRoute
 	PeriodKey               string
 	PeriodLabel             string
-	FallbackToRegular       bool
 	TierName                string
 	TierCode                string
 	LimitSeconds            int64
@@ -439,24 +445,11 @@ func snapshotFromState(status *MembershipStatus, state quotaState, pools ...quot
 	}
 }
 
+// routeSnapshotFromState 组装指定路由的额度快照。活动额度不再优先扣减，因此它只作为
+// 一个独立字段参与展示与可用性判断，不覆盖主池（常规/专项）的统计口径。
 func routeSnapshotFromState(status *MembershipStatus, state quotaState, route quotaRoute, entries ...string) QuotaSnapshot {
 	snapshot := baseRouteSnapshotFromState(status, state, route)
 	snapshot.EventRemainingSeconds = eventQuotaRemaining(state, firstEntry(entries))
-	if !snapshot.UnlimitedRuntime && snapshot.EventRemainingSeconds > 0 {
-		snapshot.Pool = quotaPoolEvent
-		snapshot.LimitSeconds = 0
-		snapshot.UsedSeconds = 0
-		for _, grant := range state.EventGrants {
-			if grant.TaskEntry == "" || grant.TaskEntry == firstEntry(entries) {
-				snapshot.LimitSeconds += grant.LimitSeconds
-				snapshot.UsedSeconds += grant.UsedSeconds
-			}
-		}
-		snapshot.PeriodKey = ""
-		snapshot.PeriodLabel = "event_grant"
-		snapshot.RemainingSeconds = snapshot.EventRemainingSeconds
-		snapshot.FallbackToRegular = false
-	}
 	return snapshot
 }
 
@@ -470,7 +463,9 @@ func baseRouteSnapshotFromState(status *MembershipStatus, state quotaState, rout
 		return regular
 	}
 
-	if route == quotaRouteSpecialThenRegular && special.RemainingSeconds > 0 {
+	// 扣减顺序为“常规 → 专项 → 活动”，常规额度因此是主池；只有常规额度已经用尽、
+	// 而该路由仍可用专项额度时，才把专项额度作为当前正在扣减的池展示。
+	if route == quotaRouteSpecialThenRegular && regular.RemainingSeconds <= 0 && special.RemainingSeconds > 0 {
 		special.Route = route
 		special.SpecialLimitSeconds = special.LimitSeconds
 		special.SpecialUsedSeconds = special.UsedSeconds
@@ -482,7 +477,6 @@ func baseRouteSnapshotFromState(status *MembershipStatus, state quotaState, rout
 	}
 
 	regular.Route = route
-	regular.FallbackToRegular = route == quotaRouteSpecialThenRegular && special.RemainingSeconds <= 0
 	regular.SpecialLimitSeconds = special.LimitSeconds
 	regular.SpecialUsedSeconds = special.UsedSeconds
 	regular.SpecialRemainingSeconds = special.RemainingSeconds
@@ -490,6 +484,16 @@ func baseRouteSnapshotFromState(status *MembershipStatus, state quotaState, rout
 	regular.RegularUsedSeconds = regular.UsedSeconds
 	regular.RegularRemainingSeconds = regular.RemainingSeconds
 	return regular
+}
+
+// quotaReserveSeconds 汇总该路由下所有额度池的剩余计费秒数，仅用于决定下一次额度 tick
+// 的间隔：剩余越多，检查可以越稀疏。常规额度被用尽后仍可由活动额度支撑，因此不能只
+// 看主池剩余，否则会退化成每 5 秒一次的密集读写。
+func quotaReserveSeconds(snapshot QuotaSnapshot) int64 {
+	if snapshot.UnlimitedRuntime {
+		return 0
+	}
+	return snapshot.RegularRemainingSeconds + snapshot.SpecialRemainingSeconds + snapshot.EventRemainingSeconds
 }
 
 func GetQuotaSnapshot(status *MembershipStatus, pool quotaPool) (QuotaSnapshot, error) {
@@ -577,13 +581,7 @@ func EnsureQuotaRouteAvailable(status *MembershipStatus, route quotaRoute, entri
 		return QuotaSnapshot{}, false, err
 	}
 	snapshot := routeSnapshotFromState(status, state, route, entries...)
-	if snapshot.UnlimitedRuntime || snapshot.EventRemainingSeconds > 0 {
-		return snapshot, true, nil
-	}
-	if route == quotaRouteSpecialThenRegular {
-		return snapshot, snapshot.SpecialRemainingSeconds > 0 || snapshot.RegularRemainingSeconds > 0, nil
-	}
-	return snapshot, snapshot.RegularRemainingSeconds > 0, nil
+	return snapshot, quotaAvailableForRoute(status, route, state, firstEntry(entries)), nil
 }
 
 func AddQuotaRouteUsageSeconds(status *MembershipStatus, route quotaRoute, seconds int64) (QuotaSnapshot, error) {
@@ -614,52 +612,122 @@ func addQuotaRouteUsageSeconds(status *MembershipStatus, route quotaRoute, secon
 		return QuotaSnapshot{}, false, err
 	}
 	state = normalizeQuotaPools(status, state, []quotaPool{quotaPoolRegularDaily, quotaPoolSpecialPeriod}, now)
-	if isRuntimeQuotaSubject(status) {
-		seconds = consumeEventQuota(&state, "", seconds)
-	}
-	exhausted := chargeQuotaPools(status, route, seconds, &state, now)
+	_, exhausted := chargeQuotaByPriority(status, "", route, seconds, false, &state, now)
 	if err := saveQuotaState(path, state); err != nil {
 		return QuotaSnapshot{}, false, err
 	}
 	return routeSnapshotFromState(status, state, route), exhausted, nil
 }
 
-// chargeQuotaPools 按路由把 billable 秒数写入对应额度池，返回是否将常规额度耗尽。
-func chargeQuotaPools(status *MembershipStatus, route quotaRoute, seconds int64, state *quotaState, now time.Time) bool {
-	exhausted := false
-	if !isRuntimeQuotaSubject(status) {
-		return exhausted
+// quotaPoolRemaining 返回额度池的剩余秒数（下限为 0）。
+func quotaPoolRemaining(state quotaState, pool quotaPool) int64 {
+	poolState := state.Pools[string(pool)]
+	remaining := poolState.LimitSeconds - poolState.UsedSeconds
+	if remaining < 0 {
+		return 0
 	}
-	updatedAt := now.Format(time.RFC3339)
-	regularState := state.Pools[string(quotaPoolRegularDaily)]
-	specialState := state.Pools[string(quotaPoolSpecialPeriod)]
-	regularCharge := seconds
-	if route == quotaRouteSpecialThenRegular {
-		specialRemaining := specialState.LimitSeconds - specialState.UsedSeconds
-		if specialRemaining < 0 {
-			specialRemaining = 0
-		}
-		specialCharge := seconds
-		if specialCharge > specialRemaining {
-			specialCharge = specialRemaining
-		}
-		if specialCharge > 0 {
-			specialState.UsedSeconds += specialCharge
-			specialState.UpdatedAt = updatedAt
-			state.Pools[string(quotaPoolSpecialPeriod)] = specialState
-		}
-		regularCharge = seconds - specialCharge
-	}
-	if regularCharge > 0 {
-		regularState, exhausted = addQuotaPoolUsage(regularState, regularCharge)
-		regularState.UpdatedAt = updatedAt
-		state.Pools[string(quotaPoolRegularDaily)] = regularState
-	}
-	return exhausted
+	return remaining
 }
 
-// addQuotaRouteUsageRealSeconds 根据任务 entry 和当前专项额度剩余动态计算倍率，
-// 并在同一次文件锁内完成扣费，避免每个 tick 重复读写额度状态文件。
+// quotaReserveAvailable 判断该路由下是否还有常规额度之外的可用额度：
+// 活动额度，或高级任务路由下的专项额度。这两类额度都按实际时长（1 倍）扣减。
+func quotaReserveAvailable(route quotaRoute, state quotaState, entry string) bool {
+	if eventQuotaRemaining(state, entry) > 0 {
+		return true
+	}
+	return route == quotaRouteSpecialThenRegular && quotaPoolRemaining(state, quotaPoolSpecialPeriod) > 0
+}
+
+// quotaAvailableForRoute 判断该路由下是否还有任一可扣减的额度池。
+// 与 EnsureQuotaRouteAvailable 的放行口径保持一致：常规额度被打满并不等于任务必须
+// 停止，只要活动额度（或高级任务的专项额度）仍有剩余就应继续运行。
+func quotaAvailableForRoute(status *MembershipStatus, route quotaRoute, state quotaState, entry string) bool {
+	if !isRuntimeQuotaSubject(status) {
+		return true
+	}
+	if quotaReserveAvailable(route, state, entry) {
+		return true
+	}
+	return quotaPoolRemaining(state, quotaPoolRegularDaily) > 0
+}
+
+// billableSecondsToReal 把计费秒数按倍率还原为实际秒数（向下取整）。
+// 用于常规额度被打满时，把溢出的计费额度交还给后续额度池。
+func billableSecondsToReal(billable, permille int64) int64 {
+	if billable <= 0 {
+		return 0
+	}
+	if permille <= 0 {
+		permille = multiplierScale
+	}
+	return (billable*multiplierScale + permille - 1) / permille
+}
+
+// chargeQuotaByPriority 按“最早失效优先”的顺序扣减 realSeconds，返回本次实际使用的
+// 倍率，以及该路由下所有额度来源是否都已耗尽。
+//
+// 顺序由 quotaChargeOrder 统一决定：常规额度按业务日失效，专项额度按订阅周期失效，
+// 每笔活动额度各按自己的期限失效，谁先失效谁先被消耗。这样会员每天的常规额度不会因为
+// 手里攒着活动额度而被整日闲置，即将到期的活动额度也不会被更晚失效的专项额度挤掉。
+//
+// 倍率由实际扣减的额度池决定：高级任务消耗常规额度时按 5 倍计费，专项额度与活动额度
+// 始终按实际时长（1 倍）扣减。
+func chargeQuotaByPriority(status *MembershipStatus, entry string, route quotaRoute, realSeconds int64, flush bool, state *quotaState, now time.Time) (quotaMultiplier, bool) {
+	if !isRuntimeQuotaSubject(status) || realSeconds <= 0 {
+		return unmultipliedQuotaMultiplier(), false
+	}
+
+	updatedAt := now.Format(time.RFC3339)
+	remainingReal := realSeconds
+	// 本次实际使用的倍率：只有从常规额度扣费时才可能高于 1 倍。
+	usedRegular := false
+
+	for _, source := range quotaChargeOrder(status, route, *state, entry, now) {
+		if remainingReal <= 0 {
+			break
+		}
+		switch source.pool {
+		case quotaPoolRegularDaily:
+			// 常规额度按倍率计费（高级任务 5 倍）；打满时把溢出的计费额度还原成实际
+			// 秒数，交给后面失效更晚的额度来源。
+			regularMultiplier := regularQuotaMultiplier(entry)
+			usedRegular = true
+			available := quotaPoolRemaining(*state, quotaPoolRegularDaily)
+			regular := state.Pools[string(quotaPoolRegularDaily)]
+			billable := regularMultiplier.billableSecondsFromReal(remainingReal, flush)
+			if billable < available {
+				regular.UsedSeconds += billable
+				remainingReal = 0
+			} else {
+				regular.UsedSeconds = regular.LimitSeconds
+				remainingReal = billableSecondsToReal(billable-available, regularMultiplier.totalPermille())
+			}
+			regular.UpdatedAt = updatedAt
+			state.Pools[string(quotaPoolRegularDaily)] = regular
+		case quotaPoolSpecialPeriod:
+			special := state.Pools[string(quotaPoolSpecialPeriod)]
+			charge := min(remainingReal, quotaPoolRemaining(*state, quotaPoolSpecialPeriod))
+			special.UsedSeconds += charge
+			special.UpdatedAt = updatedAt
+			state.Pools[string(quotaPoolSpecialPeriod)] = special
+			remainingReal -= charge
+		case quotaPoolEvent:
+			grant := &state.EventGrants[source.grantIndex]
+			charge := min(remainingReal, grant.LimitSeconds-grant.UsedSeconds)
+			grant.UsedSeconds += charge
+			remainingReal -= charge
+		}
+	}
+
+	if usedRegular {
+		return regularQuotaMultiplier(entry), !quotaAvailableForRoute(status, route, *state, entry)
+	}
+	return unmultipliedQuotaMultiplier(), !quotaAvailableForRoute(status, route, *state, entry)
+}
+
+// addQuotaRouteUsageRealSeconds 根据任务 entry 与当前额度池状态动态计算倍率，
+// 并按最早失效优先的顺序在同一次文件锁内完成扣费，
+// 避免每个 tick 重复读写额度状态文件。
 // 注意：quotaMu 与文件锁必须按“quotaMu → 文件锁”的顺序同时持有、整体释放，
 // 与其他配额路径保持一致；若持文件锁期间再等 quotaMu，会造成锁序倒置死锁。
 func addQuotaRouteUsageRealSeconds(status *MembershipStatus, entry string, route quotaRoute, realSeconds int64, flush bool) (QuotaSnapshot, quotaMultiplier, bool, error) {
@@ -690,23 +758,7 @@ func addQuotaRouteUsageRealSeconds(status *MembershipStatus, entry string, route
 	}
 	state = normalizeQuotaPools(status, state, []quotaPool{quotaPoolRegularDaily, quotaPoolSpecialPeriod}, now)
 
-	if isRuntimeQuotaSubject(status) {
-		realSeconds = consumeEventQuota(&state, entry, realSeconds)
-	}
-	// 专项额度覆盖的部分按实际秒数扣减，越界的剩余部分重新计算日常倍率。
-	if isRuntimeQuotaSubject(status) && route == quotaRouteSpecialThenRegular {
-		special := state.Pools[string(quotaPoolSpecialPeriod)]
-		charge := min(realSeconds, max(int64(0), special.LimitSeconds-special.UsedSeconds))
-		special.UsedSeconds += charge
-		special.UpdatedAt = now.Format(time.RFC3339)
-		state.Pools[string(quotaPoolSpecialPeriod)] = special
-		realSeconds -= charge
-	}
-	multiplier := multiplierForEntry(entry, false)
-	billableSeconds := multiplier.billableSecondsFromReal(realSeconds, flush)
-	exhausted := chargeQuotaPools(status, quotaRouteRegular, billableSeconds, &state, now)
-	current := routeSnapshotFromState(status, state, route, entry)
-	multiplier = multiplierForEntry(entry, current.EventRemainingSeconds > 0 || (route == quotaRouteSpecialThenRegular && current.SpecialRemainingSeconds > 0))
+	multiplier, exhausted := chargeQuotaByPriority(status, entry, route, realSeconds, flush, &state, now)
 	if err := saveQuotaState(path, state); err != nil {
 		return QuotaSnapshot{}, multiplier, false, err
 	}
@@ -728,9 +780,29 @@ func firstEntry(entries []string) string {
 	return ""
 }
 
+// eventGrantActive 判断一笔活动额度是否仍在有效期内。未设置到期时间表示永久有效；
+// 到期时间无法解析时同样按永久处理，避免脏数据让用户平白丢失额度。
+func eventGrantActive(grant eventQuotaGrant, now time.Time) bool {
+	if grant.ExpiresAt == "" {
+		return true
+	}
+	expiresAt, err := time.Parse(time.RFC3339, grant.ExpiresAt)
+	if err != nil {
+		return true
+	}
+	return now.Before(expiresAt)
+}
+
 func eventQuotaRemaining(state quotaState, entry string) int64 {
+	return eventQuotaRemainingAt(state, entry, time.Now())
+}
+
+func eventQuotaRemainingAt(state quotaState, entry string, now time.Time) int64 {
 	var remaining int64
 	for _, grant := range state.EventGrants {
+		if !eventGrantActive(grant, now) {
+			continue
+		}
 		if (grant.TaskEntry == "" || grant.TaskEntry == entry) && grant.LimitSeconds > grant.UsedSeconds {
 			remaining += grant.LimitSeconds - grant.UsedSeconds
 		}
@@ -738,22 +810,132 @@ func eventQuotaRemaining(state quotaState, entry string) int64 {
 	return remaining
 }
 
-// consumeEventQuota 优先使用指定任务的福利，再使用通用福利；返回未覆盖的实际秒数。
-func consumeEventQuota(state *quotaState, entry string, seconds int64) int64 {
-	for _, restricted := range []bool{true, false} {
-		for i := range state.EventGrants {
-			grant := &state.EventGrants[i]
-			if (grant.TaskEntry != "") != restricted || (grant.TaskEntry != "" && grant.TaskEntry != entry) {
-				continue
-			}
-			available := grant.LimitSeconds - grant.UsedSeconds
-			if available <= 0 || seconds <= 0 {
-				continue
-			}
-			charge := min(available, seconds)
-			grant.UsedSeconds += charge
-			seconds -= charge
-		}
+// formatEventGrantExpiry 把发放项的到期时间格式化为北京时间文本；永久有效返回空串。
+func formatEventGrantExpiry(grant eventQuotaGrant) string {
+	if grant.ExpiresAt == "" {
+		return ""
 	}
-	return seconds
+	expiresAt, err := time.Parse(time.RFC3339, grant.ExpiresAt)
+	if err != nil {
+		return ""
+	}
+	return expiresAt.In(beijingLocation).Format("2006-01-02 15:04")
+}
+
+// eventGrantExpiry 返回用于排序的到期时间戳。永久有效的发放项返回 math.MaxInt64，
+// 从而始终排在有时限的发放项之后。
+func eventGrantExpiry(grant eventQuotaGrant) int64 {
+	if grant.ExpiresAt == "" {
+		return math.MaxInt64
+	}
+	expiresAt, err := time.Parse(time.RFC3339, grant.ExpiresAt)
+	if err != nil {
+		return math.MaxInt64
+	}
+	return expiresAt.Unix()
+}
+
+// eventGrantCandidates 返回本次可用于 entry 且尚未用尽的活动额度发放项下标。
+// 每张券兑换来的额度都是独立的一笔（各自计时、各自过期），这里只做过滤，
+// 与常规/专项额度之间的先后顺序统一交给 quotaChargeOrder。
+func eventGrantCandidates(grants []eventQuotaGrant, entry string, now time.Time) []int {
+	candidates := make([]int, 0, len(grants))
+	for i, grant := range grants {
+		if !eventGrantActive(grant, now) {
+			continue
+		}
+		if grant.TaskEntry != "" && grant.TaskEntry != entry {
+			continue
+		}
+		if grant.LimitSeconds <= grant.UsedSeconds {
+			continue
+		}
+		candidates = append(candidates, i)
+	}
+	return candidates
+}
+
+// regularQuotaExpiry 返回当前业务日常规额度的失效时刻：下一个业务日的 4:00（北京时间）。
+func regularQuotaExpiry(now time.Time) time.Time {
+	beijing := now.In(beijingLocation)
+	businessDay := beijing.Add(-4 * time.Hour)
+	return time.Date(businessDay.Year(), businessDay.Month(), businessDay.Day(), 4, 0, 0, 0, beijingLocation).AddDate(0, 0, 1)
+}
+
+// specialQuotaExpiry 返回当前订阅周期专项额度的失效时刻（订阅到期日的次日 0 点）。
+// 订阅信息缺失或无法解析时返回零值时间，由 quotaExpiryUnix 按“最晚失效”处理。
+func specialQuotaExpiry(status *MembershipStatus) time.Time {
+	if status == nil {
+		return time.Time{}
+	}
+	expiresOn, err := time.ParseInLocation("2006-01-02", strings.TrimSpace(status.ExpiresOn), beijingLocation)
+	if err != nil {
+		return time.Time{}
+	}
+	return expiresOn.AddDate(0, 0, 1)
+}
+
+// quotaExpiryUnix 把失效时刻转换为可比较的时间戳；零值时间按“最晚”处理。
+func quotaExpiryUnix(expiry time.Time) int64 {
+	if expiry.IsZero() {
+		return math.MaxInt64
+	}
+	return expiry.Unix()
+}
+
+// quotaChargeSource 描述一个可扣减的额度来源。
+type quotaChargeSource struct {
+	pool       quotaPool
+	grantIndex int
+	expiry     int64
+	rank       int
+}
+
+// quotaChargeOrder 汇总本次可用于该路由的额度来源，按“最早失效优先”排序。
+//
+// 顺序不再是固定的“常规 → 专项 → 活动”，而是统一按失效时刻升序排列：常规额度按业务日
+// 失效，专项额度按订阅周期失效，每笔活动额度各按自己的期限失效。固定顺序会在“专项额度
+// 还有一个月、而某笔活动额度三天后到期”时放过即将作废的那笔；反过来，当活动额度是永久
+// 的、而专项额度本周期即将结束时，专项额度又会正确地排到活动额度之前。
+//
+// 失效时刻相同时按额度池排序（常规 → 专项 → 活动）；同为活动额度时，限定任务的额度优先
+// 于通用额度——它只服务于当前任务，对本任务而言更“易浪费”。排序稳定，完全并列时保持
+// 原有兑换顺序。
+func quotaChargeOrder(status *MembershipStatus, route quotaRoute, state quotaState, entry string, now time.Time) []quotaChargeSource {
+	sources := make([]quotaChargeSource, 0, len(state.EventGrants)+2)
+	if quotaPoolRemaining(state, quotaPoolRegularDaily) > 0 {
+		sources = append(sources, quotaChargeSource{
+			pool:       quotaPoolRegularDaily,
+			grantIndex: -1,
+			expiry:     regularQuotaExpiry(now).Unix(),
+			rank:       0,
+		})
+	}
+	if route == quotaRouteSpecialThenRegular && quotaPoolRemaining(state, quotaPoolSpecialPeriod) > 0 {
+		sources = append(sources, quotaChargeSource{
+			pool:       quotaPoolSpecialPeriod,
+			grantIndex: -1,
+			expiry:     quotaExpiryUnix(specialQuotaExpiry(status)),
+			rank:       1,
+		})
+	}
+	for _, index := range eventGrantCandidates(state.EventGrants, entry, now) {
+		rank := 3
+		if state.EventGrants[index].TaskEntry != "" {
+			rank = 2
+		}
+		sources = append(sources, quotaChargeSource{
+			pool:       quotaPoolEvent,
+			grantIndex: index,
+			expiry:     eventGrantExpiry(state.EventGrants[index]),
+			rank:       rank,
+		})
+	}
+	sort.SliceStable(sources, func(a, b int) bool {
+		if sources[a].expiry != sources[b].expiry {
+			return sources[a].expiry < sources[b].expiry
+		}
+		return sources[a].rank < sources[b].rank
+	})
+	return sources
 }

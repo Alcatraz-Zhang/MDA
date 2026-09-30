@@ -65,7 +65,11 @@ MDA includes a variety of tasks covering dailies, events, and utilities — all 
 - 🗺️ **Auto Map Pushing**: Automatically click monsters to fight and trigger mechanisms to push through main stages.
 - 🔴 **Clear Red Dots**: Automatically clear red-dot notifications across supported interfaces.
 - 👥 **Friend Management**: Remove long-inactive friends and accept all friend requests.
-- 📊 **Quota Display**: Show today's used and remaining run quota; this task consumes no quota.
+- 📊 **Quota Display**: Show today's used and remaining run quota plus each task's remaining event quota (with expiry times); this task consumes no quota.
+
+> ⚠️ **Advanced tasks** (Auto Map Pushing, Effect Reroll, Custom Burst): consume regular quota at **5x**; special and event quota are charged at actual runtime.
+>
+> 💡 **Quota consumption order** is decided dynamically by earliest expiry: among regular quota (reset daily at 4 AM Beijing time), special quota (expires with the subscription period) and event quota (each coupon can carry its own validity, permanent when left blank), whichever expires first is consumed first. A member's daily regular quota is never displaced by event quota, and event quota about to expire is never skipped in favour of quota that expires later.
 
 ---
 
