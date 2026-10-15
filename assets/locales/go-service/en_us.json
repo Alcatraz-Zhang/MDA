@@ -60,7 +60,7 @@
     "tasker.equipment_reroll.lock_abort_page_unknown": "⚠️ After abandoning the lock and closing the lock page, neither the effect-change confirmation page nor the equipment details page could be recognized. The task stopped; return to equipment details and retry.",
     "tasker.equipment_reroll.operation_failed": "⚠️ Equipment reroll reached an unrecoverable page state. The task stopped; check the current page and retry.",
     "tasker.equipment_reroll.cost_unreadable": "⚠️ The confirmation page cost (custom modules / custom lock keys) could not be read within the retry limit. The task stopped to avoid spending materials at an unknown cost; check that the current page fully shows the material cost bar, then retry.",
-    "tasker.equipment_reroll.details_page_not_opened": "⚠️ The equipment details page did not open after repeatedly clicking the equipment. With background input methods (screencap FramePool/PrintWindow + mouse SendMessage/PostMessage) the game window may ignore synthetic clicks; switch to foreground methods (screencap ScreenDC + mouse Interception/Seize), keep the game window visible and unobstructed, then retry.",
+    "tasker.equipment_reroll.details_page_not_opened": "⚠️ The equipment details page did not open within the time limit after clicking the equipment. With background input methods (screencap FramePool/PrintWindow + mouse SendMessage/PostMessage) the game window may ignore synthetic clicks; switch to foreground methods (screencap ScreenDC + mouse Interception/Seize), keep the game window visible and unobstructed, then retry.",
     "tasker.equipment_reroll.config_invalid": "Invalid reroll configuration. Check the operation, scope and value targets (at least one tier from 1 to 15).",
     "tasker.equipment_reroll.value_invalid": "Cannot plan value reroll: %s. Further rerolls have stopped. Check the effects, values, locks and target settings.",
     "tasker.equipment_reroll.value_satisfied": "All selected value targets within the scope are satisfied. No reroll needed.",
@@ -124,5 +124,6 @@
     "tasker.quota_display.all_tasks": "All tasks",
     "tasker.quota_display.event": "🎁 Event quota (%s): about %d minutes remaining.",
     "tasker.quota_display.event_expires": "🎁 Event quota (%s): about %d minutes remaining, expires at %s.",
-    "tasker.quota_display.event_expired": "🎁 Event quota (%s): about %d minutes expired at %s and no longer counts toward available quota."
+    "tasker.quota_display.event_expired": "🎁 Event quota (%s): about %d minutes expired at %s and no longer counts toward available quota.",
+    "tasker.equipment_reroll.scan_unreadable": "Equipment effects or lock states could not be reliably verified. The task stopped before rerolling. Check the equipment details page; the failed slot and recognition text are recorded in the logs."
 }
