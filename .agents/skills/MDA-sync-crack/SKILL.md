@@ -57,17 +57,18 @@ git diff --name-only HEAD..upstream/main | python tools\crack_build_mode.py --fo
 
 **构建模式判断（关键）**：根据 `git diff --name-only` 的输出，决定后续 Step 6 用快速构建还是完整重构：
 
-| 改动类型 | 需要 `-Full`？ | 理由 |
-|---|---|---|
-| `deps/` 任何文件 | **是** | MaaFramework 核心库更新，必须复制新二进制 |
-| `agent/go-service/` 非 membership 目录的 `.go` 文件 | **是** | Go 源码逻辑变化，需完整编译 |
-| `tools/install.py` | **是** | 安装脚本本身有变，需用新版流程 |
-| `assets/` 新增/删除目录，或 `interface.json` 结构变更 | **是** | 资源结构变化，install 包需重新复制 |
-| 仅 `assets/resource/pipeline/*.json` | **否** | Pipeline 配置直接读取，go-only 即可 |
-| 仅 `.py` / `.mjs` / `.md` / `.yml` 脚本或文档 | **否** | 不影响二进制，go-only 即可 |
-| 仅 `.gitignore` | **否** | 纯 git 配置，go-only 即可 |
+| 改动类型                                              | 需要 `-Full`？ | 理由                                      |
+| ----------------------------------------------------- | -------------- | ----------------------------------------- |
+| `deps/` 任何文件                                      | **是**         | MaaFramework 核心库更新，必须复制新二进制 |
+| `agent/go-service/` 非 membership 目录的 `.go` 文件   | **是**         | Go 源码逻辑变化，需完整编译               |
+| `tools/install.py`                                    | **是**         | 安装脚本本身有变，需用新版流程            |
+| `assets/` 新增/删除目录，或 `interface.json` 结构变更 | **是**         | 资源结构变化，install 包需重新复制        |
+| 仅 `assets/resource/pipeline/*.json`                  | **否**         | Pipeline 配置直接读取，go-only 即可       |
+| 仅 `.py` / `.mjs` / `.md` / `.yml` 脚本或文档         | **否**         | 不影响二进制，go-only 即可                |
+| 仅 `.gitignore`                                       | **否**         | 纯 git 配置，go-only 即可                 |
 
 判断逻辑：
+
 - 优先使用 `tools\crack_build_mode.py` 对 `git diff --name-only` 的输出自动判定构建模式。
 - 如果输出 `mode=full` / `script_args=["-Full","-Yes"]` → 记录 `BUILD_MODE = "-Full"`，并在报告中说明 `reason`。
 - 如果输出 `mode=go-only` / `script_args=["-Yes"]` → 记录 `BUILD_MODE = "--build-go-only"`（默认快速构建），并在报告中说明 `reason`。
@@ -79,13 +80,13 @@ git diff --name-only HEAD..upstream/main | python tools\crack_build_mode.py --fo
 
 上游 diff 涉及以下路径时，**bypass 不一定继续生效**，必须看 diff 内容：
 
-| 路径 | 风险 | 检查动作 |
-|---|---|---|
-| `agent/go-service/taskersink/membership/memberdata.go` | **高** | 看 `isDebugVersion()` 是否还存在、`major < 1` 短路是否还在 |
-| `agent/go-service/taskersink/membership/action.go` | **中** | 看 `checkMembership()` 是否还消费 `isDebugVersion()` 返回值 |
-| `tools/install.py` | **中** | 看 `-ldflags -X main.Version=...` 注入语句是否还在 |
-| `.gitignore` | **低** | 看是否会破坏 `!tools/build-cracked.ps1` 的 negation |
-| 任何 pipeline JSON / 任何 `.py` / 任何资源 | **零** | 直接放行 |
+| 路径                                                   | 风险   | 检查动作                                                    |
+| ------------------------------------------------------ | ------ | ----------------------------------------------------------- |
+| `agent/go-service/taskersink/membership/memberdata.go` | **高** | 看 `isDebugVersion()` 是否还存在、`major < 1` 短路是否还在  |
+| `agent/go-service/taskersink/membership/action.go`     | **中** | 看 `checkMembership()` 是否还消费 `isDebugVersion()` 返回值 |
+| `tools/install.py`                                     | **中** | 看 `-ldflags -X main.Version=...` 注入语句是否还在          |
+| `.gitignore`                                           | **低** | 看是否会破坏 `!tools/build-cracked.ps1` 的 negation         |
+| 任何 pipeline JSON / 任何 `.py` / 任何资源             | **零** | 直接放行                                                    |
 
 绝大多数 upstream commit 只动 pipeline 和资源，零风险。若高风险路径有改动，**用 `git show <sha> -- <path>` 看具体 diff**，只在 bypass 路径被破坏时才需要 fallback（见 Step 7）。
 
@@ -106,11 +107,13 @@ git merge main -m "merge: sync from upstream/main"
 ```
 
 冲突最可能出现在：
+
 - `.gitignore`（如果上游也动了它）
 - `tools/build-cracked.ps1`（极罕见，上游不会写这个文件）
 - `AGENTS.md`（如果它存在于 crack 上且和上游版本分叉）
 
 **冲突解决原则**：
+
 1. `.gitignore`：保留上游所有改动 **+** 文末的 `!tools/build-cracked.ps1` negation 块（这是 crack 的核心，丢了构建脚本就没法 add 进 git）。
 2. `tools/build-cracked.ps1`：100% 用 crack 这边的版本（`git checkout --ours tools/build-cracked.ps1`）。
 3. 任何 Go 源码冲突：100% 用上游版本（`git checkout --theirs <file>`），因为 crack 不应该有 Go 源码修改。如果有，说明 fallback patch 被应用过了，要单独评估。
@@ -129,11 +132,13 @@ git commit --no-edit   # merge commit
 根据 Step 2 的构建模式判断执行对应的命令：
 
 **快速构建（默认，绝大多数情况）：**
+
 ```powershell
 pwsh tools\build-cracked.ps1 -Yes
 ```
 
 **完整重构（仅当 Step 2 判断需要 `-Full` 时）：**
+
 ```powershell
 pwsh tools\build-cracked.ps1 -Full -Yes
 ```
@@ -141,6 +146,7 @@ pwsh tools\build-cracked.ps1 -Full -Yes
 完整重构会额外执行：复制 `deps/bin`（MaaFramework 核心）、`assets/resource`、`assets/tasks`、`assets/locales`、`assets/interface.json` 到 `install/` 目录，并清理开发模式留下的 junction 链接。
 
 脚本会：
+
 1. 用 `-ldflags -X main.Version=v0.0.1` 重新构建 `install\agent\go-service.exe`
 2. 验证二进制里能找到 `v0.0.1` 字符串
 3. 验证二进制里能找到 `Debug version detected, bypassing membership verification` 日志字符串
