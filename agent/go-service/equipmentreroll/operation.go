@@ -1,6 +1,12 @@
 package equipmentreroll
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"strings"
+
+	"github.com/1204244136/MDA/agent/go-service/pkg/i18n"
+)
 
 // rerollOperation 描述重洗内容，与角色/单件范围无关。
 type rerollOperation string
@@ -28,7 +34,45 @@ func (c carrierConfig) validateOperation() error {
 		}
 		return c.ValueTargets.validate(15 * len(c.valueScope()))
 	}
+	if !c.isSingle() {
+		if c.GoalProblem != "" {
+			return &goalQuotaError{Problem: c.GoalProblem}
+		}
+		if c.AllowSubstitution {
+			if problem := substitutionProblem(c.Substitution); problem != "" {
+				return &goalQuotaError{Problem: problem}
+			}
+		}
+		// 无任何配额的旧配置仍可能依赖调用节点默认值，在最终入口再校验。
+		if c.quotaExplicit || len(c.Quota) > 0 {
+			if problem := goalQuotaProblem(c.Quota); problem != "" {
+				return &goalQuotaError{Problem: problem}
+			}
+		}
+	}
 	return nil
+}
+
+type goalQuotaError struct {
+	Problem string
+}
+
+func (e *goalQuotaError) Error() string {
+	return fmt.Sprintf("invalid equipment reroll target: %s", e.Problem)
+}
+
+func rerollConfigErrorMessage(err error) string {
+	var goalError *goalQuotaError
+	if errors.As(err, &goalError) {
+		if goalError.Problem == "empty quota" {
+			return i18n.T("tasker.equipment_reroll.goal_empty")
+		}
+		if strings.HasPrefix(goalError.Problem, "substitution:") {
+			return i18n.T("tasker.equipment_reroll.substitution_invalid")
+		}
+		return i18n.T("tasker.equipment_reroll.goal_invalid")
+	}
+	return i18n.T("tasker.equipment_reroll.config_invalid")
 }
 
 // rerollDecisionTarget 是扫描后的业务分发点，供后续结果返回链复用。

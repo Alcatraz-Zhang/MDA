@@ -57,7 +57,8 @@ type partNeedParam struct {
 	// Part 要判断的部位："头部"/"臂部"/"身躯"/"腿部"，或 "all" 表示判断四件全部达标。
 	Part string `json:"part"`
 	// GlobalQuota 自定义词条配额：-1 禁止 / 0 不要求 / 1~4 需求。
-	GlobalQuota map[string]int `json:"global_quota"`
+	GlobalQuota map[string]int   `json:"global_quota"`
+	Goals       []map[string]int `json:"-"`
 }
 
 func (p *partNeedParam) normalize() {
@@ -88,22 +89,25 @@ func (r *EquipmentRerollPartNeedRecognition) Run(ctx *maa.Context, arg *maa.Cust
 	params.normalize()
 
 	// 角色配额统一从承载点读取（attach.quota_* 优先，为空时回退本节点自带默认）。
-	params.GlobalQuota = loadCarrierConfig(ctx).resolveQuota(params.GlobalQuota)
-	if !quotaIsValid(params.GlobalQuota) {
-		log.Error().Str("component", "EquipmentReroll").Int64("task_id", arg.TaskID).Msg("part need recognition requires a valid 1 to 12 affix quota")
+	cfg := loadCarrierConfig(ctx)
+	if err := cfg.validateGoalQuotas(params.GlobalQuota); err != nil {
+		log.Error().Err(err).Str("component", "EquipmentReroll").Int64("task_id", arg.TaskID).Msg("part need recognition requires valid target alternatives")
 		return nil, false
 	}
+	params.Goals = cfg.resolveGoalQuotas(params.GlobalQuota)
 	return r.runQuota(arg, params)
 }
 
 func (r *EquipmentRerollPartNeedRecognition) runQuota(arg *maa.CustomRecognitionArg, params partNeedParam) (*maa.CustomRecognitionResult, bool) {
-	quota := normalizeQuota(params.GlobalQuota)
-	if !quotaIsValid(quota) {
+	goals := params.Goals
+	if len(goals) == 0 {
+		goals = []map[string]int{normalizeQuota(params.GlobalQuota)}
+	}
+	if !validGoalQuotas(goals) {
 		log.Error().
 			Str("component", "EquipmentReroll").
 			Int64("task_id", arg.TaskID).
-			Int("quota_total", quotaTotal(quota)).
-			Msg("custom quota requires 1 to 12 affixes")
+			Msg("custom target alternatives require valid quotas")
 		return nil, false
 	}
 
@@ -117,7 +121,7 @@ func (r *EquipmentRerollPartNeedRecognition) runQuota(arg *maa.CustomRecognition
 	}
 
 	if params.Part == partAll {
-		if AllPartsSatisfiedQuota(parts, quota) {
+		if allPartsSatisfiedQuotaAlternatives(parts, goals) {
 			log.Info().Str("component", "EquipmentReroll").Msg("all four parts satisfy custom quota target")
 			// 用户可见摘要由后继 EquipmentRerollFinalSummaryAction 统一通过 focus 输出。
 			return &maa.CustomRecognitionResult{Box: arg.Roi, Detail: "{}"}, true
@@ -125,7 +129,14 @@ func (r *EquipmentRerollPartNeedRecognition) runQuota(arg *maa.CustomRecognition
 		return nil, false
 	}
 
-	if !PartNeedsRerollQuota(parts, params.Part, quota) {
+	needsReroll := false
+	if len(goals) == 1 {
+		needsReroll = PartNeedsRerollQuota(parts, params.Part, goals[0])
+	} else {
+		selected, selectedOK := chooseBestPartForQuotaAlternativesWithMaterial(parts, goals, equipmentParts, lockMaterialForTask(arg.TaskID, ""))
+		needsReroll = selectedOK && selected == params.Part
+	}
+	if !needsReroll {
 		log.Info().Str("component", "EquipmentReroll").Str("part", params.Part).Msg("part already satisfies custom quota target")
 		return nil, false
 	}
@@ -141,7 +152,8 @@ func (r *EquipmentRerollPartNeedRecognition) runQuota(arg *maa.CustomRecognition
 // resultDecideParam 是 EquipmentRerollResultDecideRecognition 的参数。
 type resultDecideParam struct {
 	// GlobalQuota 自定义词条配额：-1 禁止 / 0 不要求 / 1~4 需求（角色模式）。
-	GlobalQuota map[string]int `json:"global_quota"`
+	GlobalQuota map[string]int   `json:"global_quota"`
+	Goals       []map[string]int `json:"-"`
 }
 
 func (p *resultDecideParam) normalize() {
@@ -181,7 +193,11 @@ func (r *EquipmentRerollResultDecideRecognition) Run(ctx *maa.Context, arg *maa.
 		return nil, false
 	}
 
-	changed, changedValues, changedRaw, ok := recognizeChangedEffects(ctx, arg.Img, resultSourceForTask(arg.TaskID))
+	// 全部任务选项统一从承载点读取；一次 Run 只读一次。
+	// 数值重洗保持效果种类不变，结果页名称读不出时可按本轮快照补齐，因此必须先取配置。
+	cfg := loadCarrierConfig(ctx)
+
+	changed, changedValues, changedRaw, ok := recognizeChangedEffects(ctx, arg.Img, resultSourceForTask(arg.TaskID), cfg.isValue())
 	if !ok {
 		log.Warn().
 			Str("component", "EquipmentReroll").
@@ -197,8 +213,6 @@ func (r *EquipmentRerollResultDecideRecognition) Run(ctx *maa.Context, arg *maa.
 		return nil, false
 	}
 
-	// 全部任务选项统一从承载点读取；一次 Run 只读一次。
-	cfg := loadCarrierConfig(ctx)
 	if err := cfg.validateOperation(); err != nil {
 		log.Error().Err(err).Msg("invalid result decision config")
 		return nil, false
@@ -227,11 +241,11 @@ func (r *EquipmentRerollResultDecideRecognition) Run(ctx *maa.Context, arg *maa.
 	}
 
 	// 角色配额：承载点 attach.quota_* 优先，为空时回退本节点自带默认。
-	params.GlobalQuota = cfg.resolveQuota(params.GlobalQuota)
-	if !quotaIsValid(params.GlobalQuota) {
-		log.Error().Str("component", "EquipmentReroll").Int64("task_id", arg.TaskID).Msg("result decide requires a valid 1 to 12 affix quota")
+	if err := cfg.validateGoalQuotas(params.GlobalQuota); err != nil {
+		log.Error().Err(err).Str("component", "EquipmentReroll").Int64("task_id", arg.TaskID).Msg("result decide requires valid target alternatives")
 		return nil, false
 	}
+	params.Goals = cfg.resolveGoalQuotas(params.GlobalQuota)
 	return r.decideQuota(arg, params, part, changed, changedValues, changedRaw)
 }
 
@@ -285,13 +299,15 @@ func (r *EquipmentRerollResultDecideRecognition) decideQuota(arg *maa.CustomReco
 		log.Error().Str("component", "EquipmentReroll").Msg("result decide part scan is missing")
 		return nil, false
 	}
-	quota := normalizeQuota(params.GlobalQuota)
-	if !quotaIsValid(quota) {
+	goals := params.Goals
+	if len(goals) == 0 {
+		goals = []map[string]int{normalizeQuota(params.GlobalQuota)}
+	}
+	if !validGoalQuotas(goals) {
 		log.Error().
 			Str("component", "EquipmentReroll").
 			Int64("task_id", arg.TaskID).
-			Int("quota_total", quotaTotal(quota)).
-			Msg("custom quota requires 1 to 12 affixes")
+			Msg("custom target alternatives require valid quotas")
 		return nil, false
 	}
 
@@ -315,15 +331,19 @@ func (r *EquipmentRerollResultDecideRecognition) decideQuota(arg *maa.CustomReco
 		// 而非旧积分制的"已匹配配额数 × 100 + 槽位结构分"。
 		// 使用与下一轮锁定相同的材料口径；已消耗的单次锁不能当成永久保护。
 		material := lockMaterialForScan(arg.TaskID, allParts[part])
-		currentCost := expectedModulesForQuotaWithMaterial(allParts, quota, material)
-		candidateCost := expectedModulesForQuotaWithMaterial(candidateParts, quota, material)
-		if candidateCost < currentCost-costDecisionEpsilon {
-			decision = ResultDecisionAccept
-		}
-		decisionDetail = fmt.Sprintf("current_cost=%.2f candidate_cost=%.2f", currentCost, candidateCost)
+		currentCost := expectedModulesForQuotaAlternativesWithMaterial(allParts, goals, material)
+		candidateCost := expectedModulesForQuotaAlternativesWithMaterial(candidateParts, goals, material)
+		decision = decideQuotaAlternativesByExpectedCost(allParts, candidateParts, goals, material)
+		decisionDetail = fmt.Sprintf("current_cost=%.2f candidate_cost=%.2f current_goals=%v candidate_goals=%v", currentCost, candidateCost,
+			independentGoalCosts(allParts, goals, material), independentGoalCosts(candidateParts, goals, material))
 	} else {
+		if len(goals) != 1 {
+			// 替换目标不能在残缺快照上逐词条拼接判定；保留现场等待完整状态。
+			log.Error().Int64("task_id", arg.TaskID).Msg("multi-goal result decision requires all four snapshots")
+			return nil, false
+		}
 		// 全局快照缺失时的降级路径（单件期望成本比较）。
-		decision = decideResultPageQuotaWithMaterial(current, changed, scan, quota, lockMaterialForScan(arg.TaskID, effectPostRollScan(scan)))
+		decision = decideResultPageQuotaWithMaterial(current, changed, scan, goals[0], lockMaterialForScan(arg.TaskID, effectPostRollScan(scan)))
 	}
 	stageResultDecision(arg.TaskID, part, decision, changed, changedValues)
 
@@ -360,8 +380,10 @@ func isTransientUnlockText(raw string) bool {
 // 槽位读到官方效果或"未获得效果"都有效；其他任何非空但未识别的文本（如 OCR 截断的
 // “击增加]”）都不能当作空槽，必须让整次识别失败并重试，避免因漏读目标词条导致误决策。
 // 本轮已锁且快照完整的槽位沿用快照；未锁槽的瞬时“已解除效果锁定”仍视为无效帧。
+// valueMode 为真时（数值重洗），读到数值但读不出官方词条名的槽位改用本轮变更前快照补齐，
+// 见 fillUnreadableEffectsFromSource。
 // 返回：effects（词条名）、values（从 OCR 原文提取的数值）、raws（OCR 原文）。
-func recognizeChangedEffects(ctx *maa.Context, img image.Image, source partScan) ([maxSlot]string, [maxSlot]string, [maxSlot]string, bool) {
+func recognizeChangedEffects(ctx *maa.Context, img image.Image, source partScan, valueMode bool) ([maxSlot]string, [maxSlot]string, [maxSlot]string, bool) {
 	if ctx == nil || img == nil {
 		return [maxSlot]string{}, [maxSlot]string{}, [maxSlot]string{}, false
 	}
@@ -392,12 +414,85 @@ func recognizeChangedEffects(ctx *maa.Context, img image.Image, source partScan)
 		return effects, values, rawTexts, false
 	}
 
+	if valueMode {
+		effects, rawTexts, recognized = fillUnreadableEffectsFromSource(effects, values, rawTexts, recognized, source)
+	}
+
 	// 验证识别完整性
 	if !validateSlotRecognitionCompleteness(effects, values, rawTexts, recognized) {
 		return effects, values, rawTexts, false
 	}
 
 	return effects, values, rawTexts, true
+}
+
+// fillUnreadableEffectsFromSource 在数值重洗时用本轮变更前快照补齐读不出名称的槽位。
+//
+// 数值重洗保持效果种类不变，evaluateValueResult 也以 changed[i] == 本轮快照词条名为前提；
+// 因此「读到数值、名称却不像官方词条」时按同槽快照补齐不会改变最终决策。真正读出了另一个
+// 官方词条的槽位不会被补齐，仍由 evaluateValueResult 判为“效果在数值重洗中变化”并重试。
+//
+// 补齐条件（全部满足才补）：
+//   - 该槽未识别出官方词条，但 OCR 确实产出非空原文（空原文代表未渲染或未命中，必须重试）；
+//   - 该槽读到了百分比（缺数值无法评估，不能猜名称）；
+//   - 快照同槽词条能归一化为官方词条；
+//   - 补齐后三槽词条仍互不重复（装备不可能出现重复词条，重复说明槽位可能错位）。
+//
+// 补齐失败时原样返回，交由 validateSlotRecognitionCompleteness 走原有的重试/降级路径。
+func fillUnreadableEffectsFromSource(effects, values, rawTexts [maxSlot]string, recognized [maxSlot]bool, source partScan) ([maxSlot]string, [maxSlot]string, [maxSlot]bool) {
+	if source == (partScan{}) {
+		return effects, rawTexts, recognized
+	}
+
+	patchedEffects, patchedRaw, patchedRecognized := effects, rawTexts, recognized
+	var filledSlots []int
+	for i := range effects {
+		if recognized[i] || rawTexts[i] == "" || values[i] == "" {
+			continue
+		}
+		fallback, ok := normalizeEffect(source.Slots[i].Effect)
+		if !ok || fallback == "" {
+			continue
+		}
+		patchedEffects[i] = fallback
+		patchedRaw[i] = fmt.Sprintf("%s（词条名沿用本轮快照）", rawTexts[i])
+		patchedRecognized[i] = true
+		filledSlots = append(filledSlots, i+1)
+	}
+	if len(filledSlots) == 0 {
+		return effects, rawTexts, recognized
+	}
+	if !effectsAreDistinct(patchedEffects, patchedRecognized) {
+		log.Warn().
+			Str("component", "EquipmentReroll").
+			Ints("filled_slots", filledSlots).
+			Strs("raw_slots", rawTexts[:]).
+			Msg("snapshot effect fallback would duplicate an affix; retry recognition")
+		return effects, rawTexts, recognized
+	}
+
+	log.Warn().
+		Str("component", "EquipmentReroll").
+		Ints("filled_slots", filledSlots).
+		Strs("raw_slots", rawTexts[:]).
+		Strs("snapshot_effects", patchedEffects[:]).
+		Msg("result page effect name unreadable; filled from pre-reroll snapshot")
+	return patchedEffects, patchedRaw, patchedRecognized
+}
+
+// effectsAreDistinct 判断已识别词条是否互不重复；空槽（未获得效果）不参与比较。
+func effectsAreDistinct(effects [maxSlot]string, recognized [maxSlot]bool) bool {
+	seen := make(map[string]struct{}, maxSlot)
+	for i, effect := range effects {
+		if !recognized[i] || effect == "" {
+			continue
+		}
+		if _, exists := seen[effect]; exists {
+			return false
+		}
+		seen[effect] = struct{}{}
+	}
+	return true
 }
 
 // extractSlotOCRData 合并本轮锁定快照与未锁槽 OCR；不完整快照回退到实际识别。
@@ -545,11 +640,10 @@ func shouldContinueCurrentPartAfterAcceptWithMaterial(current string, cfg carrie
 			singlePartNeedsReroll(scan, cfg.Target) && !singleTargetUnreachable(scan, cfg.Target)
 	}
 
-	quota := cfg.resolveQuota(nil)
-	if !quotaIsValid(quota) || len(parts) != len(equipmentParts) {
+	if cfg.validateGoalQuotas(nil) != nil || len(parts) != len(equipmentParts) {
 		return false
 	}
-	best, ok := chooseBestPartForQuotaWithMaterial(parts, quota, equipmentParts, material)
+	best, ok := chooseBestPartForQuotaAlternativesWithMaterial(parts, cfg.resolveGoalQuotas(nil), equipmentParts, material)
 	return ok && best == current
 }
 

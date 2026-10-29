@@ -234,9 +234,25 @@ HIGH_MODULE_LOCK_WEIGHT >> KEY_LOCK_WEIGHT
 
 全部正数配额合计必须在 `1-12` 条之间（Go 端 `quotaIsValid` 校验）。
 
+**允许词条替换（可替换词条对）**
+
+角色效果模式只有一份配额。开启「允许词条替换」后，用两个 select 选择任意两项可互相替换的官方词条（X=X），两项的正数需求合并为**合计条数**：任意一项出现都计入合计，未填写配额的一项也能顶替。
+
+例如选择暴击率增加 ↔ 暴击伤害增加后，「暴击伤害 = 需求 3、暴击率 = 不要求」等价于「暴击 + 爆伤合计 3 条」，洗出 2 条暴击伤害加 1 条暴击率同样达标，不需要枚举 3+0 / 2+1 / 1+2 / 0+3 四套方案。替换对不限于暴击，任意两项官方效果都能组合；两项必须不同且都选择后才生效。关闭时（默认）仍按各效果分别达标。
+
+实现上，Go 端把合计条数展开成若干完整等价目标（每种分配一个目标），继续复用既有 OR 规划器：任一完整目标达标即整体达标。展开严格保持合计条数与其它效果配额不变，因此不会放宽或收紧目标；「禁止」成员不参与分摊，仍由每个目标继续约束。两项词条对最多展开 5 个目标。
+
+目标必须作为完整配额组保存。例如「4 攻 4 优 4 暴击率」与「4 攻 4 优 3 暴击率 1 装弹」不能逐效果取最小值，否则会误收只有 11 条有效效果的组合；也不能取最大值形成 13 条不可达目标。
+
+配置仍使用承载点的扁平键：`quota_<效果名>` 是唯一一份配额；`allow_substitution` 控制是否启用替换；`substitution_affix1/2` 保存两项官方效果名。只有完全缺少配额字段时才兼容读取节点默认值；显式全为「不要求」必须报错，不能静默恢复默认目标。校验官方效果、单效果 `-1/0/1-4` 与总需求 `1-12`；数值模式与单件模式忽略该开关。
+
+替换目标之间是 OR：规划器同时保留直接完成某一目标的路线，以及「先完成共用准备，最后一件装备根据实际结果选择目标」的路线。在最后一件中，满足任一完整目标对应局部要求的结果都计入成功概率；新增锁、保留结果及未来续程成本通过同一 OR Bellman 模型比较。每次结果确认后重新计算。
+
+这种策略集合包含各个单目标计划，因此开启替换不会提高当前模型的估算成本；合计条数相同的替换只会增加可接受的结果。它仍是分解后的滚动估值，未穷举四件装备随机过程与所有跨件目标交换，不宣称全局 MDP 最优。初始预估统一使用模组锁口径；有限密钥库存也不等价于无限免费锁。
+
 > 接口统一说明：角色配额的每个效果 select 与单件模式的"需求词条行"select 一样，case 直接写死语义值，
 > 配置统一写入承载点 **`EquipmentRerollLockNeed.attach` 的扁平顶层键**（模式 `mode`；单件部位 `part`；
-> 角色 `quota_<效果名>`；单件 `want1/2/3`、`slot1/2/3`）。选择 attach 是因为 MaaFramework 对同一节点多次
+> 角色 `quota_<效果名>`、`allow_substitution`、`substitution_affix1/2`；单件 `want1/2/3`、`slot1/2/3`）。选择 attach 是因为 MaaFramework 对同一节点多次
 > override 时 `custom_recognition_param` 是**整体替换**（后覆盖会丢失前值），而 attach 顶层键按 key 合并互不覆盖。
 > 其余组件（AllSatisfied / ChoosePart / ResultPage / KeepLockCheck / SingleDecide 等）
 > 统一经 `loadCarrierConfig` 从承载点读取，不再各自接收 override。
@@ -245,12 +261,13 @@ HIGH_MODULE_LOCK_WEIGHT >> KEY_LOCK_WEIGHT
 
 **常见示例：**
 
-| 习惯叫法                          | 等价全局配额                                                       |
-| --------------------------------- | ------------------------------------------------------------------ |
-| 四优                              | 优越代码伤害增加 4                                                 |
-| 四优+装弹                         | 优越代码伤害增加 4、最大装弹数增加 1                               |
-| 攻 4 + 优 4                       | 攻击力增加 4、优越代码伤害增加 4                                   |
-| 攻 4 + 优 4 + 装弹 1 + 蓄力速度 3 | 攻击力增加 4、优越代码伤害增加 4、最大装弹数增加 1、蓄力速度增加 3 |
+| 习惯叫法                          | 等价全局配额                                                                                                |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 四优                              | 优越代码伤害增加 4                                                                                          |
+| 四优+装弹                         | 优越代码伤害增加 4、最大装弹数增加 1                                                                        |
+| 攻 4 + 优 4                       | 攻击力增加 4、优越代码伤害增加 4                                                                            |
+| 攻 4 + 优 4 + 装弹 1 + 蓄力速度 3 | 攻击力增加 4、优越代码伤害增加 4、最大装弹数增加 1、蓄力速度增加 3                                          |
+| 4 优 4 攻 3 暴击/爆伤 1 装弹      | 优越代码伤害增加 4、攻击力增加 4、暴击伤害增加 3（开启允许词条替换并选择暴击率/暴击伤害）、最大装弹数增加 1 |
 
 “装弹”“蓄力速度”等只是展示简写，内部识别必须使用官方效果名称“最大装弹数增加”“蓄力速度增加”，不能把简写直接当作 OCR 目标字符串。
 
@@ -1067,6 +1084,8 @@ EquipmentRerollMain
 - 模拟（单件、达到“三槽各含 优/攻/装弹”，200k 样本）：**最优锁定策略在两种材料下一致（饱和下先苦后甜最优）**，仅模块成本略有差异（密钥版 44.5 vs 模块版 50.4 模块；从不锁约 650；只锁2赌3 约 230；渐进去重 49.4/54.0）。因此**当自订密钥耗尽、脚本回退用订制模组时，无需改变锁定策略（先苦后甜/拿到就锁）**，只需把“买锁的模块”计入真实成本。
 - 决策实现：`bestLockSlotAndCostForRequired(scan, quota, required, material)` 接受锁定材料。材料来源：进入**效果锁定页**时由 `EquipmentRerollMaterialCheckRecognition` 用 OCR 读取一次材料「持有」数量（`__EquipmentRerollLockModuleHeld` / `__EquipmentRerollLockKeyHeld`）初始化 `Inventory` 余额；之后 `EquipmentRerollLockSelectRecognition` 直接读该余额并用 `Inventory.ChooseLockMaterial` 决策（有密钥用密钥、不足用订制模组），同时把材料传入 `DesiredLockSlotForQuota` / `desiredLockSlotForCurrentMode`。当材料为“订制模块”时，会把 `lockAcquireCost(当前锁数)`（0→1=2、1→2=3）计入锁定成本，使**模块锁定时决策更保守**；自订密钥获取成本为 0。详情页规划阶段若尚未读到库存（库存现在进锁定页才读），`EquipmentRerollLockCheckRecognition` 按“材料充足”乐观规划，真实持有量在锁定页读到后修正材料选择；两种材料都付不起时 `LockSelectRecognition` 返回 `material_code=0`，由 `EquipmentRerollLockAbort` 清状态并按关闭后的真实页面继续。
 
+- 库存 OCR 的候选过滤、千位分隔符归一化和最右数字选择统一由 Pipeline 的 `expected`、`replace`、`order_by: Horizontal` 与 `index: -1` 声明。Go 只读取框架选定的 `Best` 并转换为非负整数，不再按置信度、坐标或文本长度重新挑选候选，也不回退到未过滤的 `All`。
+
 **去重与轮转**：自定义配额每件最多 2 锁。`expireOneTimeLocks` 在每次 reroll 后使橙锁失效，蓝锁保留。Keep 分支回到 `ConfirmChangeEffect` 直接重洗同件（确认页内，Flag 不参与），Accept 分支经 `ReturnToDecide→Decide` 重调度（基于快照，Flag 重新锚定）。
 
 ### 8.6 决策页就绪与按钮兜底
@@ -1176,10 +1195,10 @@ EquipmentRerollMain
 
 **`EquipmentRerollMode`**（select，父级、互斥）：
 
-| case                | 含义       | 嵌套子选项                                                      | pipeline_override                                                                                                         |
-| ------------------- | ---------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `Character`（默认） | 洗角色词条 | 9 个效果配额 select（`EquipmentRerollQuotaElementalDamage` 等） | `attach.mode = "character"`                                                                                               |
-| `Single`            | 洗单件词条 | `EquipmentRerollSinglePart`、`EquipmentRerollSingleWant1/2/3`   | `attach.mode = "single"`；`EquipmentRerollScanDetailsPageEntered.next → EquipmentRerollSingleScanRoute`（只扫选定那一件） |
+| case                | 含义       | 嵌套子选项                                                                                                                                               | pipeline_override                                                                                                         |
+| ------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `Character`（默认） | 洗角色词条 | 9 个效果配额 select（`EquipmentRerollQuotaElementalDamage` 等）＋`EquipmentRerollAllowSubstitution` switch＋其下的 `EquipmentRerollSubstitutionAffix1/2` | `attach.mode = "character"`；`attach.allow_substitution = true/false`；`attach.substitution_affix1/2 = "<官方效果名>"`    |
+| `Single`            | 洗单件词条 | `EquipmentRerollSinglePart`、`EquipmentRerollSingleWant1/2/3`                                                                                            | `attach.mode = "single"`；`EquipmentRerollScanDetailsPageEntered.next → EquipmentRerollSingleScanRoute`（只扫选定那一件） |
 
 两种模式共用入口 `EquipmentRerollMain`（RuntimeQuotaCheck 计费）与扫描流程；
 `EquipmentRerollAfterMaterialCheck` 读取承载点 `attach.mode` 分流到 `EquipmentRerollDecide`（角色）或

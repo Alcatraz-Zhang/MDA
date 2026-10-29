@@ -178,7 +178,7 @@ func (p *affixOfflineProbe) checkAffixSafety(ctx *maa.Context, arg *maa.CustomRe
 	clearMonitorState(arg.TaskID)
 	// 结果页回放验证完整词条和数值可以通过 OCR 读取。
 	img := loadAffixPanel(t, "affix-result-panel.png", image.Pt(460, 110))
-	effects, values, raws, known := recognizeChangedEffects(ctx, img, partScan{})
+	effects, values, raws, known := recognizeChangedEffects(ctx, img, partScan{}, false)
 	t.Logf("result affixes: %v %v raw=%v", effects, values, raws)
 	if !known || effects != [3]string{"优越代码伤害增加", "暴击伤害增加", "攻击力增加"} || values != [3]string{"23.56%", "6.64%", "11.11%"} {
 		t.Errorf("result OCR: known=%v effects=%v values=%v", known, effects, values)
@@ -186,20 +186,20 @@ func (p *affixOfflineProbe) checkAffixSafety(ctx *maa.Context, arg *maa.CustomRe
 	// 直接识别漏字时，检测识别仍可从同槽的名称框与数值框恢复完整结果。
 	resultSlot := "__EquipmentRerollResultChangedEffectSlot1"
 	override(map[string]any{resultSlot: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{{"优越代码伤害增加", "优越代码伤害增"}}}}}})
-	effects, values, raws, known = recognizeChangedEffects(ctx, img, partScan{})
+	effects, values, raws, known = recognizeChangedEffects(ctx, img, partScan{}, false)
 	if !known || effects[0] != "优越代码伤害增加" || values[0] != "23.56%" {
 		t.Errorf("split result OCR: known=%v effects=%v values=%v raw=%v", known, effects, values, raws)
 	}
 	// 检测路径的数值被过滤后，不能借用残缺名称路径中的百分比。
 	resultDetected := resultSlot + "DetectedOCR"
 	override(map[string]any{resultDetected: map[string]any{"recognition": map[string]any{"param": map[string]any{"expected": []string{"优越代码伤害增加"}}}}})
-	if _, _, _, known := recognizeChangedEffects(ctx, img, partScan{}); known {
+	if _, _, _, known := recognizeChangedEffects(ctx, img, partScan{}, false); known {
 		t.Error("unfiltered split percentage or partial-name percentage was accepted")
 	}
 	override(map[string]any{resultDetected: map[string]any{"recognition": map[string]any{"param": map[string]any{"expected": []string{".*"}}}}})
 	// 名称相同但两条路径给出不同百分比时，也不能进入结果取舍。
 	override(map[string]any{resultSlot: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{{"23.56", "24.00"}}}}}})
-	if _, _, _, known := recognizeChangedEffects(ctx, img, partScan{}); known {
+	if _, _, _, known := recognizeChangedEffects(ctx, img, partScan{}, false); known {
 		t.Error("conflicting result percentages were accepted")
 	}
 	override(map[string]any{resultSlot: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{}}}}})
@@ -303,4 +303,27 @@ func (p *affixOfflineProbe) checkAffixSafety(ctx *maa.Context, arg *maa.CustomRe
 	if effect, _, known := read(); !known || effect != "防御力增加" {
 		t.Errorf("complete-name OCR failed: %q %v", effect, known)
 	}
+	// v1.11.8 / task 200001415 现场：装弹 77.15% 被读成 17.15%，
+	// 整行名称中的数值又漏成 7.15%。扫描必须依据官方档位恢复 T13，而不是保存
+	// tier=0 的错值。这里复用真实框架 OCR，再把结果替换成日志中的三路文本。
+	override(original)
+	override(map[string]any{
+		direct: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{
+			{`【优越代码伤害增加】23\.56`, "【最大装弹数增加】7.15%"},
+		}}}},
+		detected: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{
+			{"优越代码伤害增加", "最大装弹数增加"}, {`23\.56`, "17.15%"},
+		}}}},
+		valueNode: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{
+			{`^23\.56[%％]?$`, "17.15%"},
+		}}}},
+		valueFallback: map[string]any{"recognition": map[string]any{"param": map[string]any{"replace": [][]string{
+			{`^23\.56[%％]?$`, "17.15%"},
+		}}}},
+	})
+	scan := scanSlotByPipeline(ctx, arg.Img, 1)
+	if scan.Effect != "最大装弹数增加" || scan.RawValue != "17.15%" || scan.Value != "77.15%" || scan.Tier != 13 {
+		t.Errorf("blue ammo OCR should recover T13: %+v", scan)
+	}
+	override(original)
 }

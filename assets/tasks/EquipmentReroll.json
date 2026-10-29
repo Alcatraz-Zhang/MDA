@@ -51,6 +51,9 @@
                             "post_delay": 0,
                             "next": [
                                 "EquipmentRerollResultPage"
+                            ],
+                            "on_error": [
+                                "EquipmentRerollResultUnreadableFailed"
                             ]
                         },
                         "__EquipmentRerollLocateFlag": {
@@ -1323,7 +1326,8 @@
                         "EquipmentRerollQuotaChargeSpeed",
                         "EquipmentRerollQuotaChargeDamage",
                         "EquipmentRerollQuotaHitRate",
-                        "EquipmentRerollQuotaDefense"
+                        "EquipmentRerollQuotaDefense",
+                        "EquipmentRerollAllowSubstitution"
                     ],
                     "pipeline_override": {
                         "EquipmentRerollLockNeed": {
@@ -1331,7 +1335,8 @@
                                 "mode": "character"
                             }
                         }
-                    }
+                    },
+                    "description": "$option.EquipmentRerollMode.Character.description"
                 },
                 {
                     "name": "Single",
@@ -1966,6 +1971,260 @@
                         "EquipmentRerollLockNeed": {
                             "attach": {
                                 "slot3": 3
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "EquipmentRerollAllowSubstitution": {
+            "type": "switch",
+            "label": "$option.EquipmentRerollAllowSubstitution.label",
+            "description": "$option.EquipmentRerollAllowSubstitution.description",
+            "default_case": "No",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "allow_substitution": true
+                            }
+                        }
+                    },
+                    "option": [
+                        "EquipmentRerollSubstitutionAffix1",
+                        "EquipmentRerollSubstitutionAffix2"
+                    ]
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "allow_substitution": false
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "EquipmentRerollSubstitutionAffix1": {
+            "type": "select",
+            "label": "$option.EquipmentRerollSubstitutionAffix1.label",
+            "description": "$option.EquipmentRerollSubstitutionAffix1.description",
+            "default_case": "None",
+            "cases": [
+                {
+                    "name": "None",
+                    "label": "$option.EquipmentRerollSubstitutionAffix.None.label"
+                },
+                {
+                    "name": "ElementalDamage",
+                    "label": "$option.EquipmentRerollQuota.affix.ElementalDamage.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "优越代码伤害增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "AttackIncrease",
+                    "label": "$option.EquipmentRerollQuota.affix.AttackIncrease.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "攻击力增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "MaxAmmo",
+                    "label": "$option.EquipmentRerollQuota.affix.MaxAmmo.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "最大装弹数增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "CritDamage",
+                    "label": "$option.EquipmentRerollQuota.affix.CritDamage.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "暴击伤害增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "CritRate",
+                    "label": "$option.EquipmentRerollQuota.affix.CritRate.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "暴击率增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ChargeSpeed",
+                    "label": "$option.EquipmentRerollQuota.affix.ChargeSpeed.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "蓄力速度增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ChargeDamage",
+                    "label": "$option.EquipmentRerollQuota.affix.ChargeDamage.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "蓄力伤害增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "HitRate",
+                    "label": "$option.EquipmentRerollQuota.affix.HitRate.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "命中率增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Defense",
+                    "label": "$option.EquipmentRerollQuota.affix.Defense.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix1": "防御力增加"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "EquipmentRerollSubstitutionAffix2": {
+            "type": "select",
+            "label": "$option.EquipmentRerollSubstitutionAffix2.label",
+            "description": "$option.EquipmentRerollSubstitutionAffix2.description",
+            "default_case": "None",
+            "cases": [
+                {
+                    "name": "None",
+                    "label": "$option.EquipmentRerollSubstitutionAffix.None.label"
+                },
+                {
+                    "name": "ElementalDamage",
+                    "label": "$option.EquipmentRerollQuota.affix.ElementalDamage.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "优越代码伤害增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "AttackIncrease",
+                    "label": "$option.EquipmentRerollQuota.affix.AttackIncrease.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "攻击力增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "MaxAmmo",
+                    "label": "$option.EquipmentRerollQuota.affix.MaxAmmo.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "最大装弹数增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "CritDamage",
+                    "label": "$option.EquipmentRerollQuota.affix.CritDamage.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "暴击伤害增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "CritRate",
+                    "label": "$option.EquipmentRerollQuota.affix.CritRate.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "暴击率增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ChargeSpeed",
+                    "label": "$option.EquipmentRerollQuota.affix.ChargeSpeed.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "蓄力速度增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ChargeDamage",
+                    "label": "$option.EquipmentRerollQuota.affix.ChargeDamage.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "蓄力伤害增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "HitRate",
+                    "label": "$option.EquipmentRerollQuota.affix.HitRate.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "命中率增加"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Defense",
+                    "label": "$option.EquipmentRerollQuota.affix.Defense.label",
+                    "pipeline_override": {
+                        "EquipmentRerollLockNeed": {
+                            "attach": {
+                                "substitution_affix2": "防御力增加"
                             }
                         }
                     }

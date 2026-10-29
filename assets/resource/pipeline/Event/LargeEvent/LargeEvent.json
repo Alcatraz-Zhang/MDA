@@ -40,7 +40,7 @@
                     68
                 ],
                 "template": [
-                    "LargeEvent/CoinRushShowdown/CoinRushShowdownLogo.png" //当前活动，随最新主题更新
+                    "LargeEvent/MARIAn/MARIAnLogo.png" //当前活动，随最新主题更新
                 ]
             }
         },
@@ -55,6 +55,7 @@
                 ]
             }
         },
+        "post_delay": 1500, //点完固定等 1.5 秒再重判：游戏要 1 秒左右才切到加载页，否则会对着同一个入口连点两次
         "next": [
             "LargeEventMainPageFlow",
             "LargeEventEnterMainPage"
@@ -119,8 +120,7 @@
         "desc": "大活动小游戏",
         "max_hit": 1,
         "next": [
-            "LargeEventCoinRushShowdownMiniGame", //当前活动，随最新主题更新
-            "CommonEndTask"
+            "CommonEndTask" //当前活动暂未适配小游戏，随最新主题更新
         ]
     },
     "LargeEventGoBack": {
